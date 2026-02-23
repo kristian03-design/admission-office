@@ -1457,3 +1457,37 @@ body {
     height: 340px;
   }
 }
+
+ /* Lucide icon sizing helpers — scoped so they don't override your CSS */
+    i[data-lucide] {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+    /* Tighten icon rendering inside feature-icon-wrap */
+    .feature-icon-wrap i[data-lucide] { width: 24px; height: 24px; }
+    /* Contact icon wrap */
+    .contact-icon-wrap i[data-lucide] { width: 20px; height: 20px; }
+    /* Step-highlight icon aligns with your existing flex + gap rules */
+    .step-highlight i[data-lucide] { width: 18px; height: 18px; margin-top: 1px; }
+    /* Program-card meta small icons */
+    .meta-item i[data-lucide] { width: 14px; height: 14px; }
+    /* Inline CTA arrows */
+    .program-cta i[data-lucide],
+    .btn-hero-primary i[data-lucide],
+    .btn-hero-secondary i[data-lucide],
+    .btn-cta-primary i[data-lucide] { width: 16px; height: 16px; }
+    /* Carousel buttons */
+    .carousel-btn i[data-lucide] { width: 20px; height: 20px; }
+    /* Back-to-top */
+    .back-to-top i[data-lucide] { width: 20px; height: 20px; }
+    /* Hamburger */
+    #menu-toggle i[data-lucide] { width: 20px; height: 20px; }
+    /* Spinner inside submit button */
+    .btn-spinner i[data-lucide] { width: 20px; height: 20px; }
+    /* Select arrow */
+    .select-arrow i[data-lucide] { width: 16px; height: 16px; }
+    /* Form success icon inside contact success state */
+    .success-icon i[data-lucide] { width: 28px; height: 28px; color: #fff; }
