@@ -77,29 +77,50 @@
       <div class="fcard">
       <div class="fhdr"><h2>Step 2: Personal Information</h2><p>As they appear on official government documents</p></div>
       <div class="fbdy">
-        <p class="stitle">Student Details</p>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-        <div><label class="fl">Surname <span style="color:var(--red)">*</span></label><input type="text" name="surname" placeholder="e.g. Dela Cruz" class="fi"><span class="et" id="e-sur"></span></div>
-        <div><label class="fl">First Name <span style="color:var(--red)">*</span></label><input type="text" name="firstName" placeholder="e.g. Juan" class="fi"><span class="et" id="e-fn"></span></div>
-        <div><label class="fl">Middle Name</label><input type="text" name="middleName" placeholder="e.g. Santos" class="fi"></div>
-        <div><label class="fl">Suffix</label><input type="text" name="suffix" placeholder="Jr., Sr., III" class="fi"></div>
+      <p class="stitle">Student Details</p>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+      <div><label class="fl">Surname <span style="color:var(--red)">*</span></label><input type="text" name="surname" placeholder="e.g. Dela Cruz" class="fi"><span class="et" id="e-sur"></span></div>
+      <div><label class="fl">First Name <span style="color:var(--red)">*</span></label><input type="text" name="firstName" placeholder="e.g. Juan" class="fi"><span class="et" id="e-fn"></span></div>
+      <div><label class="fl">Middle Name</label><input type="text" name="middleName" placeholder="e.g. Santos" class="fi"></div>
+      <div><label class="fl">Suffix</label><input type="text" name="suffix" placeholder="Jr., Sr., III" class="fi"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3" style="margin-top:12px">
+      <div>
+        <label class="fl">Sex <span style="color:var(--red)">*</span></label>
+        <div style="display:flex;gap:8px">
+        <label class="oc" style="flex:1;margin-bottom:0;align-items:center"><input type="radio" name="sex" value="Male" style="width:16px;height:16px;accent-color:var(--navy)"><span style="margin-left:8px;font-size:13px;font-weight:600">Male</span></label>
+        <label class="oc" style="flex:1;margin-bottom:0;align-items:center"><input type="radio" name="sex" value="Female" style="width:16px;height:16px;accent-color:var(--navy)"><span style="margin-left:8px;font-size:13px;font-weight:600">Female</span></label>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3" style="margin-top:12px">
+        <span class="et" id="e-sex"></span>
+      </div>
+      <div><label class="fl">Date of Birth <span style="color:var(--red)">*</span></label><input type="date" name="dateOfBirth" class="fi"><span class="et" id="e-dob"></span></div>
+      <div><label class="fl">Place of Birth <span style="color:var(--red)">*</span></label><input type="text" name="placeOfBirth" placeholder="City / Province" class="fi"><span class="et" id="e-pob"></span></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3" style="margin-top:12px">
         <div>
-          <label class="fl">Sex <span style="color:var(--red)">*</span></label>
-          <div style="display:flex;gap:8px">
-          <label class="oc" style="flex:1;margin-bottom:0;align-items:center"><input type="radio" name="sex" value="Male" style="width:16px;height:16px;accent-color:var(--navy)"><span style="margin-left:8px;font-size:13px;font-weight:600">Male</span></label>
-          <label class="oc" style="flex:1;margin-bottom:0;align-items:center"><input type="radio" name="sex" value="Female" style="width:16px;height:16px;accent-color:var(--navy)"><span style="margin-left:8px;font-size:13px;font-weight:600">Female</span></label>
-          </div>
-          <span class="et" id="e-sex"></span>
+          <label class="fl">Civil Status <span style="color:var(--red)">*</span></label>
+          <select 
+            name="civilStatus" 
+            class="fi" 
+            style="background-image:url('data:image/svg+xml;utf8,<svg fill=%22%234b5563%22 viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/></svg>');background-repeat:no-repeat;background-position:right 10px center;background-size:20px;padding-right:36px;appearance:none"
+          >
+            <option value="">Select civil status</option>
+            <option value="Single">Single</option>
+            <option value="Married">Married</option>
+            <option value="Divorced">Divorced</option>
+            <option value="Widowed">Widowed</option>
+          </select>
+          <span class="et" id="e-cs"></span>
         </div>
-        <div><label class="fl">Date of Birth <span style="color:var(--red)">*</span></label><input type="date" name="dateOfBirth" class="fi"><span class="et" id="e-dob"></span></div>
-        <div><label class="fl">Place of Birth <span style="color:var(--red)">*</span></label><input type="text" name="placeOfBirth" placeholder="City / Province" class="fi"><span class="et" id="e-pob"></span></div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3" style="margin-top:12px">
-        <div><label class="fl">Contact Number <span style="color:var(--red)">*</span></label><div class="phone-wrap"><span class="ppfx">+63</span><input type="tel" name="studentContactNumber" placeholder="9XXXXXXXXX" class="fi phi" maxlength="10"></div><p style="font-size:11px;color:#9aa5b1;margin-top:4px">10-digit mobile number starting with 9</p><span class="et" id="e-scn"></span></div>
-        <div><label class="fl">Email Address <span style="color:var(--red)">*</span></label><input type="email" name="studentEmail" placeholder="e.g. juan.delacruz@email.com" class="fi"><span class="et" id="e-email"></span></div>
-        </div>
+      </div>
+      <div id="marriageNoteDiv" style="display:none;background:#fff3cd;border:1.5px solid #ffc107;border-radius:8px;padding:10px 12px;margin-top:12px">
+        <p style="font-size:12px;color:#856404;font-weight:600;margin-bottom:4px">⚠ Marriage Certificate Required</p>
+        <p style="font-size:11px;color:#856404">Please upload a scanned copy of your marriage certificate in the documents section.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3" style="margin-top:12px">
+      <div><label class="fl">Contact Number <span style="color:var(--red)">*</span></label><div class="phone-wrap"><span class="ppfx">+63</span><input type="tel" name="studentContactNumber" placeholder="9XXXXXXXXX" class="fi phi" maxlength="10"></div><p style="font-size:11px;color:#9aa5b1;margin-top:4px">10-digit mobile number starting with 9</p><span class="et" id="e-scn"></span></div>
+      <div><label class="fl">Email Address <span style="color:var(--red)">*</span></label><input type="email" name="studentEmail" placeholder="e.g. juan.delacruz@email.com" class="fi"><span class="et" id="e-email"></span></div>
+      </div>
           <p class="stitle">Mother's Information <span style="font-size:11px;font-weight:400;color:#9aa5b1;text-transform:none">(Refer to your PSA Birth Certificate)</span></p>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div><label class="fl">First Name <span style="color:var(--red)">*</span></label><input type="text" name="motherFirstName" placeholder="First name" class="fi"><span class="et" id="e-mfn"></span></div>
@@ -116,6 +137,7 @@
         </div>
       </div>
     </div>
+  </div>
 
     <!-- STEP 3 -->
     <div class="sc" data-step="3">

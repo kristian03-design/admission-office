@@ -1,0 +1,42 @@
+Options -Indexes
+
+# ── Rewrite all requests to index.php ────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Don't rewrite actual files or directories
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Route everything through index.php
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# ── Security headers ──────────────────────────────────────────
+<IfModule mod_headers.c>
+    # Prevent clickjacking
+    Header always set X-Frame-Options "DENY"
+    # Prevent MIME type sniffing
+    Header always set X-Content-Type-Options "nosniff"
+    # XSS protection
+    Header always set X-XSS-Protection "1; mode=block"
+    # Referrer policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    # Remove server signature
+    Header unset Server
+    Header unset X-Powered-By
+</IfModule>
+
+# ── Disable PHP error display in production ───────────────────
+php_flag display_errors Off
+
+# ── Protect sensitive files ───────────────────────────────────
+<FilesMatch "\.(env|log|sql|json|md|lock|gitignore)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# ── File upload size (adjust to match PHP settings) ──────────
+php_value upload_max_filesize 10M
+php_value post_max_size 12M
+php_value max_execution_time 60
