@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admissions — Baliwag Polytechnic College</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+
+  <!-- ✦ Lucide Icons ✦ -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=3" />
+
+</head>
+<body>
+  @include('partials.site-loader')
+
+  <!-- ───────────────────────────────────── NAV ───────────────────────────────────── -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
+      <a href="{{ route('home') }}" class="flex items-center gap-3 group">
+        <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
+        <div class="leading-tight">
+          <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSION OFFICE' }}</p>
+          <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
+        </div>
+      </a>
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="{{ route('home') }}" class="nav-link text-sm font-medium tracking-wide">Home</a>
+        <a href="{{ route('about') }}" class="nav-link text-sm font-medium tracking-wide">About</a>
+        <a href="{{ route('home') }}#programs" class="nav-link text-sm font-medium tracking-wide">Programs</a>
+        <a href="{{ route('news-events') }}" class="nav-link text-sm font-medium tracking-wide">News &amp; Events</a>
+        <a href="{{ route('home') }}#contact" class="nav-link text-sm font-medium tracking-wide">Contact Us</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="{{ route('apply') }}" class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full transition-all">Inquire Now</a>
+        <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu"><i data-lucide="menu"></i></button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden mobile-menu">
+      <div class="px-8 pb-6 pt-2 flex flex-col gap-4">
+        <a href="{{ route('home') }}" class="mobile-nav-link text-base font-medium">Home</a>
+        <a href="{{ route('about') }}" class="mobile-nav-link text-base font-medium">About</a>
+        <a href="{{ route('news-events') }}" class="mobile-nav-link text-base font-medium">News &amp; Events</a>
+      </div>
+    </div>
+  </header>
+  <main>
+
+    <!-- ───────────────────────────────────── HERO ───────────────────────────────────── -->
+    <section id="hero" class="hero-section relative min-h-screen flex items-center overflow-hidden">
+      <div class="hero-bg-overlay absolute inset-0"></div>
+      <div class="hero-pattern absolute inset-0"></div>
+
+      <div class="deco-circle deco-circle-1"></div>
+      <div class="deco-circle deco-circle-2"></div>
+      <div class="deco-line deco-line-1"></div>
+      <div class="deco-line deco-line-2"></div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full pt-28 pb-16">
+        <div class="hero-grid">
+
+          <!-- LEFT: Text -->
+          <div class="hero-content">
+            <div class="inline-flex items-center gap-2 pill-badge mb-8" data-animate="fade-up" data-delay="0">
+              <span class="pill-dot"></span>
+              <span class="text-xs font-semibold tracking-widest uppercase">{{ $settings['school_year_label'] ?? 'Admissions Open · S.Y. 2025–2026' }}</span>
+            </div>
+
+            <h1 class="hero-headline" data-animate="fade-up" data-delay="100">
+              @if(isset($settings['hero_headline']))
+                {!! nl2br(e($settings['hero_headline'])) !!}
+              @else
+                <span class="block text-line-1">Begin Your</span>
+                <span class="block text-line-2 italic">Journey</span>
+                <span class="block text-line-3">Here.</span>
+              @endif
+            </h1>
+
+            <div class="hero-program-label" data-animate="fade-up" data-delay="150">
+              <span class="program-label-dot"></span>
+              <span id="hero-program-name">Hospitality Management</span>
+            </div>
+
+            <p class="hero-sub mt-4 text-lg leading-relaxed max-w-lg" data-animate="fade-up" data-delay="200">
+              {{ $settings['hero_subheadline'] ?? 'Baliwag Polytechnic College has been shaping futures through quality, accessible higher education for over a decade. Your story starts with a single step.' }}
+            </p>
+
+            <div class="flex flex-wrap gap-4 mt-10" data-animate="fade-up" data-delay="300">
+              <a href="{{ url('/apply') }}" class="btn-hero-primary group">
+                <span>{{ $settings['cta_text'] ?? 'Start Your Application' }}</span>
+                <i data-lucide="arrow-right"></i>
+              </a>
+              <a href="#process" class="btn-hero-secondary group">
+                <span>How It Works</span>
+                <i data-lucide="chevron-down" style="opacity:.6"></i>
+              </a>
+            </div>
+
+            <!-- Slider dots -->
+            <div class="hero-slider-nav mt-10" data-animate="fade-up" data-delay="350">
+              <button class="hero-slider-dot active" data-index="0" aria-label="Hospitality"></button>
+              <button class="hero-slider-dot" data-index="1" aria-label="Business Administration"></button>
+              <button class="hero-slider-dot" data-index="2" aria-label="Education"></button>
+              <button class="hero-slider-dot" data-index="3" aria-label="Accountancy"></button>
+              <button class="hero-slider-dot" data-index="4" aria-label="Tourism"></button>
+              <button class="hero-slider-dot" data-index="5" aria-label="Information Technology"></button>
+              <button class="hero-slider-dot" data-index="6" aria-label="Management"></button>
+              <button class="hero-slider-dot" data-index="7" aria-label="Arts & Sciences"></button>
+            </div>
+
+            <div class="hero-stats mt-10 grid grid-cols-3 gap-6" data-animate="fade-up" data-delay="400">
+              <div class="stat-item">
+                <span class="stat-number" data-count="{{ now()->year - ($settings['institution_founding_year'] ?? 2008) }}">0</span>
+                <span class="stat-plus">+</span>
+                <p class="stat-label">Years of Excellence</p>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number" data-count="{{ $settings['alumni_count_k'] ?? '8' }}">0</span>
+                <span class="stat-plus">k+</span>
+                <p class="stat-label">Alumni Worldwide</p>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number" data-count="{{ $programs->count() }}">0</span>
+                <p class="stat-label">Degree Programs</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Rotating images -->
+          <div class="hero-visual" data-animate="fade-up" data-delay="200">
+            <div class="hero-visual-ring"></div>
+            <div class="hero-visual-ring hero-visual-ring--2"></div>
+
+            <div class="hero-badge-float" id="hero-badge-float">
+              <div>
+                <p class="hero-badge-title" id="hero-badge-title">Hospitality</p>
+              </div>
+            </div>
+
+            <div class="hero-img-stage" id="hero-img-stage">
+              <div class="hero-img-slide active" data-program="Hospitality Management"  data-icon="🍳" data-dept="Hospitality Management">
+                <img src="{{ asset('assets/images/chef.png') }}" alt="Hospitality student" fetchpriority="high" decoding="async" />
+              </div>
+              <div class="hero-img-slide" data-program="Business Administration"        data-icon="💼" data-dept="Marketing Management">
+                <img src="{{ asset('assets/images/business-male.png') }}" alt="Business student" loading="lazy" decoding="async" />
+              </div>
+              <div class="hero-img-slide" data-program="Education Program"              data-icon="📚" data-dept="Secondary Education">
+                <img src="{{ asset('assets/images/barong.png') }}" alt="Education student" loading="lazy" decoding="async" />
+              </div>
+              <div class="hero-img-slide" data-program="Accountancy"                   data-icon="📊" data-dept="Accountancy">
+                <img src="{{ asset('assets/images/business-female.png') }}" alt="Accountancy student" loading="lazy" decoding="async" />
+              </div>
+              <div class="hero-img-slide" data-program="Tourism Management"             data-icon="✈️" data-dept="Tourism Management">
+                <img src="{{ asset('assets/images/flight.png') }}" alt="Tourism student" loading="lazy" decoding="async" />
+              </div>
+              <div class="hero-img-slide" data-program="Information Technology"         data-icon="💻" data-dept="Information Technology">
+                <img src="{{ asset('assets/images/it-female.png') }}" alt="IT student" loading="lazy" decoding="async" />
+              </div>
+              <div class="hero-img-slide" data-program="Business Management"            data-icon="📖" data-dept="Business Administration">
+                <img src="{{ asset('assets/images/reading-male.png') }}" alt="Management student" loading="lazy" decoding="async" />
+              </div>
+              <div class="hero-img-slide" data-program="Arts & Sciences"                data-icon="🎓" data-dept="Arts & Sciences">
+                <img src="{{ asset('assets/images/reading-female.png') }}" alt="Arts & Sciences student" loading="lazy" decoding="async" />
+              </div>
+            </div>
+
+            <div class="hero-progress-wrap">
+              <div class="hero-progress-bar" id="hero-progress-bar"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2">
+        <div class="scroll-mouse"><div class="scroll-dot"></div></div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────────────────── TICKER ───────────────────────────────────── -->
+    @php
+      $tickerAnnouncements = $tickerAnnouncements ?? $announcements->where('is_popup', false)->values();
+    @endphp
+    <div class="ticker-bar">
+      <div class="ticker-inner">
+        <span class="ticker-label">ANNOUNCEMENTS</span>
+        <div class="ticker-track-wrap">
+          <div class="ticker-track" id="ticker">
+            @if($tickerAnnouncements->isNotEmpty())
+              @foreach($tickerAnnouncements as $ann)
+                <span class="ticker-item">
+                  @if($ann->popup_image)
+                    <img src="{{ $ann->popup_image }}" alt="" class="ticker-image" loading="lazy" decoding="async" width="34" height="34">
+                  @endif
+                  <span>{{ $ann->message }}</span>
+                </span>
+              @endforeach
+              <!-- Duplicate for seamless scroll -->
+              @foreach($tickerAnnouncements as $ann)
+                <span class="ticker-item">
+                  @if($ann->popup_image)
+                    <img src="{{ $ann->popup_image }}" alt="" class="ticker-image" loading="lazy" decoding="async" width="34" height="34">
+                  @endif
+                  <span>{{ $ann->message }}</span>
+                </span>
+              @endforeach
+            @else
+            @endif
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────────────────────────────────── WHY BTECH ───────────────────────────────────── -->
+    <section id="why" class="why-section py-28">
+      <div class="max-w-7xl mx-auto px-8">
+        <div class="section-header text-center mb-20" data-animate="fade-up">
+          <span class="section-tag">Why Choose BTECH</span>
+          <h2 class="section-title mt-3">More Than a Degree.<br/>A Launchpad.</h2>
+          <p class="section-desc mt-4 max-w-2xl mx-auto">
+            We combine academic rigor with real-world readiness, preparing graduates who don't just find jobs — they lead industries.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          @for($i = 1; $i <= 6; $i++)
+            @php
+              $title = $settings["feature_{$i}_title"] ?? null;
+              $desc = $settings["feature_{$i}_desc"] ?? null;
+              $icon = $settings["feature_{$i}_icon"] ?? null;
+              
+              if (!$title) {
+                $fallbacks = [
+                  1 => ['title' => 'CHED-Recognized', 'desc' => 'All programs are fully accredited and recognized by CHED, ensuring your degree opens doors.', 'icon' => 'graduation-cap'],
+                  2 => ['title' => 'Expert Faculty', 'desc' => 'Learn from industry practitioners and seasoned academics who bring real-world perspective.', 'icon' => 'users-round'],
+                  3 => ['title' => 'Scholarship Support', 'desc' => 'We believe talent shouldn\'t be limited by finances. Our scholarship programs make education accessible.', 'icon' => 'badge-percent'],
+                  4 => ['title' => 'Modern Facilities', 'desc' => 'State-of-the-art computer laboratories, science facilities, and collaborative spaces for learning.', 'icon' => 'building-2'],
+                  5 => ['title' => 'Industry Partnerships', 'desc' => 'OJT placements and employment connections with over 200 local and national partner companies.', 'icon' => 'handshake'],
+                  6 => ['title' => 'Strategic Location', 'desc' => 'Located in the heart of Baliwag, Bulacan — accessible from the entire region.', 'icon' => 'map-pin'],
+                ];
+                $title = $fallbacks[$i]['title'];
+                $desc = $fallbacks[$i]['desc'];
+                $icon = $fallbacks[$i]['icon'];
+              }
+              $isDark = ($i === 6);
+              $isAccent = ($i === 1);
+            @endphp
+            <div class="feature-card {{ $isDark ? 'feature-card--dark' : ($isAccent ? 'feature-card--accent' : '') }}" data-animate="fade-up" data-delay="{{ ($i-1) * 80 }}">
+              <div class="feature-icon-wrap {{ $isDark ? 'feature-icon-wrap--light' : '' }}">
+                <i data-lucide="{{ $icon }}"></i>
+              </div>
+              <h3 class="feature-title {{ $isDark ? 'feature-title--light' : '' }} mt-5">{{ $title }}</h3>
+              <p class="feature-desc {{ $isDark ? 'feature-desc--light' : '' }} mt-2">{{ $desc }}</p>
+            </div>
+          @endfor
+        </div>
+      </div>
+    </section>
+
+     <!-- ───────────────────────────────────── PROGRAMS ───────────────────────────────────── -->
+    <section id="programs" class="programs-section py-28">
+      <div class="max-w-7xl mx-auto px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16" data-animate="fade-up">
+          <div>
+            <span class="section-tag">Academic Programs</span>
+            <h2 class="section-title mt-3">Find Your Path</h2>
+          </div>
+          <div class="flex gap-2 program-filters" role="tablist">
+            <button class="filter-btn active" data-filter="all"          role="tab">All Programs</button>
+            <button class="filter-btn"         data-filter="technology"  role="tab">Technology</button>
+            <button class="filter-btn"         data-filter="business"    role="tab">Business</button>
+            <button class="filter-btn"         data-filter="education"   role="tab">Education</button>
+            <button class="filter-btn"         data-filter="hospitality" role="tab">Hospitality</button>
+            <button class="filter-btn"         data-filter="accountancy" role="tab">Accountancy</button>
+            <button class="filter-btn"         data-filter="arts&sciences" role="tab">Arts & Sciences</button>
+          </div>
+        </div>
+
+        <div class="programs-grid" id="programs-grid">
+          @foreach($programs as $index => $program)
+            @php
+              $category = strtolower(str_replace(' ', '', $program->department ?? ''));
+              if ($category === 'arts&sciences') $category = 'arts&sciences';
+              
+              $badgeClass = match($category) {
+                'technology' => 'badge--tech',
+                'business' => 'badge--biz',
+                'accountancy' => 'badge--acc',
+                'education' => 'badge--edu',
+                'hospitality' => 'badge--hosp',
+                'arts&sciences' => 'badge--arts',
+                default => 'badge--biz'
+              };
+            @endphp
+            <div class="program-card" data-category="{{ $category }}" data-animate="fade-up" data-delay="{{ ($index % 6) * 60 }}">
+              <div class="program-card-inner">
+                <div class="program-badge {{ $badgeClass }}">{{ $program->department }}</div>
+                <h3 class="program-name mt-4">{{ $program->name }}</h3>
+                <p class="program-desc mt-2">
+                  {{ $program->description ?? 'Join our ' . $program->name . ' program and build a successful career in ' . $program->department . '.' }}
+                </p>
+                <div class="program-meta mt-4">
+                  <span class="meta-item"><i data-lucide="clock"></i> 4 Years</span>
+                  <span class="meta-item"><i data-lucide="sun-moon"></i> Day / Evening</span>
+                </div>
+                <a href="{{ route('programs.show', $program->id) }}" class="program-cta group">
+                  Learn more <i data-lucide="chevron-right"></i>
+                </a>
+              </div>
+            </div>
+          @endforeach
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────────────────── PROCESS ───────────────────────────────────── -->
+    <section id="process" class="process-section py-28">
+      <div class="max-w-7xl mx-auto px-8">
+        <div class="section-header text-center mb-20" data-animate="fade-up">
+          <span class="section-tag">Admissions Process</span>
+          <h2 class="section-title mt-3">Your Path to Enrollment</h2>
+          <p class="section-desc mt-4 max-w-xl mx-auto">We've made the process simple, transparent, and welcoming. Here's everything you need to know.</p>
+        </div>
+
+        <div class="process-timeline">
+
+          <!-- Step 01 -->
+          <div class="process-step" data-animate="fade-right" data-delay="0">
+            <div class="step-number-wrap">
+              <div class="step-number">01</div>
+              <div class="step-connector"></div>
+            </div>
+            <div class="step-content">
+              <h3 class="step-title">Submit an Online Application Form</h3>
+              <p class="step-desc">Fill out our online application form or visit the Admissions Office. Our staff will guide you on your program options and requirements.</p>
+
+              <div class="step-requirements">
+                <p class="req-label">Documents to Prepare (Freshmen):</p>
+                <ul class="req-list">
+                  <li>PSA Birth Certificate</li>
+                  <li>Senior High School Report Card (Grade 11 &amp; 12)</li>
+                  <li>Certificate of Good Moral Character</li>
+                  <li>Original of Diploma</li>
+                </ul>
+                <ul class="req-list mt-2">
+                  <li><strong>Note:</strong> Grade 12 students can submit a Certificate of Enrollment and provide the final report card and diploma once available.</li>
+                </ul>
+              </div>
+
+              <div class="step-requirements">
+                <p class="req-label">Documents to Prepare (Transferee):</p>
+                <ul class="req-list">
+                  <li>PSA Birth Certificate</li>
+                  <li>Official Transcript of Records (TOR)</li>
+                  <li>Certificate of Good Moral Character</li>
+                  <li>Original of Diploma</li>
+                  <li>Letter of Recommendation from Previous School</li>
+                </ul>
+                <ul class="req-list mt-2">
+                  <li><strong>Note:</strong> Transferees must have completed at least one semester in their previous school.</li>
+                </ul>
+              </div>
+
+              <div class="step-requirements">
+                <p class="req-label">Documents to Prepare (ALS Graduate):</p>
+                <ul class="req-list">
+                  <li>PSA Birth Certificate</li>
+                  <li>ALS Certificate of Completion</li>
+                  <li>Certificate of Good Moral Character</li>
+                  <li>PEPT/TPEP Certificate (if applicable)</li>
+                </ul>
+                <ul class="req-list mt-2">
+                  <li><strong>Note:</strong> ALS graduates must have completed the ALS program within the last 2 years.</li>
+                </ul>
+              </div>
+
+              <div class="step-requirements">
+                <p class="req-label">Documents to Prepare (Returnee):</p>
+                <ul class="req-list">
+                  <li>PSA Birth Certificate</li>
+                  <li>Official Transcript of Records (TOR) from BTECH</li>
+                  <li>Certificate of Good Moral Character</li>
+                  <li>Written Request for Re-enrollment</li>
+                </ul>
+                <ul class="req-list mt-2">
+                  <li><strong>Note:</strong> Returnees must have been away from BTECH for at least one academic year.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 02 -->
+          <div class="process-step" data-animate="fade-right" data-delay="100">
+            <div class="step-number-wrap">
+              <div class="step-number">02</div>
+              <div class="step-connector"></div>
+            </div>
+            <div class="step-content">
+              <h3 class="step-title">Schedule of Interview for Qualified Applicants</h3>
+              <p class="step-desc">Schedule and complete the BTECH College Admission Interview. This evaluates your academic readiness and helps us tailor your academic support.</p>
+              <!-- step-highlight uses display:flex align-items:flex-start gap:.6rem in your CSS -->
+              <div class="step-highlight">
+                <i data-lucide="calendar-days"></i>
+                <span>Tests are held every <strong>Monday to Friday</strong> — 9:00 AM to 3:00 PM</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 03 -->
+          <div class="process-step" data-animate="fade-right" data-delay="150">
+            <div class="step-number-wrap">
+              <div class="step-number">03</div>
+              <div class="step-connector"></div>
+            </div>
+            <div class="step-content">
+              <h3 class="step-title">Take the College Admission Test (CAT)</h3>
+              <p class="step-desc">Schedule and complete the BTC College Admission Test. This evaluates your academic readiness and helps us tailor your academic support.</p>
+              <div class="step-highlight">
+                <i data-lucide="clipboard-list"></i>
+                <span>Schedule will be announced — <strong>TBA</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 04 -->
+          <div class="process-step" data-animate="fade-right" data-delay="200">
+            <div class="step-number-wrap">
+              <div class="step-number">04</div>
+              <div class="step-connector"></div>
+            </div>
+            <div class="step-content">
+              <h3 class="step-title">Receive Your Admission Result</h3>
+              <p class="step-desc">Results are released within 3–5 working days. Qualifying students will receive an Admission Notice via email.</p>
+              <div class="step-highlight">
+                <i data-lucide="mail-check"></i>
+                <span>Results sent directly to your registered email and available at the Admissions Office.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 05 -->
+          <div class="process-step" data-animate="fade-right" data-delay="250">
+            <div class="step-number-wrap">
+              <div class="step-number">05</div>
+              <div class="step-connector"></div>
+            </div>
+            <div class="step-content">
+              <h3 class="step-title">Complete Enrollment &amp; Orientation</h3>
+              <p class="step-desc">Present your Admission Notice, submit required documents, pay initial fees, and attend the New Student Orientation to begin your BTC journey.</p>
+              <div class="step-highlight">
+                <i data-lucide="party-popper"></i>
+                <span>Complete enrollment and orientation within <strong>1 week</strong> of receiving your admission notice.</span>
+              </div>
+              <div class="step-requirements" style="margin-top:1rem;padding:1rem;background:#fef3c7;border-left:4px solid #f59e0b;border-radius:var(--radius-sm);">
+                <p class="req-label" style="color:#92400e;font-weight:700;">Take Note:</p>
+                <p style="color:#92400e;margin-top:.5rem;font-size:.875rem;line-height:1.6;">Applicants who have not completed their required documents by the enrollment deadline will not be allowed to proceed with enrollment. Please ensure all required documents are submitted before the specified deadline.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────────────────── TESTIMONIALS ───────────────────────────────────── -->
+    <section id="testimonials" class="testimonials-section py-28">
+      <div class="max-w-7xl mx-auto px-8">
+        <div class="section-header text-center mb-16" data-animate="fade-up">
+          <span class="section-tag">Student Stories</span>
+          <h2 class="section-title mt-3">Life After BTECH</h2>
+          <p class="section-desc mt-4 max-w-xl mx-auto">Hear directly from our graduates and current students about their BTECH experience.</p>
+        </div>
+
+        <div class="testimonials-carousel-wrap" data-animate="fade-up" data-delay="100">
+          <div class="testimonials-carousel" id="testimonials-carousel">
+            @forelse($testimonials as $testimonial)
+              @php
+                $authorParts = collect(explode(' ', trim($testimonial->author_name)))->filter()->values();
+                $authorInitials = strtoupper(substr($authorParts->first() ?? 'B', 0, 1) . substr($authorParts->count() > 1 ? $authorParts->last() : ($authorParts->first() ?? 'T'), 0, 1));
+              @endphp
+              <div class="testimonial-card">
+                <div class="testimonial-quote-icon">"</div>
+                <p class="testimonial-text">{{ $testimonial->message }}</p>
+                <div class="testimonial-author mt-6">
+                  @if($testimonial->author_avatar)
+                    <div class="author-avatar" style="background-image: url('{{ $testimonial->author_avatar }}'); background-size: cover;"></div>
+                  @else
+                    <div class="author-avatar" style="background: var(--navy); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                      {{ $authorInitials }}
+                    </div>
+                  @endif
+                  <div>
+                    <p class="author-name">{{ $testimonial->author_name }}</p>
+                    <p class="author-role">{{ $testimonial->author_role }}</p>
+                  </div>
+                </div>
+              </div>
+            @empty
+              <div class="testimonial-card">
+                <div class="testimonial-quote-icon">"</div>
+                <p class="testimonial-text">BTECH gave me the technical foundation and the confidence to land my first IT job right after graduation. The professors genuinely care about your growth.</p>
+                <div class="testimonial-author mt-6">
+                  <div class="author-avatar" style="background: var(--navy); color: white; display: flex; align-items: center; justify-content: center;">JR</div>
+                  <div>
+                    <p class="author-name">Jose Reyes</p>
+                    <p class="author-role">BSIT Graduate, 2023 · Software Developer</p>
+                  </div>
+                </div>
+              </div>
+            @endforelse
+          </div>
+
+          <!-- Carousel controls — your JS targets #carousel-prev, #carousel-next, #carousel-dots -->
+          <div class="carousel-controls mt-10 flex items-center justify-center gap-4">
+            <button class="carousel-btn" id="carousel-prev" aria-label="Previous">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <div class="carousel-dots" id="carousel-dots"></div>
+            <button class="carousel-btn" id="carousel-next" aria-label="Next">
+              <i data-lucide="chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────────────────── APPLY CTA ───────────────────────────────────── -->
+    <section id="apply" class="apply-cta-section py-28">
+      <div class="apply-cta-inner max-w-7xl mx-auto px-8 relative overflow-hidden rounded-3xl">
+        <div class="apply-cta-bg"></div>
+        <div class="apply-cta-pattern"></div>
+        <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 py-20 px-8">
+          <div class="text-center lg:text-left">
+            <h2 class="apply-cta-title">{!! $settings['cta_section_headline'] ?? 'Your Future Begins<br/><em>This Enrollment Season.</em>' !!}</h2>
+            <p class="apply-cta-sub mt-4 max-w-xl">{{ $settings['cta_section_subheadline'] ?? "Don't wait. Seats are limited and scholarship slots fill quickly. Take the first step toward the career — and the life — you've been working toward." }}</p>
+            <div class="apply-deadline mt-6">
+              <span class="deadline-label">Application Deadline</span>
+              <span class="deadline-date">{{ $settings['application_deadline'] ?? 'April 17, 2026' }}</span>
+            </div>
+          </div>
+          <div class="flex flex-col gap-4 min-w-64">
+            <a href="{{ route('apply') }}" class="btn-cta-primary text-center">
+              {{ $settings['cta_section_button_text'] ?? 'Apply Online Now' }}
+              <i data-lucide="arrow-right" style="display:inline-flex;margin-left:.5rem;vertical-align:middle;width:18px;height:18px;"></i>
+            </a>
+            <button id="open-guide" class="btn-cta-link text-center text-sm w-full">Admission Guidelines & Guide →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────────────────── CONTACT ───────────────────────────────────── -->
+    <section id="contact" class="contact-section py-28">
+      <div class="max-w-7xl mx-auto px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+
+          <!-- Left: info -->
+          <div data-animate="fade-right">
+            <span class="section-tag">Get In Touch</span>
+            <h2 class="section-title mt-3">We're Here to Help</h2>
+            <p class="section-desc mt-4 max-w-lg">Have questions about programs, scholarships, or the admissions process? Our team is ready to assist you Monday through Friday.</p>
+
+            <div class="contact-info mt-10 flex flex-col gap-5">
+
+              <!-- Address -->
+              <div class="contact-item">
+                <div class="contact-icon-wrap">
+                  <i data-lucide="map-pin"></i>
+                </div>
+                <div>
+                  <p class="contact-label">Campus Address</p>
+                  <p class="contact-value">{{ $settings['contact_address'] ?? 'Baliwag City, Bulacan 3006' }}</p>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="contact-item">
+                <div class="contact-icon-wrap">
+                  <i data-lucide="mail"></i>
+                </div>
+                <div>
+                  <p class="contact-label">Email</p>
+                  <a href="mailto:{{ $settings['admissions_email'] ?? 'admission@btech.edu.ph' }}" class="contact-value contact-link">{{ $settings['admissions_email'] ?? 'admission@btech.edu.ph' }}</a>
+                </div>
+              </div>
+
+              <!-- Phone -->
+              <div class="contact-item">
+                <div class="contact-icon-wrap">
+                  <i data-lucide="phone"></i>
+                </div>
+                <div>
+                  <p class="contact-label">Phone</p>
+                  <p class="contact-value">{{ $settings['contact_phone'] ?? '(044) 766 2222' }}</p>
+                </div>
+              </div>
+
+              <!-- Hours -->
+              <div class="contact-item">
+                <div class="contact-icon-wrap">
+                  <i data-lucide="clock"></i>
+                </div>
+                <div>
+                  <p class="contact-label">Office Hours</p>
+                  <p class="contact-value">{{ $settings['contact_office_hours'] ?? 'Mon–Fri, 8:00 AM – 5:00 PM' }}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Right: form -->
+          <div data-animate="fade-left">
+            <div class="contact-form-card">
+              <h3 class="contact-form-title">Send Us a Message</h3>
+              <!-- JS targets #contact-form, .form-input[required], #contact-submit-btn, .btn-text, .btn-spinner -->
+              <form id="contact-form" class="mt-6 flex flex-col gap-4" novalidate>
+                @csrf
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="form-group">
+                    <label class="form-label">First Name</label>
+                    <input type="text" name="first_name" placeholder="Maria" class="form-input" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" name="last_name" placeholder="Santos" class="form-input" required />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Email</label>
+                  <input type="email" name="email" placeholder="maria@email.com" class="form-input" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Subject</label>
+                  <div class="select-wrap">
+                    <select name="subject" class="form-select">
+                      <option value="Admissions Inquiry">Admissions Inquiry</option>
+                      <option value="Scholarship Information">Scholarship Information</option>
+                      <option value="Program Details">Program Details</option>
+                      <option value="Other">Other</option>
+                    </select>
+                    <!-- select-arrow is position:absolute right:.85rem, pointer-events:none in your CSS -->
+                    <i data-lucide="chevron-down" class="select-arrow"></i>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Message</label>
+                  <textarea name="message" rows="4" placeholder="Tell us how we can help you..." class="form-input form-textarea" required></textarea>
+                </div>
+                <button type="submit" class="btn-form-submit mt-1" id="contact-submit-btn">
+                  <!-- JS toggles .hidden on .btn-text and .btn-spinner -->
+                  <span class="btn-text">Send Message</span>
+                  <span class="btn-spinner hidden">
+                    <i data-lucide="loader-circle" class="animate-spin"></i>
+                  </span>
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
+  <footer class="footer-section pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="grid md:grid-cols-4 gap-10 pb-12 border-b footer-border">
+
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-3 mb-4">
+            <img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" class="w-16 h-16 rounded-full object-cover" loading="lazy" decoding="async" width="64" height="64">
+            <p class="text-sm font-semibold footer-heading">Baliwag Polytechnic College</p>
+          </div>
+          <p class="text-sm footer-text leading-relaxed">Empowering Bulacan's future leaders through accessible, quality higher education since 2008.</p>
+          <div class="social-links mt-5 flex gap-3">
+            <!-- Facebook brand icon — not available in Lucide; inline SVG only -->
+            <a href="https://www.facebook.com/BTECHAdmissionsOfficial" class="social-btn" aria-label="Facebook">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+            <!-- Youtube Brand Icon -->
+            <a href="https://www.youtube.com/c/BaliwagPolytechnicCollege" class="social-btn" aria-label="Youtube">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title mb-4">Programs</h4>
+          <ul class="footer-links">
+            <li><a href="#">BS Information Technology</a></li>
+            <li><a href="#">BS Business Administration</a></li>
+            <li><a href="#">BS Secondary Education</a></li>
+            <li><a href="#">BS Hospitality Management</a></li>
+            <li><a href="#">BS Tourism Management</a></li>
+            <li><a href="#">BS Management Accounting</a></li>
+            <li><a href="#">Bachelor of Arts in History</a></li>
+            <li><a href="#">Bachelor of Science in Mathematics</a></li>
+            <li><a href="#">BS Elementary Education</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title mb-4">Admissions</h4>
+          <ul class="footer-links">
+            <li><a href="#">How to Apply</a></li>
+            <li><a href="#">Requirements</a></li>
+            <li><a href="#">Scholarship Programs</a></li>
+            <li><a href="#">Tuition &amp; Fees</a></li>
+            <li><a href="#">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title mb-4">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="{{ route('about') }}#about-office">About BTECH Admission</a></li>
+            <li><a href="{{ route('about') }}#faculty-staff">Faculty &amp; Staff</a></li>
+            <li><a href="{{ route('news-events') }}">News &amp; Events</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
+        <p class="text-sm footer-text">© 2026 Baliwag Polytechnic College. All rights reserved.</p>
+            <div class="flex gap-4 mt-8">
+              @if(isset($settings['facebook_link']))
+                <a href="{{ $settings['facebook_link'] }}" class="footer-social-link" aria-label="Facebook">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+              @endif
+              @if(isset($settings['twitter_link']))
+                <a href="{{ $settings['twitter_link'] }}" class="footer-social-link"><i data-lucide="twitter"></i></a>
+              @endif
+              @if(isset($settings['instagram_link']))
+                <a href="{{ $settings['instagram_link'] }}" class="footer-social-link"><i data-lucide="instagram"></i></a>
+              @endif
+            </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top — your CSS targets #back-to-top.visible -->
+  <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+    <i data-lucide="arrow-up"></i>
+  </button>
+
+
+  <!-- Initialize Lucide after DOM + your JS have both run -->
+  <!-- ─── ANNOUNCEMENT POPUP ─── -->
+  @php
+    $popupAnn = $popupAnn ?? $announcements->firstWhere('is_popup', true);
+  @endphp
+
+  @if($popupAnn)
+    <div id="announcementPopup" 
+         data-id="{{ $popupAnn->id }}"
+         data-always-show="{{ $popupAnn->popup_always_show ? 'true' : 'false' }}"
+         class="fixed inset-0 z-[9999] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-700">
+      
+      <!-- Modal Container -->
+      <div class="relative bg-white rounded-[2rem] overflow-hidden max-w-xl w-full shadow-[0_32px_80px_-16px_rgba(27,53,87,0.4)] transform scale-90 translate-y-10 transition-all duration-700 ease-out border border-white/20" id="popupCard">
+        
+        <!-- Close Button (Floating) -->
+        <button onclick="closePopup()" class="absolute top-5 right-5 w-11 h-11 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-xl text-white hover:bg-white/30 hover:scale-110 transition-all z-50 border border-white/20">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        
+        <!-- Top Section: Image or Gradient -->
+        <div class="relative">
+          @if($popupAnn->popup_image)
+            <div class="h-72 overflow-hidden">
+              <img src="{{ $popupAnn->popup_image }}" alt="Announcement" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000" loading="lazy" decoding="async">
+              <!-- Overlay for better text readability and depth -->
+              <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-black/20"></div>
+            </div>
+          @else
+            <div class="h-44 bg-gradient-to-br from-[#0f1e3d] via-[#1b3557] to-[#254d82] flex flex-col items-center justify-center relative overflow-hidden">
+              <!-- Decorative elements -->
+              <div class="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+              <div class="absolute bottom-[-10%] left-[-5%] w-48 h-48 bg-gold-mid/10 rounded-full blur-2xl"></div>
+              
+              <div class="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-2 border border-white/10 shadow-inner">
+                <i data-lucide="megaphone" class="w-10 h-10 text-white shadow-sm"></i>
+              </div>
+              <span class="text-white/40 text-[10px] font-bold tracking-[0.2em] uppercase">Official Bulletin</span>
+            </div>
+          @endif
+          
+          <!-- Important Badge -->
+          <div class="absolute -bottom-4 left-10">
+            <span class="px-5 py-2.5 bg-[#c9933a] text-white text-[11px] font-extrabold tracking-wider uppercase rounded-full shadow-[0_8px_20px_-4px_rgba(201,147,58,0.5)] flex items-center gap-2">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+              Important Notice
+            </span>
+          </div>
+        </div>
+
+        <!-- Content Section -->
+        <div class="p-10 pt-12">
+          <h2 class="text-3xl font-extrabold text-[#0f1e3d] leading-tight tracking-tight" style="font-family: 'Playfair Display', serif;">
+            {{ $popupAnn->title ?? 'Announcement' }}
+          </h2>
+          
+          <div class="w-12 h-1 bg-gradient-to-r from-[#c9933a] to-transparent my-6 rounded-full"></div>
+          
+          <p class="text-gray-500 leading-relaxed text-[16px] font-medium opacity-90">
+            {{ $popupAnn->message }}
+          </p>
+
+          <!-- Footer Actions -->
+          <div class="mt-10 flex flex-col sm:flex-row gap-4">
+            @if($popupAnn->popup_button_link)
+              <a href="{{ $popupAnn->popup_button_link }}" class="flex-[2] px-8 py-4 bg-[#0f1e3d] text-white rounded-[1.2rem] font-bold text-center hover:bg-[#1b3557] hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group">
+                <span>{{ $popupAnn->popup_button_text ?? 'Learn More' }}</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+              </a>
+            @endif
+            <button onclick="closePopup()" class="flex-1 px-8 py-4 bg-white text-[#0f1e3d] border-2 border-[#0f1e3d]/5 rounded-[1.2rem] font-bold text-center hover:bg-gray-50 hover:border-[#0f1e3d]/10 transition-all">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const popup = document.getElementById('announcementPopup');
+        if (!popup) return;
+
+        const popupId = 'announcement_popup_' + popup.getAttribute('data-id');
+        const hasSeen = localStorage.getItem(popupId);
+        const alwaysShow = popup.getAttribute('data-always-show') === 'true';
+
+        if (!hasSeen || alwaysShow) {
+          setTimeout(() => {
+            const card = document.getElementById('popupCard');
+            popup.classList.remove('opacity-0', 'pointer-events-none');
+            card.classList.remove('scale-90', 'translate-y-10');
+          }, 1500);
+        }
+      });
+
+      function closePopup() {
+        const popup = document.getElementById('announcementPopup');
+        const card = document.getElementById('popupCard');
+        if (!popup || !card) return;
+
+        popup.classList.add('opacity-0', 'pointer-events-none');
+        card.classList.add('scale-90', 'translate-y-10');
+        
+        const popupId = 'announcement_popup_' + popup.getAttribute('data-id');
+        const alwaysShow = popup.getAttribute('data-always-show') === 'true';
+        
+        if (!alwaysShow) {
+          localStorage.setItem(popupId, 'true');
+        }
+      }
+    </script>
+  @endif
+
+  <script>
+    
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Animate on scroll
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+  </script>
+  <!-- ───────────────────────────────────── ADMISSION GUIDE MODAL ───────────────────────────────────── -->
+  <div id="guide-modal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2 class="modal-title">Admission Guidelines</h2>
+        <div class="flex items-center gap-4">
+          <button id="print-guide" class="modal-close" aria-label="Print guidelines">
+            <i data-lucide="printer"></i>
+          </button>
+          <button id="close-guide" class="modal-close" aria-label="Close modal">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        
+        <!-- NEW STUDENTS -->
+        <section class="guide-section">
+          <h3 class="guide-category">
+            <i data-lucide="user-plus"></i>
+            New Students (Freshmen – Graduate & Undergraduate)
+          </h3>
+          <div class="guide-list">
+            <div class="guide-item">
+              <span class="guide-step">1</span>
+              <p class="guide-text">Fill out the admission form and submit to the Admission Office.</p>
+            </div>
+            <div class="guide-item">
+              <span class="guide-step">2</span>
+              <div class="guide-text">
+                Present the following documents in a <strong>long brown envelope</strong>.
+                <span class="guide-note">Note: Write your full name in CAPITAL LETTERS at the upper left corner (SURNAME, FIRST NAME, MIDDLE NAME).</span>
+                <div class="guide-sub-list">
+                  <span class="guide-sub-item">3pcs 2X2 picture with white background</span>
+                  <span class="guide-sub-item">Original Card of Grade 11 and 12 (Report Card)</span>
+                  <span class="guide-sub-item">Original Good Moral Certificate</span>
+                  <span class="guide-sub-item">Photocopy of PSA Birth Certificate</span>
+                  <span class="guide-sub-item">Photocopy of SHS Diploma</span>  
+                </div>
+              </div>
+            </div>
+            <div class="guide-item">
+              <span class="guide-step">3</span>
+              <p class="guide-text">Take the Entrance Exam; Mental Ability Test and Aptitude Test. 
+                <span class="guide-note">(Professional Exam required for Accountancy and Education Enrollees)</span>
+              </p>
+            </div>
+            <div class="guide-item">
+              <span class="guide-step">4</span>
+              <p class="guide-text">Fill out the enrollment form.</p>
+            </div>
+            <div class="guide-item">
+              <span class="guide-step">5</span>
+              <p class="guide-text">Proceed to the Program Director for interview/evaluation.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- TRANSFEREE -->
+        <section class="guide-section">
+          <h3 class="guide-category">
+            <i data-lucide="refresh-cw"></i>
+            Transferees
+          </h3>
+          <div class="guide-list">
+            <div class="guide-item">
+              <span class="guide-step">1</span>
+              <p class="guide-text">Fill out the admission form and submit to the Admission Office.</p>
+            </div>
+            <div class="guide-item">
+              <span class="guide-step">2</span>
+              <div class="guide-text">
+                Present the following documents in a <strong>long brown envelope</strong>.
+                <span class="guide-note">Note: Write your full name in CAPITAL LETTERS at the upper left corner (SURNAME, FIRST NAME, MIDDLE NAME).</span>
+                <div class="guide-sub-list">
+                  <span class="guide-sub-item">3pcs 2X2 picture with white background</span>
+                  <span class="guide-sub-item">Original Transcript of Records (TOR)</span>
+                  <span class="guide-sub-item">Honorable Dismissal</span>
+                  <span class="guide-sub-item">Original Good Moral Certificate</span>
+                  <span class="guide-sub-item">Photocopy of PSA Birth Certificate</span>
+                </div>
+              </div>
+            </div>
+            <div class="guide-item">
+              <span class="guide-step">3</span>
+              <p class="guide-text">Take the Entrance Exam; Mental Ability Test and Aptitude Test.
+                <span class="guide-note">(Professional Exam required for Accountancy and Education Enrollees)</span>
+              </p>
+            </div>
+            <div class="guide-item">
+              <span class="guide-step">4</span>
+              <p class="guide-text">Fill out the enrollment form.</p>
+            </div>
+            <div class="guide-item">
+              <span class="guide-step">5</span>
+              <p class="guide-text">Proceed to the Program Director for interview/evaluation.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- RETURNING STUDENTS -->
+        <section class="guide-section">
+          <h3 class="guide-category">
+            <i data-lucide="rotate-ccw"></i>
+            Returning Students
+          </h3>
+          <div class="guide-list">
+            <div class="guide-item">
+              <span class="guide-step">1</span>
+              <p class="guide-text">Secure Clearance for enrollment from the Registrar's Office.</p>
+            </div>
+            <div class="guide-item">
+              <span class="guide-step">2</span>
+              <p class="guide-text">Present the accomplished Clearance to the Admission Office for issuance of the Enrollment Form.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ALS GRADUATES -->
+        <section class="guide-section">
+          <h3 class="guide-category">
+            <i data-lucide="graduation-cap"></i>
+            ALS Graduates
+          </h3>
+          <div class="guide-list">
+            <div class="guide-item">
+              <span class="guide-step">1</span>
+              <p class="guide-text">Fill out the admission form and submit to the Admission Office.</p>
+            </div>
+            <div class="guide-item">
+              <span class="guide-step">2</span>
+              <div class="guide-text">
+                Present the following documents in a <strong>long brown envelope</strong>.
+                <span class="guide-note">Note: Write your full name in CAPITAL LETTERS at the upper left corner (SURNAME, FIRST NAME, MIDDLE NAME).</span>
+                <div class="guide-sub-list">
+                  <span class="guide-sub-item">3pcs 2X2 picture with white background</span>
+                  <span class="guide-sub-item">ALS Certificate of Completion (Original)</span>
+                  <span class="guide-sub-item">PEPT / TPEP Certificate (if applicable)</span>
+                  <span class="guide-sub-item">Original Good Moral Certificate</span>
+                  <span class="guide-sub-item">Photocopy of PSA Birth Certificate</span>
+                </div>
+              </div>
+            </div>
+            <div class="guide-item">
+              <span class="guide-step">3</span>
+              <p class="guide-text">Take the Entrance Exam; Mental Ability Test and Aptitude Test.
+                <span class="guide-note">(Professional Exam required for Accountancy and Education Enrollees)</span>
+              </p>
+            </div>
+            <div class="guide-item">
+              <span class="guide-step">4</span>
+              <p class="guide-text">Fill out the enrollment form.</p>
+            </div>
+            <div class="guide-item">
+              <span class="guide-step">5</span>
+              <p class="guide-text">Proceed to the Program Director for interview/evaluation.</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ asset('js/home-page.js') }}?v=4"></script>
+  <script>
+    // Initialize all icons including those in the modal and footer
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

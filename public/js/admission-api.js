@@ -1,0 +1,239 @@
+/**
+ * Admission Office – frontend API helper (no modules)
+ * Load api-config.js before this. Use: AdmissionAPI.getPrograms(), AdmissionAPI.submitPublic(), etc.
+ */
+(function () {
+  const API_BASE = window.ADMISSION_API_BASE || (window.location.origin + '/api');
+
+  function getToken() {
+    return sessionStorage.getItem('_at');
+  }
+
+  function setToken(access, refresh) {
+    sessionStorage.setItem('_at', access || '');
+    sessionStorage.setItem('_rt', refresh || '');
+  }
+
+  function clearToken() {
+    sessionStorage.removeItem('_at');
+    sessionStorage.removeItem('_rt');
+  }
+
+  async function request(endpoint, options = {}) {
+    const url = endpoint.startsWith('http') ? endpoint : API_BASE + endpoint;
+    const headers = {
+      'Accept': 'application/json',
+      ...options.headers,
+    };
+    if (options.body && !(options.body instanceof FormData)) {
+      headers['Content-Type'] = 'application/json';
+    }
+    const token = getToken();
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
+    let res;
+    try {
+      res = await fetch(url, { ...options, headers, signal: controller.signal });
+    } catch (e) {
+      if (e.name === 'AbortError') throw new Error('Request timed out');
+      throw e;
+    } finally {
+      clearTimeout(id);
+    }
+
+    const rawText = await res.text();
+    let data = {};
+    try {
+      data = JSON.parse(rawText.replace(/^\s*\uFEFF/, '')); // strip BOM
+    } catch (_) {
+      data = {};
+    }
+
+    if (!res.ok) {
+      const err = new Error(data.message || 'Request failed');
+      err.status = res.status;
+      err.data = data;
+      throw err;
+    }
+    return data;
+  }
+
+  window.AdmissionAPI = {
+    getBase: () => API_BASE,
+    getToken,
+    setToken,
+    clearToken,
+    request,
+
+    /** GET /api/programs – returns array of { id, code, name, department, ... } */
+    async getPrograms() {
+      const data = await request('/programs');
+      const list = data.data ?? data.programs;
+      return Array.isArray(list) ? list : [];
+    },
+
+    /** PATCH /api/programs/:id/slots-left */
+    async updateProgramSlotsLeft(id, slotsLeft) {
+      const data = await request('/programs/' + id + '/slots-left', {
+        method: 'PATCH',
+        body: JSON.stringify({ slots_left: slotsLeft }),
+      });
+      return data.data || {};
+    },
+
+    /** GET /api/settings – public settings */
+    async getPublicSettings() {
+      const data = await request('/settings');
+      return data.data || {};
+    },
+
+    /** POST /api/applications/submit-public – full form submit (no auth) */
+    async submitPublic(payload) {
+      const data = await request('/applications/submit-public', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+      return data.data;
+    },
+
+    /** Recursively find first string value for given keys in obj (any nesting) */
+    _findToken(obj, keys) {
+      if (obj === null || obj === undefined) return '';
+      if (typeof obj === 'string' && obj.length > 20) return obj;
+      if (typeof obj === 'object') {
+        for (const k of keys) {
+          if (Object.prototype.hasOwnProperty.call(obj, k) && typeof obj[k] === 'string' && obj[k].length > 0)
+            return obj[k];
+        }
+        for (const v of Object.values(obj)) {
+          const found = this._findToken(v, keys);
+          if (found) return found;
+        }
+      }
+      return '';
+    },
+
+    /** POST /api/auth/login – returns { user, access_token?, refresh_token?, _tokenReceived } */
+    async login(email, password) {
+      const url = (API_BASE.replace(/\/$/, '') + '/auth/login');
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const rawText = await res.text();
+      const isHtml = /^\s*</.test(rawText.trim());
+      let data = {};
+      if (!isHtml) {
+        try {
+          data = JSON.parse(rawText.replace(/^\s*\uFEFF/, ''));
+        } catch (_) {
+          data = {};
+        }
+      }
+      if (!res.ok) {
+        const err = new Error(data.message || 'Request failed');
+        err.status = res.status;
+        err.data = data;
+        throw err;
+      }
+      let access = this._findToken(data, ['access_token', 'accessToken', 'token']);
+      let refresh = this._findToken(data, ['refresh_token', 'refreshToken']);
+      if (!access && rawText) {
+        const accessMatch = rawText.match(/"access_token"\s*:\s*"((?:[^"\\]|\\.)*)"/) || rawText.match(/'access_token'\s*:\s*'([^']*)'/);
+        const refreshMatch = rawText.match(/"refresh_token"\s*:\s*"((?:[^"\\]|\\.)*)"/) || rawText.match(/'refresh_token'\s*:\s*'([^']*)'/);
+        if (accessMatch) access = accessMatch[1].replace(/\\"/g, '"');
+        if (refreshMatch) refresh = refreshMatch[1].replace(/\\"/g, '"');
+      }
+      if (access) {
+        try {
+          setToken(access, refresh);
+        } catch (e) {
+          console.warn('setToken failed', e);
+        }
+      }
+      const d = data.data || data || {};
+      d._tokenReceived = !!access;
+      d._responseSnippet = isHtml ? rawText.trim().slice(0, 120) : (access ? '' : rawText.trim().slice(0, 200));
+      return d;
+    },
+
+    /** POST /api/applications/:id/documents – upload file (requires auth) */
+    async uploadDocument(applicationId, documentType, file) {
+      const form = new FormData();
+      form.append('document_type', documentType);
+      form.append('file', file);
+      const data = await request('/applications/' + applicationId + '/documents', {
+        method: 'POST',
+        body: form,
+      });
+      return data.data;
+    },
+
+    /** GET /api/admin/dashboard (admin/staff only) */
+    async getDashboard() {
+      const data = await request('/admin/dashboard');
+      return data.data;
+    },
+
+    /** GET /api/auth/me – current user (requires auth) */
+    async getMe() {
+      const data = await request('/auth/me');
+      return data.data || data;
+    },
+
+    /** POST /api/auth/password - update current admin password */
+    async changePassword(payload) {
+      return request('/auth/password', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+    },
+
+    /** GET /api/applications (with optional ?status= & page= & per_page=) */
+    async getApplications(params = {}) {
+      const qs = new URLSearchParams(params).toString();
+      const data = await request('/applications' + (qs ? '?' + qs : ''));
+      return data.data;
+    },
+
+    /** GET /api/applications/:id – full application + applicant details */
+    async getApplication(id) {
+      const data = await request('/applications/' + id);
+      return data.data;
+    },
+
+    /** PATCH /api/applications/:id/status */
+    async updateApplicationStatus(id, status, notes) {
+      const data = await request('/applications/' + id + '/status', {
+        method: 'PATCH',
+        body: JSON.stringify({ status, notes: notes || '' }),
+      });
+      return data.data;
+    },
+
+    /** GET /api/admin/settings – returns key-value settings object */
+    async getSettings() {
+      const data = await request('/admin/settings');
+      return data.data || {};
+    },
+
+    /** PUT /api/admin/settings – saves key-value settings */
+    async saveSettings(payload) {
+      const data = await request('/admin/settings', {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+      });
+      return data.data || {};
+    },
+
+    /** GET /api/admin/dashboard – full analytics (requires auth) */
+    async getDashboardStats() {
+      const data = await request('/admin/dashboard');
+      return data.data || {};
+    },
+  };
+})();
