@@ -10,18 +10,84 @@
             "use": "@vercel/static"
         }
     ],
+    "headers": [
+        {
+            "source": "/css/(.*)",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "text/css; charset=utf-8"
+                }
+            ]
+        },
+        {
+            "source": "/js/(.*)",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/javascript; charset=utf-8"
+                }
+            ]
+        },
+        {
+            "source": "/build/assets/(.*).css",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "text/css; charset=utf-8"
+                }
+            ]
+        },
+        {
+            "source": "/build/assets/(.*).js",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/javascript; charset=utf-8"
+                }
+            ]
+        }
+    ],
     "routes": [
         {
-            "src": "/(favicon.ico|favicon.png|robots.txt)",
-            "dest": "/public/$1"
+            "src": "/favicon.ico",
+            "dest": "/public/favicon.ico"
+        },
+        {
+            "src": "/robots.txt",
+            "dest": "/public/robots.txt"
+        },
+        {
+            "src": "/css/(.*)",
+            "dest": "/public/css/$1"
+        },
+        {
+            "src": "/js/(.*)",
+            "dest": "/public/js/$1"
+        },
+        {
+            "src": "/assets/(.*)",
+            "dest": "/public/assets/$1"
+        },
+        {
+            "src": "/images/(.*)",
+            "dest": "/public/images/$1"
+        },
+        {
+            "src": "/fonts/(.*)",
+            "dest": "/public/fonts/$1"
         },
         {
             "src": "/build/(.*)",
             "dest": "/public/build/$1"
         },
         {
-            "src": "/(css|js|images|assets|fonts)(.*)",
-            "dest": "/public/$1$2"
+            "src": "/storage/(.*)",
+            "dest": "/public/storage/$1"
+        },
+        {
+            "src": "/(.*\\.(?:css|js|png|jpg|jpeg|gif|webp|svg|ico|txt|woff|woff2|ttf|eot|map))",
+            "dest": "/public/$1"
         },
         {
             "src": "/(.*)",
