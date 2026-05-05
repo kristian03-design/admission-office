@@ -3926,134 +3926,123 @@ document.addEventListener('DOMContentLoaded', () => {
  * Fetches the latest data from the API and updates the UI.
  * @param {boolean} isInitial If true, redirects to dashboard after loading.
  */
-function refreshData(isInitial = false) {
+async function refreshData(isInitial = false) {
   if (isRefreshingData) return;
   isRefreshingData = true;
 
-  AdmissionAPI.getMe()
-    .then(function (me) {
-      if (!me) {
-        isRefreshingData = false;
-        return null;
-      }
-      var role = (me && (me.role || (me.user && me.user.role))) || '';
+  try {
+    try {
+      const me = await AdmissionAPI.getMe();
+      const role = (me && (me.role || (me.user && me.user.role))) || '';
       if (role && role !== 'admin' && role !== 'staff') {
         if (typeof AdmissionAPI.clearToken === 'function') AdmissionAPI.clearToken();
-        // Avoid redirect loop if already on login or if something is wrong
-        if (window.location.pathname !== '/admin/login') {
-          window.location.replace('/admin/login');
-        }
-        isRefreshingData = false;
-        return null;
-      }
-      // Force brand label in UI (requested)
-      var name = 'Admissions Office';
-      var roleLabel = 'Super Administration';
-      var initials = name.split(/\s+/).map(function (s) { return (s[0] || '').toUpperCase(); }).slice(0, 2).join('') || '?';
-      var sidebarName = document.getElementById('sidebarUserName');
-      var sidebarRole = document.getElementById('sidebarUserRole');
-      var sidebarInitials = document.getElementById('sidebarUserInitials');
-      var topbarName = document.getElementById('topbarUserName');
-      var topbarInitials = document.getElementById('topbarUserInitials');
-      if (sidebarName) sidebarName.textContent = name;
-      if (sidebarRole) sidebarRole.textContent = roleLabel;
-      if (sidebarInitials) sidebarInitials.textContent = initials;
-      if (topbarName) topbarName.textContent = name;
-      if (topbarInitials) topbarInitials.textContent = initials;
-
-      return Promise.all([
-        AdmissionAPI.getApplications({ per_page: 1000 }),
-        AdmissionAPI.getPrograms(),
-        AdmissionAPI.getDashboardStats(),
-        AdmissionAPI.getSettings()
-      ]);
-    })
-    .catch(function (err) {
-      console.warn('getMe failed:', err);
-      if (err.status === 401) {
-        if (typeof AdmissionAPI.clearToken === 'function') AdmissionAPI.clearToken();
-        if (window.location.pathname !== '/admin/login') {
-          window.location.replace('/admin/login');
-        }
-      } else if (isInitial) {
-        API_APPLICATIONS = 'error';
-        showPage('dashboard');
-      }
-      isRefreshingData = false;
-      return null;
-    })
-    .then(function (result) {
-      if (!result) {
-        // If it failed and we already marked it as error
+        if (window.location.pathname !== '/admin/login') window.location.replace('/admin/login');
         return;
       }
-      var res = result[0], progList = result[1], stats = result[2], settings = result[3];
-      DASHBOARD_STATS = stats; // Cache global stats
-      applySystemSettingsUI(settings);
-      const raw = Array.isArray(res) ? res : (res && res.data) ? res.data : [];
-      API_APPLICATIONS = raw.map(a => {
-        const lastName = (a.last_name != null ? String(a.last_name) : '').trim();
-        const firstName = (a.first_name != null ? String(a.first_name) : '').trim();
-        const middleName = (a.middle_name != null ? String(a.middle_name) : '').trim();
-        const applicantName = (a.applicant_name || '').trim() || [firstName, middleName, lastName].filter(Boolean).join(' ');
-        return {
-          id: a.id != null ? Number(a.id) : null,
-          ref: a.application_no || a.reference_number || '',
-          applicant_name: applicantName,
-          surname: lastName,
-          firstName,
-          middleName,
-          firstChoice: a.first_choice || a.program_name || '',
-          status: mapApiStatus(a.status || a.current_status),
-          filed: a.submitted_at || a.created_at,
-          type: a.applicant_type || a.application_type || 'Freshmen',
-          g11: a.gwa_grade_11 != null ? a.gwa_grade_11 : (a.g11 || a.grade11GWA),
-          g12: a.gwa_grade_12 != null ? a.gwa_grade_12 : (a.g12 || a.grade12GWA),
-          pwd: a.pwd || a.differentlyAbled || 'No',
-          solo: a.solo || a.soloParent || 'No',
-          indigenous: a.indigenous || a.indigenous_person || a.indigenousPerson || 'No',
-          fours: a.fours || a.fourPs || 'No',
-          sex: a.gender || a.sex || '',
-          raw: a
-        };
-      });
-      filteredApps = [...API_APPLICATIONS];
-      syncNotificationToasts({ silent: isInitial });
-      API_PROGRAMS = Array.isArray(progList) ? progList : [];
-      API_PROGRAMS.forEach(p => {
-        const slotsLeft = p.slots_left != null ? Number(p.slots_left) : 0;
-        programEnabled[p.name] = (p.is_active !== false) && (isNaN(slotsLeft) || slotsLeft > 0);
-      });
+    } catch (err) {
+      console.warn('getMe failed:', err);
+      if (err && err.status === 401) {
+        if (typeof AdmissionAPI.clearToken === 'function') AdmissionAPI.clearToken();
+        if (window.location.pathname !== '/admin/login') window.location.replace('/admin/login');
+        return;
+      }
+    }
 
-      if (isInitial) {
-        // Data is now ready, re-render the current page
-        if (currentPage === 'dashboard') initDashboard();
-        else showPage(currentPage);
-      } else {
-        // Just refresh the current view
-        if (currentPage === 'dashboard') {
-          renderKPIs();
-          renderRecentList();
-          initCharts();
-        } else if (currentPage === 'applications') {
-          applyFilters();
-        } else if (currentPage === 'reports') {
-          initReports();
-        } else if (currentPage === 'programs') {
-          renderProgramsTable();
-        } else if (currentPage === 'interviews') {
-          renderInterviewsTable();
-        }
-        updatePendingBadge();
-      }
-      isRefreshingData = false;
-    })
-    .catch(function (err) {
-      console.error('Refresh failed:', err);
-      if (isInitial) {
-        API_APPLICATIONS = 'error';
-        showPage('dashboard');
-      }
-      isRefreshingData = false;
+    // Force brand label in UI (requested)
+    const name = 'Admissions Office';
+    const roleLabel = 'Super Administration';
+    const initials = name.split(/\s+/).map(s => (s[0] || '').toUpperCase()).slice(0, 2).join('') || '?';
+    const sidebarName = document.getElementById('sidebarUserName');
+    const sidebarRole = document.getElementById('sidebarUserRole');
+    const sidebarInitials = document.getElementById('sidebarUserInitials');
+    const topbarName = document.getElementById('topbarUserName');
+    const topbarInitials = document.getElementById('topbarUserInitials');
+    if (sidebarName) sidebarName.textContent = name;
+    if (sidebarRole) sidebarRole.textContent = roleLabel;
+    if (sidebarInitials) sidebarInitials.textContent = initials;
+    if (topbarName) topbarName.textContent = name;
+    if (topbarInitials) topbarInitials.textContent = initials;
+
+    const [appsResult, programsResult, statsResult, settingsResult] = await Promise.allSettled([
+      AdmissionAPI.getApplications({ per_page: 1000 }),
+      AdmissionAPI.getPrograms(),
+      AdmissionAPI.getDashboardStats(),
+      AdmissionAPI.getSettings()
+    ]);
+
+    if (appsResult.status === 'rejected') console.warn('Applications API failed:', appsResult.reason);
+    if (programsResult.status === 'rejected') console.warn('Programs API and fallback failed:', programsResult.reason);
+    if (statsResult.status === 'rejected') console.warn('Dashboard stats API failed:', statsResult.reason);
+    if (settingsResult.status === 'rejected') console.warn('Settings API failed:', settingsResult.reason);
+
+    const res = appsResult.status === 'fulfilled' ? appsResult.value : [];
+    const progList = programsResult.status === 'fulfilled' ? programsResult.value : [];
+    const stats = statsResult.status === 'fulfilled' ? statsResult.value : null;
+    const settings = settingsResult.status === 'fulfilled' ? settingsResult.value : {};
+
+    DASHBOARD_STATS = stats && typeof stats === 'object' ? stats : null;
+    applySystemSettingsUI(settings);
+
+    const raw = Array.isArray(res) ? res : (res && res.data) ? res.data : [];
+    API_APPLICATIONS = raw.map(a => {
+      const lastName = (a.last_name != null ? String(a.last_name) : '').trim();
+      const firstName = (a.first_name != null ? String(a.first_name) : '').trim();
+      const middleName = (a.middle_name != null ? String(a.middle_name) : '').trim();
+      const applicantName = (a.applicant_name || '').trim() || [firstName, middleName, lastName].filter(Boolean).join(' ');
+      return {
+        id: a.id != null ? Number(a.id) : null,
+        ref: a.application_no || a.reference_number || '',
+        applicant_name: applicantName,
+        surname: lastName,
+        firstName,
+        middleName,
+        firstChoice: a.first_choice || a.program_name || '',
+        status: mapApiStatus(a.status || a.current_status),
+        filed: a.submitted_at || a.created_at,
+        type: a.applicant_type || a.application_type || 'Freshmen',
+        g11: a.gwa_grade_11 != null ? a.gwa_grade_11 : (a.g11 || a.grade11GWA),
+        g12: a.gwa_grade_12 != null ? a.gwa_grade_12 : (a.g12 || a.grade12GWA),
+        pwd: a.pwd || a.differentlyAbled || 'No',
+        solo: a.solo || a.soloParent || 'No',
+        indigenous: a.indigenous || a.indigenous_person || a.indigenousPerson || 'No',
+        fours: a.fours || a.fourPs || 'No',
+        sex: a.gender || a.sex || '',
+        raw: a
+      };
     });
+    filteredApps = [...API_APPLICATIONS];
+    syncNotificationToasts({ silent: isInitial });
+
+    API_PROGRAMS = Array.isArray(progList) ? progList : [];
+    API_PROGRAMS.forEach(p => {
+      const slotsLeft = p.slots_left != null ? Number(p.slots_left) : 0;
+      programEnabled[p.name] = (p.is_active !== false) && (isNaN(slotsLeft) || slotsLeft > 0);
+    });
+
+    if (isInitial) {
+      if (currentPage === 'dashboard') initDashboard();
+      else showPage(currentPage);
+    } else {
+      if (currentPage === 'dashboard') {
+        renderKPIs();
+        renderRecentList();
+        initCharts();
+      } else if (currentPage === 'applications') {
+        applyFilters();
+      } else if (currentPage === 'reports') {
+        initReports();
+      } else if (currentPage === 'programs') {
+        renderProgramsTable();
+      } else if (currentPage === 'interviews') {
+        renderInterviewsTable();
+      }
+      updatePendingBadge();
+    }
+  } catch (err) {
+    console.error('Refresh failed:', err);
+    API_APPLICATIONS = [];
+    if (isInitial) showPage('dashboard');
+  } finally {
+    isRefreshingData = false;
+  }
 }
