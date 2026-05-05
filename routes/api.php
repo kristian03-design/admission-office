@@ -34,12 +34,14 @@ Route::middleware('auth:sanctum')->group(function () {
     // Program management
     Route::patch('/programs/{id}/schedule', [ProgramController::class, 'updateSchedule']);
     Route::patch('/programs/{id}/slots-left', [ProgramController::class, 'updateSlotsLeft']);
+    Route::post('/programs/{id}/slots-left', [ProgramController::class, 'updateSlotsLeft']);
 
     // Admin dashboard
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index']);
 
     // System Settings
     Route::get('/admin/settings', [SettingsController::class, 'show']);
+    Route::post('/admin/settings', [SettingsController::class, 'update']);
     Route::put('/admin/settings', [SettingsController::class, 'update']);
 
     // Interview Scheduling

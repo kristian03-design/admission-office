@@ -1628,7 +1628,7 @@ async function saveWebsiteSettings() {
   btn.innerHTML = "Saving...";
   
   try {
-    const res = await apiFetch("/api/admin/settings", {
+    let res = await apiFetch("/api/admin/settings", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -1637,6 +1637,18 @@ async function saveWebsiteSettings() {
       },
       body: JSON.stringify(data)
     });
+
+    if (res.status === 404 || res.status === 405) {
+      res = await apiFetch("/api/admin/settings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + sessionStorage.getItem("_at"),
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+    }
     
     const result = await res.json();
     if (res.ok) {
@@ -3024,7 +3036,14 @@ async function openStudentScheduling(courseName) {
   } catch (err) {
     console.error('Scheduling Load Error:', err);
     if (err.data) console.error('Error Data:', err.data);
-    showToast('Failed to load scheduling data. Please try again.', 'error');
+    currentSchedulingData = [];
+    renderSchedulingRows([]);
+    showPage('student-scheduling');
+
+    const searchInput = document.getElementById('schedulingSearchInput');
+    if (searchInput) searchInput.value = '';
+
+    showToast('Could not load saved schedules. You can still add schedules manually.', 'warning');
   }
 }
 

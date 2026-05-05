@@ -14,6 +14,10 @@ class InterviewController extends Controller
         $programId = $request->program_id;
         $search = $request->search;
 
+        if (!$programId) {
+            return response()->json(['data' => []]);
+        }
+
         $query = Interview::where('program_id', $programId);
 
         if ($search) {
@@ -28,11 +32,26 @@ class InterviewController extends Controller
 
     public function sync(Request $request, $programId)
     {
-        $schedules = $request->schedules; // Array of objects
+        $validated = $request->validate([
+            'schedules' => ['nullable', 'array'],
+            'schedules.*.application_id' => ['nullable'],
+            'schedules.*.student_name' => ['required_with:schedules', 'string'],
+            'schedules.*.reference_number' => ['nullable', 'string'],
+            'schedules.*.interview_date' => ['required_with:schedules', 'date'],
+            'schedules.*.interview_time' => ['required_with:schedules'],
+            'schedules.*.status' => ['nullable', 'string'],
+        ]);
+
+        $schedules = $validated['schedules'] ?? []; // Array of objects
 
         // Get all application_ids and student_names in the incoming payload
         $incomingIds = array_filter(array_column($schedules, 'application_id'));
         $incomingNames = array_filter(array_column($schedules, 'student_name'));
+
+        if (count($schedules) === 0) {
+            Interview::where('program_id', $programId)->delete();
+            return response()->json(['message' => 'Schedules cleared successfully']);
+        }
 
         // Delete interviews that were removed from the UI for this program
         // We only keep those that match either application_id or student_name in the incoming payload

@@ -94,10 +94,22 @@
 
     /** PATCH /api/programs/:id/slots-left */
     async updateProgramSlotsLeft(id, slotsLeft) {
-      const data = await request('/programs/' + id + '/slots-left', {
-        method: 'PATCH',
-        body: JSON.stringify({ slots_left: slotsLeft }),
-      });
+      let data;
+      try {
+        data = await request('/programs/' + id + '/slots-left', {
+          method: 'PATCH',
+          body: JSON.stringify({ slots_left: slotsLeft }),
+        });
+      } catch (error) {
+        if (error && (error.status === 404 || error.status === 405)) {
+          data = await request('/programs/' + id + '/slots-left', {
+            method: 'POST',
+            body: JSON.stringify({ slots_left: slotsLeft }),
+          });
+        } else {
+          throw error;
+        }
+      }
       return data.data || {};
     },
 
@@ -240,10 +252,22 @@
 
     /** PUT /api/admin/settings – saves key-value settings */
     async saveSettings(payload) {
-      const data = await request('/admin/settings', {
-        method: 'PUT',
-        body: JSON.stringify(payload),
-      });
+      let data;
+      try {
+        data = await request('/admin/settings', {
+          method: 'PUT',
+          body: JSON.stringify(payload),
+        });
+      } catch (error) {
+        if (error && (error.status === 404 || error.status === 405)) {
+          data = await request('/admin/settings', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+          });
+        } else {
+          throw error;
+        }
+      }
       return data.data || {};
     },
 

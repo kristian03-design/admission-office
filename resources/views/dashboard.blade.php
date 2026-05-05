@@ -13,11 +13,11 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=7" />
   <script src="{{ asset('js/api-config.js') }}?v=7"></script>
-  <script src="{{ asset('js/admission-api.js') }}?v=7"></script>
+  <script src="{{ asset('js/admission-api.js') }}?v=9"></script>
   <script>
     sessionStorage.setItem('_at', @json($admissionApiToken ?? session('admission_api_token') ?? ''));
   </script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=23" defer></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=25" defer></script>
 </head>
 <body>
   @include('partials.site-loader')
@@ -107,7 +107,7 @@
     <div class="topbar-right">
       <div class="topbar-school-year">
         <i data-lucide="calendar-range" style="width:14px;height:14px"></i>
-        <span id="topbarSY">S.Y. 2025–2026</span>
+        <span id="topbarSY"></span>
       </div>
       <button class="topbar-btn" id="notifBtn">
         <i data-lucide="bell"></i>
