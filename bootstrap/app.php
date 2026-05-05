@@ -12,7 +12,7 @@ $app = Application::configure(basePath: $_ENV['APP_BASE_PATH'] ?? $_SERVER['APP_
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
