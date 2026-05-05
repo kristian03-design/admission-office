@@ -577,7 +577,7 @@
 </div>
 
 <!-- API base is auto-detected by api-config.js (e.g. /admission-office/api on XAMPP). -->
-<script src="{{ asset('js/api-config.js') }}?v=4"></script>
+<script src="{{ asset('js/api-config.js') }}?v=5"></script>
 <script src="{{ asset('js/admission-api.js') }}?v=4"></script>
 <script src="{{ asset('js/form.js') }}?v=4"></script>
 <script>

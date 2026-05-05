@@ -12,7 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=7" />
-  <script src="{{ asset('js/api-config.js') }}?v=4"></script>
+  <script src="{{ asset('js/api-config.js') }}?v=5"></script>
   <script src="{{ asset('js/admission-api.js') }}?v=4"></script>
   @if (session('admission_api_token'))
   <script>
