@@ -14,12 +14,10 @@
   <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=7" />
   <script src="{{ asset('js/api-config.js') }}?v=5"></script>
   <script src="{{ asset('js/admission-api.js') }}?v=4"></script>
-  @if (session('admission_api_token'))
   <script>
-    sessionStorage.setItem('_at', "{{ session('admission_api_token') }}");
+    sessionStorage.setItem('_at', @json($admissionApiToken ?? session('admission_api_token') ?? ''));
   </script>
-  @endif
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=21" defer></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=22" defer></script>
 </head>
 <body>
   @include('partials.site-loader')

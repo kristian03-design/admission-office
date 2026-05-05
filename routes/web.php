@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\WelcomeController;
@@ -21,8 +22,13 @@ Route::get('/apply', function () {
 
 
 // Admin Dashboard//
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/dashboard', function (Request $request) {
+    $user = $request->user();
+    $user->tokens()->where('name', 'admin-dashboard')->delete();
+
+    return view('dashboard', [
+        'admissionApiToken' => $user->createToken('admin-dashboard')->plainTextToken,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Admin authentication routes for the custom admin login page.
@@ -37,8 +43,13 @@ Route::middleware('guest')->group(function () {
         ->name('admin.login.submit');
 });
 
-Route::get('/admin/dashboard', function () {
-    return view('dashboard');
+Route::get('/admin/dashboard', function (Request $request) {
+    $user = $request->user();
+    $user->tokens()->where('name', 'admin-dashboard')->delete();
+
+    return view('dashboard', [
+        'admissionApiToken' => $user->createToken('admin-dashboard')->plainTextToken,
+    ]);
 })->middleware(['auth', 'verified'])->name('admin.dashboard');
 
 require __DIR__.'/auth.php';

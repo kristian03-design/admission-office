@@ -35,6 +35,26 @@ function getPrograms() {
   return API_PROGRAMS;
 }
 
+function apiUrl(path) {
+  const base = (typeof AdmissionAPI !== 'undefined' && AdmissionAPI.getBase)
+    ? AdmissionAPI.getBase()
+    : (window.ADMISSION_API_BASE || window.location.origin + '/api');
+  const normalized = String(path || '').replace(/^\/api(?=\/|$)/, '');
+  return base.replace(/\/$/, '') + (normalized.startsWith('/') ? normalized : '/' + normalized);
+}
+
+function apiFetch(path, options = {}) {
+  const headers = {
+    'Accept': 'application/json',
+    ...(options.headers || {}),
+  };
+  const token = typeof AdmissionAPI !== 'undefined' && AdmissionAPI.getToken
+    ? AdmissionAPI.getToken()
+    : sessionStorage.getItem('_at');
+  if (token && !headers.Authorization) headers.Authorization = 'Bearer ' + token;
+  return fetch(apiUrl(path), { ...options, headers });
+}
+
 function mapApiStatus(s) {
   if (!s) return 'Pending';
   const m = {
@@ -1608,7 +1628,7 @@ async function saveWebsiteSettings() {
   btn.innerHTML = "Saving...";
   
   try {
-    const res = await fetch("/api/admin/settings", {
+    const res = await apiFetch("/api/admin/settings", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -1639,7 +1659,7 @@ async function loadAnnouncements() {
   clearContentPagination("announcements");
   
   try {
-    const res = await fetch("/api/announcements", {
+    const res = await apiFetch("/api/announcements", {
       headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("_at"),
         "Accept": "application/json"
@@ -1788,7 +1808,7 @@ async function saveAnnouncement() {
       payload.append("_method", "PATCH");
     }
     
-    const res = await fetch(url, {
+    const res = await apiFetch(url, {
       method,
       headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("_at"),
@@ -1816,7 +1836,7 @@ async function deleteAnnouncement(id) {
   if (!confirm("Are you sure you want to delete this announcement?")) return;
   
   try {
-    const res = await fetch(`/api/announcements/${id}`, {
+    const res = await apiFetch(`/api/announcements/${id}`, {
       method: "DELETE",
       headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("_at"),
@@ -1841,7 +1861,7 @@ async function loadNewsEvents() {
   clearContentPagination("newsEvents");
 
   try {
-    const res = await fetch("/api/admin/news-events", {
+    const res = await apiFetch("/api/admin/news-events", {
       headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("_at"),
         "Accept": "application/json"
@@ -2245,7 +2265,7 @@ async function saveNewsEvent() {
       payload.append("_method", "PATCH");
     }
 
-    const res = await fetch(url, {
+    const res = await apiFetch(url, {
       method,
       headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("_at"),
@@ -2273,7 +2293,7 @@ async function deleteNewsEvent(id) {
   if (!confirm("Are you sure you want to delete this item?")) return;
 
   try {
-    const res = await fetch(`/api/admin/news-events/${id}`, {
+    const res = await apiFetch(`/api/admin/news-events/${id}`, {
       method: "DELETE",
       headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("_at"),
@@ -2298,7 +2318,7 @@ async function loadTestimonials() {
   clearContentPagination("testimonials");
 
   try {
-    const res = await fetch("/api/testimonials", {
+    const res = await apiFetch("/api/testimonials", {
       headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("_at"),
         "Accept": "application/json"
@@ -2552,7 +2572,7 @@ async function saveTestimonial() {
       payload.append("_method", "PATCH");
     }
 
-    const res = await fetch(id ? `/api/testimonials/${id}` : "/api/testimonials", {
+    const res = await apiFetch(id ? `/api/testimonials/${id}` : "/api/testimonials", {
       method: "POST",
       headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("_at"),
@@ -2580,7 +2600,7 @@ async function deleteTestimonial(id) {
   if (!confirm("Are you sure you want to delete this testimonial?")) return;
 
   try {
-    const res = await fetch(`/api/testimonials/${id}`, {
+    const res = await apiFetch(`/api/testimonials/${id}`, {
       method: "DELETE",
       headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("_at"),
@@ -2605,7 +2625,7 @@ async function loadFacultyStaff() {
   clearContentPagination("facultyStaff");
 
   try {
-    const res = await fetch("/api/faculty-staff", {
+    const res = await apiFetch("/api/faculty-staff", {
       headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("_at"),
         "Accept": "application/json"
@@ -2858,7 +2878,7 @@ async function saveFacultyStaff() {
       payload.append("_method", "PATCH");
     }
 
-    const res = await fetch(id ? `/api/faculty-staff/${encodeURIComponent(id)}` : "/api/faculty-staff", {
+    const res = await apiFetch(id ? `/api/faculty-staff/${encodeURIComponent(id)}` : "/api/faculty-staff", {
       method: "POST",
       headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("_at"),
@@ -2886,7 +2906,7 @@ async function deleteFacultyStaff(id) {
   if (!confirm("Are you sure you want to delete this faculty/staff member?")) return;
 
   try {
-    const res = await fetch(`/api/faculty-staff/${encodeURIComponent(id)}`, {
+    const res = await apiFetch(`/api/faculty-staff/${encodeURIComponent(id)}`, {
       method: "DELETE",
       headers: {
         "Authorization": "Bearer " + sessionStorage.getItem("_at"),
