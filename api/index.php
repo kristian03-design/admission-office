@@ -7,8 +7,16 @@
  * We must redirect all writable Laravel paths to /tmp before bootstrapping.
  */
 
-// Point all writable paths to /tmp (the only writable dir on Vercel)
-$_ENV['APP_STORAGE_PATH'] = '/tmp/storage';
+// Point all writable paths to /tmp (the only writable dir on Vercel).
+$_ENV['LARAVEL_STORAGE_PATH'] = '/tmp/storage';
+$_SERVER['LARAVEL_STORAGE_PATH'] = '/tmp/storage';
+$_ENV['APP_BOOTSTRAP_PATH'] = '/tmp/bootstrap';
+$_SERVER['APP_BOOTSTRAP_PATH'] = '/tmp/bootstrap';
+$_ENV['APP_SERVICES_CACHE'] = '/tmp/bootstrap/cache/services.php';
+$_ENV['APP_PACKAGES_CACHE'] = '/tmp/bootstrap/cache/packages.php';
+$_ENV['APP_CONFIG_CACHE'] = '/tmp/bootstrap/cache/config.php';
+$_ENV['APP_ROUTES_CACHE'] = '/tmp/bootstrap/cache/routes-v7.php';
+$_ENV['APP_EVENTS_CACHE'] = '/tmp/bootstrap/cache/events.php';
 
 // Create the necessary writable directories in /tmp if they don't exist
 $tmpDirs = [
