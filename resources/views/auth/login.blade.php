@@ -289,8 +289,8 @@
 
 </div>
 
-<script src="{{ asset('js/api-config.js') }}?v=5"></script>
-<script src="{{ asset('js/admission-api.js') }}?v=4"></script>
+<script src="{{ asset('js/api-config.js') }}?v=7"></script>
+<script src="{{ asset('js/admission-api.js') }}?v=7"></script>
 <script>
   /* ── TOGGLE PASSWORD VISIBILITY ── */
   document.getElementById('togglePw').addEventListener('click', () => {

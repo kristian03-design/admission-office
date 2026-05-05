@@ -202,7 +202,7 @@
     </div>
   </footer>
 
-  <script src="{{ asset('js/home-page.js') }}?v=4"></script>
+  <script src="{{ asset('js/home-page.js') }}?v=5"></script>
   <script>
     if (window.lucide) lucide.createIcons();
   </script>

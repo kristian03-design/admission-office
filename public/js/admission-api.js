@@ -53,12 +53,24 @@
     }
 
     if (!res.ok) {
-      const err = new Error(data.message || 'Request failed');
+      const err = new Error(data.message || `Request failed (${res.status})`);
       err.status = res.status;
       err.data = data;
+      err.url = url;
       throw err;
     }
     return data;
+  }
+
+  async function getJsonProgramsFallback() {
+    const res = await fetch('/data/programs.json', {
+      headers: { 'Accept': 'application/json' },
+      cache: 'no-store',
+    });
+    if (!res.ok) throw new Error(`Program JSON failed (${res.status})`);
+    const data = await res.json();
+    const list = Array.isArray(data) ? data : (data.data || data.programs || []);
+    return Array.isArray(list) ? list : [];
   }
 
   window.AdmissionAPI = {
@@ -70,9 +82,14 @@
 
     /** GET /api/programs – returns array of { id, code, name, department, ... } */
     async getPrograms() {
-      const data = await request('/programs');
-      const list = data.data ?? data.programs;
-      return Array.isArray(list) ? list : [];
+      try {
+        const data = await request('/programs');
+        const list = data.data ?? data.programs;
+        if (Array.isArray(list) && list.length > 0) return list;
+      } catch (error) {
+        console.warn('Programs API unavailable, using JSON fallback:', error);
+      }
+      return getJsonProgramsFallback();
     },
 
     /** PATCH /api/programs/:id/slots-left */

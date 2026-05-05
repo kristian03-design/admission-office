@@ -330,7 +330,7 @@
     </div>
   </footer>
 
-  <script src="{{ asset('js/home-page.js') }}?v=4"></script>
+  <script src="{{ asset('js/home-page.js') }}?v=5"></script>
   <script>
     const detailGallery = JSON.parse(document.getElementById('gallery-section').getAttribute('data-gallery') || '[]');
     let currentGalleryIndex = 0;

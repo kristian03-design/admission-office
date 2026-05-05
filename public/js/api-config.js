@@ -26,9 +26,10 @@
   }
 
   const isVercel = /\.vercel\.app$/i.test(window.location.hostname);
+  const apiSegment = isVercel ? '/backend' : '/api';
 
   if (basePrefix) {
-    window.ADMISSION_API_BASE = basePrefix + (isVercel ? '/api/index.php/api' : '/api');
+    window.ADMISSION_API_BASE = basePrefix + apiSegment;
     return;
   }
 
@@ -36,8 +37,8 @@
   const path = window.location.pathname || '/';
   const publicIdx = path.indexOf('/public/');
   if (publicIdx > 0) {
-    window.ADMISSION_API_BASE = path.slice(0, publicIdx) + (isVercel ? '/api/index.php/api' : '/api');
+    window.ADMISSION_API_BASE = path.slice(0, publicIdx) + apiSegment;
   } else {
-    window.ADMISSION_API_BASE = window.location.origin + (isVercel ? '/api/index.php/api' : '/api');
+    window.ADMISSION_API_BASE = window.location.origin + apiSegment;
   }
 })();

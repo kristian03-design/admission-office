@@ -50,6 +50,10 @@
     ],
     "routes": [
         {
+            "src": "/backend/(.*)",
+            "dest": "/api/index.php/api/$1"
+        },
+        {
             "src": "/api/(.*)",
             "dest": "/api/index.php/api/$1"
         },

@@ -1065,7 +1065,7 @@
     </div>
   </div>
 
-  <script src="{{ asset('js/home-page.js') }}?v=4"></script>
+  <script src="{{ asset('js/home-page.js') }}?v=5"></script>
   <script>
     // Initialize all icons including those in the modal and footer
     if (window.lucide) {

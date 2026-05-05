@@ -12,10 +12,10 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=7" />
-  <script src="{{ asset('js/api-config.js') }}?v=5"></script>
-  <script src="{{ asset('js/admission-api.js') }}?v=4"></script>
+  <script src="{{ asset('js/api-config.js') }}?v=7"></script>
+  <script src="{{ asset('js/admission-api.js') }}?v=7"></script>
   <script>
-    sessionStorage.setItem('_at', @json($admissionApiToken ?? session('admission_api_token') ?? ''));
+    sessionStorage.setItem('_at', "{{ $admissionApiToken ?? session('admission_api_token') ?? '' }}");
   </script>
   <script src="{{ asset('js/admin-dashboard.js') }}?v=22" defer></script>
 </head>
@@ -705,7 +705,6 @@
         <div class="settings-field">
           <label class="settings-label">School Year</label>
           <select class="filter-select" id="settingSY" style="width:100%">
-            <option>S.Y. 2025–2026</option>
             <option>S.Y. 2026–2027</option>
             <option>S.Y. 2027–2028</option>
             <option>S.Y. 2028–2029</option>

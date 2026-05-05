@@ -102,7 +102,18 @@
       <div><label class="fl">Surname <span style="color:var(--red)">*</span></label><input type="text" name="surname" placeholder="e.g. Dela Cruz" class="fi"><span class="et" id="e-sur"></span></div>
       <div><label class="fl">First Name <span style="color:var(--red)">*</span></label><input type="text" name="firstName" placeholder="e.g. Juan" class="fi"><span class="et" id="e-fn"></span></div>
       <div><label class="fl">Middle Name  <span style="color:var(--red)">*</span> </label><input type="text" name="middleName" placeholder="e.g. Santos" class="fi"></div>
-      <div><label class="fl">Suffix</label><input type="text" name="suffix" placeholder="Jr., Sr., III" class="fi"></div>
+      <div>
+        <label class="fl">Suffix</label>
+        <select name="suffix" class="fi" aria-label="Suffix">
+          <option value="N/A" selected>N/A</option>
+          <option value="Jr.">Jr.</option>
+          <option value="Sr.">Sr.</option>
+          <option value="II">II</option>
+          <option value="III">III</option>
+          <option value="IV">IV</option>
+          <option value="V">V</option>
+        </select>
+      </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3" style="margin-top:12px">
       <div>
@@ -577,9 +588,9 @@
 </div>
 
 <!-- API base is auto-detected by api-config.js (e.g. /admission-office/api on XAMPP). -->
-<script src="{{ asset('js/api-config.js') }}?v=5"></script>
-<script src="{{ asset('js/admission-api.js') }}?v=4"></script>
-<script src="{{ asset('js/form.js') }}?v=4"></script>
+<script src="{{ asset('js/api-config.js') }}?v=7"></script>
+<script src="{{ asset('js/admission-api.js') }}?v=7"></script>
+<script src="{{ asset('js/form.js') }}?v=6"></script>
 <script>
   if (typeof lucide !== 'undefined') {
     lucide.createIcons();

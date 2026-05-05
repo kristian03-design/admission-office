@@ -40,14 +40,18 @@ foreach ($tmpDirs as $dir) {
     }
 }
 
-// Copy the bootstrap/cache files so they are writable
+// Vercel may reuse /tmp between invocations/deployments. Clear stale Laravel
+// cache files first so old route/config caches cannot shadow the current code.
+foreach (glob('/tmp/bootstrap/cache/*.php') ?: [] as $file) {
+    @unlink($file);
+}
+
+// Copy the bootstrap/cache files so they are writable.
 $bootstrapCache = __DIR__ . '/../bootstrap/cache';
 if (is_dir($bootstrapCache)) {
     foreach (glob($bootstrapCache . '/*.php') as $file) {
         $dest = '/tmp/bootstrap/cache/' . basename($file);
-        if (!file_exists($dest)) {
-            copy($file, $dest);
-        }
+        copy($file, $dest);
     }
 }
 

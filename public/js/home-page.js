@@ -26,6 +26,13 @@ setTimeout(hideSiteLoader, 4500);
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
+function apiUrl(path) {
+  const isVercel = /\.vercel\.app$/i.test(window.location.hostname);
+  const base = window.ADMISSION_API_BASE || (window.location.origin + (isVercel ? '/backend' : '/api'));
+  const normalized = String(path || '').replace(/^\/api(?=\/|$)/, '');
+  return base.replace(/\/$/, '') + (normalized.startsWith('/') ? normalized : '/' + normalized);
+}
+
 function debounce(fn, ms = 150) {
   let t;
   return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
@@ -340,7 +347,7 @@ function clearError(inputEl, errorEl) {
       const firstName = nameParts[0];
       const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '---';
 
-      const response = await fetch('/api/contact', {
+      const response = await fetch(apiUrl('/contact'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
@@ -439,7 +446,7 @@ function clearError(inputEl, errorEl) {
     setSubmitting(true);
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(apiUrl('/contact'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
