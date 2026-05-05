@@ -17,7 +17,7 @@
                         <td style="background: linear-gradient(135deg, #0f1e3d 0%, #1b3557 100%); padding: 40px 40px 30px 40px; text-align: center;">
                             <img src="{{ $message->embed(public_path('assets/images/logo.jpg')) }}" alt="BTECH Logo" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.2); margin-bottom: 20px;">
                             <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">Baliwag Polytechnic College</h1>
-                            <p style="color: #b8860b; margin: 5px 0 0 0; font-size: 14px; font-weight: 600; text-transform: uppercase; tracking: 2px;">Admissions Office</p>
+                            <p style="color: #b8860b; margin: 5px 0 0 0; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Admissions Office</p>
                         </td>
                     </tr>
 

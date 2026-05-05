@@ -11,7 +11,7 @@
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=6" />
+  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=7" />
   <script src="{{ asset('js/api-config.js') }}?v=4"></script>
   <script src="{{ asset('js/admission-api.js') }}?v=4"></script>
   @if (session('admission_api_token'))
@@ -19,9 +19,10 @@
     sessionStorage.setItem('_at', "{{ session('admission_api_token') }}");
   </script>
   @endif
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=17" defer></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=20" defer></script>
 </head>
 <body>
+  @include('partials.site-loader')
 
 <!-- ═══ SIDEBAR ═══ -->
 <aside class="sidebar" id="sidebar">
@@ -475,12 +476,6 @@
       <div>
         <h1 class="page-title">Website Content Studio</h1>
         <p class="page-sub">Design, publish, and maintain your public-facing admissions content.</p>
-      </div>
-      <div class="page-actions">
-        <button class="btn-outline" id="clearPublicCacheBtn">
-          <i data-lucide="refresh-cw"></i>
-          Refresh Public Cache
-        </button>
       </div>
     </div>
 

@@ -1,3 +1,17 @@
+/* ─── SITE LOADER HIDE LOGIC ─── */
+function hideSiteLoader() {
+  const loader = document.getElementById('site-loader');
+  if (!loader) return;
+  loader.classList.add('is-hidden');
+  document.body.classList.remove('site-loader-lock');
+  setTimeout(() => loader.remove(), 550);
+}
+document.body.classList.add('site-loader-lock');
+window.addEventListener('load', () => {
+  setTimeout(hideSiteLoader, 350);
+});
+setTimeout(hideSiteLoader, 4500); // fallback
+
 /* ─── DATA (from API only) ─── */
 let API_PROGRAMS = [];
 const programEnabled = {};
@@ -454,7 +468,7 @@ function renderTable() {
       <td>${escapeHtml(shortProg(app.firstChoice))}</td>
       <td class="gwa-col">${avgGWA(app)}</td>
       <td>${formatDate(app.filed)}</td>
-      <td>${escapeHtml(app.status)}</td>
+      <td><span class="badge ${statusClass(app.status)}">${escapeHtml(app.status)}</span></td>
       <td>
         <div class="action-btns-cell">
           <button type="button" class="btn-view-label btn-view-app" title="View Details" data-app-id="${app.id != null ? app.id : ''}" data-app-ref="${escapeHtml(app.ref || '')}">View</button>
@@ -1430,11 +1444,6 @@ function initWebsiteContent() {
     saveBtn.onclick = saveWebsiteSettings;
   }
   
-  // Wire up cache clear button
-  const clearBtn = document.getElementById("clearPublicCacheBtn");
-  if (clearBtn) {
-    clearBtn.onclick = clearPublicCache;
-  }
 
   // Wire up announcement modal popup toggle
   const popupCheck = document.getElementById("annIsPopup");
@@ -1823,32 +1832,6 @@ async function deleteAnnouncement(id) {
     }
   } catch (err) {
     showToast(err.message);
-  }
-}
-
-async function clearPublicCache() {
-  const btn = document.getElementById("clearPublicCacheBtn");
-  const originalText = btn.innerHTML;
-  btn.innerHTML = "Clearing...";
-  
-  try {
-    const res = await fetch("/api/admin/clear-cache", {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer " + sessionStorage.getItem("_at"),
-        "Accept": "application/json"
-      }
-    });
-    
-    if (res.ok) {
-      showToast("Landing page cache cleared successfully.");
-    } else {
-      showToast("Failed to clear cache.");
-    }
-  } catch (err) {
-    showToast("Error: " + err.message);
-  } finally {
-    btn.innerHTML = originalText;
   }
 }
 
@@ -2955,7 +2938,7 @@ function renderInterviewsTable() {
   tbody.innerHTML = filtered.map(p => {
     const schedule = p.interview_schedule || 'Mon-Fri, 9AM-4PM';
     const status = p.interview_status || 'Ongoing';
-    const sClass = status === 'Ongoing' ? 'status-approved' : (status === 'Paused' ? 'status-pending' : 'status-rejected');
+    const sClass = status === 'Ongoing' ? 'badge--approved' : (status === 'Paused' ? 'badge--pending' : 'badge--rejected');
 
     return `<tr>
       <td>

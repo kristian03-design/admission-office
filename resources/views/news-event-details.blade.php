@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=2" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=4" />
 
   <style>
   /* ── News/Events detail page: force solid navbar since there's no dark hero ── */
@@ -157,7 +157,7 @@
 
   <!-- ───────────────────────────────────── NEWS EVENT DETAILS ───────────────────────────────────── --> 
   <main>
-  <section class="pt-32 pb-20" style="background: var(--gray-50);">
+  <section id="gallery-section" class="pt-32 pb-20" style="background: var(--gray-50);" data-gallery="{{ json_encode(array_values($gallery)) }}">
     <div style="max-width: 860px; margin: 0 auto; padding: 0 2rem;">
 
       <a href="{{ route('news-events') }}"
@@ -181,7 +181,7 @@
             @foreach($gallery as $index => $img)
               <button type="button"
                       class="detail-thumb-button"
-                      onclick="setMainImage({{ $index }})"
+                      data-index="{{ $index }}" onclick="setMainImage(parseInt(this.getAttribute('data-index')))"
                       style="width:72px;height:72px;border-radius:12px;overflow:hidden;border:none;cursor:pointer;padding:0;opacity:.8;transition:opacity .2s;"
                       onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.8'"
                       aria-label="Select image {{ $index + 1 }}">
@@ -330,9 +330,9 @@
     </div>
   </footer>
 
-  <script src="{{ asset('js/home-page.js') }}?v=2"></script>
+  <script src="{{ asset('js/home-page.js') }}?v=4"></script>
   <script>
-    const detailGallery = @json(array_values($gallery));
+    const detailGallery = JSON.parse(document.getElementById('gallery-section').getAttribute('data-gallery') || '[]');
     let currentGalleryIndex = 0;
 
     function setMainImage(index) {

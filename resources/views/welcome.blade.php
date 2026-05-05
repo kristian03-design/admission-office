@@ -14,7 +14,7 @@
   <!-- ✦ Lucide Icons ✦ -->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=3" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=4" />
 
 </head>
 <body>

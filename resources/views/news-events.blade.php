@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=2" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=4" />
 </head>
 <body>
   @include('partials.site-loader')
@@ -202,7 +202,7 @@
     </div>
   </footer>
 
-  <script src="{{ asset('js/home-page.js') }}?v=2"></script>
+  <script src="{{ asset('js/home-page.js') }}?v=4"></script>
   <script>
     if (window.lucide) lucide.createIcons();
   </script>

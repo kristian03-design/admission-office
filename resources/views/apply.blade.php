@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
-  <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v=4">
+  <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v=5">
   <style>
     .mo { will-change: opacity; transform: translateZ(0); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
     .mb { will-change: transform, opacity; transform: translateZ(0) scale(.92) translateY(24px); }
@@ -17,6 +17,7 @@
   </style>
 </head>
 <body>
+  @include('partials.site-loader')
 
 <div class="save-toast no-print" id="saveToast">
   <i data-lucide="check" style="width:14px;height:14px;stroke-width:3"></i>
@@ -583,6 +584,20 @@
   if (typeof lucide !== 'undefined') {
     lucide.createIcons();
   }
+
+  // Hide site loader
+  function hideSiteLoader() {
+    const loader = document.getElementById('site-loader');
+    if (!loader) return;
+    loader.classList.add('is-hidden');
+    document.body.classList.remove('site-loader-lock');
+    setTimeout(() => loader.remove(), 550);
+  }
+  document.body.classList.add('site-loader-lock');
+  window.addEventListener('load', () => {
+    setTimeout(hideSiteLoader, 350);
+  });
+  setTimeout(hideSiteLoader, 4500); // fallback
 </script>
 </body>
 </html>
