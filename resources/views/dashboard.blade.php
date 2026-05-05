@@ -15,7 +15,7 @@
   <script src="{{ asset('js/api-config.js') }}?v=7"></script>
   <script src="{{ asset('js/admission-api.js') }}?v=10"></script>
   <script>
-    sessionStorage.setItem('_at', @json($admissionApiToken ?? session('admission_api_token') ?? ''));
+    sessionStorage.setItem('_at', "{{ $admissionApiToken ?? session('admission_api_token') ?? '' }}");
   </script>
   <script src="{{ asset('js/admin-dashboard.js') }}?v=25" defer></script>
 </head>
