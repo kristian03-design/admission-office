@@ -1,13 +1,9 @@
 {
     "version": 2,
-    "framework": null,
-    "buildCommand": "npm run build",
-    "outputDirectory": "public",
-    "installCommand": "npm install",
     "builds": [
         {
             "src": "api/index.php",
-            "use": "vercel-php@0.6.1"
+            "use": "vercel-php@0.7.2"
         },
         {
             "src": "public/**",
