@@ -19,7 +19,7 @@
     sessionStorage.setItem('_at', "{{ session('admission_api_token') }}");
   </script>
   @endif
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=20" defer></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=21" defer></script>
 </head>
 <body>
   @include('partials.site-loader')

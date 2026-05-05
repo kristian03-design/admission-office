@@ -3274,16 +3274,16 @@ async function initReports() {
   }
 
   const list = getApplications();
-  const total   = DASHBOARD_STATS ? DASHBOARD_STATS.total_applications   : list.length;
-  const approved = DASHBOARD_STATS ? DASHBOARD_STATS.approved_applications : list.filter(a => a.status === 'Approved').length;
+  const total = Number(DASHBOARD_STATS?.total_applications ?? list.length ?? 0);
+  const approved = Number(DASHBOARD_STATS?.approved_applications ?? list.filter(a => a.status === 'Approved').length ?? 0);
   const yes = v => String(v || '').trim().toLowerCase() === 'yes';
-  const pwdCount = DASHBOARD_STATS ? DASHBOARD_STATS.pwd_count : list.filter(a => yes(a.pwd)).length;
-  const indigenousCount = DASHBOARD_STATS ? DASHBOARD_STATS.indigenous_count : list.filter(a => yes(a.indigenous)).length;
-  const foursCount = DASHBOARD_STATS ? DASHBOARD_STATS.four_ps_count : list.filter(a => yes(a.fours)).length;
+  const pwdCount = Number(DASHBOARD_STATS?.pwd_count ?? list.filter(a => yes(a.pwd)).length ?? 0);
+  const indigenousCount = Number(DASHBOARD_STATS?.indigenous_count ?? list.filter(a => yes(a.indigenous)).length ?? 0);
+  const foursCount = Number(DASHBOARD_STATS?.four_ps_count ?? list.filter(a => yes(a.fours)).length ?? 0);
   const avgGWAAll  = DASHBOARD_STATS && DASHBOARD_STATS.avg_gwa != null
     ? parseFloat(DASHBOARD_STATS.avg_gwa).toFixed(2)
     : (total ? (list.reduce((s, a) => s + ((parseFloat(a.g11) || 0) + (parseFloat(a.g12) || 0)) / 2, 0) / total).toFixed(2) : '0.00');
-  const progCount  = DASHBOARD_STATS ? (DASHBOARD_STATS.by_program ? DASHBOARD_STATS.by_program.length : getPrograms().length) : getPrograms().length;
+  const progCount = Number(Array.isArray(DASHBOARD_STATS?.by_program) ? DASHBOARD_STATS.by_program.length : getPrograms().length);
 
   document.getElementById('reportsGrid').innerHTML = [
     { label: 'Total Applications',  value: total,    sub: 'S.Y. 2025–2026' },
