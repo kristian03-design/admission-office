@@ -1,0 +1,31 @@
+{
+    "version": 2,
+    "framework": null,
+    "buildCommand": "npm run build",
+    "outputDirectory": "public",
+    "installCommand": "npm install",
+    "builds": [
+        {
+            "src": "api/index.php",
+            "use": "vercel-php@0.6.1"
+        },
+        {
+            "src": "public/**",
+            "use": "@vercel/static"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/build/(.*)",
+            "dest": "/public/build/$1"
+        },
+        {
+            "src": "/(css|js|images|assets|fonts)(.*)",
+            "dest": "/public/$1$2"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
+        }
+    ]
+}

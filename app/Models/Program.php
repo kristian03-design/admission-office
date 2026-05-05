@@ -14,6 +14,7 @@ class Program extends Model
         'slots_left' => 'integer',
         'career_opportunities' => 'array',
         'core_areas' => 'array',
+        'is_active' => 'boolean',
     ];
 
     public function applications()
