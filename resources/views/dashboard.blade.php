@@ -13,7 +13,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=7" />
   <script src="{{ asset('js/api-config.js') }}?v=7"></script>
-  <script src="{{ asset('js/admission-api.js') }}?v=9"></script>
+  <script src="{{ asset('js/admission-api.js') }}?v=10"></script>
   <script>
     sessionStorage.setItem('_at', @json($admissionApiToken ?? session('admission_api_token') ?? ''));
   </script>
@@ -151,7 +151,7 @@
       <div class="page-actions">
         <span class="deadline-chip">
           <i data-lucide="clock" style="width:13px;height:13px"></i>
-          Deadline: April 17, 2026
+          Deadline: <span id="deadline"></span>
         </span>
       </div>
     </div>
@@ -163,7 +163,7 @@
         <div class="chart-card-header">
           <div>
             <div class="chart-title">Application Trend</div>
-            <div class="chart-sub">Monthly submissions — S.Y. 2025–2026</div>
+            <div class="chart-sub">Monthly submissions — <span id="chartSY"></span></div>
           </div>
         </div>
         <div class="chart-body"><canvas id="trendChart"></canvas></div>

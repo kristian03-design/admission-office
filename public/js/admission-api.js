@@ -85,7 +85,7 @@
       try {
         const data = await request('/programs');
         const list = data.data ?? data.programs;
-        if (Array.isArray(list) && list.length > 0) return list;
+        if (Array.isArray(list)) return list;
       } catch (error) {
         console.warn('Programs API unavailable, using JSON fallback:', error);
       }

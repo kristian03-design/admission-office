@@ -537,6 +537,7 @@ body {
   padding: 4px 10px 4px 4px;
   border-radius: 99px;
   transition: var(--transition);
+  background: var(--border);
 }
 
 .topbar-admin:hover {
@@ -3052,6 +3053,7 @@ body {
     border: 1px solid #ccc !important;
   }
 }
+
 /* Site Loader Styles */
 body.site-loader-lock {
   overflow: hidden;
@@ -3163,4 +3165,4 @@ body.site-loader-lock {
   100% {
     transform: translateX(260%);
   }
-}
+}
