@@ -92,7 +92,7 @@
             </p>
 
             <div class="flex flex-wrap gap-4 mt-10" data-animate="fade-up" data-delay="300">
-              <a href="{{ url('/apply') }}" class="btn-hero-primary group">
+              <a href="{{ route('apply') }}" class="btn-hero-primary group">
                 <span>{{ $settings['cta_text'] ?? 'Start Your Application' }}</span>
                 <i data-lucide="arrow-right"></i>
               </a>

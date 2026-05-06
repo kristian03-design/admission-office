@@ -622,7 +622,7 @@
                 OJT & Industry Partners
               </li>
             </ul>
-            <a href="{{ url('/apply') }}" class="btn-apply-card">Apply for this Course</a>
+            <a href="{{ route('apply') }}" class="btn-apply-card">Apply for this Course</a>
             <div class="apply-divider"></div>
             <div class="apply-card-slots">
               <span>Available Slots</span>

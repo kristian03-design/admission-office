@@ -26,6 +26,7 @@ const APP_PER_PAGE = 10;
 let API_APPLICATIONS = null;
 let filteredApps = [];
 let SYSTEM_SETTINGS = null;
+const ADMIN_LOGIN_URL = window.ADMIN_LOGIN_URL || '/admin/login';
 
 function getApplications() {
   return Array.isArray(API_APPLICATIONS) ? API_APPLICATIONS : [];
@@ -3718,7 +3719,7 @@ function logoutAfterPasswordChange() {
     form.submit();
     return;
   }
-  window.location.href = '/admin/login';
+  window.location.href = ADMIN_LOGIN_URL;
 }
 
 function togglePasswordVisibility(button) {
@@ -3919,7 +3920,7 @@ document.addEventListener('DOMContentLoaded', () => {
       refreshData(false);
     }, 30000);
   } else {
-    if (typeof AdmissionAPI !== 'undefined') window.location.href = '/admin/login';
+    if (typeof AdmissionAPI !== 'undefined') window.location.href = ADMIN_LOGIN_URL;
     else showPage('dashboard');
   }
 });
@@ -3938,14 +3939,14 @@ async function refreshData(isInitial = false) {
       const role = (me && (me.role || (me.user && me.user.role))) || '';
       if (role && role !== 'admin' && role !== 'staff') {
         if (typeof AdmissionAPI.clearToken === 'function') AdmissionAPI.clearToken();
-        if (window.location.pathname !== '/admin/login') window.location.replace('/admin/login');
+        if (window.location.pathname !== ADMIN_LOGIN_URL) window.location.replace(ADMIN_LOGIN_URL);
         return;
       }
     } catch (err) {
       console.warn('getMe failed:', err);
       if (err && err.status === 401) {
         if (typeof AdmissionAPI.clearToken === 'function') AdmissionAPI.clearToken();
-        if (window.location.pathname !== '/admin/login') window.location.replace('/admin/login');
+        if (window.location.pathname !== ADMIN_LOGIN_URL) window.location.replace(ADMIN_LOGIN_URL);
         return;
       }
     }

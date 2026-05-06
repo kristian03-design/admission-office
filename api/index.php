@@ -60,11 +60,7 @@ $_ENV['APP_BASE_PATH']    = __DIR__ . '/..';
 $_SERVER['APP_BASE_PATH'] = __DIR__ . '/..';
 $_ENV['APP_BOOTSTRAP_PATH'] = '/tmp/bootstrap';
 
-// ─── Fix REQUEST_URI for Vercel routing ───────────────────────────────────────
-// Vercel routes /backend/(.*) → /api/index.php/api/$1
-// PHP receives REQUEST_URI as /api/index.php/api/auth/me
-// Laravel must see just /api/auth/me to match routes correctly.
-// Strip the /api/index.php script prefix from REQUEST_URI.
+
 if (isset($_SERVER['REQUEST_URI'])) {
     $uri = $_SERVER['REQUEST_URI'];
     $scriptName = $_SERVER['SCRIPT_NAME'] ?? '/api/index.php';
