@@ -27,7 +27,7 @@ let API_APPLICATIONS = null;
 let filteredApps = [];
 let SYSTEM_SETTINGS = null;
 const ADMIN_LOGIN_URL = window.ADMIN_LOGIN_URL || '/admin/login';
-const ADMIN_REFRESH_MS = 10000;
+const ADMIN_REFRESH_MS = 0;
 
 function getApplications() {
   return Array.isArray(API_APPLICATIONS) ? API_APPLICATIONS : [];
@@ -223,6 +223,15 @@ function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = s;
   return div.innerHTML;
+}
+
+function storageUrl(path) {
+  const value = String(path || '').trim();
+  if (!value) return '';
+  if (/^(https?:|data:|blob:)/i.test(value)) return value;
+
+  const clean = value.replace(/^\/+/, '').replace(/^storage\//, '');
+  return '/uploaded-storage/' + clean;
 }
 
 function shortProg(name) {
@@ -1004,7 +1013,7 @@ function openSlideoverByApp(app) {
         </div>
         <div class="form-photo-box" style="overflow:hidden;padding:0;">
           ${o.photoPath
-          ? `<img src="/storage/${o.photoPath}" alt="Applicant Photo" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;"><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5'><path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg><div class='form-photo-label'>2x2 Photo</div></div>`
+          ? `<img src="${storageUrl(o.photoPath)}" alt="Applicant Photo" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;"><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5'><path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg><div class='form-photo-label'>2x2 Photo</div></div>`
           : `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><div class="form-photo-label">2x2 Photo</div>`
         }
         </div>
@@ -1313,7 +1322,7 @@ function loadSlideoverPhoto(bodyEl, rawData) {
   if (!box) return;
 
   var img = document.createElement('img');
-  img.src = '/storage/' + rawData.photoPath;
+  img.src = storageUrl(rawData.photoPath);
   img.alt = '2x2 Photo';
   img.setAttribute('class', 'form-photo-img');
   img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;';
@@ -3987,10 +3996,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial fetch
     refreshData(true);
 
-    // Set up polling (every 30 seconds)
-    setInterval(() => {
-      refreshData(false);
-    }, ADMIN_REFRESH_MS);
+    if (ADMIN_REFRESH_MS > 0) {
+      setInterval(() => {
+        refreshData(false);
+      }, ADMIN_REFRESH_MS);
+    }
   } else {
     if (typeof AdmissionAPI !== 'undefined') window.location.href = ADMIN_LOGIN_URL;
     else showPage('dashboard');

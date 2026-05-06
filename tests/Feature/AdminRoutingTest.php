@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class AdminRoutingTest extends TestCase
@@ -92,5 +93,25 @@ class AdminRoutingTest extends TestCase
         $this->assertDatabaseHas('testimonials', [
             'author_name' => 'Student One',
         ]);
+    }
+
+    public function test_legacy_interviews_endpoint_can_load_saved_schedules(): void
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('admin-dashboard')->plainTextToken;
+
+        $this->withHeader('Authorization', 'Bearer '.$token)
+            ->getJson('/interviews?program_id=1')
+            ->assertOk()
+            ->assertJsonPath('data', []);
+    }
+
+    public function test_uploaded_public_storage_files_can_be_served_by_laravel(): void
+    {
+        Storage::disk('public')->put('applications/1/photo.txt', 'photo-data');
+
+        $this->get('/uploaded-storage/applications/1/photo.txt')
+            ->assertOk()
+            ->assertSee('photo-data');
     }
 }

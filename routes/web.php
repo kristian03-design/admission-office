@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Api\ApplicationController;
@@ -13,6 +14,13 @@ use App\Http\Controllers\Api\TestimonialController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Api\SettingsController;
 use App\Http\Controllers\WelcomeController;
+
+Route::get('/uploaded-storage/{path}', function (string $path) {
+    abort_unless(Storage::disk('public')->exists($path), 404);
+
+    return response(Storage::disk('public')->get($path), 200)
+        ->header('Content-Type', Storage::disk('public')->mimeType($path) ?: 'application/octet-stream');
+})->where('path', '.*');
 
 //Landing Page//
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
@@ -92,6 +100,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/programs/{id}/slots-left', [ProgramController::class, 'updateSlotsLeft']);
     Route::post('/programs/{id}/slots-left', [ProgramController::class, 'updateSlotsLeft']);
 
+    Route::get('/interviews', [InterviewController::class, 'index']);
     Route::post('/interviews/sync/{programId}', [InterviewController::class, 'sync']);
 
     Route::get('/announcements', [AnnouncementController::class, 'index']);

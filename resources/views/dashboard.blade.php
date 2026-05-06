@@ -18,7 +18,7 @@
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
     sessionStorage.setItem('_at', "{{ $admissionApiToken ?? session('admission_api_token') ?? '' }}");
   </script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=29" defer></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=32" defer></script>
 </head>
 <body>
   @include('partials.site-loader')
