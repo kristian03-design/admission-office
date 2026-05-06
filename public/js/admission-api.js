@@ -3,7 +3,25 @@
  * Load api-config.js before this. Use: AdmissionAPI.getPrograms(), AdmissionAPI.submitPublic(), etc.
  */
 (function () {
-  const API_BASE = window.ADMISSION_API_BASE || (window.location.origin + '/api');
+  function normalizeApiBase(base) {
+    try {
+      const url = new URL(base || window.location.origin, window.location.origin);
+      const path = url.pathname.replace(/\/+$/, '');
+      const isApiBase = /\/(?:api|backend)$/.test(path);
+
+      if (!isApiBase) {
+        const segment = /\.vercel\.app$/i.test(window.location.hostname) ? '/backend' : '/api';
+        url.pathname = path + segment;
+      }
+
+      return url.origin + url.pathname.replace(/\/+$/, '');
+    } catch (_) {
+      const segment = /\.vercel\.app$/i.test(window.location.hostname) ? '/backend' : '/api';
+      return window.location.origin + segment;
+    }
+  }
+
+  const API_BASE = normalizeApiBase(window.ADMISSION_API_BASE);
 
   function getToken() {
     return sessionStorage.getItem('_at');

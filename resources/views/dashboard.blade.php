@@ -13,7 +13,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=7" />
   <script src="{{ asset('js/api-config.js') }}?v=7"></script>
-  <script src="{{ asset('js/admission-api.js') }}?v=10"></script>
+  <script src="{{ asset('js/admission-api.js') }}?v=11"></script>
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
     sessionStorage.setItem('_at', "{{ $admissionApiToken ?? session('admission_api_token') ?? '' }}");

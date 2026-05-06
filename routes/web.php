@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Api\SettingsController;
 use App\Http\Controllers\WelcomeController;
 
 //Landing Page//
@@ -60,6 +61,14 @@ Route::get('/admin/dashboard', function (Request $request) {
         'admissionApiToken' => $user->createToken('admin-dashboard')->plainTextToken,
     ]);
 })->name('admin.dashboard');
+
+// Compatibility for stale dashboard assets that call /admin/settings instead of
+// /api/admin/settings. Keep Sanctum auth so this remains admin-only.
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/admin/settings', [SettingsController::class, 'show']);
+    Route::post('/admin/settings', [SettingsController::class, 'update']);
+    Route::put('/admin/settings', [SettingsController::class, 'update']);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

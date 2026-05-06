@@ -25,6 +25,7 @@ return new class extends Migration
             ['key' => 'email_notifications',      'value' => '1',              'created_at' => now(), 'updated_at' => now()],
             ['key' => 'scholarship_applications', 'value' => '1',              'created_at' => now(), 'updated_at' => now()],
             ['key' => 'institution_name',         'value' => 'Baliwag Polytechnic College', 'created_at' => now(), 'updated_at' => now()],
+            ['key' => 'site_nav_label',           'value' => 'BTECH ADMISSION OFFICE', 'created_at' => now(), 'updated_at' => now()],
             ['key' => 'admissions_email',         'value' => 'admission@btech.edu.ph', 'created_at' => now(), 'updated_at' => now()],
             ['key' => 'campus_address',           'value' => 'Baliwag City, Bulacan 3006', 'created_at' => now(), 'updated_at' => now()],
             ['key' => 'contact_address',          'value' => 'Baliwag City, Bulacan 3006', 'created_at' => now(), 'updated_at' => now()],
