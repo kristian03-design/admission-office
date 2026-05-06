@@ -60,6 +60,30 @@ $_ENV['APP_BASE_PATH']    = __DIR__ . '/..';
 $_SERVER['APP_BASE_PATH'] = __DIR__ . '/..';
 $_ENV['APP_BOOTSTRAP_PATH'] = '/tmp/bootstrap';
 
+// Vercel rewrites dynamic routes to this single PHP function and passes the
+// original path as __path. Restore REQUEST_URI so Laravel can match web/API
+// routes such as /apply, /news-events, /programs/15, and /admin/login.
+if (isset($_GET['__path'])) {
+    $path = trim((string) $_GET['__path'], '/');
+    $query = $_GET;
+    unset($query['__path']);
+
+    $requestUri = '/' . $path;
+    if ($requestUri === '/') {
+        $requestUri = '/';
+    }
+
+    if ($query) {
+        $requestUri .= '?' . http_build_query($query);
+    }
+
+    $_SERVER['REQUEST_URI'] = $requestUri;
+    $_SERVER['PHP_SELF'] = $requestUri;
+    $_SERVER['SCRIPT_NAME'] = '/api/index.php';
+    $_SERVER['QUERY_STRING'] = $query ? http_build_query($query) : '';
+    unset($_SERVER['PATH_INFO']);
+    unset($_GET['__path']);
+}
 
 if (isset($_SERVER['REQUEST_URI'])) {
     $uri = $_SERVER['REQUEST_URI'];
