@@ -27,6 +27,7 @@ let API_APPLICATIONS = null;
 let filteredApps = [];
 let SYSTEM_SETTINGS = null;
 const ADMIN_LOGIN_URL = window.ADMIN_LOGIN_URL || '/admin/login';
+const ADMIN_REFRESH_MS = 10000;
 
 function getApplications() {
   return Array.isArray(API_APPLICATIONS) ? API_APPLICATIONS : [];
@@ -136,6 +137,20 @@ function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function afterToastPaint(callback) {
+  requestAnimationFrame(() => {
+    setTimeout(callback, 0);
+  });
+}
+
+function refreshDataSoon() {
+  afterToastPaint(() => refreshData(false));
+}
+
+function reloadContentSoon(loader) {
+  afterToastPaint(loader);
 }
 
 function formatDeadline(dateStr) {
@@ -259,6 +274,28 @@ function showPage(page) {
   if (page === 'settings') initSettings();
 
   if (window.innerWidth < 768) closeSidebar();
+}
+
+function rerenderCurrentPageAfterRefresh() {
+  if (currentPage === 'dashboard') {
+    initDashboard();
+  } else if (currentPage === 'applications') {
+    applyFilters();
+  } else if (currentPage === 'interviews') {
+    renderInterviewsTable();
+  } else if (currentPage === 'student-scheduling') {
+    renderInterviewsTable();
+    if (currentSchedulingCourse) {
+      openStudentScheduling(currentSchedulingCourse);
+    }
+  } else if (currentPage === 'programs') {
+    renderProgramsTable();
+  } else if (currentPage === 'reports') {
+    initReports();
+  } else if (currentPage === 'settings') {
+    initSettings();
+  }
+  updatePendingBadge();
 }
 
 /* ─── DASHBOARD ─── */
@@ -558,6 +595,7 @@ function changeStatusById(appId, newStatus) {
       badge.className = 'badge ' + statusClass(newStatus);
       badge.textContent = newStatus;
     }
+    refreshDataSoon();
   }).catch(function (e) {
     var msg = e.message || 'Update failed';
     if (e.data) {
@@ -1374,6 +1412,7 @@ function saveProgramSlotsLeft(programId, btn) {
       }
       showToast(isEnabled ? 'Slots left updated.' : 'Slots reached 0. Program disabled automatically.');
       renderProgramsTable();
+      refreshDataSoon();
     })
     .catch((err) => {
       let msg = err && err.message ? err.message : 'Failed to update slots left.';
@@ -1812,7 +1851,7 @@ async function saveAnnouncement() {
     if (res.ok) {
       showToast(id ? "Announcement updated" : "Announcement created");
       closeAnnouncementModal();
-      loadAnnouncements();
+      reloadContentSoon(loadAnnouncements);
     } else {
       const err = await res.json();
       throw new Error(err.message || "Failed to save announcement");
@@ -1838,7 +1877,7 @@ async function deleteAnnouncement(id) {
 
     if (res.ok) {
       showToast("Announcement deleted");
-      loadAnnouncements();
+      reloadContentSoon(loadAnnouncements);
     } else {
       throw new Error("Failed to delete");
     }
@@ -2269,7 +2308,7 @@ async function saveNewsEvent() {
     if (res.ok) {
       showToast(id ? "News/Event updated" : "News/Event created");
       closeNewsEventModal();
-      loadNewsEvents();
+      reloadContentSoon(loadNewsEvents);
     } else {
       const err = await res.json();
       throw new Error(err.message || "Failed to save News/Event");
@@ -2295,7 +2334,7 @@ async function deleteNewsEvent(id) {
 
     if (res.ok) {
       showToast("News/Event deleted");
-      loadNewsEvents();
+      reloadContentSoon(loadNewsEvents);
     } else {
       throw new Error("Failed to delete");
     }
@@ -2576,7 +2615,7 @@ async function saveTestimonial() {
     if (res.ok) {
       showToast(id ? "Testimonial updated" : "Testimonial created");
       closeTestimonialModal();
-      loadTestimonials();
+      reloadContentSoon(loadTestimonials);
     } else {
       const err = await res.json();
       throw new Error(err.message || "Failed to save testimonial");
@@ -2602,7 +2641,7 @@ async function deleteTestimonial(id) {
 
     if (res.ok) {
       showToast("Testimonial deleted");
-      loadTestimonials();
+      reloadContentSoon(loadTestimonials);
     } else {
       throw new Error("Failed to delete testimonial");
     }
@@ -2882,7 +2921,7 @@ async function saveFacultyStaff() {
     if (res.ok) {
       showToast(id ? "Faculty/staff member updated" : "Faculty/staff member added");
       closeFacultyStaffModal();
-      loadFacultyStaff();
+      reloadContentSoon(loadFacultyStaff);
     } else {
       const err = await res.json();
       throw new Error(err.message || "Failed to save faculty/staff member");
@@ -2908,7 +2947,7 @@ async function deleteFacultyStaff(id) {
 
     if (res.ok) {
       showToast("Faculty/staff member deleted");
-      loadFacultyStaff();
+      reloadContentSoon(loadFacultyStaff);
     } else {
       throw new Error("Failed to delete faculty/staff member");
     }
@@ -2982,6 +3021,14 @@ function renderInterviewsTable() {
 
 let currentSchedulingCourse = '';
 let currentSchedulingData = []; // To keep track of rows for searching
+
+function normalizeProgramKey(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .replace(/[^\w\s]/g, '');
+}
 
 async function openStudentScheduling(courseName) {
   currentSchedulingCourse = courseName;
@@ -3175,6 +3222,7 @@ async function saveAllStudentSchedules() {
     });
     showToast('Schedules saved successfully and notification emails sent!');
     showPage('interviews');
+    refreshDataSoon();
   } catch (err) {
     console.error(err);
     showToast('Failed to save schedules', 'error');
@@ -3193,15 +3241,37 @@ function openSelectApplicantModal() {
 
   document.getElementById('applicantSearchInput').value = '';
 
+  const selectedProgram = getPrograms().find(p => p.name === currentSchedulingCourse);
+  const selectedId = selectedProgram && selectedProgram.id != null ? String(selectedProgram.id) : '';
+  const selectedNames = [
+    currentSchedulingCourse,
+    selectedProgram?.name,
+    selectedProgram?.code,
+  ].map(normalizeProgramKey).filter(Boolean);
+
   // Get applicants for the current course
   const applicants = getApplications().filter(a => {
-    const choice = (a.firstChoice || '').trim().toLowerCase();
-    return choice === currentSchedulingCourse.trim().toLowerCase();
+    const raw = a.raw || {};
+    const appProgramId = a.programId != null ? String(a.programId) : (raw.program_id != null ? String(raw.program_id) : '');
+    if (selectedId && appProgramId && selectedId === appProgramId) return true;
+
+    const choices = [
+      a.firstChoice,
+      raw.first_choice,
+      raw.program_name,
+      raw.program?.name,
+      raw.program?.code,
+    ].map(normalizeProgramKey).filter(Boolean);
+
+    return choices.some(choice => selectedNames.includes(choice));
   });
 
   // Filter out applicants already in currentSchedulingData
   applicantModalData = applicants.filter(a => {
-    return !currentSchedulingData.find(ci => ci.application_id === a.id || ci.reference_number === a.ref);
+    return !currentSchedulingData.find(ci =>
+      (ci.application_id && a.id && String(ci.application_id) === String(a.id)) ||
+      (ci.reference_number && a.ref && String(ci.reference_number) === String(a.ref))
+    );
   });
 
   renderApplicantModalList(applicantModalData);
@@ -3870,6 +3940,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       // Update immediately from local payload as fallback.
       applySystemSettingsUI(payload);
+      refreshDataSoon();
     } catch (e) {
       showToast('Failed to save settings: ' + (e.message || 'Unknown error'));
       console.error('Save settings error:', e);
@@ -3919,7 +3990,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set up polling (every 30 seconds)
     setInterval(() => {
       refreshData(false);
-    }, 30000);
+    }, ADMIN_REFRESH_MS);
   } else {
     if (typeof AdmissionAPI !== 'undefined') window.location.href = ADMIN_LOGIN_URL;
     else showPage('dashboard');
@@ -3979,7 +4050,7 @@ async function refreshData(isInitial = false) {
     if (statsResult.status === 'rejected') console.warn('Dashboard stats API failed:', statsResult.reason);
     if (settingsResult.status === 'rejected') console.warn('Settings API failed:', settingsResult.reason);
 
-    const res = appsResult.status === 'fulfilled' ? appsResult.value : [];
+    const res = appsResult.status === 'fulfilled' ? appsResult.value : null;
     const progList = programsResult.status === 'fulfilled' ? programsResult.value : [];
     const stats = statsResult.status === 'fulfilled' ? statsResult.value : null;
     const settings = settingsResult.status === 'fulfilled' ? settingsResult.value : {};
@@ -3987,7 +4058,7 @@ async function refreshData(isInitial = false) {
     DASHBOARD_STATS = stats && typeof stats === 'object' && Object.prototype.hasOwnProperty.call(stats, 'total_applications') ? stats : null;
     applySystemSettingsUI(settings);
 
-    const raw = Array.isArray(res) ? res : (res && res.data) ? res.data : [];
+    const raw = Array.isArray(res) ? res : (res && Array.isArray(res.data)) ? res.data : [];
     API_APPLICATIONS = raw.map(a => {
       const lastName = (a.last_name != null ? String(a.last_name) : '').trim();
       const firstName = (a.first_name != null ? String(a.first_name) : '').trim();
@@ -3995,6 +4066,7 @@ async function refreshData(isInitial = false) {
       const applicantName = (a.applicant_name || '').trim() || [firstName, middleName, lastName].filter(Boolean).join(' ');
       return {
         id: a.id != null ? Number(a.id) : null,
+        programId: a.program_id != null ? Number(a.program_id) : (a.program && a.program.id != null ? Number(a.program.id) : null),
         ref: a.application_no || a.reference_number || '',
         applicant_name: applicantName,
         surname: lastName,
@@ -4015,6 +4087,10 @@ async function refreshData(isInitial = false) {
       };
     });
     filteredApps = [...API_APPLICATIONS];
+    if (appsResult.status === 'rejected') {
+      API_APPLICATIONS = 'error';
+      filteredApps = [];
+    }
     syncNotificationToasts({ silent: isInitial });
 
     API_PROGRAMS = Array.isArray(progList) ? progList : [];
@@ -4027,20 +4103,7 @@ async function refreshData(isInitial = false) {
       if (currentPage === 'dashboard') initDashboard();
       else showPage(currentPage);
     } else {
-      if (currentPage === 'dashboard') {
-        renderKPIs();
-        renderRecentList();
-        initCharts();
-      } else if (currentPage === 'applications') {
-        applyFilters();
-      } else if (currentPage === 'reports') {
-        initReports();
-      } else if (currentPage === 'programs') {
-        renderProgramsTable();
-      } else if (currentPage === 'interviews') {
-        renderInterviewsTable();
-      }
-      updatePendingBadge();
+      rerenderCurrentPageAfterRefresh();
     }
   } catch (err) {
     console.error('Refresh failed:', err);

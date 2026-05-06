@@ -244,7 +244,10 @@
     async getApplications(params = {}) {
       const qs = new URLSearchParams(params).toString();
       const data = await request('/applications' + (qs ? '?' + qs : ''));
-      return data.data;
+      const payload = data.data || data;
+      if (Array.isArray(payload)) return payload;
+      if (payload && Array.isArray(payload.data)) return payload.data;
+      return [];
     },
 
     /** GET /api/applications/:id – full application + applicant details */

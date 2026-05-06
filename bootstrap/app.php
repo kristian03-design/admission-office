@@ -15,8 +15,20 @@ $app = Application::configure(basePath: $_ENV['APP_BASE_PATH'] ?? $_SERVER['APP_
         $middleware->trustProxies(at: '*');
         $middleware->validateCsrfTokens(except: [
             'admin/settings',
+            'admin/news-events',
+            'admin/news-events/*',
+            'announcements',
+            'announcements/*',
+            'testimonials',
+            'testimonials/*',
+            'faculty-staff',
+            'faculty-staff/*',
+            'programs/*/schedule',
+            'programs/*/slots-left',
+            'interviews/sync/*',
             'applications/submit-public',
             'applications/*/documents',
+            'applications/*/status',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

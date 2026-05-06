@@ -4,6 +4,12 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Api\ApplicationController;
+use App\Http\Controllers\Api\AnnouncementController;
+use App\Http\Controllers\Api\FacultyStaffController;
+use App\Http\Controllers\Api\InterviewController;
+use App\Http\Controllers\Api\NewsEventController as ApiNewsEventController;
+use App\Http\Controllers\Api\ProgramController;
+use App\Http\Controllers\Api\TestimonialController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Api\SettingsController;
 use App\Http\Controllers\WelcomeController;
@@ -30,6 +36,12 @@ Route::redirect('/admissions/apply', '/apply', 301);
 // the /api or /backend prefix.
 Route::post('/applications/submit-public', [ApplicationController::class, 'submitPublic']);
 Route::post('/applications/{id}/documents', [ApplicationController::class, 'uploadDocument']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/applications', [ApplicationController::class, 'index']);
+    Route::get('/applications/{id}', [ApplicationController::class, 'show']);
+    Route::patch('/applications/{id}/status', [ApplicationController::class, 'updateStatus']);
+    Route::post('/applications/{id}/status', [ApplicationController::class, 'updateStatus']);
+});
 
 
 // Admin Dashboard//
@@ -74,6 +86,37 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/admin/settings', [SettingsController::class, 'show']);
     Route::post('/admin/settings', [SettingsController::class, 'update']);
     Route::put('/admin/settings', [SettingsController::class, 'update']);
+
+    Route::patch('/programs/{id}/schedule', [ProgramController::class, 'updateSchedule']);
+    Route::post('/programs/{id}/schedule', [ProgramController::class, 'updateSchedule']);
+    Route::patch('/programs/{id}/slots-left', [ProgramController::class, 'updateSlotsLeft']);
+    Route::post('/programs/{id}/slots-left', [ProgramController::class, 'updateSlotsLeft']);
+
+    Route::post('/interviews/sync/{programId}', [InterviewController::class, 'sync']);
+
+    Route::get('/announcements', [AnnouncementController::class, 'index']);
+    Route::post('/announcements', [AnnouncementController::class, 'store']);
+    Route::post('/announcements/{id}', [AnnouncementController::class, 'update']);
+    Route::patch('/announcements/{id}', [AnnouncementController::class, 'update']);
+    Route::delete('/announcements/{id}', [AnnouncementController::class, 'destroy']);
+
+    Route::get('/admin/news-events', [ApiNewsEventController::class, 'index']);
+    Route::post('/admin/news-events', [ApiNewsEventController::class, 'store']);
+    Route::post('/admin/news-events/{id}', [ApiNewsEventController::class, 'update']);
+    Route::patch('/admin/news-events/{id}', [ApiNewsEventController::class, 'update']);
+    Route::delete('/admin/news-events/{id}', [ApiNewsEventController::class, 'destroy']);
+
+    Route::get('/testimonials', [TestimonialController::class, 'index']);
+    Route::post('/testimonials', [TestimonialController::class, 'store']);
+    Route::post('/testimonials/{id}', [TestimonialController::class, 'update']);
+    Route::patch('/testimonials/{id}', [TestimonialController::class, 'update']);
+    Route::delete('/testimonials/{id}', [TestimonialController::class, 'destroy']);
+
+    Route::get('/faculty-staff', [FacultyStaffController::class, 'index']);
+    Route::post('/faculty-staff', [FacultyStaffController::class, 'store']);
+    Route::post('/faculty-staff/{id}', [FacultyStaffController::class, 'update']);
+    Route::patch('/faculty-staff/{id}', [FacultyStaffController::class, 'update']);
+    Route::delete('/faculty-staff/{id}', [FacultyStaffController::class, 'destroy']);
 });
 
 Route::middleware('auth')->group(function () {
