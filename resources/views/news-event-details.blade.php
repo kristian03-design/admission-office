@@ -157,6 +157,9 @@
 
   <!-- ───────────────────────────────────── NEWS EVENT DETAILS ───────────────────────────────────── --> 
   <main>
+  @php
+    $gallery = array_map(fn($url) => asset(ltrim($url, '/')), $gallery);
+  @endphp
   <section id="gallery-section" class="pt-32 pb-20" style="background: var(--gray-50);" data-gallery="{{ json_encode(array_values($gallery)) }}">
     <div style="max-width: 860px; margin: 0 auto; padding: 0 2rem;">
 

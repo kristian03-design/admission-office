@@ -69,9 +69,10 @@
         <div class="programs-grid">
           @forelse($newsEvents as $item)
             @php
-              $gallery = is_array($item->image_urls) && count($item->image_urls)
+              $galleryUrls = is_array($item->image_urls) && count($item->image_urls)
                 ? $item->image_urls
                 : ($item->image_url ? [$item->image_url] : []);
+              $gallery = array_map(fn($url) => asset(ltrim($url, '/')), $galleryUrls);
               $previewText = $item->summary ?: $item->content ?: '';
             @endphp
             <article class="program-card">

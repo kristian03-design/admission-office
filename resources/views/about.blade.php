@@ -272,7 +272,7 @@
                 <div class="team-card-header">
                   <div class="team-photo-wrap">
                   <img
-                    src="{{ $member['image'] ?? '' }}"
+                    src="{{ $member['image'] ? asset(ltrim($member['image'], '/')) : '' }}"
                     alt="{{ $member['name'] }}"
                     class="team-photo"
                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
