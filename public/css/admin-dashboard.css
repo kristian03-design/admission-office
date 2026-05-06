@@ -1129,7 +1129,7 @@ body {
 
 .table-wrap {
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+
 }
 
 .app-table {
@@ -2392,7 +2392,7 @@ body {
   }
 
   .table-wrap {
-    -webkit-overflow-scrolling: touch;
+
   }
 
   .app-table th,
@@ -2559,8 +2559,8 @@ body {
     overflow-x: auto;
     flex-wrap: nowrap;
     padding-bottom: 4px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+
+
     -ms-overflow-style: none;
   }
 
@@ -2582,7 +2582,7 @@ body {
 
   .table-wrap {
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+
   }
 
   .app-table th,
@@ -2675,8 +2675,8 @@ body {
     overflow-x: auto;
     padding: 6px;
     gap: 6px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+
+
   }
 
   .content-studio-sidebar::-webkit-scrollbar {

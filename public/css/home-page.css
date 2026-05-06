@@ -2452,10 +2452,10 @@ i[data-lucide] {
   /* Program filters: horizontal scroll */
   .program-filters {
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+
     flex-wrap: nowrap;
     padding-bottom: 0.5rem;
-    scrollbar-width: none;
+
   }
 
   .program-filters::-webkit-scrollbar {

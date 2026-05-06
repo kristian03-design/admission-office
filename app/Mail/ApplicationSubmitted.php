@@ -14,12 +14,12 @@ class ApplicationSubmitted extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $application;
+    public \App\Models\Application $application;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($application)
+    public function __construct(\App\Models\Application $application)
     {
         $this->application = $application;
     }

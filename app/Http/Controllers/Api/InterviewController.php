@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Interview;
 use App\Models\Program;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class InterviewController extends Controller
 {
@@ -30,7 +31,7 @@ class InterviewController extends Controller
         return response()->json(['data' => $query->get()]);
     }
 
-    public function sync(Request $request, $programId)
+    public function sync(Request $request, string $programId)
     {
         $validated = $request->validate([
             'schedules' => ['nullable', 'array'],
