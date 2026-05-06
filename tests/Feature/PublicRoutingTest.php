@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Program;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -32,5 +33,24 @@ class PublicRoutingTest extends TestCase
         $this->get('/inquiry')->assertRedirect('/apply');
         $this->get('/application')->assertRedirect('/apply');
         $this->get('/admissions/apply')->assertRedirect('/apply');
+    }
+
+    public function test_program_details_show_career_opportunities_when_database_list_is_empty(): void
+    {
+        $program = Program::create([
+            'code' => 'BSIT-T',
+            'name' => 'Bachelor of Science in Information Technology',
+            'department' => 'Technology',
+            'category' => 'technology',
+            'duration_years' => 4,
+            'schedule' => 'Day',
+            'slots_left' => 50,
+            'is_active' => true,
+        ]);
+
+        $this->get("/programs/{$program->id}")
+            ->assertOk()
+            ->assertSee('Career Opportunities')
+            ->assertSee('Software Developer');
     }
 }

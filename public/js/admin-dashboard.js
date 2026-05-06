@@ -15,6 +15,7 @@ setTimeout(hideSiteLoader, 4500); // fallback
 /* ─── DATA (from API only) ─── */
 let API_PROGRAMS = [];
 const programEnabled = {};
+const savedProgramSlots = {};
 let isRefreshingData = false;
 let programFilter = 'All';
 let interviewFilter = 'All';
@@ -532,12 +533,12 @@ function renderTable() {
     <tr data-app-id="${app.id}">
       <td class="ref-col">${escapeHtml(app.ref)}</td>
       <td class="name-col">${escapeHtml(fullNameDisplay(app))}</td>
-      <td>${escapeHtml(app.type)}</td>
-      <td>${escapeHtml(shortProg(app.firstChoice))}</td>
-      <td class="gwa-col">${avgGWA(app)}</td>
+      <td style="text-align: center">${escapeHtml(app.type)}</td>
+      <td style="text-align: center">${escapeHtml(shortProg(app.firstChoice))}</td>
+      <td class="gwa-col" style="text-align: center">${avgGWA(app)}</td>
       <td>${formatDate(app.filed)}</td>
-      <td><span class="badge ${statusClass(app.status)}">${escapeHtml(app.status)}</span></td>
-      <td>
+      <td style="text-align: center"><span class="badge ${statusClass(app.status)}">${escapeHtml(app.status)}</span></td>
+      <td style="text-align: center">
         <div class="action-btns-cell">
           <button type="button" class="btn-view-label btn-view-app" title="View Details" data-app-id="${app.id != null ? app.id : ''}" data-app-ref="${escapeHtml(app.ref || '')}">View</button>
         </div>
@@ -1416,12 +1417,12 @@ function saveProgramSlotsLeft(programId, btn) {
         program.slots_left = value;
         program.is_active = isEnabled;
       }
+      savedProgramSlots[String(programId)] = value;
       if (updated && typeof updated === 'object' && updated.name) {
         programEnabled[updated.name] = isEnabled;
       }
       showToast(isEnabled ? 'Slots left updated.' : 'Slots reached 0. Program disabled automatically.');
       renderProgramsTable();
-      refreshDataSoon();
     })
     .catch((err) => {
       let msg = err && err.message ? err.message : 'Failed to update slots left.';
@@ -4104,6 +4105,12 @@ async function refreshData(isInitial = false) {
     syncNotificationToasts({ silent: isInitial });
 
     API_PROGRAMS = Array.isArray(progList) ? progList : [];
+    API_PROGRAMS.forEach(p => {
+      const savedSlots = savedProgramSlots[String(p.id)];
+      if (savedSlots == null) return;
+      p.slots_left = savedSlots;
+      p.is_active = savedSlots > 0;
+    });
     API_PROGRAMS.forEach(p => {
       const slotsLeft = p.slots_left != null ? Number(p.slots_left) : 0;
       programEnabled[p.name] = (p.is_active !== false) && (isNaN(slotsLeft) || slotsLeft > 0);

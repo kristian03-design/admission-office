@@ -735,14 +735,13 @@
             </div>
             <div class="sidebar-card-body">
               <ul class="career-list">
-                @if($program->career_opportunities && count($program->career_opportunities) > 0)
-                  @foreach($program->career_opportunities as $career)
+                @if(!empty($careerOpportunities))
+                  @foreach($careerOpportunities as $career)
                     <li>
                       <span class="career-dot"><i data-lucide="circle-check"></i></span>
                       {{ $career }}
                     </li>
                   @endforeach
-                @else
                 @endif
               </ul>
 

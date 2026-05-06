@@ -49,7 +49,8 @@ class WelcomeController extends Controller
         
         return view('course-details', [
             'program' => $program,
-            'settings' => $settings
+            'settings' => $settings,
+            'careerOpportunities' => $this->careerOpportunitiesFor($program),
         ]);
     }
 
@@ -114,5 +115,53 @@ class WelcomeController extends Controller
         usort($items, fn ($a, $b) => ($a['order'] ?? 0) <=> ($b['order'] ?? 0));
 
         return $items;
+    }
+
+    private function careerOpportunitiesFor(Program $program): array
+    {
+        $careers = $program->career_opportunities;
+        if (is_string($careers)) {
+            $decoded = json_decode($careers, true);
+            $careers = is_array($decoded) ? $decoded : [];
+        }
+
+        if (is_array($careers) && count($careers) > 0) {
+            return array_values(array_filter(array_map(function ($career) {
+                if (is_array($career)) {
+                    return $career['name'] ?? $career['title'] ?? null;
+                }
+
+                return $career;
+            }, $careers)));
+        }
+
+        $name = strtolower($program->name ?? '');
+        $department = strtolower($program->department ?? '');
+
+        if (str_contains($name, 'information technology')) {
+            return ['Software Developer', 'Web Developer', 'Network Administrator', 'Database Administrator', 'IT Support Specialist'];
+        }
+
+        if (str_contains($name, 'hospitality')) {
+            return ['Hotel Operations Supervisor', 'Restaurant Manager', 'Front Office Associate', 'Events Coordinator', 'Food and Beverage Supervisor'];
+        }
+
+        if (str_contains($name, 'tourism')) {
+            return ['Tourism Officer', 'Travel Consultant', 'Tour Coordinator', 'Flight Attendant', 'Destination Marketing Associate'];
+        }
+
+        if (str_contains($department, 'education') || str_contains($name, 'education')) {
+            return ['Licensed Teacher', 'Curriculum Assistant', 'Learning Facilitator', 'Academic Coordinator', 'Education Program Staff'];
+        }
+
+        if (str_contains($department, 'accountancy') || str_contains($name, 'accounting') || str_contains($name, 'accountancy') || str_contains($name, 'auditing')) {
+            return ['Accounting Associate', 'Auditor', 'Tax Assistant', 'Bookkeeper', 'Financial Reporting Staff'];
+        }
+
+        if (str_contains($department, 'business') || str_contains($name, 'business') || str_contains($name, 'entrepreneurship') || str_contains($name, 'economics')) {
+            return ['Business Analyst', 'Marketing Associate', 'Operations Supervisor', 'Financial Services Associate', 'Entrepreneur'];
+        }
+
+        return ['Industry Specialist', 'Program Coordinator', 'Research Assistant', 'Administrative Officer', 'Professional Consultant'];
     }
 }

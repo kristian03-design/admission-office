@@ -69,7 +69,7 @@
           <div class="hero-content">
             <div class="inline-flex items-center gap-2 pill-badge mb-8" data-animate="fade-up" data-delay="0">
               <span class="pill-dot"></span>
-              <span class="text-xs font-semibold tracking-widest uppercase">{{ $settings['school_year_label'] ?? 'Admissions Open · S.Y. 2025–2026' }}</span>
+              <span class="text-xs font-semibold tracking-widest uppercase">{{ $settings['school_year_label'] ?? 'Admissions Open · S.Y. 2026–2027' }}</span>
             </div>
 
             <h1 class="hero-headline" data-animate="fade-up" data-delay="100">
@@ -776,11 +776,6 @@
       
       <!-- Modal Container -->
       <div class="relative bg-white rounded-[2rem] overflow-hidden max-w-xl w-full shadow-[0_32px_80px_-16px_rgba(27,53,87,0.4)] transform scale-90 translate-y-10 transition-all duration-700 ease-out border border-white/20" id="popupCard">
-        
-        <!-- Close Button (Floating) -->
-        <button onclick="closePopup()" class="absolute top-5 right-5 w-11 h-11 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-xl text-white hover:bg-white/30 hover:scale-110 transition-all z-50 border border-white/20">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
         
         <!-- Top Section: Image or Gradient -->
         <div class="relative">

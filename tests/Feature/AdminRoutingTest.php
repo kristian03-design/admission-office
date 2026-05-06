@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Program;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -104,6 +105,35 @@ class AdminRoutingTest extends TestCase
             ->getJson('/interviews?program_id=1')
             ->assertOk()
             ->assertJsonPath('data', []);
+    }
+
+    public function test_legacy_program_slots_endpoint_persists_saved_value(): void
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('admin-dashboard')->plainTextToken;
+        $program = Program::create([
+            'code' => 'TST',
+            'name' => 'Test Program',
+            'department' => 'Testing',
+            'category' => 'testing',
+            'duration_years' => 4,
+            'schedule' => 'Day',
+            'slots_left' => 3000,
+            'is_active' => true,
+        ]);
+
+        $this->withHeader('Authorization', 'Bearer '.$token)
+            ->postJson("/programs/{$program->id}/slots-left", [
+                'slots_left' => 125,
+            ])
+            ->assertOk()
+            ->assertJsonPath('data.slots_left', 125);
+
+        $this->assertDatabaseHas('programs', [
+            'id' => $program->id,
+            'slots_left' => 125,
+            'is_active' => true,
+        ]);
     }
 
     public function test_uploaded_public_storage_files_can_be_served_by_laravel(): void
