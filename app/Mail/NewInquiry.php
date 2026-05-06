@@ -14,11 +14,11 @@ class NewInquiry extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $inquiry;
-    public $isModel;
-    public $id;
+    public mixed $inquiry;
+    public bool $isModel;
+    public mixed $id;
 
-    public function __construct($inquiry)
+    public function __construct(mixed $inquiry)
     {
         $this->inquiry = $inquiry;
         $this->isModel = ($inquiry instanceof ContactInquiry);

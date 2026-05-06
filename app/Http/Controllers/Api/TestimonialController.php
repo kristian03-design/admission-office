@@ -40,7 +40,7 @@ class TestimonialController extends Controller
         return response()->json(['message' => 'Testimonial added.', 'data' => $testimonial]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $testimonial = Testimonial::findOrFail($id);
         
@@ -71,7 +71,7 @@ class TestimonialController extends Controller
         return response()->json(['message' => 'Testimonial updated.', 'data' => $testimonial]);
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $testimonial = Testimonial::findOrFail($id);
         $this->deleteStoredAvatar($testimonial->author_avatar);

@@ -20,10 +20,8 @@
     }
   } catch (_) {}
 
-  // If app is served from /public, API is still rooted at app base.
-  if (basePrefix.endsWith('/public')) {
-    basePrefix = basePrefix.slice(0, -'/public'.length);
-  }
+  // Keep /public if it exists, because Laravel needs it to route through index.php
+  // when accessed directly without a virtual host (e.g. via XAMPP).
 
   const isVercel = /\.vercel\.app$/i.test(window.location.hostname);
   const apiSegment = isVercel ? '/backend' : '/api';

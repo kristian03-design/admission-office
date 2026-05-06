@@ -9,6 +9,7 @@ use App\Mail\NewInquiry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class InquiryController extends Controller
 {
@@ -37,7 +38,7 @@ class InquiryController extends Controller
             Mail::to($adminEmail)->send(new NewInquiry($inquiry));
         } catch (\Exception $e) {
             // Log error but don't fail the response
-            \Log::error('Mail Error: ' . $e->getMessage());
+            Log::error('Mail Error: ' . $e->getMessage());
         }
 
         return response()->json([
@@ -58,7 +59,7 @@ class InquiryController extends Controller
     /**
      * DELETE /api/admin/inquiries/{id}
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
         ContactInquiry::findOrFail($id)->delete();
         return response()->json(['message' => 'Inquiry deleted.']);

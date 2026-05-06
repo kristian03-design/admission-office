@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use App\Mail\ApplicationSubmitted;
+use Illuminate\Support\Facades\Log;
 
 
 class ApplicationController extends Controller
@@ -58,14 +59,14 @@ class ApplicationController extends Controller
                 Mail::to($application->email)->send(new ApplicationSubmitted($application));
             } catch (\Exception $e) {
                 // Log error but don't fail the request
-                \Log::error('Failed to send application submission email: ' . $e->getMessage());
+                Log::error('Failed to send application submission email: ' . $e->getMessage());
             }
         }
 
         return response()->json(['data' => $application], 201);
     }
 
-    public function uploadDocument(Request $request, $id)
+    public function uploadDocument(Request $request, string $id)
     {
         $application = Application::findOrFail($id);
         
@@ -107,13 +108,13 @@ class ApplicationController extends Controller
         return response()->json(['data' => $applications]);
     }
 
-    public function show($id)
+    public function show(string $id)
     {
         $application = Application::with('program')->findOrFail($id);
         return response()->json(['data' => $application]);
     }
 
-    public function updateStatus(Request $request, $id)
+    public function updateStatus(Request $request, string $id)
     {
         $application = Application::findOrFail($id);
         

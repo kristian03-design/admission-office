@@ -24,14 +24,14 @@ class ProgramController extends Controller
         return response()->json(['data' => $programs]);
     }
 
-    public function updateSchedule(Request $request, $id)
+    public function updateSchedule(Request $request, string $id)
     {
         $program = Program::findOrFail($id);
         $program->update($request->only(['interview_schedule', 'interview_status']));
         return response()->json(['message' => 'Course schedule updated successfully', 'data' => $program]);
     }
 
-    public function updateSlotsLeft(Request $request, $id)
+    public function updateSlotsLeft(Request $request, string $id)
     {
         $validated = $request->validate([
             'slots_left' => ['required', 'integer', 'min:0', 'max:3000'],

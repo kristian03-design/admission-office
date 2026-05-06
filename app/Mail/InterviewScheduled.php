@@ -14,13 +14,13 @@ class InterviewScheduled extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $interview;
-    public $application;
+    public mixed $interview;
+    public mixed $application;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($interview, $application)
+    public function __construct(mixed $interview, mixed $application)
     {
         $this->interview = $interview;
         $this->application = $application;

@@ -42,7 +42,7 @@ class WelcomeController extends Controller
     /**
      * Display details for a specific program.
      */
-    public function showProgram($id)
+    public function showProgram(string $id)
     {
         $program = Program::findOrFail($id);
         $settings = SystemSetting::all_as_array();
@@ -83,7 +83,7 @@ class WelcomeController extends Controller
     /**
      * Display a single News/Event details page.
      */
-    public function showNewsEvent($id)
+    public function showNewsEvent(string $id)
     {
         $settings = SystemSetting::all_as_array();
         $item = NewsEvent::where('is_active', true)->findOrFail($id);

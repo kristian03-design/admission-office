@@ -58,7 +58,7 @@ class AnnouncementController extends Controller
     /**
      * Update the specified announcement in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $announcement = Announcement::findOrFail($id);
 
@@ -100,7 +100,7 @@ class AnnouncementController extends Controller
     /**
      * Remove the specified announcement from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $announcement = Announcement::findOrFail($id);
         $this->deleteStoredImage($announcement->popup_image);

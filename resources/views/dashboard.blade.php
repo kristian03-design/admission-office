@@ -107,7 +107,7 @@
     <div class="topbar-right">
       <div class="topbar-school-year">
         <i data-lucide="calendar-range" style="width:14px;height:14px"></i>
-        <span id="topbarSY"></span>
+        <span id="topbarSY">S.Y. {{ date('Y') }}–{{ date('Y') + 1 }}</span>
       </div>
       <button class="topbar-btn" id="notifBtn">
         <i data-lucide="bell"></i>
@@ -163,7 +163,7 @@
         <div class="chart-card-header">
           <div>
             <div class="chart-title">Application Trend</div>
-            <div class="chart-sub">Monthly submissions — <span id="chartSY"></span></div>
+            <div class="chart-sub">Monthly submissions — <span id="chartSY">{{ date('Y') }}–{{ date('Y') + 1 }}</span></div>
           </div>
         </div>
         <div class="chart-body"><canvas id="trendChart"></canvas></div>

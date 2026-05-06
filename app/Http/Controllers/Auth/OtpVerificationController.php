@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Mail;
 
 class OtpVerificationController extends Controller
 {
@@ -95,7 +96,7 @@ class OtpVerificationController extends Controller
         ]);
 
         try {
-            \Mail::to($user->email)->send(new \App\Mail\LoginOtpMail($otp, $user->name));
+            Mail::to($user->email)->send(new \App\Mail\LoginOtpMail($otp, $user->name));
         } catch (\Exception $e) {
             return back()->withErrors(['otp' => 'Failed to resend OTP. Please try again.']);
         }
