@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Api\SettingsController;
 use App\Http\Controllers\WelcomeController;
@@ -24,6 +25,11 @@ Route::redirect('/inquire', '/apply', 301);
 Route::redirect('/inquiry', '/apply', 301);
 Route::redirect('/application', '/apply', 301);
 Route::redirect('/admissions/apply', '/apply', 301);
+
+// Compatibility for stale public form assets that call the endpoint without
+// the /api or /backend prefix.
+Route::post('/applications/submit-public', [ApplicationController::class, 'submitPublic']);
+Route::post('/applications/{id}/documents', [ApplicationController::class, 'uploadDocument']);
 
 
 // Admin Dashboard//

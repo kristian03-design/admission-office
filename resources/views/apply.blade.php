@@ -588,9 +588,9 @@
 </div>
 
 <!-- API base is auto-detected by api-config.js (e.g. /admission-office/api on XAMPP). -->
-<script src="{{ asset('js/api-config.js') }}?v=7"></script>
-<script src="{{ asset('js/admission-api.js') }}?v=7"></script>
-<script src="{{ asset('js/form.js') }}?v=6"></script>
+<script src="{{ asset('js/api-config.js') }}?v=8"></script>
+<script src="{{ asset('js/admission-api.js') }}?v=11"></script>
+<script src="{{ asset('js/form.js') }}?v=7"></script>
 <script>
   if (typeof lucide !== 'undefined') {
     lucide.createIcons();

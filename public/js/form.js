@@ -240,6 +240,141 @@ const ZIP_BY_CITY = {
 let uploadedPic  = null;
 let uploadedDocs = [];
 let generatedRef = '';
+const FORM_PROGRESS_KEY = 'btech_admission_form_progress_v1';
+let isRestoringProgress = false;
+
+function debounceProgress(fn, ms = 250) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), ms);
+  };
+}
+
+function collectProgressData() {
+  const form = document.getElementById('aForm');
+  if (!form) return null;
+
+  const fields = {};
+  form.querySelectorAll('input[name], select[name], textarea[name]').forEach(el => {
+    if (!el.name || el.type === 'file') return;
+
+    if (el.type === 'radio') {
+      if (el.checked) fields[el.name] = el.value;
+      return;
+    }
+
+    if (el.type === 'checkbox') {
+      fields[el.name] = !!el.checked;
+      return;
+    }
+
+    fields[el.name] = el.value;
+  });
+
+  return {
+    version: 1,
+    savedAt: new Date().toISOString(),
+    currentStep,
+    generatedRef,
+    fields,
+    uploadedPic: uploadedPic ? {
+      name: uploadedPic.name,
+      dataURL: uploadedPic.dataURL,
+      restoredPreviewOnly: !uploadedPic.file,
+    } : null,
+  };
+}
+
+function saveProgress() {
+  if (isRestoringProgress) return;
+
+  try {
+    const data = collectProgressData();
+    if (data) localStorage.setItem(FORM_PROGRESS_KEY, JSON.stringify(data));
+  } catch (err) {
+    console.warn('Could not save application progress:', err);
+  }
+}
+
+const saveProgressSoon = debounceProgress(saveProgress);
+
+function applySavedFieldValues(fields) {
+  if (!fields || typeof fields !== 'object') return;
+
+  Object.entries(fields).forEach(([name, value]) => {
+    const controls = Array.from(document.querySelectorAll(`[name="${CSS.escape(name)}"]`));
+    controls.forEach(el => {
+      if (el.type === 'file') return;
+
+      if (el.type === 'radio') {
+        el.checked = el.value === value;
+        return;
+      }
+
+      if (el.type === 'checkbox') {
+        el.checked = !!value;
+        return;
+      }
+
+      el.value = value ?? '';
+    });
+  });
+}
+
+function restoreUploadedPicPreview(savedPic) {
+  if (!savedPic || !savedPic.dataURL) return;
+
+  uploadedPic = {
+    name: savedPic.name || 'Saved 2x2 photo',
+    dataURL: savedPic.dataURL,
+    file: null,
+    restoredPreviewOnly: true,
+  };
+
+  const zone = document.getElementById('picZone');
+  if (zone) {
+    zone.classList.add('uploaded');
+    zone.innerHTML = `<input type="file" accept="image/jpeg,image/png,image/jpg" onchange="handlePic(this)" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%"><img src="${savedPic.dataURL}" alt="2x2 photo" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`;
+  }
+}
+
+function restoreProgress() {
+  try {
+    const raw = localStorage.getItem(FORM_PROGRESS_KEY);
+    if (!raw) return;
+
+    const data = JSON.parse(raw);
+    if (!data || data.version !== 1) return;
+
+    isRestoringProgress = true;
+    applySavedFieldValues(data.fields);
+    generatedRef = data.generatedRef || '';
+    currentStep = Math.min(Math.max(parseInt(data.currentStep, 10) || 1, 1), TOTAL_STEPS);
+    restoreUploadedPicPreview(data.uploadedPic);
+  } catch (err) {
+    console.warn('Could not restore application progress:', err);
+  } finally {
+    isRestoringProgress = false;
+  }
+}
+
+function clearSavedProgress() {
+  try {
+    localStorage.removeItem(FORM_PROGRESS_KEY);
+  } catch (err) {
+    console.warn('Could not clear saved application progress:', err);
+  }
+}
+
+function initProgressAutosave() {
+  const form = document.getElementById('aForm');
+  if (!form) return;
+
+  form.addEventListener('input', saveProgressSoon);
+  form.addEventListener('change', saveProgressSoon);
+  window.addEventListener('beforeunload', saveProgress);
+}
 
 const DOCS_MAP = {
   'Freshmen':     ['Original Report Card (Grade 11 & 12)', 'Original Diploma', 'PSA Birth Certificate', '2×2 ID Picture', 'Certificate of Good Moral Character'],
@@ -268,7 +403,7 @@ function buildStepper() {
       (i === currentStep ? ' active' : '') +
       (i < currentStep  ? ' done'   : '');
     btn.innerHTML = `<span class="snum">${i < currentStep ? '✓' : i}</span><span class="slbl">${STEP_LABELS[i - 1]}</span>`;
-    btn.onclick = () => { if (i <= currentStep) { currentStep = i; show(); } };
+    btn.onclick = () => { if (i <= currentStep) { currentStep = i; show(); saveProgressSoon(); } };
     row.appendChild(btn);
     if (i < TOTAL_STEPS) {
       const conn = document.createElement('div');
@@ -317,6 +452,7 @@ function show() {
   buildStepper();
   updateAcadBlocks();
   if (currentStep === 12) buildReview();
+  saveProgressSoon();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -325,6 +461,7 @@ function nav(dir) {
   if (dir === 1) showToast();
   currentStep = Math.min(Math.max(currentStep + dir, 1), TOTAL_STEPS);
   show();
+  saveProgressSoon();
 }
 
 function validate(step) {

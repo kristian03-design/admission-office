@@ -280,11 +280,12 @@ function initDashboard() {
 
 function renderKPIs() {
   const list = getApplications();
-  const total = DASHBOARD_STATS ? DASHBOARD_STATS.total_applications : list.length;
-  const pending = DASHBOARD_STATS ? DASHBOARD_STATS.pending_applications : list.filter(a => a.status === 'Pending').length;
-  const approved = DASHBOARD_STATS ? DASHBOARD_STATS.approved_applications : list.filter(a => a.status === 'Approved').length;
-  const rejected = DASHBOARD_STATS ? DASHBOARD_STATS.rejected_applications : list.filter(a => a.status === 'Rejected').length;
-  const interview = DASHBOARD_STATS ? DASHBOARD_STATS.interview_applications : list.filter(a => a.status === 'Interview Scheduled').length;
+  const hasStats = DASHBOARD_STATS && Object.prototype.hasOwnProperty.call(DASHBOARD_STATS, 'total_applications');
+  const total = hasStats ? Number(DASHBOARD_STATS.total_applications || 0) : list.length;
+  const pending = hasStats ? Number(DASHBOARD_STATS.pending_applications || 0) : list.filter(a => a.status === 'Pending').length;
+  const approved = hasStats ? Number(DASHBOARD_STATS.approved_applications || 0) : list.filter(a => a.status === 'Approved').length;
+  const rejected = hasStats ? Number(DASHBOARD_STATS.rejected_applications || 0) : list.filter(a => a.status === 'Rejected').length;
+  const interview = hasStats ? Number(DASHBOARD_STATS.interview_applications || 0) : list.filter(a => a.status === 'Interview Scheduled').length;
 
   const kpis = [
     { label: 'Total Applications', value: total, icon: 'file-text', cls: 'kpi-icon--navy', delta: `S.Y. ${new Date().getFullYear()}–${new Date().getFullYear() + 1}`, dc: '' },
@@ -3983,7 +3984,7 @@ async function refreshData(isInitial = false) {
     const stats = statsResult.status === 'fulfilled' ? statsResult.value : null;
     const settings = settingsResult.status === 'fulfilled' ? settingsResult.value : {};
 
-    DASHBOARD_STATS = stats && typeof stats === 'object' ? stats : null;
+    DASHBOARD_STATS = stats && typeof stats === 'object' && Object.prototype.hasOwnProperty.call(stats, 'total_applications') ? stats : null;
     applySystemSettingsUI(settings);
 
     const raw = Array.isArray(res) ? res : (res && res.data) ? res.data : [];

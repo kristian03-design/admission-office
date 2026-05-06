@@ -496,7 +496,7 @@
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
         <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo"></div>
         <div class="leading-tight">
-          <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['site_nav_label'] ?? 'BTECH ADMISSION OFFICE' }}</p>
+          <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSION OFFICE' }}</p>
           <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
         </div>
       </a>
