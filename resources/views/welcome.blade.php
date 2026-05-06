@@ -196,7 +196,7 @@
               @foreach($tickerAnnouncements as $ann)
                 <span class="ticker-item">
                   @if($ann->popup_image)
-                    <img src="{{ $ann->popup_image }}" alt="" class="ticker-image" loading="lazy" decoding="async" width="34" height="34">
+                    <img src="{{ asset(ltrim($ann->popup_image, '/')) }}" alt="" class="ticker-image" loading="lazy" decoding="async" width="34" height="34">
                   @endif
                   <span>{{ $ann->message }}</span>
                 </span>
@@ -205,7 +205,7 @@
               @foreach($tickerAnnouncements as $ann)
                 <span class="ticker-item">
                   @if($ann->popup_image)
-                    <img src="{{ $ann->popup_image }}" alt="" class="ticker-image" loading="lazy" decoding="async" width="34" height="34">
+                    <img src="{{ asset(ltrim($ann->popup_image, '/')) }}" alt="" class="ticker-image" loading="lazy" decoding="async" width="34" height="34">
                   @endif
                   <span>{{ $ann->message }}</span>
                 </span>
@@ -781,7 +781,7 @@
         <div class="relative">
           @if($popupAnn->popup_image)
             <div class="h-72 overflow-hidden">
-              <img src="{{ $popupAnn->popup_image }}" alt="Announcement" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000" loading="lazy" decoding="async">
+              <img src="{{ asset(ltrim($popupAnn->popup_image, '/')) }}" alt="Announcement" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000" loading="lazy" decoding="async">
               <!-- Overlay for better text readability and depth -->
               <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-black/20"></div>
             </div>

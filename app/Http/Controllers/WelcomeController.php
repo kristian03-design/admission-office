@@ -102,11 +102,9 @@ class WelcomeController extends Controller
 
     private function facultyStaff(): array
     {
-        if (!Storage::disk('local')->exists('faculty-staff.json')) {
-            return [];
-        }
+        $json = \App\Models\SystemSetting::get('faculty_staff_data', '[]');
+        $items = json_decode($json, true);
 
-        $items = json_decode(Storage::disk('local')->get('faculty-staff.json'), true);
         if (!is_array($items)) {
             return [];
         }

@@ -105,11 +105,8 @@ class FacultyStaffController extends Controller
 
     private function readItems(): array
     {
-        if (!Storage::disk('local')->exists($this->path)) {
-            return [];
-        }
-
-        $decoded = json_decode(Storage::disk('local')->get($this->path), true);
+        $json = \App\Models\SystemSetting::get('faculty_staff_data', '[]');
+        $decoded = json_decode($json, true);
 
         if (!is_array($decoded)) {
             return [];
@@ -123,7 +120,7 @@ class FacultyStaffController extends Controller
     private function writeItems(array $items): void
     {
         usort($items, fn ($a, $b) => ($a['order'] ?? 0) <=> ($b['order'] ?? 0));
-        Storage::disk('local')->put($this->path, json_encode(array_values($items), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        \App\Models\SystemSetting::set('faculty_staff_data', json_encode(array_values($items), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
     private function uniqueId(string $name, array $items): string
