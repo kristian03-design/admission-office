@@ -286,7 +286,7 @@ function renderKPIs() {
   const interview = DASHBOARD_STATS ? DASHBOARD_STATS.interview_applications : list.filter(a => a.status === 'Interview Scheduled').length;
 
   const kpis = [
-    { label: 'Total Applications', value: total, icon: 'file-text', cls: 'kpi-icon--navy', delta: 'S.Y. 2025–2026', dc: '' },
+    { label: 'Total Applications', value: total, icon: 'file-text', cls: 'kpi-icon--navy', delta: `S.Y. ${new Date().getFullYear()}–${new Date().getFullYear() + 1}`, dc: '' },
     { label: 'Pending Review', value: pending, icon: 'alert-circle', cls: 'kpi-icon--gold', delta: `${interview} in interview`, dc: 'warn' },
     { label: 'Approved', value: approved, icon: 'check-circle', cls: 'kpi-icon--green', delta: `${Math.round(approved / total * 100 || 0)}% acceptance rate`, dc: 'up' },
     { label: 'Interview Scheduled', value: interview, icon: 'calendar', cls: 'kpi-icon--blue', delta: 'Awaiting results', dc: '' },
@@ -759,7 +759,7 @@ function exportReportsCSV() {
     rows = DASHBOARD_STATS.by_program.map(row => {
       const prog = programs.find(p => p.name === row.first_choice);
       const dept = prog ? (prog.department || '—') : '—';
-      const gwa  = row.avg_gwa != null ? parseFloat(row.avg_gwa).toFixed(1) : '—';
+      const gwa = row.avg_gwa != null ? parseFloat(row.avg_gwa).toFixed(1) : '—';
       return [row.first_choice || '—', dept, row.total || 0, row.approved || 0, row.pending || 0, row.rejected || 0, gwa];
     });
   } else {
@@ -850,8 +850,8 @@ function normalizeDetailForSlideover(d) {
   if (sex === 'male') sex = 'Male'; else if (sex === 'female') sex = 'Female';
   var applicantTypeRaw = (
     flat.applicant_type != null ? flat.applicant_type :
-    (flat.application_type != null ? flat.application_type :
-      (flat.type != null ? flat.type : (flat.respondentType || '')))
+      (flat.application_type != null ? flat.application_type :
+        (flat.type != null ? flat.type : (flat.respondentType || '')))
   );
   var applicantTypeNorm = String(applicantTypeRaw || '').trim().toLowerCase();
   var applicantTypeLabel = applicantTypeNorm === 'transferee'
@@ -1457,22 +1457,22 @@ function initWebsiteContent() {
   loadTestimonials();
   loadFacultyStaff();
   initContentStudioSidebar();
-  
+
   // Wire up save button
   const saveBtn = document.getElementById("saveWebsiteSettingsBtn");
   if (saveBtn) {
     saveBtn.onclick = saveWebsiteSettings;
   }
-  
+
 
   // Wire up announcement modal popup toggle
   const popupCheck = document.getElementById("annIsPopup");
   if (popupCheck) {
-    popupCheck.onchange = function() {
+    popupCheck.onchange = function () {
       document.getElementById("popupFields").style.display = this.checked ? "block" : "none";
     };
   }
-  
+
   // Save announcement button
   const saveAnnBtn = document.getElementById("saveAnnouncementBtn");
   if (saveAnnBtn) {
@@ -1586,7 +1586,7 @@ function initContentStudioSidebar() {
 
 function loadWebsiteSettings() {
   if (!SYSTEM_SETTINGS) return;
-  
+
   const fields = {
     settingHeroHeadline: "hero_headline",
     settingHeroSubheadline: "hero_subheadline",
@@ -1597,7 +1597,7 @@ function loadWebsiteSettings() {
     settingFacebook: "facebook_link",
     settingInstagram: "instagram_link"
   };
-  
+
   for (const [id, key] of Object.entries(fields)) {
     const el = document.getElementById(id);
     if (el) el.value = SYSTEM_SETTINGS[key] || "";
@@ -1615,50 +1615,28 @@ async function saveWebsiteSettings() {
     facebook_link: "settingFacebook",
     instagram_link: "settingInstagram"
   };
-  
+
   const data = {};
   for (const [key, id] of Object.entries(fields)) {
     const el = document.getElementById(id);
     if (el) data[key] = el.value;
   }
-  
+
   const btn = document.getElementById("saveWebsiteSettingsBtn");
   const originalText = btn.innerHTML;
   btn.disabled = true;
   btn.innerHTML = "Saving...";
-  
-  try {
-    let res = await apiFetch("/api/admin/settings", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + sessionStorage.getItem("_at"),
-        "Accept": "application/json"
-      },
-      body: JSON.stringify(data)
-    });
 
-    if (res.status === 404 || res.status === 405) {
-      res = await apiFetch("/api/admin/settings", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + sessionStorage.getItem("_at"),
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(data)
-      });
+  try {
+    if (typeof AdmissionAPI === 'undefined' || !AdmissionAPI.getToken()) {
+      throw new Error('Not authenticated. Please log in.');
     }
-    
-    const result = await res.json();
-    if (res.ok) {
-      SYSTEM_SETTINGS = result.data;
-      showToast("Website settings saved successfully.");
-    } else {
-      throw new Error(result.message || "Failed to save settings");
-    }
+    const updated = await AdmissionAPI.saveSettings(data);
+    SYSTEM_SETTINGS = Object.assign(SYSTEM_SETTINGS || {}, updated);
+    showToast("Website settings saved successfully.");
   } catch (err) {
-    showToast(err.message);
+    showToast('Failed to save settings: ' + (err.message || 'Unknown error'));
+    console.error('Save website settings error:', err);
   } finally {
     btn.disabled = false;
     btn.innerHTML = originalText;
@@ -1669,7 +1647,7 @@ async function loadAnnouncements() {
   const tbody = document.getElementById("announcementsTableBody");
   if (tbody) tbody.innerHTML = "<tr><td colspan=\"4\">Loading...</td></tr>";
   clearContentPagination("announcements");
-  
+
   try {
     const res = await apiFetch("/api/announcements", {
       headers: {
@@ -1689,7 +1667,7 @@ async function loadAnnouncements() {
 function renderAnnouncementsTable() {
   const tbody = document.getElementById("announcementsTableBody");
   if (!tbody) return;
-  
+
   if (API_ANNOUNCEMENTS.length === 0) {
     tbody.innerHTML = "<tr><td colspan=\"4\"><p class=\"empty-state\">No announcements yet.</p></td></tr>";
     clearContentPagination("announcements");
@@ -1697,7 +1675,7 @@ function renderAnnouncementsTable() {
   }
 
   const pageItems = getContentPageItems(API_ANNOUNCEMENTS, "announcements");
-  
+
   tbody.innerHTML = pageItems.map(ann => `
     <tr>
       <td>
@@ -1730,7 +1708,7 @@ function openAnnouncementModal(id = null) {
   const modal = document.getElementById("announcementModal");
   const title = document.getElementById("announcementModalTitle");
   const idInput = document.getElementById("editAnnouncementId");
-  
+
   // Clear fields
   idInput.value = id || "";
   document.getElementById("annMessage").value = "";
@@ -1746,7 +1724,7 @@ function openAnnouncementModal(id = null) {
   announcementPopupImageRemoved = false;
   setAnnouncementImageError("");
   hideAnnouncementImagePreview();
-  
+
   if (id) {
     title.textContent = "Edit Announcement";
     const ann = API_ANNOUNCEMENTS.find(a => a.id === id);
@@ -1764,7 +1742,7 @@ function openAnnouncementModal(id = null) {
   } else {
     title.textContent = "Add Announcement";
   }
-  
+
   modal.style.display = "flex";
 }
 
@@ -1786,7 +1764,7 @@ async function saveAnnouncement() {
   const popupImageFile = document.getElementById("annPopupImageFile");
   const selectedImage = popupImageFile && popupImageFile.files && popupImageFile.files[0] ? popupImageFile.files[0] : null;
   const imageError = validateAnnouncementImage(selectedImage);
-  
+
   if (!data.message) {
     showToast("Message is required");
     return;
@@ -1797,10 +1775,10 @@ async function saveAnnouncement() {
     showToast(imageError);
     return;
   }
-  
+
   const btn = document.getElementById("saveAnnouncementBtn");
   btn.disabled = true;
-  
+
   try {
     const url = id ? `/api/announcements/${id}` : "/api/announcements";
     const method = "POST";
@@ -1819,7 +1797,7 @@ async function saveAnnouncement() {
     if (id) {
       payload.append("_method", "PATCH");
     }
-    
+
     const res = await apiFetch(url, {
       method,
       headers: {
@@ -1828,7 +1806,7 @@ async function saveAnnouncement() {
       },
       body: payload
     });
-    
+
     if (res.ok) {
       showToast(id ? "Announcement updated" : "Announcement created");
       closeAnnouncementModal();
@@ -1846,7 +1824,7 @@ async function saveAnnouncement() {
 
 async function deleteAnnouncement(id) {
   if (!confirm("Are you sure you want to delete this announcement?")) return;
-  
+
   try {
     const res = await apiFetch(`/api/announcements/${id}`, {
       method: "DELETE",
@@ -1855,7 +1833,7 @@ async function deleteAnnouncement(id) {
         "Accept": "application/json"
       }
     });
-    
+
     if (res.ok) {
       showToast("Announcement deleted");
       loadAnnouncements();
@@ -2984,14 +2962,14 @@ function renderInterviewsTable() {
         <div style="display:flex;align-items:center;gap:8px">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-3)"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           <span>${schedule}</span>
-          <button class="btn-ghost" style="padding:2px;margin-left:4px;color:var(--navy)" onclick="openEditCourseModal(${p.id}, '${(p.name||'').replace(/'/g, "\\'")}', '${(p.department||'').replace(/'/g, "\\'")}', '${(p.code||'').replace(/'/g, "\\'")}', '${schedule}', '${status}')">
+          <button class="btn-ghost" style="padding:2px;margin-left:4px;color:var(--navy)" onclick="openEditCourseModal(${p.id}, '${(p.name || '').replace(/'/g, "\\'")}', '${(p.department || '').replace(/'/g, "\\'")}', '${(p.code || '').replace(/'/g, "\\'")}', '${schedule}', '${status}')">
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
           </button>
         </div>
       </td>
       <td><span class="badge ${sClass}">${status}</span></td>
       <td>
-        <button class="btn-primary" style="padding:6px 12px;font-size:12px" onclick="openStudentScheduling('${(p.name||'').replace(/'/g, "\\'")}')">
+        <button class="btn-primary" style="padding:6px 12px;font-size:12px" onclick="openStudentScheduling('${(p.name || '').replace(/'/g, "\\'")}')">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           Schedule Students
         </button>
@@ -3123,15 +3101,15 @@ function removeSchedulingRow(btn) {
   const tr = btn.closest('tr');
   const appId = tr.querySelector('[name="app_id"]')?.value;
   const refNum = tr.querySelector('[name="ref_num"]')?.value;
-  
+
   if (appId) {
     currentSchedulingData = currentSchedulingData.filter(ci => String(ci.application_id) !== String(appId));
   } else if (refNum) {
     currentSchedulingData = currentSchedulingData.filter(ci => ci.reference_number !== refNum);
   }
-  
+
   tr.remove();
-  
+
   // If table is now empty, show empty state message
   const tbody = document.getElementById('studentSchedulingTableBody');
   if (tbody && tbody.querySelectorAll('tr').length === 0) {
@@ -3319,19 +3297,19 @@ async function initReports() {
   const pwdCount = Number(DASHBOARD_STATS?.pwd_count ?? list.filter(a => yes(a.pwd)).length ?? 0);
   const indigenousCount = Number(DASHBOARD_STATS?.indigenous_count ?? list.filter(a => yes(a.indigenous)).length ?? 0);
   const foursCount = Number(DASHBOARD_STATS?.four_ps_count ?? list.filter(a => yes(a.fours)).length ?? 0);
-  const avgGWAAll  = DASHBOARD_STATS && DASHBOARD_STATS.avg_gwa != null
+  const avgGWAAll = DASHBOARD_STATS && DASHBOARD_STATS.avg_gwa != null
     ? parseFloat(DASHBOARD_STATS.avg_gwa).toFixed(2)
     : (total ? (list.reduce((s, a) => s + ((parseFloat(a.g11) || 0) + (parseFloat(a.g12) || 0)) / 2, 0) / total).toFixed(2) : '0.00');
   const progCount = Number(Array.isArray(DASHBOARD_STATS?.by_program) ? DASHBOARD_STATS.by_program.length : getPrograms().length);
 
   document.getElementById('reportsGrid').innerHTML = [
-    { label: 'Total Applications',  value: total,    sub: 'S.Y. 2025–2026' },
+    { label: 'Total Applications', value: total, sub: 'S.Y. 2025–2026' },
     { label: 'Overall Approval Rate', value: total ? Math.round(approved / total * 100) + '%' : '0%', sub: `${approved} approved` },
     { label: 'Overall Average GWA', value: avgGWAAll, sub: 'Across all applicants' },
-    { label: 'PWD Applicants',      value: pwdCount,  sub: 'With disability' },
+    { label: 'PWD Applicants', value: pwdCount, sub: 'With disability' },
     { label: 'Indigenous Applicants', value: indigenousCount, sub: 'IP / tribe members' },
-    { label: '4Ps Beneficiaries',   value: foursCount, sub: 'Pantawid recipients' },
-    { label: 'Programs Offered',    value: progCount,  sub: 'Active programs' },
+    { label: '4Ps Beneficiaries', value: foursCount, sub: 'Pantawid recipients' },
+    { label: 'Programs Offered', value: progCount, sub: 'Active programs' },
   ].map(s => `
     <div class="report-stat-card">
       <div class="report-stat-label">${s.label}</div>
@@ -3351,7 +3329,7 @@ function renderReportTable() {
     document.getElementById('rptTableBody').innerHTML = DASHBOARD_STATS.by_program.map(row => {
       const prog = programs.find(p => p.name === row.first_choice);
       const dept = prog ? (prog.department || '—') : '—';
-      const gwa  = row.avg_gwa != null ? parseFloat(row.avg_gwa).toFixed(1) : '—';
+      const gwa = row.avg_gwa != null ? parseFloat(row.avg_gwa).toFixed(1) : '—';
       return `<tr>
         <td style="font-weight:600">${escapeHtml(row.first_choice || '—')}</td>
         <td>${escapeHtml(dept)}</td>
@@ -3405,7 +3383,7 @@ function initReportCharts() {
       .sort((a, b) => b.avg_gwa - a.avg_gwa)
       .slice(0, 8);
     gwaLabels = sorted.map(r => shortProg(r.first_choice));
-    gwaData   = sorted.map(r => parseFloat(r.avg_gwa).toFixed(1));
+    gwaData = sorted.map(r => parseFloat(r.avg_gwa).toFixed(1));
   } else {
     const progGWAs = {};
     getApplications().forEach(a => {
@@ -3420,7 +3398,7 @@ function initReportCharts() {
       .map(([k, v]) => ({ name: shortProg(k), avg: v.reduce((s, x) => s + x, 0) / v.length }))
       .sort((a, b) => b.avg - a.avg).slice(0, 8);
     gwaLabels = sorted.map(s => s.name);
-    gwaData   = sorted.map(s => +s.avg.toFixed(1));
+    gwaData = sorted.map(s => +s.avg.toFixed(1));
   }
 
   if (gwaChart) gwaChart.destroy();
@@ -3433,19 +3411,19 @@ function initReportCharts() {
   // Eligibility doughnut — prefer server-side counts
   let pwd = 0, solo = 0, indigenous = 0, fours = 0, none = 0;
   if (DASHBOARD_STATS) {
-    pwd        = DASHBOARD_STATS.pwd_count         || 0;
-    solo       = DASHBOARD_STATS.solo_parent_count || 0;
-    indigenous = DASHBOARD_STATS.indigenous_count  || 0;
-    fours      = DASHBOARD_STATS.four_ps_count     || 0;
-    none       = DASHBOARD_STATS.none_count        || 0;
+    pwd = DASHBOARD_STATS.pwd_count || 0;
+    solo = DASHBOARD_STATS.solo_parent_count || 0;
+    indigenous = DASHBOARD_STATS.indigenous_count || 0;
+    fours = DASHBOARD_STATS.four_ps_count || 0;
+    none = DASHBOARD_STATS.none_count || 0;
   } else {
     const list = getApplications();
     const yes = v => String(v || '').trim().toLowerCase() === 'yes';
-    pwd        = list.filter(a => yes(a.pwd)).length;
-    solo       = list.filter(a => yes(a.solo)).length;
+    pwd = list.filter(a => yes(a.pwd)).length;
+    solo = list.filter(a => yes(a.solo)).length;
     indigenous = list.filter(a => yes(a.indigenous)).length;
-    fours      = list.filter(a => yes(a.fours)).length;
-    none       = list.filter(a => !yes(a.pwd) && !yes(a.solo) && !yes(a.indigenous) && !yes(a.fours)).length;
+    fours = list.filter(a => yes(a.fours)).length;
+    none = list.filter(a => !yes(a.pwd) && !yes(a.solo) && !yes(a.indigenous) && !yes(a.fours)).length;
   }
   if (eligChart) eligChart.destroy();
   eligChart = new Chart(document.getElementById('eligChart'), {
@@ -3505,9 +3483,9 @@ async function initSettings() {
     // First card text inputs: interview_schedule_text, institution_name, campus_address
     const textInputMap = [
       { id: 'settingInterviewSchedule', key: 'interview_schedule_text' },
-      { id: 'settingInstitutionName',   key: 'institution_name' },
-      { id: 'settingAdmissionsEmail',   key: 'admissions_email' },
-      { id: 'settingCampusAddress',     key: 'campus_address' },
+      { id: 'settingInstitutionName', key: 'institution_name' },
+      { id: 'settingAdmissionsEmail', key: 'admissions_email' },
+      { id: 'settingCampusAddress', key: 'campus_address' },
     ];
     textInputMap.forEach(({ id, key }) => {
       const el = document.getElementById(id);
