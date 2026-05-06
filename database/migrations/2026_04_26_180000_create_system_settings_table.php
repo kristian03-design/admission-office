@@ -27,6 +27,7 @@ return new class extends Migration
             ['key' => 'institution_name',         'value' => 'Baliwag Polytechnic College', 'created_at' => now(), 'updated_at' => now()],
             ['key' => 'admissions_email',         'value' => 'admission@btech.edu.ph', 'created_at' => now(), 'updated_at' => now()],
             ['key' => 'campus_address',           'value' => 'Baliwag City, Bulacan 3006', 'created_at' => now(), 'updated_at' => now()],
+            ['key' => 'contact_address',          'value' => 'Baliwag City, Bulacan 3006', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 

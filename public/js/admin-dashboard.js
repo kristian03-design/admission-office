@@ -3491,6 +3491,10 @@ async function initSettings() {
       const el = document.getElementById(id);
       if (el && s[key] != null) el.value = s[key];
     });
+    const campusEl = document.getElementById('settingCampusAddress');
+    if (campusEl && s.campus_address == null && s.contact_address != null) {
+      campusEl.value = s.contact_address;
+    }
 
     const toggleMap = [
       { id: 'toggleAcceptApplications', key: 'accept_applications' },
@@ -3845,6 +3849,7 @@ document.addEventListener('DOMContentLoaded', () => {
       institution_name: instName,
       admissions_email: admEmail,
       campus_address: campusAddr,
+      contact_address: campusAddr,
       accept_applications: acceptApps,
       email_notifications: emailNotif,
       dashboard_notifications: dashboardNotif,

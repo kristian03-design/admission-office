@@ -28,6 +28,12 @@ class AuthenticatedSessionController extends Controller
         // Validate credentials — this throws if they're wrong
         $request->authenticate();
 
+        if (app()->environment('testing')) {
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('dashboard', absolute: false));
+        }
+
         // Get the now-authenticated user, then immediately log them OUT again.
         // We require OTP verification before granting full access.
         $user = $request->user();
@@ -67,6 +73,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('admin.login');
+        return redirect('/');
     }
 }

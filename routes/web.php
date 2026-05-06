@@ -29,7 +29,7 @@ Route::get('/dashboard', function (Request $request) {
     return view('dashboard', [
         'admissionApiToken' => $user->createToken('admin-dashboard')->plainTextToken,
     ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 // Admin authentication routes for the custom admin login page.
 Route::middleware('guest')->group(function () {
@@ -50,6 +50,12 @@ Route::get('/admin/dashboard', function (Request $request) {
     return view('dashboard', [
         'admissionApiToken' => $user->createToken('admin-dashboard')->plainTextToken,
     ]);
-})->middleware(['auth', 'verified'])->name('admin.dashboard');
+})->middleware(['auth'])->name('admin.dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 require __DIR__.'/auth.php';

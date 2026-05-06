@@ -36,6 +36,7 @@ class SettingsController extends Controller
             'institution_name',
             'admissions_email',
             'campus_address',
+            'contact_address',
             'accept_applications',
             'scholarship_applications',
         ])->pluck('value', 'key');
@@ -60,6 +61,7 @@ class SettingsController extends Controller
             'institution_name',
             'admissions_email',
             'campus_address',
+            'contact_address',
             'hero_headline',
             'hero_subheadline',
             'school_year_label',
@@ -82,6 +84,14 @@ class SettingsController extends Controller
         ];
 
         $data = $request->only($allowed);
+
+        if (array_key_exists('campus_address', $data) && ! array_key_exists('contact_address', $data)) {
+            $data['contact_address'] = $data['campus_address'];
+        }
+
+        if (array_key_exists('contact_address', $data) && ! array_key_exists('campus_address', $data)) {
+            $data['campus_address'] = $data['contact_address'];
+        }
 
         foreach ($data as $key => $value) {
             SystemSetting::set($key, $value);
