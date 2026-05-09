@@ -173,7 +173,7 @@ class NewsEventController extends Controller
         $uploadedUrls = [];
         foreach ($files as $file) {
             $path = $file->store('news-events', 'public');
-            $uploadedUrls[] = Storage::url($path);
+            $uploadedUrls[] = $path;
         }
 
         return $uploadedUrls;
@@ -228,9 +228,10 @@ class NewsEventController extends Controller
     private function deleteStoredImages(array $urls): void
     {
         foreach ($urls as $url) {
-            if ($url && str_starts_with($url, '/storage/')) {
-                $oldPath = str_replace('/storage/', '', $url);
-                Storage::disk('public')->delete($oldPath);
+            if (!$url) continue;
+            $cleanPath = str_replace('/storage/', '', $url);
+            if (Storage::disk('public')->exists($cleanPath)) {
+                Storage::disk('public')->delete($cleanPath);
             }
         }
     }

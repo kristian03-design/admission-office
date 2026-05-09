@@ -271,8 +271,8 @@
               <div class="team-card-inner">
                 <div class="team-card-header">
                   <div class="team-photo-wrap">
-                  <img
-                    src="{{ $member['image'] ? asset(ltrim($member['image'], '/')) : '' }}"
+                    <img
+                      src="{{ $member['image'] ? (str_starts_with($member['image'], 'http') ? $member['image'] : asset(str_starts_with($member['image'], 'storage/') || str_starts_with($member['image'], '/storage/') ? ltrim($member['image'], '/') : 'storage/' . $member['image'])) : '' }}"
                     alt="{{ $member['name'] }}"
                     class="team-photo"
                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"

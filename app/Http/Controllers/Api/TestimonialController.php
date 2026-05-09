@@ -29,7 +29,7 @@ class TestimonialController extends Controller
         ]);
 
         if ($request->hasFile('author_avatar_file')) {
-            $validated['author_avatar'] = Storage::url($request->file('author_avatar_file')->store('testimonials', 'public'));
+            $validated['author_avatar'] = $request->file('author_avatar_file')->store('testimonials', 'public');
         }
 
         unset($validated['author_avatar_file']);
@@ -57,7 +57,7 @@ class TestimonialController extends Controller
 
         if ($request->hasFile('author_avatar_file')) {
             $this->deleteStoredAvatar($testimonial->author_avatar);
-            $validated['author_avatar'] = Storage::url($request->file('author_avatar_file')->store('testimonials', 'public'));
+            $validated['author_avatar'] = $request->file('author_avatar_file')->store('testimonials', 'public');
         } elseif (!empty($validated['clear_avatar'])) {
             $this->deleteStoredAvatar($testimonial->author_avatar);
             $validated['author_avatar'] = null;
@@ -80,10 +80,17 @@ class TestimonialController extends Controller
         return response()->json(['message' => 'Testimonial deleted.']);
     }
 
-    private function deleteStoredAvatar(?string $url): void
+    private function deleteStoredAvatar(?string $path): void
     {
-        if ($url && str_starts_with($url, '/storage/')) {
-            Storage::disk('public')->delete(str_replace('/storage/', '', $url));
+        if (!$path) {
+            return;
+        }
+
+        // Handle both full URLs/prefixed paths and relative paths
+        $cleanPath = str_replace('/storage/', '', $path);
+        
+        if (Storage::disk('public')->exists($cleanPath)) {
+            Storage::disk('public')->delete($cleanPath);
         }
     }
 }

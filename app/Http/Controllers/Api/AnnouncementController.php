@@ -41,7 +41,7 @@ class AnnouncementController extends Controller
         ]);
 
         if ($request->hasFile('popup_image_file')) {
-            $validated['popup_image'] = Storage::url($request->file('popup_image_file')->store('announcements', 'public'));
+            $validated['popup_image'] = $request->file('popup_image_file')->store('announcements', 'public');
         }
         unset($validated['popup_image_file'], $validated['clear_popup_image']);
 
@@ -80,7 +80,7 @@ class AnnouncementController extends Controller
 
         if ($request->hasFile('popup_image_file')) {
             $this->deleteStoredImage($announcement->popup_image);
-            $validated['popup_image'] = Storage::url($request->file('popup_image_file')->store('announcements', 'public'));
+            $validated['popup_image'] = $request->file('popup_image_file')->store('announcements', 'public');
         } elseif (!empty($validated['clear_popup_image'])) {
             $this->deleteStoredImage($announcement->popup_image);
             $validated['popup_image'] = null;
@@ -121,10 +121,14 @@ class AnnouncementController extends Controller
         Cache::forget('welcome_page_data');
     }
 
-    private function deleteStoredImage(?string $url): void
+    private function deleteStoredImage(?string $path): void
     {
-        if ($url && str_starts_with($url, '/storage/')) {
-            Storage::disk('public')->delete(str_replace('/storage/', '', $url));
+        if (!$path) {
+            return;
+        }
+        $cleanPath = str_replace('/storage/', '', $path);
+        if (Storage::disk('public')->exists($cleanPath)) {
+            Storage::disk('public')->delete($cleanPath);
         }
     }
 }

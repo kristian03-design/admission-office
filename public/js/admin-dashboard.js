@@ -1828,7 +1828,9 @@ async function saveAnnouncement() {
   }
 
   const btn = document.getElementById("saveAnnouncementBtn");
+  const originalHtml = btn.innerHTML;
   btn.disabled = true;
+  btn.innerHTML = '<i class="lucide-loader animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
 
   try {
     const url = id ? `/api/announcements/${id}` : "/api/announcements";
@@ -1870,6 +1872,7 @@ async function saveAnnouncement() {
     showToast(err.message);
   } finally {
     btn.disabled = false;
+    btn.innerHTML = originalHtml;
   }
 }
 
@@ -2278,7 +2281,9 @@ async function saveNewsEvent() {
   }
 
   const btn = document.getElementById("saveNewsEventBtn");
+  const originalHtml = btn.innerHTML;
   btn.disabled = true;
+  btn.innerHTML = '<i class="lucide-loader animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
 
   try {
     const url = id ? `/api/admin/news-events/${id}` : "/api/admin/news-events";
@@ -2327,6 +2332,7 @@ async function saveNewsEvent() {
     showToast(err.message);
   } finally {
     btn.disabled = false;
+    btn.innerHTML = originalHtml;
   }
 }
 
@@ -2593,7 +2599,9 @@ async function saveTestimonial() {
   }
 
   const btn = document.getElementById("saveTestimonialBtn");
+  const originalHtml = btn.innerHTML;
   btn.disabled = true;
+  btn.innerHTML = '<i class="lucide-loader animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
 
   try {
     const payload = new FormData();
@@ -2634,6 +2642,7 @@ async function saveTestimonial() {
     showToast(err.message);
   } finally {
     btn.disabled = false;
+    btn.innerHTML = originalHtml;
   }
 }
 
@@ -2898,7 +2907,9 @@ async function saveFacultyStaff() {
   }
 
   const btn = document.getElementById("saveFacultyStaffBtn");
+  const originalHtml = btn.innerHTML;
   btn.disabled = true;
+  btn.innerHTML = '<i class="lucide-loader animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
 
   try {
     const payload = new FormData();
@@ -2940,6 +2951,7 @@ async function saveFacultyStaff() {
     showToast(err.message);
   } finally {
     btn.disabled = false;
+    btn.innerHTML = originalHtml;
   }
 }
 

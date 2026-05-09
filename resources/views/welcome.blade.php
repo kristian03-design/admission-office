@@ -196,7 +196,7 @@
               @foreach($tickerAnnouncements as $ann)
                 <span class="ticker-item">
                   @if($ann->popup_image)
-                    <img src="{{ asset(ltrim($ann->popup_image, '/')) }}" alt="" class="ticker-image" loading="lazy" decoding="async" width="34" height="34">
+                    <img src="{{ str_starts_with($ann->popup_image, 'http') ? $ann->popup_image : asset(str_starts_with($ann->popup_image, 'storage/') || str_starts_with($ann->popup_image, '/storage/') ? ltrim($ann->popup_image, '/') : 'storage/' . $ann->popup_image) }}" alt="" class="ticker-image" loading="lazy" decoding="async" width="34" height="34">
                   @endif
                   <span>{{ $ann->message }}</span>
                 </span>
@@ -205,7 +205,7 @@
               @foreach($tickerAnnouncements as $ann)
                 <span class="ticker-item">
                   @if($ann->popup_image)
-                    <img src="{{ asset(ltrim($ann->popup_image, '/')) }}" alt="" class="ticker-image" loading="lazy" decoding="async" width="34" height="34">
+                    <img src="{{ str_starts_with($ann->popup_image, 'http') ? $ann->popup_image : asset(str_starts_with($ann->popup_image, 'storage/') || str_starts_with($ann->popup_image, '/storage/') ? ltrim($ann->popup_image, '/') : 'storage/' . $ann->popup_image) }}" alt="" class="ticker-image" loading="lazy" decoding="async" width="34" height="34">
                   @endif
                   <span>{{ $ann->message }}</span>
                 </span>
@@ -489,7 +489,10 @@
                 <p class="testimonial-text">{{ $testimonial->message }}</p>
                 <div class="testimonial-author mt-6">
                   @if($testimonial->author_avatar)
-                    <div class="author-avatar" style="background-image: url('{{ $testimonial->author_avatar }}'); background-size: cover;"></div>
+                    @php
+                      $avatarUrl = str_starts_with($testimonial->author_avatar, 'http') ? $testimonial->author_avatar : asset(str_starts_with($testimonial->author_avatar, 'storage/') || str_starts_with($testimonial->author_avatar, '/storage/') ? ltrim($testimonial->author_avatar, '/') : 'storage/' . $testimonial->author_avatar);
+                    @endphp
+                    <div class="author-avatar" style="background-image: url('{{ $avatarUrl }}'); background-size: cover;"></div>
                   @else
                     <div class="author-avatar" style="background: var(--navy); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
                       {{ $authorInitials }}
@@ -781,7 +784,7 @@
         <div class="relative">
           @if($popupAnn->popup_image)
             <div class="h-72 overflow-hidden">
-              <img src="{{ asset(ltrim($popupAnn->popup_image, '/')) }}" alt="Announcement" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000" loading="lazy" decoding="async">
+              <img src="{{ str_starts_with($popupAnn->popup_image, 'http') ? $popupAnn->popup_image : asset(str_starts_with($popupAnn->popup_image, 'storage/') || str_starts_with($popupAnn->popup_image, '/storage/') ? ltrim($popupAnn->popup_image, '/') : 'storage/' . $popupAnn->popup_image) }}" alt="Announcement" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000" loading="lazy" decoding="async">
               <!-- Overlay for better text readability and depth -->
               <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-black/20"></div>
             </div>

@@ -22,7 +22,7 @@ class FacultyStaffController extends Controller
         $items = $this->readItems();
 
         if ($request->hasFile('image_file')) {
-            $validated['image'] = Storage::url($request->file('image_file')->store('faculty-staff', 'public'));
+            $validated['image'] = $request->file('image_file')->store('faculty-staff', 'public');
         }
 
         $validated['id'] = $this->uniqueId($validated['name'], $items);
@@ -53,7 +53,7 @@ class FacultyStaffController extends Controller
 
             if ($request->hasFile('image_file')) {
                 $this->deleteStoredImage($item['image'] ?? null);
-                $item['image'] = Storage::url($request->file('image_file')->store('faculty-staff', 'public'));
+                $item['image'] = $request->file('image_file')->store('faculty-staff', 'public');
             } elseif ($request->boolean('clear_image')) {
                 $this->deleteStoredImage($item['image'] ?? null);
                 $item['image'] = '';
@@ -138,10 +138,17 @@ class FacultyStaffController extends Controller
         return $id;
     }
 
-    private function deleteStoredImage(?string $url): void
+    private function deleteStoredImage(?string $path): void
     {
-        if ($url && str_starts_with($url, '/storage/')) {
-            Storage::disk('public')->delete(str_replace('/storage/', '', $url));
+        if (!$path) {
+            return;
+        }
+
+        // Handle both full URLs/prefixed paths and relative paths
+        $cleanPath = str_replace('/storage/', '', $path);
+        
+        if (Storage::disk('public')->exists($cleanPath)) {
+            Storage::disk('public')->delete($cleanPath);
         }
     }
 }
