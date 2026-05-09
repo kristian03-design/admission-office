@@ -4428,3 +4428,33 @@ async function refreshData(isInitial = false) {
     isRefreshingData = false;
   }
 }
+
+/** Manual clear for server-side cache if things feel stuck */
+async function manualClearCache() {
+  const btn = document.getElementById('manualClearCacheBtn');
+  if (!btn) return;
+  
+  const originalHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i data-iconsax="loader"></i> Refreshing...';
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
+  
+  try {
+    const res = await AdmissionAPI.clearPublicCache();
+    showToast(res.message || 'Website cache refreshed! Guests will now see the latest changes.');
+  } catch (err) {
+    console.error('Manual clear failed:', err);
+    showToast('Failed to refresh cache: ' + (err.message || 'Unknown error'), 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalHtml;
+    if (typeof iconsax !== 'undefined') iconsax.createIcons();
+  }
+}
+
+// Bind the button after DOM is ready (or via simple global)
+document.addEventListener('click', function(e) {
+  if (e.target && (e.target.id === 'manualClearCacheBtn' || e.target.closest('#manualClearCacheBtn'))) {
+    manualClearCache();
+  }
+});

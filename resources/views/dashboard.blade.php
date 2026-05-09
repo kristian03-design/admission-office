@@ -826,6 +826,18 @@
           <input type="text" class="settings-input" id="settingCampusAddress" value="Baliwag City, Bulacan 3006" />
         </div>
       </div>
+
+      <div class="settings-card" style="border: 1px solid var(--navy-pale); background: #f8fafc;">
+        <div class="settings-card-title" style="color: var(--navy-mid);">
+          <i data-iconsax="refresh"></i>
+          System Maintenance
+        </div>
+        <p class="settings-toggle-sub" style="margin-bottom: 16px;">If your public website doesn't reflect your latest changes, click the button below to force a refresh.</p>
+        <button type="button" class="btn-outline" id="manualClearCacheBtn" style="width: 100%; justify-content: center; background: white; border-color: var(--navy-pale);">
+          <i data-iconsax="rotate-right"></i>
+          Refresh Website Cache
+        </button>
+      </div>
     </div>
 
     <div class="settings-save-row">

@@ -335,6 +335,11 @@
       const data = await request('/admin/dashboard');
       return data.data || {};
     },
+
+    /** POST /api/admin/clear-cache */
+    async clearPublicCache() {
+      return request('/admin/clear-cache', { method: 'POST' });
+    },
   };
 })();
 
