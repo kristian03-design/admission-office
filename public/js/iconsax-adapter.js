@@ -1,5 +1,7 @@
 (function () {
   const ICONSAX_STYLE = 'linear';
+  const ICONSAX_SPRITE_URL = 'https://cdn.jsdelivr.net/npm/web-elements-icons@0.1.3/iconsax-sprite.svg';
+  let spritePromise = null;
 
   const iconMap = {
     'alert-circle': 'danger',
@@ -89,16 +91,44 @@
     'zoom-in': 'search-zoom-in'
   };
 
+  function ensureSprite() {
+    if (document.getElementById('iconsax-inline-sprite')) {
+      return Promise.resolve();
+    }
+
+    if (!spritePromise) {
+      spritePromise = fetch(ICONSAX_SPRITE_URL)
+        .then((response) => {
+          if (!response.ok) throw new Error('Unable to load Iconsax sprite');
+          return response.text();
+        })
+        .then((svgText) => {
+          if (document.getElementById('iconsax-inline-sprite')) return;
+
+          const holder = document.createElement('div');
+          holder.id = 'iconsax-inline-sprite';
+          holder.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;';
+          holder.innerHTML = svgText;
+          document.body.prepend(holder);
+        })
+        .catch(() => {
+          spritePromise = null;
+        });
+    }
+
+    return spritePromise;
+  }
+
   function toIconsaxName(name) {
     if (!name) return `${ICONSAX_STYLE}-element-3`;
     const normalized = String(name).trim().toLowerCase();
     const mapped = iconMap[normalized] || normalized;
-    return `iconsax:${ICONSAX_STYLE}-${mapped}`;
+    return `${ICONSAX_STYLE}-${mapped}`;
   }
 
   function copyAttributes(from, to) {
     Array.from(from.attributes).forEach((attr) => {
-      if (attr.name === 'data-lucide' || attr.name === 'data-icon') return;
+      if (attr.name === 'data-lucide' || attr.name === 'data-iconsax') return;
       to.setAttribute(attr.name, attr.value);
     });
   }
@@ -106,28 +136,31 @@
   function renderIcon(node) {
     const lucideName = node.getAttribute('data-lucide');
     const iconsaxName = node.getAttribute('data-iconsax');
-    const iconName = iconsaxName
-      ? (iconsaxName.includes(':') ? iconsaxName : `iconsax:${ICONSAX_STYLE}-${iconsaxName}`)
+    const symbolId = iconsaxName
+      ? (iconsaxName.startsWith(`${ICONSAX_STYLE}-`) ? iconsaxName : `${ICONSAX_STYLE}-${iconsaxName}`)
       : toIconsaxName(lucideName);
 
-    const span = document.createElement('span');
-    copyAttributes(node, span);
-    span.classList.add('iconsax-icon');
-    span.setAttribute('data-icon', iconName);
-    span.setAttribute('aria-hidden', node.getAttribute('aria-hidden') || 'true');
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+    copyAttributes(node, svg);
+    svg.classList.add('iconsax-icon');
+    svg.setAttribute('aria-hidden', node.getAttribute('aria-hidden') || 'true');
+    svg.setAttribute('focusable', 'false');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    use.setAttribute('href', `#${symbolId}`);
+    use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `#${symbolId}`);
+    svg.appendChild(use);
 
-    if (!span.style.width && node.style.width) span.style.width = node.style.width;
-    if (!span.style.height && node.style.height) span.style.height = node.style.height;
+    if (!svg.style.width && node.style.width) svg.style.width = node.style.width;
+    if (!svg.style.height && node.style.height) svg.style.height = node.style.height;
 
-    node.replaceWith(span);
+    node.replaceWith(svg);
   }
 
   function createIcons() {
-    document.querySelectorAll('[data-lucide], [data-iconsax]').forEach(renderIcon);
-
-    if (window.Iconify && typeof window.Iconify.scan === 'function') {
-      window.Iconify.scan();
-    }
+    ensureSprite().finally(() => {
+      document.querySelectorAll('[data-lucide], [data-iconsax]').forEach(renderIcon);
+    });
   }
 
   window.iconsax = { createIcons };
