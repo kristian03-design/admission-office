@@ -810,7 +810,7 @@
           
           <div class="w-12 h-1 bg-gradient-to-r from-[#c9933a] to-transparent my-6 rounded-full"></div>
           
-          <p class="text-gray-500 leading-relaxed text-[16px] font-medium opacity-90">
+          <p class="text-slate-700 leading-relaxed text-[17px] font-medium">
             {{ $popupAnn->message }}
           </p>
 

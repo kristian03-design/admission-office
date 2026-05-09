@@ -46,6 +46,15 @@
   box-sizing: border-box;
 }
 
+/* Iconsax Global Constraint */
+.iconsax-icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
 html {
   scroll-behavior: smooth;
 }

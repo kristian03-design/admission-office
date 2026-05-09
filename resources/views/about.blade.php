@@ -113,7 +113,7 @@
 
     .team-note {
       margin-top: 12px;
-      color: var(--gray-600);
+      color: var(--gray-800);
       font-size: .95rem;
       line-height: 1.75;
     }
@@ -124,15 +124,25 @@
       gap: 8px;
       margin-top: auto;
       padding-top: 22px;
-      color: #64748b;
+      color: #475569;
       font-size: .82rem;
       font-weight: 600;
     }
 
-    .team-footer i {
+    .team-footer i,
+    .team-footer .iconsax-icon {
       width: 17px;
       height: 17px;
+      flex-shrink: 0;
       color: #1b3557;
+    }
+
+    /* Global Iconsax constraint */
+    .iconsax-icon {
+      width: 1em;
+      height: 1em;
+      display: inline-block;
+      vertical-align: middle;
     }
 
     @media (max-width: 1024px) {
