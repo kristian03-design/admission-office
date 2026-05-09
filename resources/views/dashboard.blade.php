@@ -376,15 +376,7 @@
         <p class="page-sub">Manage available degree programs for admission</p>
       </div>
       <div class="page-actions" style="display:flex;gap:12px;">
-        <div id="programBulkActions" style="display:none;align-items:center;gap:12px;padding:6px 16px;background:var(--navy-pale);border-radius:12px;border:1px solid var(--navy-mid);margin-right:8px;">
-          <span style="font-size:13px;font-weight:600;color:var(--navy)" id="bulkSelectCount">0 Selected</span>
-          <button class="btn-ghost" style="padding:6px 12px;font-size:12px;color:var(--red)" onclick="bulkUpdatePrograms(false)">
-            <i data-iconsax="x-circle" style="width:14px;height:14px"></i> Disable Selected
-          </button>
-          <button class="btn-ghost" style="padding:6px 12px;font-size:12px;color:var(--navy)" onclick="bulkUpdatePrograms(true)">
-            <i data-iconsax="check-circle" style="width:14px;height:14px"></i> Enable Selected
-          </button>
-        </div>
+
         <button class="btn-primary" id="saveAllProgramSlotsBtn" type="button" onclick="saveAllProgramSlotsLeft()" disabled>
           <i data-iconsax="save"></i>
           Save All Changes
@@ -406,7 +398,7 @@
         <table class="app-table">
           <thead>
             <tr>
-              <th style="width:40px;"><input type="checkbox" id="selectAllPrograms" onchange="toggleAllPrograms(this)"></th>
+
               <th>Courses/Programs</th>
               <th>Department</th>
               <th>Duration</th>
