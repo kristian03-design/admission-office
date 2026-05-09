@@ -1481,7 +1481,7 @@ function renderProgramsTable() {
   }
   tbody.innerHTML = programs.map(p => {
     const count = progCounts[p.name] || 0;
-    const enabled = programEnabled[p.name] !== false;
+    const enabled = (programEnabled[p.name] !== undefined) ? !!programEnabled[p.name] : !!p.is_active;
     const dept = p.department || '—';
     const slotsLeftVal = p.slots_left != null ? Number(p.slots_left) : 0;
     const savedSlotsLeft = Number.isFinite(slotsLeftVal) ? Math.max(0, Math.min(3000, slotsLeftVal)) : 0;
@@ -3191,7 +3191,7 @@ async function deleteFacultyStaff(id) {
 }
 
 async function toggleProgram(id, name, btn) {
-  const current = programEnabled[name] !== false;
+  const current = (programEnabled[name] !== undefined) ? !!programEnabled[name] : !!program.is_active;
   const next = !current;
   const program = API_PROGRAMS.find(p => Number(p.id) === Number(id));
   const slotsLeft = Number(program && program.slots_left != null ? program.slots_left : 0);
@@ -4400,7 +4400,7 @@ async function refreshData(isInitial = false) {
     
     // Initialize programEnabled state from the API's is_active field
     API_PROGRAMS.forEach(p => {
-      programEnabled[p.name] = (p.is_active !== false);
+      programEnabled[p.name] = !!p.is_active;
     });
 
     if (isInitial) {

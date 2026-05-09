@@ -51,10 +51,10 @@
       padding: .75rem 0;
     }
     .breadcrumb-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; gap: .5rem; }
-    .breadcrumb-inner a { font-size: .78rem; color: rgba(255,255,255,.55); text-decoration: none; transition: color .2s; }
+    .breadcrumb-inner a { font-size: .9rem; color: rgba(255,255,255,.55); text-decoration: none; transition: color .2s; }
     .breadcrumb-inner a:hover { color: var(--gold-light); }
-    .breadcrumb-inner .sep { color: rgba(255,255,255,.25); font-size: .7rem; }
-    .breadcrumb-inner .current { font-size: .78rem; color: var(--gold-light); font-weight: 500; }
+    .breadcrumb-inner .sep { color: rgba(255,255,255,.25); font-size: .8rem; }
+    .breadcrumb-inner .current { font-size: .9rem; color: var(--gold-light); font-weight: 500; }
 
     /* â”€â”€â”€ Hero â”€â”€â”€ */
     .program-hero {
@@ -93,8 +93,8 @@
       background: rgba(201,147,58,.15);
       border: 1px solid rgba(201,147,58,.3);
       color: var(--gold-light);
-      font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
-      padding: .35rem .9rem; border-radius: 999px;
+      font-size: .85rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      padding: .45rem 1.1rem; border-radius: 999px;
       margin-bottom: 1.5rem;
     }
     .hero-dept-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
@@ -133,8 +133,8 @@
       flex-shrink: 0;
     }
     .hero-meta-icon svg { width: 18px; height: 18px; }
-    .hero-meta-label { font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); }
-    .hero-meta-value { font-size: .92rem; font-weight: 600; color: #fff; margin-top: .1rem; }
+    .hero-meta-label { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.45); }
+    .hero-meta-value { font-size: 1.05rem; font-weight: 700; color: #fff; margin-top: .2rem; }
 
     /* Status badge */
     .status-open  { color: #4ade80; }
@@ -240,9 +240,9 @@
     /* Section tags */
     .section-tag {
       display: inline-block;
-      font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      font-size: .85rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
       color: var(--gold);
-      padding: .3rem .85rem;
+      padding: .45rem 1.1rem;
       background: var(--gold-pale);
       border-radius: 999px;
       margin-bottom: 1rem;

@@ -56,7 +56,7 @@ class ApplicationController extends Controller
                 $newSlotsLeft = max(0, (int) $program->slots_left - 1);
                 $program->update([
                     'slots_left' => $newSlotsLeft,
-                    'is_active' => \Illuminate\Support\Facades\DB::raw($newSlotsLeft > 0 ? 'true' : 'false')
+                    'is_active' => $newSlotsLeft > 0
                 ]);
             }
 
@@ -162,7 +162,7 @@ class ApplicationController extends Controller
                 $program->increment('slots_left');
                 // Re-activate if it was full
                 if (!$program->is_active && $program->slots_left > 0) {
-                    $program->update(['is_active' => \Illuminate\Support\Facades\DB::raw('true')]);
+                    $program->update(['is_active' => true]);
                 }
             }
         }

@@ -189,8 +189,8 @@
     <div style="max-width: 860px; margin: 0 auto; padding: 0 2rem;">
 
       <a href="{{ route('news-events') }}"
-         style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--navy-mid);text-decoration:none;margin-bottom:2rem;">
-        <i data-iconsax="chevron-left" style="width:15px;height:15px;"></i>
+         style="display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:600;color:var(--navy-mid);text-decoration:none;margin-bottom:2rem;">
+        <i data-iconsax="chevron-left" style="width:17px;height:17px;"></i>
         Back to News &amp; Events
       </a>
 
@@ -232,19 +232,19 @@
         @endif
       </div>
 
-      <h1 style="font-size:2rem;font-weight:600;line-height:1.25;margin-top:1.25rem;font-family:'Cormorant Garamond',Georgia,serif;color:var(--navy-dark);">
+      <h1 style="font-size:2.8rem;font-weight:700;line-height:1.2;margin-top:1.25rem;font-family:'Cormorant Garamond',Georgia,serif;color:var(--navy-dark);">
         {{ $item->title }}
       </h1>
 
       @if($item->summary)
-        <p style="font-size:1.05rem;line-height:1.75;margin-top:1rem;color:var(--gray-600);">
+        <p style="font-size:1.25rem;line-height:1.75;margin-top:1.25rem;color:var(--gray-600);font-weight:500;">
           {{ $item->summary }}
         </p>
       @endif
 
       @if($item->content)
-        <div style="height:1px;background:rgba(0,0,0,.08);margin:1.75rem 0;"></div>
-        <div style="font-size:.95rem;color:var(--gray-600);line-height:1.9;white-space:pre-line;">
+        <div style="height:1px;background:rgba(0,0,0,.08);margin:2.5rem 0;"></div>
+        <div style="font-size:1.1rem;color:var(--gray-600);line-height:2;white-space:pre-line;">
           {{ $item->content }}
         </div>
       @endif

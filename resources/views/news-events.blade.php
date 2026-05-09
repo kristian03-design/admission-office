@@ -19,7 +19,7 @@
 <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-        <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
+        <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="52" height="52" decoding="async"></div>
         <div class="leading-tight">
           <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSION OFFICE' }}</p>
           <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
@@ -103,7 +103,7 @@
             <article class="program-card">
               <div class="program-card-inner">
                 @if(count($gallery))
-                  <img src="{{ $gallery[0] }}" alt="{{ $item->title }}" class="w-full h-44 object-cover rounded-lg mb-4" loading="lazy" decoding="async">
+                  <img src="{{ $gallery[0] }}" alt="{{ $item->title }}" class="w-full h-56 object-cover rounded-lg mb-4" loading="lazy" decoding="async">
                 @endif
                 <div class="program-badge {{ $item->type === 'event' ? 'badge--hosp' : 'badge--biz' }}">
                   {{ strtoupper($item->type) }}
