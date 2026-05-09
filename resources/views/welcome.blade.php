@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Baliwag Polytechnic College — Admissions</title>
+  <title>BTECH — Admissions Office</title>
   <script>window.ICONSAX_SPRITE_PATH = "{{ asset('assets/iconsax-sprite.svg') }}";</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
