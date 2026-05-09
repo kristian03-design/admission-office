@@ -38,10 +38,10 @@ class ProgramController extends Controller
         
         // Auto-deactivate if slots reach 0
         if ($slotsLeft <= 0) {
-            $program->is_active = false;
+            $program->update(['is_active' => false]);
+        } else {
+            $program->save();
         }
-        
-        $program->save();
         Cache::forget('welcome_page_data');
 
         return response()->json([
@@ -66,8 +66,7 @@ class ProgramController extends Controller
             ], 422);
         }
 
-        $program->is_active = $isActive;
-        $program->save();
+        $program->update(['is_active' => (bool)$isActive]);
         Cache::forget('welcome_page_data');
 
         return response()->json([

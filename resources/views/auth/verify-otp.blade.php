@@ -43,9 +43,9 @@
     .card-sub { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 32px; }
     .card-sub span { color: var(--gold-light); font-weight: 600; }
 
-    .otp-inputs { display: flex; gap: 10px; justify-content: center; margin-bottom: 28px; }
-    .otp-digit { width: 52px; height: 60px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,.15); background: rgba(255,255,255,.07); color: #fff; font-size: 28px; font-weight: 700; text-align: center; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color .2s, background .2s, box-shadow .2s; caret-color: var(--gold); }
-    .otp-digit:focus { border-color: rgba(201,147,58,.7); background: rgba(255,255,255,.1); box-shadow: 0 0 0 3px rgba(201,147,58,.15); }
+    .otp-inputs { display: flex; gap: 8px; justify-content: center; margin-bottom: 32px; }
+    .otp-digit { width: 46px; height: 56px; flex-shrink: 0; border-radius: 12px; border: 1.5px solid rgba(255,255,255,.15); background: rgba(255,255,255,.07); color: #fff; font-size: 24px; font-weight: 700; text-align: center; font-family: 'DM Sans', sans-serif; outline: none; transition: all .2s cubic-bezier(0.4, 0, 0.2, 1); caret-color: var(--gold); }
+    .otp-digit:focus { border-color: var(--gold); background: rgba(255,255,255,0.1); box-shadow: 0 0 0 4px rgba(201, 147, 58, 0.15); transform: translateY(-2px); }
     .otp-digit.filled { border-color: rgba(201,147,58,.5); }
 
     .btn-primary { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--gold) 0%, #b8812e 100%); border: none; border-radius: 11px; cursor: pointer; font-size: 14px; font-weight: 700; font-family: 'DM Sans', sans-serif; color: #fff; letter-spacing: .3px; transition: transform .18s, box-shadow .18s, filter .18s; box-shadow: 0 6px 24px rgba(201,147,58,.35); display: flex; align-items: center; justify-content: center; gap: 8px; }

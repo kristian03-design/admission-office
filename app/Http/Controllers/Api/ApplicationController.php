@@ -54,9 +54,10 @@ class ApplicationController extends Controller
 
                 // Decrease slots and auto-disable once full.
                 $newSlotsLeft = max(0, (int) $program->slots_left - 1);
-                $program->slots_left = $newSlotsLeft;
-                $program->is_active = $newSlotsLeft > 0 ? true : false;
-                $program->save();
+                $program->update([
+                    'slots_left' => $newSlotsLeft,
+                    'is_active' => $newSlotsLeft > 0 ? true : false
+                ]);
             }
 
             if (!empty($data['second_choice'])) {
