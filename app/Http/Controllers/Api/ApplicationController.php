@@ -108,7 +108,7 @@ class ApplicationController extends Controller
                 $newSlotsLeft = max(0, (int) $program->slots_left - 1);
                 $program->update([
                     'slots_left' => $newSlotsLeft,
-                    'is_active' => $newSlotsLeft > 0,
+                    'is_active' => $this->databaseBoolean($newSlotsLeft > 0),
                 ]);
             }
 
@@ -256,7 +256,7 @@ class ApplicationController extends Controller
                 $program->increment('slots_left');
                 // Re-activate if it was full
                 if (!$program->is_active && $program->slots_left > 0) {
-                    $program->update(['is_active' => true]);
+                    $program->update(['is_active' => $this->databaseBoolean(true)]);
                 }
             }
         }
@@ -283,5 +283,14 @@ class ApplicationController extends Controller
         return $storedHash !== ''
             && $token !== ''
             && hash_equals($storedHash, hash('sha256', $token));
+    }
+
+    private function databaseBoolean(bool $value): bool|\Illuminate\Contracts\Database\Query\Expression
+    {
+        if (DB::connection()->getDriverName() === 'pgsql') {
+            return DB::raw($value ? 'true' : 'false');
+        }
+
+        return $value;
     }
 }

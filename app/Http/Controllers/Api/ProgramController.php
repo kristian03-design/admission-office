@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Program;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ProgramController extends Controller
 {
@@ -35,7 +36,7 @@ class ProgramController extends Controller
         $updateData = ['slots_left' => $slotsLeft];
         // Auto-deactivate if slots reach 0
         if ($slotsLeft <= 0) {
-            $updateData['is_active'] = false;
+            $updateData['is_active'] = $this->databaseBoolean(false);
         }
 
         $program->update($updateData);
@@ -65,7 +66,7 @@ class ProgramController extends Controller
         }
 
         $program->update([
-            'is_active' => $isActive,
+            'is_active' => $this->databaseBoolean($isActive),
         ]);
         $program->refresh();
         Cache::forget('welcome_page_data');
@@ -74,5 +75,14 @@ class ProgramController extends Controller
             'message' => 'Program status updated successfully',
             'data' => $program,
         ]);
+    }
+
+    private function databaseBoolean(bool $value): bool|\Illuminate\Contracts\Database\Query\Expression
+    {
+        if (DB::connection()->getDriverName() === 'pgsql') {
+            return DB::raw($value ? 'true' : 'false');
+        }
+
+        return $value;
     }
 }
