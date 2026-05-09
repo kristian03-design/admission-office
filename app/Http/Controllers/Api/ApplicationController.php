@@ -16,17 +16,69 @@ use App\Mail\ApplicationSubmitted;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Validation\Rule;
 
 
 class ApplicationController extends Controller
 {
     public function submitPublic(Request $request)
     {
-        // Simple validation or accept all for now
-        $data = $request->all();
-        if (empty($data['reference_number'])) {
-            $data['reference_number'] = 'BTECH-' . date('Y') . '-' . str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
-        }
+        $data = $request->validate([
+            'applicant_type' => ['nullable', 'string', 'max:80'],
+            'last_name' => ['nullable', 'string', 'max:255'],
+            'first_name' => ['nullable', 'string', 'max:255'],
+            'middle_name' => ['nullable', 'string', 'max:255'],
+            'suffix' => ['nullable', 'string', 'max:50'],
+            'date_of_birth' => ['nullable', 'date', 'before:today'],
+            'place_of_birth' => ['nullable', 'string', 'max:255'],
+            'sex' => ['nullable', 'string', 'max:50'],
+            'civil_status' => ['nullable', 'string', 'max:50'],
+            'religion' => ['nullable', 'string', 'max:100'],
+            'citizenship' => ['nullable', 'string', 'max:100'],
+            'email' => ['nullable', 'email:rfc', 'max:255'],
+            'contact_number' => ['nullable', 'string', 'max:30'],
+            'permanent_address' => ['nullable', 'string', 'max:2000'],
+            'present_address' => ['nullable', 'string', 'max:2000'],
+            'father_name' => ['nullable', 'string', 'max:255'],
+            'father_occupation' => ['nullable', 'string', 'max:255'],
+            'father_contact' => ['nullable', 'string', 'max:30'],
+            'mother_name' => ['nullable', 'string', 'max:255'],
+            'mother_occupation' => ['nullable', 'string', 'max:255'],
+            'mother_contact' => ['nullable', 'string', 'max:30'],
+            'guardian_name' => ['nullable', 'string', 'max:255'],
+            'guardian_relationship' => ['nullable', 'string', 'max:100'],
+            'guardian_contact' => ['nullable', 'string', 'max:30'],
+            'elementary_school' => ['nullable', 'string', 'max:255'],
+            'elementary_year_graduated' => ['nullable', 'integer', 'min:1900', 'max:' . (date('Y') + 1)],
+            'junior_high_school' => ['nullable', 'string', 'max:255'],
+            'junior_high_year_graduated' => ['nullable', 'integer', 'min:1900', 'max:' . (date('Y') + 1)],
+            'senior_high_school' => ['nullable', 'string', 'max:255'],
+            'senior_high_strand' => ['nullable', 'string', 'max:255'],
+            'senior_high_year_graduated' => ['nullable', 'integer', 'min:1900', 'max:' . (date('Y') + 1)],
+            'previous_college' => ['nullable', 'string', 'max:255'],
+            'previous_college_program' => ['nullable', 'string', 'max:255'],
+            'previous_college_year_last_attended' => ['nullable', 'integer', 'min:1900', 'max:' . (date('Y') + 1)],
+            'scholarship_type' => ['nullable', 'string', 'max:255'],
+            'scholarship_name' => ['nullable', 'string', 'max:255'],
+            'health_conditions' => ['nullable', 'string', 'max:2000'],
+            'emergency_contact_name' => ['nullable', 'string', 'max:255'],
+            'emergency_contact_relationship' => ['nullable', 'string', 'max:100'],
+            'emergency_contact_number' => ['nullable', 'string', 'max:30'],
+            'gwa_grade_11' => ['nullable', 'numeric', 'min:60', 'max:100'],
+            'gwa_grade_12' => ['nullable', 'numeric', 'min:60', 'max:100'],
+            'first_choice' => ['nullable', 'string', 'max:255'],
+            'second_choice' => ['nullable', 'string', 'max:255'],
+            'pwd' => ['nullable', 'string', 'max:20'],
+            'solo_parent' => ['nullable', 'string', 'max:20'],
+            'indigenous' => ['nullable', 'string', 'max:20'],
+            'four_ps' => ['nullable', 'string', 'max:20'],
+            'academic_year' => ['nullable', 'string', 'max:20'],
+            'semester' => ['nullable', 'string', 'max:50'],
+        ]);
+
+        $uploadToken = Str::random(64);
+        $data['reference_number'] = $this->generateReferenceNumber();
+        $data['document_upload_token'] = hash('sha256', $uploadToken);
         $data['status'] = 'pending';
         $data['submitted_at'] = now();
 
@@ -56,7 +108,7 @@ class ApplicationController extends Controller
                 $newSlotsLeft = max(0, (int) $program->slots_left - 1);
                 $program->update([
                     'slots_left' => $newSlotsLeft,
-                    'is_active' => \Illuminate\Support\Facades\DB::raw($newSlotsLeft > 0 ? 'TRUE' : 'FALSE')
+                    'is_active' => $newSlotsLeft > 0,
                 ]);
             }
 
@@ -85,20 +137,46 @@ class ApplicationController extends Controller
             }
         }
 
-        return response()->json(['data' => $application], 201);
+        $payload = $application->toArray();
+        unset($payload['document_upload_token']);
+        $payload['upload_token'] = $uploadToken;
+
+        return response()->json(['data' => $payload], 201);
     }
 
     public function uploadDocument(Request $request, string $id)
     {
         $application = Application::findOrFail($id);
         
-        $request->validate([
-            'document_type' => 'required|string',
-            'file' => 'required|file',
+        $validated = $request->validate([
+            'document_type' => ['required', 'string', Rule::in([
+                'id_photo',
+                'photo',
+                'birth_certificate',
+                'report_card',
+                'good_moral',
+                'tor',
+                'diploma',
+                'other',
+            ])],
+            'upload_token' => ['nullable', 'string', 'size:64'],
+            'file' => [
+                'required',
+                'file',
+                'max:5120',
+                'mimes:jpg,jpeg,png,webp,pdf',
+                'mimetypes:image/jpeg,image/png,image/webp,application/pdf',
+            ],
         ]);
 
-        $type = $request->document_type;
-        $path = $request->file('file')->store('applications/'.$id, 'supabase');
+        if (! $this->validUploadToken($application, (string) ($validated['upload_token'] ?? ''))) {
+            abort(403, 'Invalid or missing document upload token.');
+        }
+
+        $type = $validated['document_type'];
+        $file = $request->file('file');
+        $extension = strtolower($file->getClientOriginalExtension() ?: $file->extension());
+        $path = $file->storeAs('applications/'.$id, Str::uuid().'.'.$extension, 'supabase');
         
         /** @var \Illuminate\Filesystem\FilesystemAdapter $supabase */
         $supabase = Storage::disk('supabase');
@@ -119,17 +197,25 @@ class ApplicationController extends Controller
             $application->update([$columnMap[$type] => $url]);
         }
 
-        return response()->json(['data' => $application]);
+        return response()->json(['data' => $application->makeHidden('document_upload_token')]);
     }
 
     public function index(Request $request)
     {
         $query = Application::with('program');
         
-        if ($request->has('status')) {
-            $query->where('status', $request->status);
+        $validated = $request->validate([
+            'status' => ['nullable', 'string', Rule::in([
+                'pending', 'submitted', 'under_review', 'pending_docs', 'for_interview',
+                'approved', 'accepted', 'enrolled', 'rejected', 'cancelled',
+            ])],
+            'per_page' => ['nullable', 'integer', 'min:1', 'max:100'],
+        ]);
+
+        if (!empty($validated['status'])) {
+            $query->where('status', $validated['status']);
         }
-        $applications = $query->latest()->paginate($request->input('per_page', 15));
+        $applications = $query->latest()->paginate($validated['per_page'] ?? 15);
 
         return response()->json(['data' => $applications]);
     }
@@ -144,9 +230,17 @@ class ApplicationController extends Controller
     {
         $application = Application::findOrFail($id);
         
+        $validated = $request->validate([
+            'status' => ['required', Rule::in([
+                'pending', 'submitted', 'under_review', 'pending_docs', 'for_interview',
+                'approved', 'accepted', 'enrolled', 'rejected', 'cancelled',
+            ])],
+            'notes' => ['nullable', 'string', 'max:5000'],
+        ]);
+
         $application->update([
-            'status' => $request->status,
-            'admin_notes' => $request->notes ?? $application->admin_notes,
+            'status' => $validated['status'],
+            'admin_notes' => $validated['notes'] ?? $application->admin_notes,
         ]);
 
         return response()->json(['data' => $application]);
@@ -162,7 +256,7 @@ class ApplicationController extends Controller
                 $program->increment('slots_left');
                 // Re-activate if it was full
                 if (!$program->is_active && $program->slots_left > 0) {
-                    $program->update(['is_active' => \Illuminate\Support\Facades\DB::raw('TRUE')]);
+                    $program->update(['is_active' => true]);
                 }
             }
         }
@@ -171,5 +265,23 @@ class ApplicationController extends Controller
         Cache::forget('welcome_page_data');
 
         return response()->json(['message' => 'Application deleted successfully']);
+    }
+
+    private function generateReferenceNumber(): string
+    {
+        do {
+            $reference = 'BTECH-' . date('Y') . '-' . str_pad((string) random_int(1, 999999), 6, '0', STR_PAD_LEFT);
+        } while (Application::where('reference_number', $reference)->exists());
+
+        return $reference;
+    }
+
+    private function validUploadToken(Application $application, string $token): bool
+    {
+        $storedHash = (string) $application->document_upload_token;
+
+        return $storedHash !== ''
+            && $token !== ''
+            && hash_equals($storedHash, hash('sha256', $token));
     }
 }

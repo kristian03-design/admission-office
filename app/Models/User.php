@@ -24,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'email_verified_at',
+        'is_admin',
         'password',
         'login_otp',
         'login_otp_expires_at',
@@ -48,7 +49,15 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'is_admin' => 'boolean',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        $adminEmail = (string) env('ADMIN_EMAIL', '');
+
+        return (bool) $this->is_admin || ($adminEmail !== '' && hash_equals($adminEmail, (string) $this->email));
     }
 }

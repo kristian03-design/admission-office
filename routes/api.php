@@ -15,16 +15,19 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/login', [AuthController::class, 'login'])->middleware('throttle:api-login');
 Route::get('/programs', [ProgramController::class, 'index']);
 Route::get('/settings', [SettingsController::class, 'publicShow']);
-Route::post('/applications/submit-public', [ApplicationController::class, 'submitPublic']);
-Route::post('/applications/{id}/documents', [ApplicationController::class, 'uploadDocument']);
+Route::post('/applications/submit-public', [ApplicationController::class, 'submitPublic'])->middleware('throttle:public-form');
+Route::post('/applications/{id}/documents', [ApplicationController::class, 'uploadDocument'])->middleware('throttle:document-upload');
 Route::get('/news-events', [NewsEventController::class, 'publicIndex']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/auth/me', [AuthController::class, 'me']);
     Route::post('/auth/password', [AuthController::class, 'updatePassword']);
+});
+
+Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(function () {
     
     // Application management
     Route::get('/applications', [ApplicationController::class, 'index']);

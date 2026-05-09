@@ -15,7 +15,8 @@
   <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=8" />
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
-    window.ADMISSION_API_BASE = "{{ url('/api') }}";
+    // Dynamically detect API root relative to the current admin path
+    window.ADMISSION_API_BASE = window.location.origin + window.location.pathname.split('/admin')[0].replace(/\/+$/, '') + '/api';
     sessionStorage.setItem('_at', "{{ $admissionApiToken ?? session('admission_api_token') ?? '' }}");
   </script>
   <script src="{{ asset('js/api-config.js') }}?v=7"></script>

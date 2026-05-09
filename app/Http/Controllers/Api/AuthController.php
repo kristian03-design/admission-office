@@ -22,6 +22,13 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             /** @var \App\Models\User $user */
             $user = Auth::user();
+
+            if (! $user->isAdmin()) {
+                Auth::logout();
+
+                return response()->json(['message' => 'This account is not authorized for admin access.'], 403);
+            }
+
             $token = $user->createToken('auth_token')->plainTextToken;
             return response()->json([
                 'access_token' => $token,

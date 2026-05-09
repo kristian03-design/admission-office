@@ -39,8 +39,10 @@ Route::middleware('guest')->group(function () {
 Route::get('/admin/verify-otp', [\App\Http\Controllers\Auth\OtpVerificationController::class, 'create'])
     ->name('admin.otp');
 Route::post('/admin/verify-otp', [\App\Http\Controllers\Auth\OtpVerificationController::class, 'store'])
+    ->middleware('throttle:5,1')
     ->name('admin.otp.submit');
 Route::post('/admin/resend-otp', [\App\Http\Controllers\Auth\OtpVerificationController::class, 'resend'])
+    ->middleware('throttle:3,1')
     ->name('admin.otp.resend');
 
 // Admin Forgot Password (custom named routes so we can redirect correctly)

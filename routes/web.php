@@ -42,9 +42,9 @@ Route::redirect('/admissions/apply', '/apply', 301);
 
 // Compatibility for stale public form assets that call the endpoint without
 // the /api or /backend prefix.
-Route::post('/applications/submit-public', [ApplicationController::class, 'submitPublic']);
-Route::post('/applications/{id}/documents', [ApplicationController::class, 'uploadDocument']);
-Route::middleware('auth:sanctum')->group(function () {
+Route::post('/applications/submit-public', [ApplicationController::class, 'submitPublic'])->middleware('throttle:public-form');
+Route::post('/applications/{id}/documents', [ApplicationController::class, 'uploadDocument'])->middleware('throttle:document-upload');
+Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(function () {
     Route::get('/applications', [ApplicationController::class, 'index']);
     Route::get('/applications/{id}', [ApplicationController::class, 'show']);
     Route::patch('/applications/{id}/status', [ApplicationController::class, 'updateStatus']);
@@ -60,7 +60,7 @@ Route::get('/dashboard', function (Request $request) {
     return view('dashboard', [
         'admissionApiToken' => $user->createToken('admin-dashboard')->plainTextToken,
     ]);
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth', 'admin'])->name('dashboard');
 
 // Admin authentication routes for the custom admin login page.
 Route::redirect('/admin-login{extension?}', '/admin/login', 301)
@@ -81,6 +81,7 @@ Route::get('/admin/dashboard', function (Request $request) {
     }
 
     $user = $request->user();
+    abort_unless($user->isAdmin(), 403, 'This action requires an administrator account.');
     $user->tokens()->where('name', 'admin-dashboard')->delete();
 
     return view('dashboard', [
@@ -90,7 +91,7 @@ Route::get('/admin/dashboard', function (Request $request) {
 
 // Compatibility for stale dashboard assets that call /admin/settings instead of
 // /api/admin/settings. Keep Sanctum auth so this remains admin-only.
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(function () {
     Route::get('/admin/settings', [SettingsController::class, 'show']);
     Route::post('/admin/settings', [SettingsController::class, 'update']);
     Route::put('/admin/settings', [SettingsController::class, 'update']);

@@ -111,13 +111,18 @@
     /** GET /api/programs â€“ returns array of { id, code, name, department, ... } */
     async getPrograms() {
       try {
+        console.log('[API] Fetching programs...');
         const data = await request('/programs');
-        const list = data.data ?? data.programs;
-        if (Array.isArray(list)) return list;
+        const list = data.data ?? data.programs ?? (Array.isArray(data) ? data : null);
+        if (Array.isArray(list)) {
+          console.log('[API] Real-time programs loaded.');
+          return list;
+        }
+        throw new Error('Unexpected data format');
       } catch (error) {
-        console.warn('Programs API unavailable, using JSON fallback:', error);
+        console.warn('[API] Programs fetch failed, using fallback:', error.message);
+        return getJsonProgramsFallback();
       }
-      return getJsonProgramsFallback();
     },
 
     /** PATCH /api/programs/:id/slots-left */
@@ -240,10 +245,11 @@
     },
 
     /** POST /api/applications/:id/documents â€“ upload file (requires auth) */
-    async uploadDocument(applicationId, documentType, file) {
+    async uploadDocument(applicationId, documentType, file, uploadToken) {
       const form = new FormData();
       form.append('document_type', documentType);
       form.append('file', file);
+      if (uploadToken) form.append('upload_token', uploadToken);
       const data = await request('/applications/' + applicationId + '/documents', {
         method: 'POST',
         body: form,
@@ -273,12 +279,18 @@
 
     /** GET /api/applications (with optional ?status= & page= & per_page=) */
     async getApplications(params = {}) {
-      const qs = new URLSearchParams(params).toString();
-      const data = await request('/applications' + (qs ? '?' + qs : ''));
-      const payload = data.data || data;
-      if (Array.isArray(payload)) return payload;
-      if (payload && Array.isArray(payload.data)) return payload.data;
-      return [];
+      try {
+        console.log('[API] Fetching applications...');
+        const qs = new URLSearchParams(params).toString();
+        const data = await request('/applications' + (qs ? '?' + qs : ''));
+        const payload = data.data || data;
+        const list = Array.isArray(payload) ? payload : (payload && Array.isArray(payload.data) ? payload.data : []);
+        console.log('[API] Applications loaded:', list.length);
+        return list;
+      } catch (error) {
+        console.error('[API] Applications fetch failed:', error.message);
+        return [];
+      }
     },
 
     /** GET /api/applications/:id â€“ full application + applicant details */

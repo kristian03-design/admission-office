@@ -12,6 +12,10 @@ class Application extends Model
 
     protected $guarded = ['id'];
 
+    protected $hidden = [
+        'document_upload_token',
+    ];
+
     protected $casts = [
         'date_of_birth' => 'date',
         'submitted_at' => 'datetime',

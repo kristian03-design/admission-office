@@ -33,7 +33,7 @@ class AdminRoutingTest extends TestCase
 
     public function test_authenticated_admin_can_render_dashboard(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['is_admin' => true]);
 
         $this->actingAs($user)
             ->get('/admin/dashboard')
@@ -43,7 +43,7 @@ class AdminRoutingTest extends TestCase
 
     public function test_legacy_admin_news_events_endpoint_can_save(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['is_admin' => true]);
         $token = $user->createToken('admin-dashboard')->plainTextToken;
 
         $this->withHeader('Authorization', 'Bearer '.$token)
@@ -65,7 +65,7 @@ class AdminRoutingTest extends TestCase
 
     public function test_legacy_admin_content_endpoints_can_save(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['is_admin' => true]);
         $token = $user->createToken('admin-dashboard')->plainTextToken;
 
         $this->withHeader('Authorization', 'Bearer '.$token)
@@ -98,7 +98,7 @@ class AdminRoutingTest extends TestCase
 
     public function test_legacy_interviews_endpoint_can_load_saved_schedules(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['is_admin' => true]);
         $token = $user->createToken('admin-dashboard')->plainTextToken;
 
         $this->withHeader('Authorization', 'Bearer '.$token)
@@ -109,7 +109,7 @@ class AdminRoutingTest extends TestCase
 
     public function test_legacy_program_slots_endpoint_persists_saved_value(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['is_admin' => true]);
         $token = $user->createToken('admin-dashboard')->plainTextToken;
         $program = Program::create([
             'code' => 'TST',
@@ -138,7 +138,7 @@ class AdminRoutingTest extends TestCase
 
     public function test_program_status_endpoint_persists_disabled_state(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['is_admin' => true]);
         $token = $user->createToken('admin-dashboard')->plainTextToken;
         $program = Program::create([
             'code' => 'CLS',

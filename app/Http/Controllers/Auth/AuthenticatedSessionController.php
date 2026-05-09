@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Mail;
 
@@ -37,6 +38,15 @@ class AuthenticatedSessionController extends Controller
         // Get the now-authenticated user, then immediately log them OUT again.
         // We require OTP verification before granting full access.
         $user = $request->user();
+
+        if (! $user->isAdmin()) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return back()->withErrors(['email' => 'This account is not authorized for admin access.'])->withInput();
+        }
+
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
@@ -44,7 +54,7 @@ class AuthenticatedSessionController extends Controller
         // Generate a 6-digit OTP and store it in the DB
         $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
         $user->update([
-            'login_otp'            => $otp,
+            'login_otp'            => Hash::make($otp),
             'login_otp_expires_at' => now()->addMinutes(10),
         ]);
 

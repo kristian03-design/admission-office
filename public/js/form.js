@@ -1078,10 +1078,11 @@ async function uploadSubmittedFiles(data) {
   if (typeof AdmissionAPI === 'undefined') return;
   const applicationId = data && (data.id || data.application_id);
   if (!applicationId) return;
+  const uploadToken = data && data.upload_token;
 
   if (uploadedPic && uploadedPic.file) {
     try {
-      await AdmissionAPI.uploadDocument(applicationId, 'id_photo', uploadedPic.file);
+      await AdmissionAPI.uploadDocument(applicationId, 'id_photo', uploadedPic.file, uploadToken);
     } catch (err) {
       console.warn('ID photo upload failed after submission:', err);
     }
@@ -1091,7 +1092,7 @@ async function uploadSubmittedFiles(data) {
     for (const doc of uploadedDocs) {
       if (!doc.file) continue;
       try {
-        await AdmissionAPI.uploadDocument(applicationId, 'other', doc.file);
+        await AdmissionAPI.uploadDocument(applicationId, 'other', doc.file, uploadToken);
       } catch (err) {
         console.warn('Supporting document upload failed after submission:', err);
       }

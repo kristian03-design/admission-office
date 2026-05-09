@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Mail;
 
@@ -52,7 +53,7 @@ class OtpVerificationController extends Controller
         }
 
         // Check OTP value
-        if ($request->otp !== $user->login_otp) {
+        if (! Hash::check((string) $request->otp, (string) $user->login_otp)) {
             return back()->withErrors(['otp' => 'Invalid OTP code. Please try again.']);
         }
 
@@ -91,7 +92,7 @@ class OtpVerificationController extends Controller
         // Generate new OTP
         $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
         $user->update([
-            'login_otp' => $otp,
+            'login_otp' => Hash::make($otp),
             'login_otp_expires_at' => now()->addMinutes(10),
         ]);
 
