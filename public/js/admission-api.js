@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Admission Office â€“ frontend API helper (no modules)
  * Load api-config.js before this. Use: AdmissionAPI.getPrograms(), AdmissionAPI.submitPublic(), etc.
  */
@@ -43,6 +43,9 @@
       'Accept': 'application/json',
       ...options.headers,
     };
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    if (csrfToken) headers['X-CSRF-TOKEN'] = csrfToken;
+
     if (options.body && !(options.body instanceof FormData)) {
       headers['Content-Type'] = 'application/json';
     }
