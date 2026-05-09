@@ -24,7 +24,7 @@
   </script>
   <script src="{{ asset('js/api-config.js') }}?v=8"></script>
   <script src="{{ asset('js/admission-api.js') }}?v=17"></script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=39" defer></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=40" defer></script>
 </head>
 <body>
   @include('partials.site-loader')

@@ -3662,22 +3662,61 @@ function addApplicantToSchedule(appId) {
 
 // Cached server-side analytics from /api/admin/dashboard
 let DASHBOARD_STATS = null;
+let reportsRenderKey = '';
+let reportsStatsPromise = null;
+
+function buildReportsRenderKey() {
+  const apps = getApplications();
+  const programs = getPrograms();
+  const statsKey = DASHBOARD_STATS
+    ? JSON.stringify({
+      total: DASHBOARD_STATS.total_applications,
+      approved: DASHBOARD_STATS.approved_applications,
+      avg: DASHBOARD_STATS.avg_gwa,
+      pwd: DASHBOARD_STATS.pwd_count,
+      solo: DASHBOARD_STATS.solo_parent_count,
+      indigenous: DASHBOARD_STATS.indigenous_count,
+      fours: DASHBOARD_STATS.four_ps_count,
+      none: DASHBOARD_STATS.none_count,
+      programs: Array.isArray(DASHBOARD_STATS.by_program) ? DASHBOARD_STATS.by_program.length : 0
+    })
+    : 'no-stats';
+  const firstApp = apps.length ? apps[0] : null;
+  const lastApp = apps.length ? apps[apps.length - 1] : null;
+  return [
+    statsKey,
+    apps.length,
+    programs.length,
+    firstApp ? `${firstApp.id || ''}:${firstApp.status || ''}:${firstApp.filed || ''}` : '',
+    lastApp ? `${lastApp.id || ''}:${lastApp.status || ''}:${lastApp.filed || ''}` : ''
+  ].join('|');
+}
 
 async function initReports() {
+  const grid = document.getElementById('reportsGrid');
+  if (!grid) return;
+
+  const currentKey = buildReportsRenderKey();
+  if (reportsRenderKey === currentKey && grid.children.length && gwaChart && eligChart) {
+    return;
+  }
   // Show loading state
-  document.getElementById('reportsGrid').innerHTML = `
+  if (!grid.children.length) grid.innerHTML = `
     <div class="report-stat-card" style="opacity:0.5;grid-column:1/-1;text-align:center;padding:24px;">
       <div class="report-stat-label">Loading analytics…</div>
     </div>`;
 
   try {
     // Try to get server-side analytics (more accurate, includes computed avg_gwa from DB)
-    if (typeof AdmissionAPI !== 'undefined' && AdmissionAPI.getToken()) {
-      DASHBOARD_STATS = await AdmissionAPI.getDashboardStats();
+    if (!DASHBOARD_STATS && typeof AdmissionAPI !== 'undefined' && AdmissionAPI.getToken()) {
+      reportsStatsPromise = reportsStatsPromise || AdmissionAPI.getDashboardStats();
+      DASHBOARD_STATS = await reportsStatsPromise;
     }
   } catch (e) {
     console.warn('Could not load dashboard stats from API, falling back to client-side:', e);
     DASHBOARD_STATS = null;
+  } finally {
+    reportsStatsPromise = null;
   }
 
   const list = getApplications();
@@ -3692,7 +3731,7 @@ async function initReports() {
     : (total ? (list.reduce((s, a) => s + ((parseFloat(a.g11) || 0) + (parseFloat(a.g12) || 0)) / 2, 0) / total).toFixed(2) : '0.00');
   const progCount = Number(Array.isArray(DASHBOARD_STATS?.by_program) ? DASHBOARD_STATS.by_program.length : getPrograms().length);
 
-  document.getElementById('reportsGrid').innerHTML = [
+  grid.innerHTML = [
     { label: 'Total Applications', value: total, sub: 'S.Y. 2025–2026' },
     { label: 'Overall Approval Rate', value: total ? Math.round(approved / total * 100) + '%' : '0%', sub: `${approved} approved` },
     { label: 'Overall Average GWA', value: avgGWAAll, sub: 'Across all applicants' },
@@ -3710,6 +3749,7 @@ async function initReports() {
 
   renderReportTable();
   initReportCharts();
+  reportsRenderKey = buildReportsRenderKey();
 }
 
 function renderReportTable() {
@@ -3791,12 +3831,20 @@ function initReportCharts() {
     gwaData = sorted.map(s => +s.avg.toFixed(1));
   }
 
-  if (gwaChart) gwaChart.destroy();
-  gwaChart = new Chart(document.getElementById('gwaChart'), {
-    type: 'bar',
-    data: { labels: gwaLabels.length ? gwaLabels : ['No data'], datasets: [{ label: 'Avg GWA', data: gwaData.length ? gwaData : [0], backgroundColor: '#254d82', borderRadius: 6, borderSkipped: false }] },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 70, max: 100, grid: { color: 'rgba(0,0,0,.05)' } }, x: { grid: { display: false } } } }
-  });
+  const gwaCanvas = document.getElementById('gwaChart');
+  const nextGwaLabels = gwaLabels.length ? gwaLabels : ['No data'];
+  const nextGwaData = gwaData.length ? gwaData : [0];
+  if (gwaChart) {
+    gwaChart.data.labels = nextGwaLabels;
+    gwaChart.data.datasets[0].data = nextGwaData;
+    gwaChart.update('none');
+  } else if (gwaCanvas) {
+    gwaChart = new Chart(gwaCanvas, {
+      type: 'bar',
+      data: { labels: nextGwaLabels, datasets: [{ label: 'Avg GWA', data: nextGwaData, backgroundColor: '#254d82', borderRadius: 6, borderSkipped: false }] },
+      options: { responsive: true, maintainAspectRatio: false, animation: false, plugins: { legend: { display: false } }, scales: { y: { min: 70, max: 100, grid: { color: 'rgba(0,0,0,.05)' } }, x: { grid: { display: false } } } }
+    });
+  }
 
   // Eligibility doughnut — prefer server-side counts
   let pwd = 0, solo = 0, indigenous = 0, fours = 0, none = 0;
@@ -3815,12 +3863,18 @@ function initReportCharts() {
     fours = list.filter(a => yes(a.fours)).length;
     none = list.filter(a => !yes(a.pwd) && !yes(a.solo) && !yes(a.indigenous) && !yes(a.fours)).length;
   }
-  if (eligChart) eligChart.destroy();
-  eligChart = new Chart(document.getElementById('eligChart'), {
-    type: 'doughnut',
-    data: { labels: ['No Special Classification', 'Solo Parent', 'Indigenous', '4Ps', 'PWD'], datasets: [{ data: [none, solo, indigenous, fours, pwd], backgroundColor: ['#1b3557', '#c9933a', '#7c3aed', '#16a34a', '#2563eb'], borderWidth: 2, borderColor: '#fff', hoverOffset: 6 }] },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 10, font: { size: 11 } } } }, cutout: '60%' }
-  });
+  const eligCanvas = document.getElementById('eligChart');
+  const nextEligData = [none, solo, indigenous, fours, pwd];
+  if (eligChart) {
+    eligChart.data.datasets[0].data = nextEligData;
+    eligChart.update('none');
+  } else if (eligCanvas) {
+    eligChart = new Chart(eligCanvas, {
+      type: 'doughnut',
+      data: { labels: ['No Special Classification', 'Solo Parent', 'Indigenous', '4Ps', 'PWD'], datasets: [{ data: nextEligData, backgroundColor: ['#1b3557', '#c9933a', '#7c3aed', '#16a34a', '#2563eb'], borderWidth: 2, borderColor: '#fff', hoverOffset: 6 }] },
+      options: { responsive: true, maintainAspectRatio: false, animation: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 10, font: { size: 11 } } } }, cutout: '60%' }
+    });
+  }
 }
 
 /* ─── SETTINGS ─── */
@@ -4392,6 +4446,7 @@ async function refreshData(isInitial = false) {
     const settings = settingsResult.status === 'fulfilled' ? settingsResult.value : {};
 
     DASHBOARD_STATS = stats && typeof stats === 'object' && Object.prototype.hasOwnProperty.call(stats, 'total_applications') ? stats : null;
+    reportsRenderKey = '';
     applySystemSettingsUI(settings);
 
     const raw = Array.isArray(res) ? res : (res && Array.isArray(res.data)) ? res.data : [];
