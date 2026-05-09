@@ -12,9 +12,7 @@ class ProgramController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Program::query();
-
-        $programs = $query->get();
+        $programs = Program::withCount('applications')->orderBy('name')->get();
         return response()->json(['data' => $programs]);
     }
 

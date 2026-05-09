@@ -4,21 +4,24 @@
  */
 (function () {
   function normalizeApiBase(base) {
-    try {
-      const url = new URL(base || window.location.origin, window.location.origin);
-      const path = url.pathname.replace(/\/+$/, '');
-      const isApiBase = /\/(?:api|backend)$/.test(path);
-
-      if (!isApiBase) {
-        const segment = /\.vercel\.app$/i.test(window.location.hostname) ? '/backend' : '/api';
-        url.pathname = path + segment;
+    if (base) return base.replace(/\/+$/, '');
+    
+    const loc = window.location;
+    const isVercel = /\.vercel\.app$/i.test(loc.hostname);
+    const segment = isVercel ? '/backend' : '/api';
+    
+    let path = loc.pathname.replace(/\/+$/, '');
+    const pages = ['/dashboard', '/apply', '/about', '/news-events', '/news-event-details', '/course-details', '/welcome'];
+    
+    let rootPath = path;
+    pages.forEach(p => {
+      if (rootPath.endsWith(p)) {
+        rootPath = rootPath.slice(0, -p.length);
       }
+    });
 
-      return url.origin + url.pathname.replace(/\/+$/, '');
-    } catch (_) {
-      const segment = /\.vercel\.app$/i.test(window.location.hostname) ? '/backend' : '/api';
-      return window.location.origin + segment;
-    }
+    rootPath = rootPath.replace(/\/public$/, '');
+    return loc.origin + rootPath + segment;
   }
 
   const API_BASE = normalizeApiBase(window.ADMISSION_API_BASE);

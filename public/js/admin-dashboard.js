@@ -1480,7 +1480,7 @@ function renderProgramsTable() {
     return;
   }
   tbody.innerHTML = programs.map(p => {
-    const count = progCounts[p.name] || 0;
+    const count = p.applications_count || 0;
     const enabled = (programEnabled[p.name] !== undefined) ? !!programEnabled[p.name] : !!p.is_active;
     const dept = p.department || '—';
     const slotsLeftVal = p.slots_left != null ? Number(p.slots_left) : 0;
@@ -1501,7 +1501,7 @@ function renderProgramsTable() {
       </td>
       <td><span class="badge" style="background:var(--navy-pale);color:var(--navy-mid)">${dept}</span></td>
       <td>${p.duration_years || 4} Years</td>
-      <td>Day / Afternoon </td>
+      <td>${p.schedule || 'Day / Evening'}</td>
       <td style="font-weight:700;color:var(--navy-mid);text-align:center;">${count}</td>
       <td>
         <div style="display:flex;align-items:center;gap:6px;min-width:96px">
