@@ -56,7 +56,7 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        $adminEmail = (string) env('ADMIN_EMAIL', '');
+        $adminEmail = (string) env('ADMIN_EMAIL', 'btechadmissionoffice@gmail.com');
 
         return (bool) $this->is_admin || ($adminEmail !== '' && hash_equals($adminEmail, (string) $this->email));
     }
