@@ -23,8 +23,8 @@
     sessionStorage.setItem('_at', "{{ $admissionApiToken ?? session('admission_api_token') ?? '' }}");
   </script>
   <script src="{{ asset('js/api-config.js') }}?v=8"></script>
-  <script src="{{ asset('js/admission-api.js') }}?v=15"></script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=37" defer></script>
+  <script src="{{ asset('js/admission-api.js') }}?v=16"></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=38" defer></script>
 </head>
 <body>
   @include('partials.site-loader')

@@ -1493,7 +1493,10 @@ function renderProgramsTable() {
   const tbody = document.getElementById('programsTableBody');
   if (!tbody) return;
   if (programs.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No programs loaded. Data comes from the API.</td></tr>';
+    const message = window.LAST_PROGRAMS_API_ERROR
+      ? `Programs could not be loaded from the database: ${escapeHtml(window.LAST_PROGRAMS_API_ERROR)}`
+      : 'No programs loaded. Data comes from the API.';
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-state">${message}</td></tr>`;
     updateProgramSaveAllState();
     return;
   }
@@ -4373,7 +4376,7 @@ async function refreshData(isInitial = false) {
 
     const [appsResult, programsResult, statsResult, settingsResult] = await Promise.allSettled([
       AdmissionAPI.getApplications({ per_page: 100 }),
-      AdmissionAPI.getPrograms(),
+      AdmissionAPI.getPrograms({ allowFallback: false }),
       AdmissionAPI.getDashboardStats(),
       AdmissionAPI.getSettings()
     ]);
@@ -4430,7 +4433,13 @@ async function refreshData(isInitial = false) {
     }
     syncNotificationToasts({ silent: isInitial });
 
-    API_PROGRAMS = Array.isArray(progList) ? progList : [];
+    if (programsResult.status === 'rejected') {
+      window.LAST_PROGRAMS_API_ERROR = programsResult.reason?.message || 'Programs API request failed';
+      API_PROGRAMS = [];
+    } else {
+      API_PROGRAMS = Array.isArray(progList) ? progList : [];
+      window.LAST_PROGRAMS_API_ERROR = '';
+    }
     
     // Initialize programEnabled state from the API's is_active field
     API_PROGRAMS.forEach(p => {

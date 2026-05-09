@@ -109,18 +109,19 @@
     request,
 
     /** GET /api/programs â€“ returns array of { id, code, name, department, ... } */
-    async getPrograms() {
+    async getPrograms(options = {}) {
+      const allowFallback = options.allowFallback !== false;
       try {
-        console.log('[API] Fetching programs...');
         const data = await request('/programs');
         const list = data.data ?? data.programs ?? (Array.isArray(data) ? data : null);
         if (Array.isArray(list)) {
-          console.log('[API] Real-time programs loaded.');
           return list;
         }
         throw new Error('Unexpected data format');
       } catch (error) {
-        console.warn('[API] Programs fetch failed, using fallback:', error.message);
+        if (!allowFallback) {
+          throw error;
+        }
         return getJsonProgramsFallback();
       }
     },
