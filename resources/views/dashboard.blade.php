@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -1488,8 +1488,8 @@
         <p id="confirmModalMessage" style="font-size:14px; color:var(--text-3); line-height:1.5;"></p>
       </div>
       <div style="display:flex; width:100%; gap:12px; margin-top:8px;">
-        <button type="button" class="btn-ghost" id="confirmModalCancelBtn" style="flex:1; padding:12px; border:1px solid var(--navy-pale); border-radius:10px; font-weight:600;">Cancel</button>
-        <button type="button" id="confirmModalConfirmBtn" style="flex:1; padding:12px; background:#ef4444; color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer;">Confirm</button>
+        <button type="button" class="btn-ghost" id="confirmModalCancelBtn" style="flex:1; padding:12px; border:1px solid var(--navy-pale); border-radius:10px; font-weight:600; text-align:center;">Cancel</button>
+        <button type="button" id="confirmModalConfirmBtn" style="flex:1; padding:12px; background:#ef4444; color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer; text-align:center;">Confirm</button>
       </div>
     </div>
   </div>

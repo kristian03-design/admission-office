@@ -41,6 +41,7 @@ class ProgramController extends Controller
         }
 
         $program->update($updateData);
+        $program->refresh();
         Cache::forget('welcome_page_data');
 
         return response()->json([
@@ -69,6 +70,7 @@ class ProgramController extends Controller
         $program->update([
             'is_active' => \Illuminate\Support\Facades\DB::raw($isActive ? 'true' : 'false')
         ]);
+        $program->refresh();
         Cache::forget('welcome_page_data');
 
         return response()->json([

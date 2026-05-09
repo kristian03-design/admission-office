@@ -66,7 +66,6 @@ function showConfirmModal(options) {
 /* ─── DATA (from API only) ─── */
 let API_PROGRAMS = [];
 const programEnabled = {};
-const savedProgramSlots = {};
 const pendingProgramSlots = {};
 let isRefreshingData = false;
 let programFilter = 'All';
@@ -402,17 +401,34 @@ function renderKPIs() {
   ];
 
   document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
-    <div class="kpi-card">
+    <div class="kpi-card" data-kpi-target="${k.value}">
       <div class="kpi-icon ${k.cls}">
         <i data-iconsax="${k.icon}"></i>
       </div>
       <div class="kpi-body">
-        <div class="kpi-value">${k.value}</div>
+        <div class="kpi-value">0</div>
         <div class="kpi-label">${k.label}</div>
         <div class="kpi-delta ${k.dc}">${k.delta}</div>
       </div>
     </div>
   `).join('');
+
+  // Trigger counter animation
+  document.querySelectorAll('.kpi-card').forEach(card => {
+    const target = parseInt(card.dataset.kpiTarget, 10);
+    const valueEl = card.querySelector('.kpi-value');
+    if (isNaN(target) || !valueEl) return;
+    
+    let current = 0;
+    const duration = 1500;
+    const step = (timestamp) => {
+      if (!card.startTime) card.startTime = timestamp;
+      const progress = Math.min((timestamp - card.startTime) / duration, 1);
+      valueEl.textContent = Math.floor(progress * target);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
 
   if (typeof iconsax !== 'undefined') iconsax.createIcons();
   updatePendingBadge();
@@ -1467,8 +1483,8 @@ function renderProgramsTable() {
     const count = progCounts[p.name] || 0;
     const enabled = programEnabled[p.name] !== false;
     const dept = p.department || '—';
-    const slotsLeftRaw = p.slots_left != null ? Number(p.slots_left) : (p.slots != null ? Number(p.slots) : 0);
-    const savedSlotsLeft = Number.isFinite(slotsLeftRaw) ? Math.max(0, Math.min(3000, slotsLeftRaw)) : 0;
+    const slotsLeftVal = p.slots_left != null ? Number(p.slots_left) : 0;
+    const savedSlotsLeft = Number.isFinite(slotsLeftVal) ? Math.max(0, Math.min(3000, slotsLeftVal)) : 0;
     const slotsLeft = pendingProgramSlots[String(p.id)] != null ? pendingProgramSlots[String(p.id)] : savedSlotsLeft;
     const programCode = (p.code && String(p.code).trim()) ? String(p.code).trim() : shortProg(p.name || '');
     const dirtyStyle = pendingProgramSlots[String(p.id)] != null ? 'border-color:var(--gold);background:#fffbeb;' : '';
@@ -1589,7 +1605,6 @@ async function saveAllProgramSlotsLeft() {
         programEnabled[program.name] = false;
       }
     }
-    savedProgramSlots[String(programId)] = value;
     delete pendingProgramSlots[String(programId)];
   });
 
@@ -3976,7 +3991,10 @@ function updatePendingBadge() {
   const count = getUnreadNotifications().filter(n => !readNotifRefs.has(n.ref)).length;
   const badge = document.getElementById('pendingBadge');
   const dot = document.getElementById('notifDot');
-  if (badge) badge.textContent = count;
+  if (badge) {
+    badge.textContent = count;
+    badge.classList.toggle('has-pending', count > 0);
+  }
   if (dot) dot.style.display = count > 0 ? '' : 'none';
 }
 
@@ -4379,15 +4397,10 @@ async function refreshData(isInitial = false) {
     syncNotificationToasts({ silent: isInitial });
 
     API_PROGRAMS = Array.isArray(progList) ? progList : [];
+    
+    // Initialize programEnabled state from the API's is_active field
     API_PROGRAMS.forEach(p => {
-      const savedSlots = savedProgramSlots[String(p.id)];
-      if (savedSlots == null) return;
-      p.slots_left = savedSlots;
-      if (savedSlots <= 0) p.is_active = false;
-    });
-    API_PROGRAMS.forEach(p => {
-      const slotsLeft = p.slots_left != null ? Number(p.slots_left) : 0;
-      programEnabled[p.name] = (p.is_active !== false) && (isNaN(slotsLeft) || slotsLeft > 0);
+      programEnabled[p.name] = (p.is_active !== false);
     });
 
     if (isInitial) {

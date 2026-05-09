@@ -96,6 +96,81 @@ $$('.mobile-nav-link, .mobile-btn-primary').forEach(link => {
   });
 });
 
+// ─────────────────────────────────────────
+// SCROLL ANIMATIONS (Premium Feel)
+// ─────────────────────────────────────────
+
+function initScrollAnimations() {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        // Once visible, we can stop observing if we want it to stay
+        // observer.unobserve(entry.target); 
+      }
+    });
+  }, observerOptions);
+
+  const animatedElements = document.querySelectorAll('[data-animate]');
+  animatedElements.forEach(el => {
+    // Add delay if specified
+    const delay = el.getAttribute('data-delay');
+    if (delay) {
+      el.style.transitionDelay = `${delay}ms`;
+    }
+    observer.observe(el);
+  });
+}
+
+// ─────────────────────────────────────────
+// COUNTER ANIMATION
+// ─────────────────────────────────────────
+
+function initCounters() {
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.getAttribute('data-count'), 10);
+        if (isNaN(target)) return;
+        
+        let count = 0;
+        const duration = 2000; // 2 seconds
+        const startTime = performance.now();
+        
+        function updateCount(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const currentCount = Math.floor(progress * target);
+          
+          el.textContent = currentCount;
+          
+          if (progress < 1) {
+            requestAnimationFrame(updateCount);
+          } else {
+            el.textContent = target;
+          }
+        }
+        
+        requestAnimationFrame(updateCount);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.stat-number').forEach(el => counterObserver.observe(el));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initScrollAnimations();
+  initCounters();
+});
+
 // Close on escape key
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && menuOpen) toggleMenu(true);
