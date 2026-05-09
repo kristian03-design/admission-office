@@ -288,6 +288,13 @@
       });
       return data.data;
     },
+    
+    /** DELETE /api/applications/:id */
+    async deleteApplication(id) {
+      return request('/applications/' + id, {
+        method: 'DELETE',
+      });
+    },
 
     /** GET /api/admin/settings â€“ returns key-value settings object */
     async getSettings() {

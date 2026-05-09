@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/applications', [ApplicationController::class, 'index']);
     Route::get('/applications/{id}', [ApplicationController::class, 'show']);
     Route::patch('/applications/{id}/status', [ApplicationController::class, 'updateStatus']);
+    Route::delete('/applications/{id}', [ApplicationController::class, 'destroy']);
 
     // Program management
     Route::patch('/programs/{id}/schedule', [ProgramController::class, 'updateSchedule']);

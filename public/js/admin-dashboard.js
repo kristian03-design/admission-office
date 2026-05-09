@@ -563,6 +563,7 @@ function renderTable() {
       <td style="text-align: center">
         <div class="action-btns-cell">
           <button type="button" class="btn-view-label btn-view-app" title="View Details" data-app-id="${app.id != null ? app.id : ''}" data-app-ref="${escapeHtml(app.ref || '')}">View</button>
+          <button type="button" class="btn-view-label btn-delete-app" style="background:#fee2e2; color:#b91c1c;" title="Delete Application" data-app-id="${app.id != null ? app.id : ''}" data-app-ref="${escapeHtml(app.ref || '')}">Delete</button>
         </div>
       </td>
     </tr>
@@ -639,6 +640,35 @@ function changeStatusById(appId, newStatus) {
       }
     }
     showToast(msg);
+  });
+}
+
+function deleteApplicationById(appId, ref) {
+  if (!confirm(`Are you sure you want to delete application ${ref}? This will permanently remove the record and restore the program slot.`)) {
+    return;
+  }
+
+  if (typeof AdmissionAPI === 'undefined' || !AdmissionAPI.getToken()) {
+    showToast('Please log in to delete applications.');
+    return;
+  }
+
+  AdmissionAPI.deleteApplication(appId).then(() => {
+    showToast(`Application ${ref} deleted successfully.`);
+    // Update local data
+    if (Array.isArray(API_APPLICATIONS)) {
+      API_APPLICATIONS = API_APPLICATIONS.filter(a => Number(a.id) !== Number(appId));
+    }
+    filteredApps = filteredApps.filter(a => Number(a.id) !== Number(appId));
+    
+    renderKPIs();
+    renderRecentList();
+    applyFilters();
+    updatePendingBadge();
+    refreshDataSoon();
+  }).catch(e => {
+    showToast('Deletion failed: ' + (e.message || 'Unknown error'));
+    console.error('Delete error:', e);
   });
 }
 
@@ -4006,6 +4036,20 @@ document.addEventListener('DOMContentLoaded', () => {
       openSlideoverById(numId);
     } else if (ref) {
       openSlideover(ref);
+    }
+  });
+
+  // Delegated click: delete application
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('.btn-delete-app');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const id = btn.getAttribute('data-app-id');
+    const ref = (btn.getAttribute('data-app-ref') || '').trim();
+    const numId = id != null && id !== '' && id !== 'null' ? Number(id) : NaN;
+    if (!isNaN(numId) && numId > 0) {
+      deleteApplicationById(numId, ref);
     }
   });
 
