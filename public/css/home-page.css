@@ -198,7 +198,8 @@ body.site-loader-lock {
 
 .nav-inner {
   position: relative;
-  z-index: 60; /* Higher than mobile-menu (40) */
+  z-index: 60;
+  /* Higher than mobile-menu (40) */
 }
 
 .nav-main {
@@ -227,10 +228,6 @@ body.menu-open .nav-main {
 
 body.menu-open .logo-badge {
   border-color: rgba(255, 255, 255, 0.2);
-}
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 280px;
 }
 
 .nav-sub {
@@ -2999,6 +2996,7 @@ body.menu-open .logo-badge {
     margin-bottom: 2rem;
   }
 }
+
 /* ─── MOBILE MENU PREMIUM REDESIGN ─── */
 .mobile-menu {
   position: fixed;
@@ -3007,15 +3005,16 @@ body.menu-open .logo-badge {
   width: 100%;
   height: 100vh;
   background: rgba(27, 53, 87, 0.98);
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   z-index: 40;
   display: flex;
   flex-direction: column;
   opacity: 0;
   visibility: hidden;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  padding-top: 80px; /* nav height */
+  padding-top: 80px;
+  /* nav height */
 }
 
 .mobile-menu.active {
@@ -3058,7 +3057,8 @@ body.menu-open .logo-badge {
   transition-delay: calc(0.1s * var(--i));
 }
 
-.mobile-nav-link:hover, .mobile-nav-link:active {
+.mobile-nav-link:hover,
+.mobile-nav-link:active {
   background: rgba(255, 255, 255, 0.05);
   color: var(--gold-mid);
   padding-left: 1.75rem;
