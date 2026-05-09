@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   @include('partials.iconsax')
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
-  <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v=5">
+  <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v=6">
   <style>
     .mo { will-change: opacity; transform: translateZ(0); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
     .mb { will-change: transform, opacity; transform: translateZ(0) scale(.92) translateY(24px); }
@@ -20,7 +20,7 @@
   @include('partials.site-loader')
 
 <div class="save-toast no-print" id="saveToast">
-  <i data-lucide="check" style="width:14px;height:14px;stroke-width:3"></i>
+  <i data-iconsax="check" style="width:14px;height:14px;stroke-width:3"></i>
   Progress saved
 </div>
 
@@ -29,7 +29,7 @@
     <div class="hdr-brand">
       <div class="hdr-logo">
         <img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <i data-lucide="graduation-cap" style="display:none;color:white;width:26px;height:26px"></i>
+        <i data-iconsax="graduation-cap" style="display:none;color:white;width:26px;height:26px"></i>
       </div>
       <div class="hdr-text">
         <h1>BTECH Admissions Office</h1>
@@ -40,7 +40,7 @@
     <!-- RIGHT SIDE: Back button + progress ring -->
     <div class="hdr-actions">
       <a href="{{ route('home') }}" class="home-link">
-        <i data-lucide="chevron-left" style="width:14px;height:14px;stroke-width:2.5"></i>
+        <i data-iconsax="chevron-left" style="width:14px;height:14px;stroke-width:2.5"></i>
         Back to Home
       </a>
       <div class="c-ring" id="ring"><span id="pctTxt">0%</span></div>
@@ -86,7 +86,7 @@
           <label class="oc"><input type="radio" name="respondentType" value="Transferee" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--navy)"><div style="margin-left:14px"><div style="font-weight:700;color:#1f2937">Transferee</div><p style="font-size:12px;color:#6b7280;margin-top:2px">Transferring from another higher education institution</p></div></label>
           <label class="oc"><input type="radio" name="respondentType" value="ALS Graduate" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--navy)"><div style="margin-left:14px"><div style="font-weight:700;color:#1f2937">ALS Graduate</div><p style="font-size:12px;color:#6b7280;margin-top:2px">Alternative Learning System graduate with A&amp;E Certificate</p></div></label>
           <label class="oc"><input type="radio" name="respondentType" value="Returnee" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--navy)"><div style="margin-left:14px"><div style="font-weight:700;color:#1f2937">Returnee</div><p style="font-size:12px;color:#6b7280;margin-top:2px">Previously enrolled at BTECH, returning after a study break</p></div></label>
-          <div class="eb" id="e1"><svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>Please select a respondent type to continue.</div>
+          <div class="eb" id="e1"><i data-iconsax="alert-circle" style="width:16px;height:16px"></i>Please select a respondent type to continue.</div>
         </div>
       </div>
     </div>
@@ -97,7 +97,7 @@
       <div class="fhdr"><h2>Step 2: Personal Information</h2><p>As they appear on official government documents</p></div>
       <div class="fbdy">
       <p class="stitle">Student Details</p>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px"><svg width="16" height="16" fill="#10b981" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg><p style="font-size:12px;color:#16a34a;margin:0">In Place Of Birth Only Put Province and City name, not the Specific Address. (ex. Pulilan, Bulacan)</p></div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px"><i data-iconsax="alert-circle" style="width:16px;height:16px;color:#10b981"></i><p style="font-size:12px;color:#16a34a;margin:0">In Place Of Birth Only Put Province and City name, not the Specific Address. (ex. Pulilan, Bulacan)</p></div>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
       <div><label class="fl">Surname <span style="color:var(--red)">*</span></label><input type="text" name="surname" placeholder="e.g. Dela Cruz" class="fi"><span class="et" id="e-sur"></span></div>
       <div><label class="fl">First Name <span style="color:var(--red)">*</span></label><input type="text" name="firstName" placeholder="e.g. Juan" class="fi"><span class="et" id="e-fn"></span></div>
@@ -133,7 +133,7 @@
           <select 
             name="civilStatus" 
             class="fi" 
-            style="background-image:url('data:image/svg+xml;utf8,<svg fill=%22%234b5563%22 viewBox=%220 0 24 24%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/></svg>');background-repeat:no-repeat;background-position:right 10px center;background-size:20px;padding-right:36px;appearance:none"
+            style="padding-right:36px"
           >
             <option value="">Select civil status</option>
             <option value="Single">Single</option>
@@ -147,7 +147,7 @@
         <div><label class="fl">Email Address <span style="color:var(--red)">*</span></label><input type="email" name="studentEmail" placeholder="e.g. juan.delacruz@gmail.com" class="fi" title="Only Gmail or Yahoo addresses are accepted"><p style="font-size:11px;color:#9aa5b1;margin-top:4px">Only Gmail or Yahoo addresses accepted</p><span class="et" id="e-email"></span></div>
       </div>
       <div id="marriageNoteDiv" style="display:none;background:#fff3cd;border:1.5px solid #ffc107;border-radius:8px;padding:10px 12px;margin-top:12px">
-        <p style="font-size:12px;color:#856404;font-weight:600;margin-bottom:4px">⚠ Marriage Certificate Required</p>
+        <p style="font-size:12px;color:#856404;font-weight:600;margin-bottom:4px">âš  Marriage Certificate Required</p>
         <p style="font-size:11px;color:#856404">Please upload a scanned copy of your marriage certificate in the documents section.</p>
       </div>
           <p class="stitle">Mother's Information <span style="font-size:11px;font-weight:400;color:#9aa5b1;text-transform:none">(Refer to your PSA Birth Certificate)</span></p>
@@ -162,7 +162,7 @@
             <div><label class="fl">First Name <span style="color:var(--red)">*</span></label><input type="text" name="fatherFirstName" placeholder="First name" class="fi"><span class="et" id="e-ffn"></span></div>
             <div><label class="fl">Middle Name</label><input type="text" name="fatherMiddleName" placeholder="Middle name" class="fi"></div>
           </div>
-          <div class="eb" id="e2"><svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>Please fill in all required fields.</div>
+          <div class="eb" id="e2"><i data-iconsax="alert-circle" style="width:16px;height:16px"></i>Please fill in all required fields.</div>
         </div>
       </div>
     </div>
@@ -192,7 +192,7 @@
             <div><label class="fl">Father's Contact Number <span style="color:var(--red)">*</span></label><div class="phone-wrap"><span class="ppfx">+63</span><input type="tel" name="contactNumber" placeholder="9XXXXXXXXX" class="fi phi" maxlength="10"></div><p style="font-size:11px;color:#9aa5b1;margin-top:4px">10-digit mobile number starting with 9</p><span class="et" id="e-c1"></span></div>
             <div><label class="fl">Mother's Contact Number <span style="color:var(--red)">*</span></label><div class="phone-wrap"><span class="ppfx">+63</span><input type="tel" name="alternateContactNumber" placeholder="9XXXXXXXXX" class="fi phi" maxlength="10"></div><p style="font-size:11px;color:#9aa5b1;margin-top:4px">10-digit mobile number starting with 9</p><span class="et" id="e-c2"></span></div>
           </div>
-          <div class="eb" id="e3"><svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>Please enter valid contact numbers.</div>
+          <div class="eb" id="e3"><i data-iconsax="alert-circle" style="width:16px;height:16px"></i>Please enter valid contact numbers.</div>
         </div>
       </div>
     </div>
@@ -230,7 +230,7 @@
             <div><label class="fl">ZIP Code <span style="color:var(--red)">*</span></label><input type="text" name="permanentZipCode" placeholder="e.g. 3006" class="fi" maxlength="4"><span class="et" id="e-pz"></span></div>
           </div>
           <p style="font-size:11px;color:#6b7280;margin-top:8px">Location list is loaded from PSGC API.</p>
-          <div class="eb" id="e4"><svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>Please fill in all required address fields.</div>
+          <div class="eb" id="e4"><i data-iconsax="alert-circle" style="width:16px;height:16px"></i>Please fill in all required address fields.</div>
         </div>
       </div>
     </div>
@@ -268,7 +268,7 @@
             </div>
             <div><label class="fl">ZIP Code <span style="color:var(--red)">*</span></label><input type="text" name="presentZipCode" placeholder="e.g. 3006" class="fi" maxlength="4"><span class="et" id="e-rz"></span></div>
           </div>
-          <div class="eb" id="e5"><svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>Please fill in all required address fields.</div>
+          <div class="eb" id="e5"><i data-iconsax="alert-circle" style="width:16px;height:16px"></i>Please fill in all required address fields.</div>
         </div>
       </div>
     </div>
@@ -281,16 +281,16 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
               <p class="stitle" style="border-color:#c9933a">1st Choice <span style="color:var(--red)">*</span></p>
-              <div id="firstChoiceList">Loading programs…</div>
+              <div id="firstChoiceList">Loading programs...</div>
               <span class="et" id="e-fc"></span>
             </div>
             <div>
               <p class="stitle" style="border-color:#c9933a">2nd Choice <span style="color:var(--red)">*</span></p>
-              <div id="secondChoiceList">Loading programs…</div>
+              <div id="secondChoiceList">Loading programs...</div>
               <span class="et" id="e-sc2"></span>
             </div>
           </div>
-          <div class="eb" id="e6"><svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg><span id="e6t">Please select both 1st and 2nd course choices.</span></div>
+          <div class="eb" id="e6"><i data-iconsax="alert-circle" style="width:16px;height:16px"></i><span id="e6t">Please select both 1st and 2nd course choices.</span></div>
         </div>
       </div>
     </div>
@@ -309,7 +309,7 @@
             <div class="gd-avg" id="avgGWA">-</div>
             <p class="gd-rmk" id="gwaRmk"></p>
           </div>
-          <div class="eb" id="e7"><svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>Please enter valid GWA values between 70 and 100.</div>
+          <div class="eb" id="e7"><i data-iconsax="alert-circle" style="width:16px;height:16px"></i>Please enter valid GWA values between 70 and 100.</div>
         </div>
       </div>
     </div>
@@ -323,7 +323,7 @@
           <div><label class="fl" style="margin-bottom:10px">Are you a Solo Parent or child of a Solo Parent? <span style="color:var(--red)">*</span></label><div style="display:flex;gap:10px;max-width:280px"><label class="oc" style="flex:1;margin-bottom:0;align-items:center"><input type="radio" name="soloParent" value="yes" style="width:15px;height:15px;accent-color:var(--navy)"><span style="margin-left:8px;font-size:13px;font-weight:600">Yes</span></label><label class="oc" style="flex:1;margin-bottom:0;align-items:center"><input type="radio" name="soloParent" value="no" style="width:15px;height:15px;accent-color:var(--navy)"><span style="margin-left:8px;font-size:13px;font-weight:600">No</span></label></div><span class="et" id="e-solo"></span></div>
           <div><label class="fl" style="margin-bottom:10px">Are you an Indigenous person or a Member of Indigenous Tribe? <span style="color:var(--red)">*</span></label><div style="display:flex;gap:10px;max-width:280px"><label class="oc" style="flex:1;margin-bottom:0;align-items:center"><input type="radio" name="indigenous" value="yes" style="width:15px;height:15px;accent-color:var(--navy)"><span style="margin-left:8px;font-size:13px;font-weight:600">Yes</span></label><label class="oc" style="flex:1;margin-bottom:0;align-items:center"><input type="radio" name="indigenous" value="no" style="width:15px;height:15px;accent-color:var(--navy)"><span style="margin-left:8px;font-size:13px;font-weight:600">No</span></label></div><span class="et" id="e-indigenous"></span></div>
           <div><label class="fl" style="margin-bottom:10px">Are you a Beneficiary of the 4PS Program of the Government? <span style="color:var(--red)">*</span></label><div style="display:flex;gap:10px;max-width:280px"><label class="oc" style="flex:1;margin-bottom:0;align-items:center"><input type="radio" name="fourPs" value="yes" style="width:15px;height:15px;accent-color:var(--navy)"><span style="margin-left:8px;font-size:13px;font-weight:600">Yes</span></label><label class="oc" style="flex:1;margin-bottom:0;align-items:center"><input type="radio" name="fourPs" value="no" style="width:15px;height:15px;accent-color:var(--navy)"><span style="margin-left:8px;font-size:13px;font-weight:600">No</span></label></div><span class="et" id="e-4ps"></span></div>
-          <div class="eb" id="e8"><svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>Please answer all eligibility questions.</div>
+          <div class="eb" id="e8"><i data-iconsax="alert-circle" style="width:16px;height:16px"></i>Please answer all eligibility questions.</div>
         </div>
       </div>
     </div>
@@ -338,7 +338,7 @@
             <label class="oc" style="align-items:flex-start"><input type="checkbox" name="dataPrivacy" style="width:18px;height:18px;margin-top:2px;accent-color:var(--navy);flex-shrink:0"><span style="margin-left:14px"><span style="font-weight:700;color:#1f2937">I agree to the processing of my personal data</span><p style="font-size:12px;color:#6b7280;margin-top:3px">In accordance with the Data Privacy Act of 2012 (Republic Act 10173).</p></span></label>
             <label class="oc" style="align-items:flex-start"><input type="checkbox" name="authorizedProcessing" style="width:18px;height:18px;margin-top:2px;accent-color:var(--navy);flex-shrink:0"><span style="margin-left:14px"><span style="font-weight:700;color:#1f2937">I authorize BTECH to use my data for admission purposes</span><p style="font-size:12px;color:#6b7280;margin-top:3px">Including communication about my application status and enrollment processes.</p></span></label>
           </div>
-          <div class="eb" id="e9"><svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>You must agree to all three declarations to continue.</div>
+          <div class="eb" id="e9"><i data-iconsax="alert-circle" style="width:16px;height:16px"></i>You must agree to all three declarations to continue.</div>
         </div>
       </div>
     </div>
@@ -353,7 +353,7 @@
             <div>
               <div class="pic-zone" id="picZone">
                 <input type="file" id="picInput" accept="image/jpeg,image/png,image/jpg" onchange="handlePic(this)">
-                <svg width="30" height="30" fill="none" stroke="#b5cce4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <i data-iconsax="image" style="width:30px;height:30px;color:#b5cce4"></i>
                 <span style="font-size:11px;color:#b5cce4;font-weight:700;margin-top:6px">Click to upload</span>
               </div>
               <p style="font-size:10px;color:#9aa5b1;margin-top:6px;text-align:center">JPG / PNG only - max 5MB</p>
@@ -370,7 +370,7 @@
               </ul>
             </div>
           </div>
-          <div class="eb" id="e10"><svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg><span id="e10t">Please upload your 2x2 ID picture.</span></div>
+          <div class="eb" id="e10"><i data-iconsax="alert-circle" style="width:16px;height:16px"></i><span id="e10t">Please upload your 2x2 ID picture.</span></div>
         </div>
       </div>
     </div>
@@ -387,11 +387,11 @@
           </div>
           <div class="action-btns">
             <button type="button" class="bprint" onclick="window.print()">
-              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+              <i data-iconsax="printer" style="width:14px;height:14px"></i>
               Print / Save PDF
             </button>
             <button type="button" class="bsub" onclick="trySubmit()">
-              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <i data-iconsax="check" style="width:14px;height:14px"></i>
               Submit Application
             </button>
           </div>
@@ -404,7 +404,7 @@
           <div class="rs-header">
             <div class="rs-logo-box">
               <img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-              <svg style="display:none" width="44" height="44" fill="none" stroke="var(--navy)" stroke-width="1.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+              <i data-iconsax="graduation-cap" style="display:none;width:44px;height:44px;color:var(--navy)"></i>
             </div>
             <div class="rs-school-info">
               <div class="rs-republic-line">Republic of the Philippines</div>
@@ -533,13 +533,13 @@
     <!-- Nav Bar -->
     <div class="nav-bar no-print" id="navBar">
       <button type="button" id="prevBtn" class="bs" onclick="nav(-1)">
-        <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+        <i data-iconsax="chevron-left" style="width:15px;height:15px"></i>
         Previous
       </button>
       <span class="nav-hint hidden md:block" id="stepHint">Select an option to continue</span>
       <button type="button" id="nextBtn" class="bp" onclick="nav(1)">
         Next
-        <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+        <i data-iconsax="chevron-right" style="width:15px;height:15px"></i>
       </button>
     </div>
 
@@ -551,13 +551,13 @@
   <div class="mb">
     <div style="text-align:center">
       <div style="width:56px;height:56px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
-        <svg width="26" height="26" fill="none" stroke="var(--navy)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <i data-iconsax="check-circle" style="width:26px;height:26px;color:var(--navy)"></i>
       </div>
       <h3 style="font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;color:#1f2937;margin-bottom:6px">Ready to Submit?</h3>
       <p style="font-size:13px;color:#6b7280;margin-bottom:20px;line-height:1.5">This action cannot be undone. Your application will be forwarded to the BTECH Admissions Office for processing.</p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <button class="bs" style="justify-content:center" onclick="closeModal('moConfirm')"><svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Cancel</button>
-        <button class="bsub" style="justify-content:center" id="submitBtn" onclick="doSubmit()"><svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Confirm &amp; Submit</button>
+        <button class="bs" style="justify-content:center" onclick="closeModal('moConfirm')"><i data-iconsax="x" style="width:13px;height:13px"></i>Cancel</button>
+        <button class="bsub" style="justify-content:center" id="submitBtn" onclick="doSubmit()"><i data-iconsax="check" style="width:13px;height:13px"></i>Confirm &amp; Submit</button>
       </div>
     </div>
   </div>
@@ -566,7 +566,7 @@
 <!-- SUCCESS MODAL -->
 <div class="mo" id="moSuccess">
   <div class="mb" style="text-align:center">
-    <div style="width:64px;height:64px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg width="30" height="30" fill="none" stroke="var(--sage)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div>
+    <div style="width:64px;height:64px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><i data-iconsax="check" style="width:30px;height:30px;color:var(--sage)"></i></div>
     <h3 style="font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:#1f2937;margin-bottom:6px">Application Submitted!</h3>
     <p style="font-size:13px;color:#6b7280;margin-bottom:14px">Your admission application has been successfully submitted.</p>
     <div style="background:#f0f7ff;border-radius:12px;padding:14px 18px;margin-bottom:14px;border:1.5px solid #c3dafe">
@@ -574,7 +574,7 @@
       <p style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy);letter-spacing:2px" id="refNum">--</p>
     </div>
     <p style="font-size:11px;color:#9aa5b1;margin-bottom:20px;line-height:1.6">Please save your reference number. The admissions office will contact you regarding the next steps.</p>
-    <button class="bp" style="width:100%;justify-content:center" data-home-url="{{ route('home') }}" onclick="window.location.href = this.dataset.homeUrl"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>Return to Home</button>
+    <button class="bp" style="width:100%;justify-content:center" data-home-url="{{ route('home') }}" onclick="window.location.href = this.dataset.homeUrl"><i data-iconsax="home" style="width:15px;height:15px"></i>Return to Home</button>
   </div>
 </div>
 
@@ -589,11 +589,11 @@
 
 <!-- API base is auto-detected by api-config.js (e.g. /admission-office/api on XAMPP). -->
 <script src="{{ asset('js/api-config.js') }}?v=8"></script>
-<script src="{{ asset('js/admission-api.js') }}?v=11"></script>
-<script src="{{ asset('js/form.js') }}?v=7"></script>
+<script src="{{ asset('js/admission-api.js') }}?v=12"></script>
+<script src="{{ asset('js/form.js') }}?v=8"></script>
 <script>
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
+  if (typeof iconsax !== 'undefined') {
+    iconsax.createIcons();
   }
 
   // Hide site loader
@@ -612,3 +612,7 @@
 </script>
 </body>
 </html>
+
+
+
+

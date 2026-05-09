@@ -6,19 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Program;
+use Illuminate\Support\Facades\Cache;
 
 class ProgramController extends Controller
 {
     public function index(Request $request)
     {
         $query = Program::query();
-
-        // Admin/staff dashboard (authenticated) can see all programs.
-        if (!$request->user('sanctum')) {
-            // Public endpoints (e.g. apply form) only see selectable programs.
-            $query->whereRaw('is_active = true')
-                ->where('slots_left', '>', 0);
-        }
 
         $programs = $query->get();
         return response()->json(['data' => $programs]);
@@ -28,6 +22,7 @@ class ProgramController extends Controller
     {
         $program = Program::findOrFail($id);
         $program->update($request->only(['interview_schedule', 'interview_status']));
+        Cache::forget('welcome_page_data');
         return response()->json(['message' => 'Course schedule updated successfully', 'data' => $program]);
     }
 
@@ -40,11 +35,34 @@ class ProgramController extends Controller
         $program = Program::findOrFail($id);
         $slotsLeft = (int) $validated['slots_left'];
         $program->slots_left = $slotsLeft;
-        $program->is_active = $slotsLeft > 0;
+        if ($slotsLeft <= 0) {
+            $program->is_active = false;
+        }
         $program->save();
+        Cache::forget('welcome_page_data');
 
         return response()->json([
             'message' => 'Program slots left updated successfully',
+            'data' => $program,
+        ]);
+    }
+
+    public function updateStatus(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'is_active' => ['required', 'boolean'],
+        ]);
+
+        $program = Program::findOrFail($id);
+        $program->is_active = (bool) $validated['is_active'];
+        if (!$program->is_active && (int) ($program->slots_left ?? 0) < 0) {
+            $program->slots_left = 0;
+        }
+        $program->save();
+        Cache::forget('welcome_page_data');
+
+        return response()->json([
+            'message' => 'Program status updated successfully',
             'data' => $program,
         ]);
     }

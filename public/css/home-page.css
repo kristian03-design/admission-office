@@ -1050,6 +1050,14 @@ body.site-loader-lock {
   gap: .3rem;
 }
 
+.program-status-open {
+  color: #059669;
+}
+
+.program-status-closed {
+  color: #dc2626;
+}
+
 .meta-icon {
   font-size: .85rem;
 }

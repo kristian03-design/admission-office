@@ -136,6 +136,42 @@ class AdminRoutingTest extends TestCase
         ]);
     }
 
+    public function test_program_status_endpoint_persists_disabled_state(): void
+    {
+        $user = User::factory()->create();
+        $token = $user->createToken('admin-dashboard')->plainTextToken;
+        $program = Program::create([
+            'code' => 'CLS',
+            'name' => 'Closed Program',
+            'department' => 'Testing',
+            'category' => 'testing',
+            'duration_years' => 4,
+            'schedule' => 'Day',
+            'slots_left' => 25,
+            'is_active' => true,
+        ]);
+
+        $this->withHeader('Authorization', 'Bearer '.$token)
+            ->postJson("/programs/{$program->id}/status", [
+                'is_active' => false,
+            ])
+            ->assertOk()
+            ->assertJsonPath('data.is_active', false);
+
+        $this->withHeader('Authorization', 'Bearer '.$token)
+            ->postJson("/programs/{$program->id}/slots-left", [
+                'slots_left' => 25,
+            ])
+            ->assertOk()
+            ->assertJsonPath('data.is_active', false);
+
+        $this->assertDatabaseHas('programs', [
+            'id' => $program->id,
+            'slots_left' => 25,
+            'is_active' => false,
+        ]);
+    }
+
     public function test_uploaded_public_storage_files_can_be_served_by_laravel(): void
     {
         Storage::disk('public')->put('applications/1/photo.txt', 'photo-data');

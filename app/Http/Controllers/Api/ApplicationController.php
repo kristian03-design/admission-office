@@ -51,6 +51,15 @@ class ApplicationController extends Controller
                 $program->save();
             }
 
+            if (!empty($data['second_choice'])) {
+                $secondChoice = Program::where('name', $data['second_choice'])->first();
+                if (!$secondChoice || !$secondChoice->is_active || (int) ($secondChoice->slots_left ?? 0) <= 0) {
+                    throw ValidationException::withMessages([
+                        'second_choice' => ['Selected second choice program is already full or disabled. Please choose another program.'],
+                    ]);
+                }
+            }
+
             return Application::create($data);
         });
 

@@ -188,10 +188,7 @@
       {{-- Success overlay --}}
       <div class="success-overlay" id="successOverlay" data-success="{{ session('login_success') ? '1' : '0' }}" data-redirect="{{ route('admin.dashboard') }}">
         <div class="success-check">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2.5">
-            <polyline points="20 6 9 17 4 12"/>
-          </svg>
+          <i data-iconsax="check" style="width:28px;height:28px"></i>
         </div>
         <div class="success-text">Authenticated!</div>
         <div class="success-sub" id="successSub">Redirecting to dashboard…</div>
@@ -209,7 +206,7 @@
       {{-- Laravel validation errors --}}
       @if ($errors->any())
         <div class="form-error show">
-          <i data-lucide="alert-circle" style="width:16px;height:16px"></i>
+          <i data-iconsax="alert-circle" style="width:16px;height:16px"></i>
           <span>{{ $errors->first() }}</span>
         </div>
       @endif
@@ -217,14 +214,14 @@
       {{-- Session error (e.g. from failed login attempt) --}}
       @if (session('error'))
         <div class="form-error show">
-          <i data-lucide="alert-circle" style="width:16px;height:16px"></i>
+          <i data-iconsax="alert-circle" style="width:16px;height:16px"></i>
           <span>{{ session('error') }}</span>
         </div>
       @endif
 
       {{-- JS-driven error (for API-based login) --}}
       <div class="form-error" id="formError">
-        <i data-lucide="alert-circle" style="width:16px;height:16px"></i>
+        <i data-iconsax="alert-circle" style="width:16px;height:16px"></i>
         <span id="errorText">Invalid username or password.</span>
       </div>
 
@@ -236,7 +233,7 @@
           <label class="form-label" for="email">Email</label>
           <div class="input-wrap">
             <span class="input-icon">
-              <i data-lucide="mail"></i>
+              <i data-iconsax="mail"></i>
             </span>
             <input type="email" id="email" name="email" class="form-input"
                    placeholder="johndoe@gmail.com"
@@ -249,14 +246,14 @@
           <label class="form-label" for="password">Password</label>
           <div class="input-wrap">
             <span class="input-icon">
-              <i data-lucide="lock"></i>
+              <i data-iconsax="lock"></i>
             </span>
             <input type="password" id="password" name="password" class="form-input"
                    placeholder="Enter your password"
                    autocomplete="current-password" />
             <button class="toggle-pw" id="togglePw" type="button" tabindex="-1">
-              <i id="eyeOpen" data-lucide="eye"></i>
-              <i id="eyeClosed" data-lucide="eye-off" style="display:none"></i>
+              <i id="eyeOpen" data-iconsax="eye"></i>
+              <i id="eyeClosed" data-iconsax="eye-off" style="display:none"></i>
             </button>
           </div>
         </div>
@@ -273,7 +270,7 @@
         <button class="btn-login" id="loginBtn" type="submit">
           <div class="spinner" id="spinner"></div>
           <span id="btnText">Sign In to Dashboard</span>
-          <i id="btnArrow" data-lucide="arrow-right" style="width:16px;height:16px"></i>
+          <i id="btnArrow" data-iconsax="arrow-right" style="width:16px;height:16px"></i>
         </button>
 
       </form>
@@ -328,8 +325,8 @@
   });
 
   // Initialize Iconsax Icons
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
+  if (typeof iconsax !== 'undefined') {
+    iconsax.createIcons();
   }
 </script>
 </body>

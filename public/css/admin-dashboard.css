@@ -38,6 +38,43 @@
   --transition: all .22s cubic-bezier(.4, 0, .2, 1);
 }
 
+.iconsax-icon {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  vertical-align: middle;
+  color: currentColor;
+}
+
+button .iconsax-icon,
+.btn-primary .iconsax-icon,
+.btn-ghost .iconsax-icon,
+.btn-outline .iconsax-icon,
+.btn-view-label .iconsax-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.nav-item .iconsax-icon,
+.studio-nav-item .iconsax-icon,
+.settings-card h3 .iconsax-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.kpi-icon .iconsax-icon,
+.feature-icon-wrap .iconsax-icon,
+.page-header .iconsax-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.empty-state .iconsax-icon {
+  width: 48px;
+  height: 48px;
+}
+
 *,
 *::before,
 *::after {

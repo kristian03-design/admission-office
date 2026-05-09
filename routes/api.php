@@ -35,6 +35,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/programs/{id}/schedule', [ProgramController::class, 'updateSchedule']);
     Route::patch('/programs/{id}/slots-left', [ProgramController::class, 'updateSlotsLeft']);
     Route::post('/programs/{id}/slots-left', [ProgramController::class, 'updateSlotsLeft']);
+    Route::patch('/programs/{id}/status', [ProgramController::class, 'updateStatus']);
+    Route::post('/programs/{id}/status', [ProgramController::class, 'updateStatus']);
 
     // Admin dashboard
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index']);

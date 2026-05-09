@@ -214,8 +214,8 @@ function applySystemSettingsUI(settings) {
   const deadlineChip = document.querySelector('.deadline-chip');
   if (deadlineChip) {
     const deadlineText = formatDeadline(settings.application_deadline);
-    if (deadlineText) deadlineChip.innerHTML = `<i data-lucide="clock" style="width:13px;height:13px"></i> Deadline: ${deadlineText}`;
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+    if (deadlineText) deadlineChip.innerHTML = `<i data-iconsax="clock" style="width:13px;height:13px"></i> Deadline: ${deadlineText}`;
+    if (typeof iconsax !== 'undefined') iconsax.createIcons();
   }
 }
 
@@ -353,7 +353,7 @@ function renderKPIs() {
   document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
     <div class="kpi-card">
       <div class="kpi-icon ${k.cls}">
-        <i data-lucide="${k.icon}"></i>
+        <i data-iconsax="${k.icon}"></i>
       </div>
       <div class="kpi-body">
         <div class="kpi-value">${k.value}</div>
@@ -363,7 +363,7 @@ function renderKPIs() {
     </div>
   `).join('');
 
-  if (typeof lucide !== 'undefined') lucide.createIcons();
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
 
   updatePendingBadge();
 }
@@ -389,14 +389,14 @@ function renderKPIError() {
   if (!grid) return;
   grid.innerHTML = Array(5).fill(0).map(() => `
     <div class="kpi-card">
-      <div class="kpi-icon kpi-icon--red"><i data-lucide="alert-triangle"></i></div>
+      <div class="kpi-icon kpi-icon--red"><i data-iconsax="alert-triangle"></i></div>
       <div class="kpi-body">
         <div class="kpi-value" style="font-size:16px;color:var(--red)">Error</div>
         <div class="kpi-label">Failed to load</div>
       </div>
     </div>
   `).join('');
-  if (typeof lucide !== 'undefined') lucide.createIcons();
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
 }
 
 function renderRecentList() {
@@ -530,7 +530,7 @@ function renderTable() {
 
   if (!slice.length) {
     tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">
-      <i data-lucide="zoom-in" style="width:20px;height:20px"></i>
+      <i data-iconsax="zoom-in" style="width:20px;height:20px"></i>
       <p>No applications match your filters.</p>
     </div></td></tr>`;
     document.getElementById('tableInfo').textContent = 'No results found';
@@ -554,7 +554,7 @@ function renderTable() {
     </tr>
   `).join('');
 
-  if (typeof lucide !== 'undefined') lucide.createIcons();
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
 
   document.getElementById('tableInfo').textContent =
     `Showing ${start + 1}–${Math.min(start + APP_PER_PAGE, filteredApps.length)} of ${filteredApps.length} applications`;
@@ -1022,8 +1022,8 @@ function openSlideoverByApp(app) {
         </div>
         <div class="form-photo-box" style="overflow:hidden;padding:0;">
           ${o.photoPath
-          ? `<img src="${storageUrl(o.photoPath)}" alt="Applicant Photo" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;"><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5'><path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg><div class='form-photo-label'>2x2 Photo</div></div>`
-          : `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><div class="form-photo-label">2x2 Photo</div>`
+          ? `<img src="${storageUrl(o.photoPath)}" alt="Applicant Photo" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;"><i data-iconsax="user" style="width:28px;height:28px;color:#94a3b8"></i><div class='form-photo-label'>2x2 Photo</div></div>`
+          : `<i data-iconsax="user" style="width:28px;height:28px;color:#94a3b8"></i><div class="form-photo-label">2x2 Photo</div>`
         }
         </div>
       </div>
@@ -1303,6 +1303,7 @@ function openSlideoverByApp(app) {
       console.error('Slideover content error:', err);
       if (bodyEl) bodyEl.innerHTML = '<p class="empty-state">Unable to load details. Check console for details.</p>';
     }
+    if (typeof iconsax !== 'undefined') iconsax.createIcons();
     loadSlideoverPhoto(bodyEl, o);
 
   }
@@ -1388,8 +1389,8 @@ function renderProgramsTable() {
         </div>
       </td>
       <td>
-        <button class="prog-toggle ${enabled ? 'on' : 'off'}" onclick="toggleProgram('${String(p.name).replace(/'/g, "\\'")}', this)">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="1" y="5" width="22" height="14" rx="7"/><circle cx="${enabled ? 17 : 7}" cy="12" r="3" fill="currentColor" stroke="none"/></svg>
+        <button class="prog-toggle ${enabled ? 'on' : 'off'}" onclick="toggleProgram('${String(p.id).replace(/'/g, "\\'")}', '${String(p.name).replace(/'/g, "\\'")}', this)">
+          <i data-iconsax="${enabled ? 'check-circle' : 'x'}" style="width:13px;height:13px"></i>
           ${enabled ? 'Active' : 'Disabled'}
         </button>
       </td>
@@ -1423,8 +1424,8 @@ function updateProgramSaveAllState() {
   if (!btn) return;
   const count = Object.keys(pendingProgramSlots).length;
   btn.disabled = count === 0;
-  btn.innerHTML = `<i data-lucide="save"></i> ${count ? `Save All Changes (${count})` : 'Save All Changes'}`;
-  if (typeof lucide !== 'undefined') lucide.createIcons();
+  btn.innerHTML = `<i data-iconsax="save"></i> ${count ? `Save All Changes (${count})` : 'Save All Changes'}`;
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
 }
 
 async function saveAllProgramSlotsLeft() {
@@ -1455,8 +1456,8 @@ async function saveAllProgramSlotsLeft() {
   const btn = document.getElementById('saveAllProgramSlotsBtn');
   if (btn) {
     btn.disabled = true;
-    btn.innerHTML = '<i data-lucide="loader"></i> Saving...';
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+    btn.innerHTML = '<i data-iconsax="loader"></i> Saving...';
+    if (typeof iconsax !== 'undefined') iconsax.createIcons();
   }
 
   const results = await Promise.allSettled(
@@ -1469,15 +1470,14 @@ async function saveAllProgramSlotsLeft() {
     const { programId, value } = changes[index];
     const updated = result.value;
     const program = API_PROGRAMS.find(p => Number(p.id) === Number(programId));
-    const isEnabled = value > 0;
     if (program) {
       program.slots_left = value;
-      program.is_active = isEnabled;
+      if (value <= 0) program.is_active = false;
     }
     savedProgramSlots[String(programId)] = value;
     delete pendingProgramSlots[String(programId)];
     if (updated && typeof updated === 'object' && updated.name) {
-      programEnabled[updated.name] = isEnabled;
+      programEnabled[updated.name] = updated.is_active !== false;
     }
   });
 
@@ -1889,7 +1889,7 @@ async function saveAnnouncement() {
   const btn = document.getElementById("saveAnnouncementBtn");
   const originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i data-lucide="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
+  btn.innerHTML = '<i data-iconsax="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
 
   try {
     const url = id ? `/api/announcements/${id}` : "/api/announcements";
@@ -2342,7 +2342,7 @@ async function saveNewsEvent() {
   const btn = document.getElementById("saveNewsEventBtn");
   const originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i data-lucide="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
+  btn.innerHTML = '<i data-iconsax="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
 
   try {
     const url = id ? `/api/admin/news-events/${id}` : "/api/admin/news-events";
@@ -2660,7 +2660,7 @@ async function saveTestimonial() {
   const btn = document.getElementById("saveTestimonialBtn");
   const originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i data-lucide="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
+  btn.innerHTML = '<i data-iconsax="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
 
   try {
     const payload = new FormData();
@@ -2968,7 +2968,7 @@ async function saveFacultyStaff() {
   const btn = document.getElementById("saveFacultyStaffBtn");
   const originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i data-lucide="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
+  btn.innerHTML = '<i data-iconsax="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
 
   try {
     const payload = new FormData();
@@ -3037,12 +3037,44 @@ async function deleteFacultyStaff(id) {
   }
 }
 
-function toggleProgram(name, btn) {
-  programEnabled[name] = !programEnabled[name];
-  const on = programEnabled[name];
-  btn.className = `prog-toggle ${on ? 'on' : 'off'}`;
-  btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="1" y="5" width="22" height="14" rx="7"/><circle cx="${on ? 17 : 7}" cy="12" r="3" fill="currentColor" stroke="none"/></svg> ${on ? 'Active' : 'Disabled'}`;
-  showToast(`"${shortProg(name)}" is now ${on ? 'Active' : 'Disabled'}`);
+async function toggleProgram(id, name, btn) {
+  const current = programEnabled[name] !== false;
+  const next = !current;
+  const program = API_PROGRAMS.find(p => Number(p.id) === Number(id));
+  const slotsLeft = Number(program && program.slots_left != null ? program.slots_left : 0);
+
+  if (next && Number.isFinite(slotsLeft) && slotsLeft <= 0) {
+    showToast('Set Slots Left above 0 before reopening this program.');
+    return;
+  }
+
+  if (typeof AdmissionAPI === 'undefined' || !AdmissionAPI.getToken()) {
+    showToast('Please log in to update program status.');
+    return;
+  }
+
+  programEnabled[name] = next;
+  btn.disabled = true;
+  btn.className = `prog-toggle ${next ? 'on' : 'off'}`;
+  btn.innerHTML = `<i data-iconsax="${next ? 'check-circle' : 'x'}" style="width:13px;height:13px"></i> ${next ? 'Active' : 'Disabled'}`;
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
+
+  try {
+    const updated = await AdmissionAPI.updateProgramStatus(id, next);
+    if (program) program.is_active = updated.is_active !== false;
+    programEnabled[name] = updated.is_active !== false;
+    btn.className = `prog-toggle ${programEnabled[name] ? 'on' : 'off'}`;
+    btn.innerHTML = `<i data-iconsax="${programEnabled[name] ? 'check-circle' : 'x'}" style="width:13px;height:13px"></i> ${programEnabled[name] ? 'Active' : 'Disabled'}`;
+    showToast(`"${shortProg(name)}" is now ${programEnabled[name] ? 'Active' : 'Disabled'}`);
+  } catch (err) {
+    programEnabled[name] = current;
+    btn.className = `prog-toggle ${current ? 'on' : 'off'}`;
+    btn.innerHTML = `<i data-iconsax="${current ? 'check-circle' : 'x'}" style="width:13px;height:13px"></i> ${current ? 'Active' : 'Disabled'}`;
+    showToast(err && err.message ? err.message : 'Failed to update program status.');
+  } finally {
+    btn.disabled = false;
+    if (typeof iconsax !== 'undefined') iconsax.createIcons();
+  }
 }
 
 /* ─── INTERVIEW SCHEDULE ─── */
@@ -3082,22 +3114,23 @@ function renderInterviewsTable() {
       </td>
       <td>
         <div style="display:flex;align-items:center;gap:8px">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-3)"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <i data-iconsax="clock" style="width:14px;height:14px;color:var(--text-3)"></i>
           <span>${schedule}</span>
           <button class="btn-ghost" style="padding:2px;margin-left:4px;color:var(--navy)" onclick="openEditCourseModal(${p.id}, '${(p.name || '').replace(/'/g, "\\'")}', '${(p.department || '').replace(/'/g, "\\'")}', '${(p.code || '').replace(/'/g, "\\'")}', '${schedule}', '${status}')">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+            <i data-iconsax="edit" style="width:12px;height:12px"></i>
           </button>
         </div>
       </td>
       <td><span class="badge ${sClass}">${status}</span></td>
       <td>
         <button class="btn-primary" style="padding:6px 12px;font-size:12px" onclick="openStudentScheduling('${(p.name || '').replace(/'/g, "\\'")}')">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <i data-iconsax="users" style="width:14px;height:14px;margin-right:4px"></i>
           Schedule Students
         </button>
       </td>
     </tr>`;
   }).join('');
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
 }
 
 let currentSchedulingCourse = '';
@@ -3207,12 +3240,12 @@ function addSchedulingRow(data = {}) {
     </td>
     <td style="text-align:center;">
       <button class="btn-ghost" onclick="removeSchedulingRow(this)" style="color:var(--red);padding:6px;" title="Remove Applicant">
-        <i data-lucide="trash-2" style="width:16px;height:16px;"></i>
+        <i data-iconsax="trash-2" style="width:16px;height:16px;"></i>
       </button>
     </td>
   `;
   tbody.appendChild(tr);
-  if (typeof lucide !== 'undefined') lucide.createIcons();
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
 }
 
 function onSchedulingStatusChange(sel) {
@@ -3755,7 +3788,7 @@ function renderNotifications() {
   } else {
     body.innerHTML = `
       <div class="notif-empty">
-        <i data-lucide="bell-off" style="width:48px;height:48px;opacity:0.3;margin-bottom:16px"></i>
+        <i data-iconsax="bell-off" style="width:48px;height:48px;opacity:0.3;margin-bottom:16px"></i>
         <p>No new notifications</p>
       </div>
     `;
@@ -3853,8 +3886,8 @@ async function changeAdminPassword() {
   } finally {
     if (btn) {
       btn.disabled = false;
-      btn.innerHTML = originalHtml || '<i data-lucide="save"></i> Save New Password';
-      if (typeof lucide !== 'undefined') lucide.createIcons();
+      btn.innerHTML = originalHtml || '<i data-iconsax="save"></i> Save New Password';
+      if (typeof iconsax !== 'undefined') iconsax.createIcons();
     }
   }
 }
@@ -3881,8 +3914,8 @@ function togglePasswordVisibility(button) {
   const isHidden = input.type === 'password';
   input.type = isHidden ? 'text' : 'password';
   button.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
-  button.innerHTML = `<i data-lucide="${isHidden ? 'eye-off' : 'eye'}" style="width:18px;height:18px;"></i>`;
-  if (typeof lucide !== 'undefined') lucide.createIcons();
+  button.innerHTML = `<i data-iconsax="${isHidden ? 'eye-off' : 'eye'}" style="width:18px;height:18px;"></i>`;
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
 }
 
 /* ─── EVENT LISTENERS ─── */
@@ -4028,8 +4061,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } finally {
       if (btn) {
         btn.disabled = false;
-        btn.innerHTML = '<i data-lucide="save"></i> Save Changes';
-        if (typeof lucide !== 'undefined') lucide.createIcons();
+        btn.innerHTML = '<i data-iconsax="save"></i> Save Changes';
+        if (typeof iconsax !== 'undefined') iconsax.createIcons();
       }
     }
   });
@@ -4180,7 +4213,7 @@ async function refreshData(isInitial = false) {
       const savedSlots = savedProgramSlots[String(p.id)];
       if (savedSlots == null) return;
       p.slots_left = savedSlots;
-      p.is_active = savedSlots > 0;
+      if (savedSlots <= 0) p.is_active = false;
     });
     API_PROGRAMS.forEach(p => {
       const slotsLeft = p.slots_left != null ? Number(p.slots_left) : 0;

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admissions — Baliwag Polytechnic College</title>
+  <title>Admissions â€” Baliwag Polytechnic College</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
@@ -11,16 +11,16 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
 
-  <!-- ✦ Iconsax Icons ✦ -->
+  <!-- âœ¦ Iconsax Icons âœ¦ -->
   @include('partials.iconsax')
 
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=4" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=5" />
 
 </head>
 <body>
   @include('partials.site-loader')
 
-  <!-- ───────────────────────────────────── NAV ───────────────────────────────────── -->
+  <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
   <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
@@ -39,7 +39,7 @@
       </nav>
       <div class="flex items-center gap-3">
         <a href="{{ route('apply') }}" class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full transition-all">Inquire Now</a>
-        <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu"><i data-lucide="menu"></i></button>
+        <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu"><i data-iconsax="menu"></i></button>
       </div>
     </div>
     <div id="mobile-menu" class="hidden md:hidden mobile-menu">
@@ -52,7 +52,7 @@
   </header>
   <main>
 
-    <!-- ───────────────────────────────────── HERO ───────────────────────────────────── -->
+    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="hero" class="hero-section relative min-h-screen flex items-center overflow-hidden">
       <div class="hero-bg-overlay absolute inset-0"></div>
       <div class="hero-pattern absolute inset-0"></div>
@@ -69,7 +69,7 @@
           <div class="hero-content">
             <div class="inline-flex items-center gap-2 pill-badge mb-8" data-animate="fade-up" data-delay="0">
               <span class="pill-dot"></span>
-              <span class="text-xs font-semibold tracking-widest uppercase">{{ $settings['school_year_label'] ?? 'Admissions Open · S.Y. 2026–2027' }}</span>
+              <span class="text-xs font-semibold tracking-widest uppercase">{{ $settings['school_year_label'] ?? 'Admissions Open Â· S.Y. 2026â€“2027' }}</span>
             </div>
 
             <h1 class="hero-headline" data-animate="fade-up" data-delay="100">
@@ -94,11 +94,11 @@
             <div class="flex flex-wrap gap-4 mt-10" data-animate="fade-up" data-delay="300">
               <a href="{{ route('apply') }}" class="btn-hero-primary group">
                 <span>{{ $settings['cta_text'] ?? 'Start Your Application' }}</span>
-                <i data-lucide="arrow-right"></i>
+                <i data-iconsax="arrow-right"></i>
               </a>
               <a href="#process" class="btn-hero-secondary group">
                 <span>How It Works</span>
-                <i data-lucide="chevron-down" style="opacity:.6"></i>
+                <i data-iconsax="chevron-down" style="opacity:.6"></i>
               </a>
             </div>
 
@@ -144,28 +144,28 @@
             </div>
 
             <div class="hero-img-stage" id="hero-img-stage">
-              <div class="hero-img-slide active" data-program="Hospitality Management"  data-icon="🍳" data-dept="Hospitality Management">
+              <div class="hero-img-slide active" data-program="Hospitality Management"  data-icon="ðŸ³" data-dept="Hospitality Management">
                 <img src="{{ asset('assets/images/chef.png') }}" alt="Hospitality student" fetchpriority="high" decoding="async" />
               </div>
-              <div class="hero-img-slide" data-program="Business Administration"        data-icon="💼" data-dept="Marketing Management">
+              <div class="hero-img-slide" data-program="Business Administration"        data-icon="ðŸ’¼" data-dept="Marketing Management">
                 <img src="{{ asset('assets/images/business-male.png') }}" alt="Business student" loading="lazy" decoding="async" />
               </div>
-              <div class="hero-img-slide" data-program="Education Program"              data-icon="📚" data-dept="Secondary Education">
+              <div class="hero-img-slide" data-program="Education Program"              data-icon="ðŸ“š" data-dept="Secondary Education">
                 <img src="{{ asset('assets/images/barong.png') }}" alt="Education student" loading="lazy" decoding="async" />
               </div>
-              <div class="hero-img-slide" data-program="Accountancy"                   data-icon="📊" data-dept="Accountancy">
+              <div class="hero-img-slide" data-program="Accountancy"                   data-icon="ðŸ“Š" data-dept="Accountancy">
                 <img src="{{ asset('assets/images/business-female.png') }}" alt="Accountancy student" loading="lazy" decoding="async" />
               </div>
-              <div class="hero-img-slide" data-program="Tourism Management"             data-icon="✈️" data-dept="Tourism Management">
+              <div class="hero-img-slide" data-program="Tourism Management"             data-icon="âœˆï¸" data-dept="Tourism Management">
                 <img src="{{ asset('assets/images/flight.png') }}" alt="Tourism student" loading="lazy" decoding="async" />
               </div>
-              <div class="hero-img-slide" data-program="Information Technology"         data-icon="💻" data-dept="Information Technology">
+              <div class="hero-img-slide" data-program="Information Technology"         data-icon="ðŸ’»" data-dept="Information Technology">
                 <img src="{{ asset('assets/images/it-female.png') }}" alt="IT student" loading="lazy" decoding="async" />
               </div>
-              <div class="hero-img-slide" data-program="Business Management"            data-icon="📖" data-dept="Business Administration">
+              <div class="hero-img-slide" data-program="Business Management"            data-icon="ðŸ“–" data-dept="Business Administration">
                 <img src="{{ asset('assets/images/reading-male.png') }}" alt="Management student" loading="lazy" decoding="async" />
               </div>
-              <div class="hero-img-slide" data-program="Arts & Sciences"                data-icon="🎓" data-dept="Arts & Sciences">
+              <div class="hero-img-slide" data-program="Arts & Sciences"                data-icon="ðŸŽ“" data-dept="Arts & Sciences">
                 <img src="{{ asset('assets/images/reading-female.png') }}" alt="Arts & Sciences student" loading="lazy" decoding="async" />
               </div>
             </div>
@@ -183,7 +183,7 @@
       </div>
     </section>
 
-    <!-- ───────────────────────────────────── TICKER ───────────────────────────────────── -->
+    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ TICKER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     @php
       $tickerAnnouncements = $tickerAnnouncements ?? $announcements->where('is_popup', false)->values();
     @endphp
@@ -217,14 +217,14 @@
       </div>
     </div>
 
-    <!-- ───────────────────────────────────── WHY BTECH ───────────────────────────────────── -->
+    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ WHY BTECH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="why" class="why-section py-28">
       <div class="max-w-7xl mx-auto px-8">
         <div class="section-header text-center mb-20" data-animate="fade-up">
           <span class="section-tag">Why Choose BTECH</span>
           <h2 class="section-title mt-3">More Than a Degree.<br/>A Launchpad.</h2>
           <p class="section-desc mt-4 max-w-2xl mx-auto">
-            We combine academic rigor with real-world readiness, preparing graduates who don't just find jobs — they lead industries.
+            We combine academic rigor with real-world readiness, preparing graduates who don't just find jobs â€” they lead industries.
           </p>
         </div>
 
@@ -242,7 +242,7 @@
                   3 => ['title' => 'Scholarship Support', 'desc' => 'We believe talent shouldn\'t be limited by finances. Our scholarship programs make education accessible.', 'icon' => 'badge-percent'],
                   4 => ['title' => 'Modern Facilities', 'desc' => 'State-of-the-art computer laboratories, science facilities, and collaborative spaces for learning.', 'icon' => 'building-2'],
                   5 => ['title' => 'Industry Partnerships', 'desc' => 'OJT placements and employment connections with over 200 local and national partner companies.', 'icon' => 'handshake'],
-                  6 => ['title' => 'Strategic Location', 'desc' => 'Located in the heart of Baliwag, Bulacan — accessible from the entire region.', 'icon' => 'map-pin'],
+                  6 => ['title' => 'Strategic Location', 'desc' => 'Located in the heart of Baliwag, Bulacan â€” accessible from the entire region.', 'icon' => 'map-pin'],
                 ];
                 $title = $fallbacks[$i]['title'];
                 $desc = $fallbacks[$i]['desc'];
@@ -253,7 +253,7 @@
             @endphp
             <div class="feature-card {{ $isDark ? 'feature-card--dark' : ($isAccent ? 'feature-card--accent' : '') }}" data-animate="fade-up" data-delay="{{ ($i-1) * 80 }}">
               <div class="feature-icon-wrap {{ $isDark ? 'feature-icon-wrap--light' : '' }}">
-                <i data-lucide="{{ $icon }}"></i>
+                <i data-iconsax="{{ $icon }}"></i>
               </div>
               <h3 class="feature-title {{ $isDark ? 'feature-title--light' : '' }} mt-5">{{ $title }}</h3>
               <p class="feature-desc {{ $isDark ? 'feature-desc--light' : '' }} mt-2">{{ $desc }}</p>
@@ -263,7 +263,7 @@
       </div>
     </section>
 
-     <!-- ───────────────────────────────────── PROGRAMS ───────────────────────────────────── -->
+     <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ PROGRAMS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="programs" class="programs-section py-28">
       <div class="max-w-7xl mx-auto px-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16" data-animate="fade-up">
@@ -306,11 +306,19 @@
                   {{ $program->description ?? 'Join our ' . $program->name . ' program and build a successful career in ' . $program->department . '.' }}
                 </p>
                 <div class="program-meta mt-4">
-                  <span class="meta-item"><i data-lucide="clock"></i> 4 Years</span>
-                  <span class="meta-item"><i data-lucide="sun-moon"></i> Day / Evening</span>
+                  <span class="meta-item"><i data-iconsax="clock"></i> 4 Years</span>
+                  <span class="meta-item"><i data-iconsax="sun-moon"></i> Day / Evening</span>
+                  @php
+                    $slotsLeft = (int) ($program->slots_left ?? 0);
+                    $isOpen = $program->is_active && $slotsLeft > 0;
+                  @endphp
+                  <span class="meta-item {{ $isOpen ? 'program-status-open' : 'program-status-closed' }}">
+                    <i data-iconsax="{{ $isOpen ? 'check-circle' : 'x' }}"></i>
+                    {{ $isOpen ? 'Open' : ($slotsLeft <= 0 ? 'Full Slot' : 'Closed') }}
+                  </span>
                 </div>
                 <a href="{{ route('programs.show', $program->id) }}" class="program-cta group">
-                  Learn more <i data-lucide="chevron-right"></i>
+                  Learn more <i data-iconsax="chevron-right"></i>
                 </a>
               </div>
             </div>
@@ -319,7 +327,7 @@
       </div>
     </section>
 
-    <!-- ───────────────────────────────────── PROCESS ───────────────────────────────────── -->
+    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ PROCESS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="process" class="process-section py-28">
       <div class="max-w-7xl mx-auto px-8">
         <div class="section-header text-center mb-20" data-animate="fade-up">
@@ -406,8 +414,8 @@
               <p class="step-desc">Schedule and complete the BTECH College Admission Interview. This evaluates your academic readiness and helps us tailor your academic support.</p>
               <!-- step-highlight uses display:flex align-items:flex-start gap:.6rem in your CSS -->
               <div class="step-highlight">
-                <i data-lucide="calendar-days"></i>
-                <span>Tests are held every <strong>Monday to Friday</strong> — 9:00 AM to 3:00 PM</span>
+                <i data-iconsax="calendar-days"></i>
+                <span>Tests are held every <strong>Monday to Friday</strong> â€” 9:00 AM to 3:00 PM</span>
               </div>
             </div>
           </div>
@@ -422,8 +430,8 @@
               <h3 class="step-title">Take the College Admission Test (CAT)</h3>
               <p class="step-desc">Schedule and complete the BTC College Admission Test. This evaluates your academic readiness and helps us tailor your academic support.</p>
               <div class="step-highlight">
-                <i data-lucide="clipboard-list"></i>
-                <span>Schedule will be announced — <strong>TBA</strong></span>
+                <i data-iconsax="clipboard-list"></i>
+                <span>Schedule will be announced â€” <strong>TBA</strong></span>
               </div>
             </div>
           </div>
@@ -436,9 +444,9 @@
             </div>
             <div class="step-content">
               <h3 class="step-title">Receive Your Admission Result</h3>
-              <p class="step-desc">Results are released within 3–5 working days. Qualifying students will receive an Admission Notice via email.</p>
+              <p class="step-desc">Results are released within 3â€“5 working days. Qualifying students will receive an Admission Notice via email.</p>
               <div class="step-highlight">
-                <i data-lucide="mail-check"></i>
+                <i data-iconsax="mail-check"></i>
                 <span>Results sent directly to your registered email and available at the Admissions Office.</span>
               </div>
             </div>
@@ -454,7 +462,7 @@
               <h3 class="step-title">Complete Enrollment &amp; Orientation</h3>
               <p class="step-desc">Present your Admission Notice, submit required documents, pay initial fees, and attend the New Student Orientation to begin your BTC journey.</p>
               <div class="step-highlight">
-                <i data-lucide="party-popper"></i>
+                <i data-iconsax="party-popper"></i>
                 <span>Complete enrollment and orientation within <strong>1 week</strong> of receiving your admission notice.</span>
               </div>
               <div class="step-requirements" style="margin-top:1rem;padding:1rem;background:#fef3c7;border-left:4px solid #f59e0b;border-radius:var(--radius-sm);">
@@ -468,7 +476,7 @@
       </div>
     </section>
 
-    <!-- ───────────────────────────────────── TESTIMONIALS ───────────────────────────────────── -->
+    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ TESTIMONIALS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="testimonials" class="testimonials-section py-28">
       <div class="max-w-7xl mx-auto px-8">
         <div class="section-header text-center mb-16" data-animate="fade-up">
@@ -512,28 +520,28 @@
                   <div class="author-avatar" style="background: var(--navy); color: white; display: flex; align-items: center; justify-content: center;">JR</div>
                   <div>
                     <p class="author-name">Jose Reyes</p>
-                    <p class="author-role">BSIT Graduate, 2023 · Software Developer</p>
+                    <p class="author-role">BSIT Graduate, 2023 Â· Software Developer</p>
                   </div>
                 </div>
               </div>
             @endforelse
           </div>
 
-          <!-- Carousel controls — your JS targets #carousel-prev, #carousel-next, #carousel-dots -->
+          <!-- Carousel controls â€” your JS targets #carousel-prev, #carousel-next, #carousel-dots -->
           <div class="carousel-controls mt-10 flex items-center justify-center gap-4">
             <button class="carousel-btn" id="carousel-prev" aria-label="Previous">
-              <i data-lucide="chevron-left"></i>
+              <i data-iconsax="chevron-left"></i>
             </button>
             <div class="carousel-dots" id="carousel-dots"></div>
             <button class="carousel-btn" id="carousel-next" aria-label="Next">
-              <i data-lucide="chevron-right"></i>
+              <i data-iconsax="chevron-right"></i>
             </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ───────────────────────────────────── APPLY CTA ───────────────────────────────────── -->
+    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ APPLY CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="apply" class="apply-cta-section py-28">
       <div class="apply-cta-inner max-w-7xl mx-auto px-8 relative overflow-hidden rounded-3xl">
         <div class="apply-cta-bg"></div>
@@ -541,7 +549,7 @@
         <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 py-20 px-8">
           <div class="text-center lg:text-left">
             <h2 class="apply-cta-title">{!! $settings['cta_section_headline'] ?? 'Your Future Begins<br/><em>This Enrollment Season.</em>' !!}</h2>
-            <p class="apply-cta-sub mt-4 max-w-xl">{{ $settings['cta_section_subheadline'] ?? "Don't wait. Seats are limited and scholarship slots fill quickly. Take the first step toward the career — and the life — you've been working toward." }}</p>
+            <p class="apply-cta-sub mt-4 max-w-xl">{{ $settings['cta_section_subheadline'] ?? "Don't wait. Seats are limited and scholarship slots fill quickly. Take the first step toward the career â€” and the life â€” you've been working toward." }}</p>
             <div class="apply-deadline mt-6">
               <span class="deadline-label">Application Deadline</span>
               <span class="deadline-date">{{ $settings['application_deadline'] ?? 'April 17, 2026' }}</span>
@@ -550,15 +558,15 @@
           <div class="flex flex-col gap-4 min-w-64">
             <a href="{{ route('apply') }}" class="btn-cta-primary text-center">
               {{ $settings['cta_section_button_text'] ?? 'Apply Online Now' }}
-              <i data-lucide="arrow-right" style="display:inline-flex;margin-left:.5rem;vertical-align:middle;width:18px;height:18px;"></i>
+              <i data-iconsax="arrow-right" style="display:inline-flex;margin-left:.5rem;vertical-align:middle;width:18px;height:18px;"></i>
             </a>
-            <button id="open-guide" class="btn-cta-link text-center text-sm w-full">Admission Guidelines & Guide →</button>
+            <button id="open-guide" class="btn-cta-link text-center text-sm w-full">Admission Guidelines & Guide â†’</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ───────────────────────────────────── CONTACT ───────────────────────────────────── -->
+    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ CONTACT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="contact" class="contact-section py-28">
       <div class="max-w-7xl mx-auto px-8">
         <div class="grid lg:grid-cols-2 gap-16 items-start">
@@ -574,7 +582,7 @@
               <!-- Address -->
               <div class="contact-item">
                 <div class="contact-icon-wrap">
-                  <i data-lucide="map-pin"></i>
+                  <i data-iconsax="map-pin"></i>
                 </div>
                 <div>
                   <p class="contact-label">Campus Address</p>
@@ -585,7 +593,7 @@
               <!-- Email -->
               <div class="contact-item">
                 <div class="contact-icon-wrap">
-                  <i data-lucide="mail"></i>
+                  <i data-iconsax="mail"></i>
                 </div>
                 <div>
                   <p class="contact-label">Email</p>
@@ -596,7 +604,7 @@
               <!-- Phone -->
               <div class="contact-item">
                 <div class="contact-icon-wrap">
-                  <i data-lucide="phone"></i>
+                  <i data-iconsax="phone"></i>
                 </div>
                 <div>
                   <p class="contact-label">Phone</p>
@@ -607,11 +615,11 @@
               <!-- Hours -->
               <div class="contact-item">
                 <div class="contact-icon-wrap">
-                  <i data-lucide="clock"></i>
+                  <i data-iconsax="clock"></i>
                 </div>
                 <div>
                   <p class="contact-label">Office Hours</p>
-                  <p class="contact-value">{{ $settings['contact_office_hours'] ?? 'Mon–Fri, 8:00 AM – 5:00 PM' }}</p>
+                  <p class="contact-value">{{ $settings['contact_office_hours'] ?? 'Monâ€“Fri, 8:00 AM â€“ 5:00 PM' }}</p>
                 </div>
               </div>
 
@@ -649,7 +657,7 @@
                       <option value="Other">Other</option>
                     </select>
                     <!-- select-arrow is position:absolute right:.85rem, pointer-events:none in your CSS -->
-                    <i data-lucide="chevron-down" class="select-arrow"></i>
+                    <i data-iconsax="chevron-down" class="select-arrow"></i>
                   </div>
                 </div>
                 <div class="form-group">
@@ -660,7 +668,7 @@
                   <!-- JS toggles .hidden on .btn-text and .btn-spinner -->
                   <span class="btn-text">Send Message</span>
                   <span class="btn-spinner hidden">
-                    <i data-lucide="loader-circle" class="animate-spin"></i>
+                    <i data-iconsax="loader-circle" class="animate-spin"></i>
                   </span>
                 </button>
               </form>
@@ -673,7 +681,7 @@
 
   </main>
 
-  <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
+  <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ FOOTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
   <footer class="footer-section pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-8">
       <div class="grid md:grid-cols-4 gap-10 pb-12 border-b footer-border">
@@ -685,18 +693,8 @@
           </div>
           <p class="text-sm footer-text leading-relaxed">Empowering Bulacan's future leaders through accessible, quality higher education since 2008.</p>
           <div class="social-links mt-5 flex gap-3">
-            <!-- Facebook brand icon — kept as a brand glyph; inline SVG only -->
-            <a href="https://www.facebook.com/BTECHAdmissionsOfficial" class="social-btn" aria-label="Facebook">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-              </svg>
-            </a>
-            <!-- Youtube Brand Icon -->
-            <a href="https://www.youtube.com/c/BaliwagPolytechnicCollege" class="social-btn" aria-label="Youtube">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-              </svg>
-            </a>
+            <a href="https://www.facebook.com/BTECHAdmissionsOfficial" class="social-btn" aria-label="Facebook"><i data-iconsax="facebook"></i></a>
+            <a href="https://www.youtube.com/c/BaliwagPolytechnicCollege" class="social-btn" aria-label="Youtube"><i data-iconsax="youtube"></i></a>
           </div>
         </div>
 
@@ -739,34 +737,30 @@
       </div>
 
       <div class="footer-bottom flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
-        <p class="text-sm footer-text">© 2026 Baliwag Polytechnic College. All rights reserved.</p>
+        <p class="text-sm footer-text">Â© 2026 Baliwag Polytechnic College. All rights reserved.</p>
             <div class="flex gap-4 mt-8">
               @if(isset($settings['facebook_link']))
-                <a href="{{ $settings['facebook_link'] }}" class="footer-social-link" aria-label="Facebook">
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                  </svg>
-                </a>
+                <a href="{{ $settings['facebook_link'] }}" class="footer-social-link" aria-label="Facebook"><i data-iconsax="facebook"></i></a>
               @endif
               @if(isset($settings['twitter_link']))
-                <a href="{{ $settings['twitter_link'] }}" class="footer-social-link"><i data-lucide="twitter"></i></a>
+                <a href="{{ $settings['twitter_link'] }}" class="footer-social-link"><i data-iconsax="twitter"></i></a>
               @endif
               @if(isset($settings['instagram_link']))
-                <a href="{{ $settings['instagram_link'] }}" class="footer-social-link"><i data-lucide="instagram"></i></a>
+                <a href="{{ $settings['instagram_link'] }}" class="footer-social-link"><i data-iconsax="instagram"></i></a>
               @endif
             </div>
       </div>
     </div>
   </footer>
 
-  <!-- Back to top — your CSS targets #back-to-top.visible -->
+  <!-- Back to top â€” your CSS targets #back-to-top.visible -->
   <button id="back-to-top" class="back-to-top" aria-label="Back to top">
-    <i data-lucide="arrow-up"></i>
+    <i data-iconsax="arrow-up"></i>
   </button>
 
 
   <!-- Initialize Iconsax after DOM + your JS have both run -->
-  <!-- ─── ANNOUNCEMENT POPUP ─── -->
+  <!-- â”€â”€â”€ ANNOUNCEMENT POPUP â”€â”€â”€ -->
   @php
     $popupAnn = $popupAnn ?? $announcements->firstWhere('is_popup', true);
   @endphp
@@ -795,7 +789,7 @@
               <div class="absolute bottom-[-10%] left-[-5%] w-48 h-48 bg-gold-mid/10 rounded-full blur-2xl"></div>
               
               <div class="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-2 border border-white/10 shadow-inner">
-                <i data-lucide="megaphone" class="w-10 h-10 text-white shadow-sm"></i>
+                <i data-iconsax="megaphone" class="w-10 h-10 text-white shadow-sm"></i>
               </div>
               <span class="text-white/40 text-[10px] font-bold tracking-[0.2em] uppercase">Official Bulletin</span>
             </div>
@@ -804,7 +798,7 @@
           <!-- Important Badge -->
           <div class="absolute -bottom-4 left-10">
             <span class="px-5 py-2.5 bg-[#c9933a] text-white text-[11px] font-extrabold tracking-wider uppercase rounded-full shadow-[0_8px_20px_-4px_rgba(201,147,58,0.5)] flex items-center gap-2">
-              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+              <i data-iconsax="sparkles" class="w-3.5 h-3.5"></i>
               Important Notice
             </span>
           </div>
@@ -827,7 +821,7 @@
             @if($popupAnn->popup_button_link)
               <a href="{{ $popupAnn->popup_button_link }}" class="flex-[2] px-8 py-4 bg-[#0f1e3d] text-white rounded-[1.2rem] font-bold text-center hover:bg-[#1b3557] hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group">
                 <span>{{ $popupAnn->popup_button_text ?? 'Learn More' }}</span>
-                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                <i data-iconsax="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
               </a>
             @endif
             <button onclick="closePopup()" class="flex-1 px-8 py-4 bg-white text-[#0f1e3d] border-2 border-[#0f1e3d]/5 rounded-[1.2rem] font-bold text-center hover:bg-gray-50 hover:border-[#0f1e3d]/10 transition-all">
@@ -899,17 +893,17 @@
 
     document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
   </script>
-  <!-- ───────────────────────────────────── ADMISSION GUIDE MODAL ───────────────────────────────────── -->
+  <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ ADMISSION GUIDE MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
   <div id="guide-modal" class="modal-overlay">
     <div class="modal-container">
       <div class="modal-header">
         <h2 class="modal-title">Admission Guidelines</h2>
         <div class="flex items-center gap-4">
           <button id="print-guide" class="modal-close" aria-label="Print guidelines">
-            <i data-lucide="printer"></i>
+            <i data-iconsax="printer"></i>
           </button>
           <button id="close-guide" class="modal-close" aria-label="Close modal">
-            <i data-lucide="x"></i>
+            <i data-iconsax="x"></i>
           </button>
         </div>
       </div>
@@ -918,8 +912,8 @@
         <!-- NEW STUDENTS -->
         <section class="guide-section">
           <h3 class="guide-category">
-            <i data-lucide="user-plus"></i>
-            New Students (Freshmen – Graduate & Undergraduate)
+            <i data-iconsax="user-plus"></i>
+            New Students (Freshmen â€“ Graduate & Undergraduate)
           </h3>
           <div class="guide-list">
             <div class="guide-item">
@@ -960,7 +954,7 @@
         <!-- TRANSFEREE -->
         <section class="guide-section">
           <h3 class="guide-category">
-            <i data-lucide="refresh-cw"></i>
+            <i data-iconsax="refresh-cw"></i>
             Transferees
           </h3>
           <div class="guide-list">
@@ -1002,7 +996,7 @@
         <!-- RETURNING STUDENTS -->
         <section class="guide-section">
           <h3 class="guide-category">
-            <i data-lucide="rotate-ccw"></i>
+            <i data-iconsax="rotate-ccw"></i>
             Returning Students
           </h3>
           <div class="guide-list">
@@ -1020,7 +1014,7 @@
         <!-- ALS GRADUATES -->
         <section class="guide-section">
           <h3 class="guide-category">
-            <i data-lucide="graduation-cap"></i>
+            <i data-iconsax="graduation-cap"></i>
             ALS Graduates
           </h3>
           <div class="guide-list">
@@ -1066,9 +1060,11 @@
   <script src="{{ asset('js/home-page.js') }}?v=5"></script>
   <script>
     // Initialize all icons including those in the modal and footer
-    if (window.lucide) {
-      lucide.createIcons();
+    if (window.iconsax) {
+      iconsax.createIcons();
     }
   </script>
 </body>
 </html>
+
+

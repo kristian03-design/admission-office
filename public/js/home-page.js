@@ -470,9 +470,7 @@ function clearError(inputEl, errorEl) {
       form.innerHTML = `
         <div class="text-center py-6">
           <div class="success-icon mx-auto mb-4" style="background:var(--sage);width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;">
-            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-            </svg>
+            <i data-iconsax="check" style="width:28px;height:28px"></i>
           </div>
           <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--navy);font-weight:600;">Message Received!</h3>
           <p style="color:var(--gray-600);margin-top:.5rem;font-size:.9rem;">We'll respond to your inquiry within 1–2 business days.</p>

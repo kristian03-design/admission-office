@@ -1,1 +1,1 @@
-<script src="{{ asset('js/iconsax-adapter.js') }}?v=1"></script>
+<script src="{{ asset('js/iconsax-adapter.js') }}?v=2"></script>

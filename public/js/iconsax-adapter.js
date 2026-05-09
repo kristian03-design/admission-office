@@ -34,11 +34,14 @@
     download: 'document-download',
     eye: 'eye',
     'eye-off': 'eye-slash',
+    edit: 'edit-2',
+    facebook: 'facebook',
     'file-text': 'document-text',
     'flask-conical': 'glass',
     globe: 'global',
     'graduation-cap': 'teacher',
     handshake: 'like-shapes',
+    home: 'home',
     image: 'gallery',
     instagram: 'instagram',
     'key-round': 'key',
@@ -84,10 +87,12 @@
     twitter: 'x',
     'upload-cloud': 'cloud-add',
     user: 'user',
+    'user-round': 'user',
     'user-plus': 'user-add',
     users: 'people',
     'users-round': 'profile-2user',
     x: 'close-circle',
+    youtube: 'youtube',
     'zoom-in': 'search-zoom-in'
   };
 
@@ -128,17 +133,16 @@
 
   function copyAttributes(from, to) {
     Array.from(from.attributes).forEach((attr) => {
-      if (attr.name === 'data-lucide' || attr.name === 'data-iconsax') return;
+      if (attr.name === 'data-iconsax') return;
       to.setAttribute(attr.name, attr.value);
     });
   }
 
   function renderIcon(node) {
-    const lucideName = node.getAttribute('data-lucide');
     const iconsaxName = node.getAttribute('data-iconsax');
-    const symbolId = iconsaxName
-      ? (iconsaxName.startsWith(`${ICONSAX_STYLE}-`) ? iconsaxName : `${ICONSAX_STYLE}-${iconsaxName}`)
-      : toIconsaxName(lucideName);
+    const symbolId = iconsaxName && iconsaxName.startsWith(`${ICONSAX_STYLE}-`)
+      ? iconsaxName
+      : toIconsaxName(iconsaxName);
 
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
@@ -159,12 +163,11 @@
 
   function createIcons() {
     ensureSprite().finally(() => {
-      document.querySelectorAll('[data-lucide], [data-iconsax]').forEach(renderIcon);
+      document.querySelectorAll('[data-iconsax]').forEach(renderIcon);
     });
   }
 
   window.iconsax = { createIcons };
-  window.lucide = window.lucide || { createIcons };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', createIcons);

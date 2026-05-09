@@ -72,12 +72,12 @@
   <div class="card">
 
     <a href="{{ route('admin.login') }}" class="back-link">
-      <i data-lucide="arrow-left" style="width:14px;height:14px"></i>
+      <i data-iconsax="arrow-left" style="width:14px;height:14px"></i>
       Back to Login
     </a>
 
     <div class="icon-circle">
-      <i data-lucide="lock"></i>
+      <i data-iconsax="lock"></i>
     </div>
 
     <div class="card-badge">
@@ -89,14 +89,14 @@
 
     @if (session('status'))
       <div class="form-success show">
-        <i data-lucide="check" style="width:14px;height:14px"></i>
+        <i data-iconsax="check" style="width:14px;height:14px"></i>
         <span>{{ session('status') }}</span>
       </div>
     @endif
 
     @if ($errors->any())
       <div class="form-error show">
-        <i data-lucide="alert-circle" style="width:14px;height:14px"></i>
+        <i data-iconsax="alert-circle" style="width:14px;height:14px"></i>
         <span>{{ $errors->first() }}</span>
       </div>
     @endif
@@ -108,7 +108,7 @@
         <label class="form-label" for="email">Email Address</label>
         <div class="input-wrap">
           <span class="input-icon">
-            <i data-lucide="mail"></i>
+            <i data-iconsax="mail"></i>
           </span>
           <input type="email" id="email" name="email" class="form-input"
                  placeholder="johndoe@gmail.com"
@@ -118,7 +118,7 @@
       </div>
 
       <button type="submit" class="btn-primary">
-        <i data-lucide="send" style="width:16px;height:16px"></i>
+        <i data-iconsax="send" style="width:16px;height:16px"></i>
         Send Reset Link
       </button>
     </form>
@@ -126,8 +126,8 @@
   </div>
 </div>
 <script>
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
+  if (typeof iconsax !== 'undefined') {
+    iconsax.createIcons();
   }
 </script>
 </body>

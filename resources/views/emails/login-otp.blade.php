@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your OTP Code — BTECH Admin</title>
+  <title>Your OTP Code â€” BTECH Admin</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -72,12 +72,12 @@
       gap: 8px;
       border-bottom: 1px solid rgba(255,255,255,0.04);
     }
-    .security-strip svg {
+    .security-strip .mail-icon {
       width: 13px; height: 13px;
-      stroke: #C8A84B;
-      fill: none;
-      stroke-width: 1.5;
+      color: #C8A84B;
       flex-shrink: 0;
+      font-size: 13px;
+      line-height: 13px;
     }
     .security-strip span {
       font-size: 10px;
@@ -148,11 +148,11 @@
       justify-content: center;
       gap: 6px;
     }
-    .otp-timer svg {
+    .otp-timer .mail-icon {
       width: 12px; height: 12px;
-      stroke: rgba(255,255,255,0.28);
-      fill: none;
-      stroke-width: 1.5;
+      color: rgba(255,255,255,0.28);
+      font-size: 12px;
+      line-height: 12px;
     }
     .otp-timer strong { color: rgba(255,255,255,0.5); font-weight: 500; }
 
@@ -167,13 +167,13 @@
       gap: 10px;
       align-items: flex-start;
     }
-    .warning-box svg {
+    .warning-box .mail-icon {
       width: 14px; height: 14px;
-      stroke: #FCA5A5;
-      fill: none;
-      stroke-width: 1.5;
+      color: #FCA5A5;
       flex-shrink: 0;
       margin-top: 1px;
+      font-size: 14px;
+      line-height: 14px;
     }
     .warning-box p { font-size: 12px; color: rgba(255,255,255,0.38); line-height: 1.65; }
     .warning-box strong { color: #FCA5A5; font-weight: 500; }
@@ -210,17 +210,15 @@
       </div>
       <div>
         <div class="school">BTECH Admin Portal</div>
-        <div class="dept">Baliwag Polytechnic College — Admissions System</div>
+        <div class="dept">Baliwag Polytechnic College â€” Admissions System</div>
       </div>
     </div>
   </div>
 
   <!-- SECURITY STRIP -->
   <div class="security-strip">
-    <svg viewBox="0 0 24 24">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-    </svg>
-    <span>Secure Authentication — <strong>One-Time Password</strong></span>
+    <span class="mail-icon">&#9670;</span>
+    <span>Secure Authentication â€” <strong>One-Time Password</strong></span>
   </div>
 
   <!-- BODY -->
@@ -235,29 +233,22 @@
     <div class="otp-box">
       <div class="otp-digits">{{ $otp }}</div>
       <div class="otp-timer">
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="9"/>
-          <path d="M12 7v5l3 3"/>
-        </svg>
+        <span class="mail-icon">&#9679;</span>
         Expires in <strong>10 minutes</strong>
       </div>
     </div>
 
     <div class="warning-box">
-      <svg viewBox="0 0 24 24">
-        <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-        <line x1="12" y1="9" x2="12" y2="13"/>
-        <line x1="12" y1="17" x2="12.01" y2="17"/>
-      </svg>
-      <p><strong>Didn't request this?</strong> Ignore this email — your account remains secure. If this continues, consider changing your password immediately.</p>
+      <span class="mail-icon">!</span>
+      <p><strong>Didn't request this?</strong> Ignore this email â€” your account remains secure. If this continues, consider changing your password immediately.</p>
     </div>
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
     <div class="footer-left">
-      © {{ date('Y') }} Baliwag Polytechnic College<br>
-      Baliwag, Bulacan · Philippines
+      Â© {{ date('Y') }} Baliwag Polytechnic College<br>
+      Baliwag, Bulacan Â· Philippines
     </div>
     <div class="footer-right">Automated message.<br>Do not reply.</div>
   </div>
@@ -265,3 +256,4 @@
 </div>
 </body>
 </html>
+

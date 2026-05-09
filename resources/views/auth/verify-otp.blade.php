@@ -83,12 +83,12 @@
   <div class="card">
 
     <a href="{{ route('admin.login') }}" class="back-link">
-      <i data-lucide="arrow-left" style="width:14px;height:14px"></i>
+      <i data-iconsax="arrow-left" style="width:14px;height:14px"></i>
       Back to Login
     </a>
 
     <div class="icon-circle">
-      <i data-lucide="mail"></i>
+      <i data-iconsax="mail"></i>
     </div>
 
     <div class="card-badge">
@@ -103,7 +103,7 @@
     {{-- Errors --}}
     @if ($errors->any())
       <div class="form-error show">
-        <i data-lucide="alert-circle" style="width:14px;height:14px"></i>
+        <i data-iconsax="alert-circle" style="width:14px;height:14px"></i>
         <span>{{ $errors->first() }}</span>
       </div>
     @endif
@@ -111,7 +111,7 @@
     {{-- Resent success --}}
     @if (session('resent'))
       <div class="form-success show">
-        <i data-lucide="check" style="width:14px;height:14px"></i>
+        <i data-iconsax="check" style="width:14px;height:14px"></i>
         <span>{{ session('resent') }}</span>
       </div>
     @endif
@@ -131,7 +131,7 @@
       </div>
 
       <button type="submit" class="btn-primary" id="verifyBtn">
-        <i data-lucide="check-circle-2" style="width:16px;height:16px"></i>
+        <i data-iconsax="check-circle-2" style="width:16px;height:16px"></i>
         Verify &amp; Sign In
       </button>
     </form>
@@ -189,8 +189,8 @@
   digits[0].focus();
 
   // Initialize Iconsax Icons
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
+  if (typeof iconsax !== 'undefined') {
+    iconsax.createIcons();
   }
 </script>
 </body>

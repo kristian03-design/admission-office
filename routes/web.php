@@ -99,6 +99,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/programs/{id}/schedule', [ProgramController::class, 'updateSchedule']);
     Route::patch('/programs/{id}/slots-left', [ProgramController::class, 'updateSlotsLeft']);
     Route::post('/programs/{id}/slots-left', [ProgramController::class, 'updateSlotsLeft']);
+    Route::patch('/programs/{id}/status', [ProgramController::class, 'updateStatus']);
+    Route::post('/programs/{id}/status', [ProgramController::class, 'updateStatus']);
 
     Route::get('/interviews', [InterviewController::class, 'index']);
     Route::post('/interviews/sync/{programId}', [InterviewController::class, 'sync']);

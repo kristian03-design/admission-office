@@ -442,8 +442,8 @@ function show() {
   } else {
     if (navBar) navBar.style.display = 'flex';
     if (nextBtn) {
-      nextBtn.innerHTML = `Next <i data-lucide="chevron-right" style="width:14px;height:14px;stroke-width:2.5"></i>`;
-      if (typeof lucide !== 'undefined') lucide.createIcons({ props: { 'data-lucide': 'chevron-right' }, nameAttr: 'data-lucide' });
+      nextBtn.innerHTML = `Next <i data-iconsax="chevron-right" style="width:14px;height:14px;stroke-width:2.5"></i>`;
+      if (typeof iconsax !== 'undefined') iconsax.createIcons({ props: { 'data-iconsax': 'chevron-right' }, nameAttr: 'data-iconsax' });
       nextBtn.className = 'bp';
       nextBtn.onclick = () => nav(1);
     }
@@ -1109,8 +1109,8 @@ function resetForm() {
   const zone = document.getElementById('picZone');
   if (zone) {
     zone.classList.remove('uploaded');
-    zone.innerHTML = `<input type="file" id="picInput" accept="image/jpeg,image/png,image/jpg" onchange="handlePic(this)"><i data-lucide="image" style="width:30px;height:30px;color:#b5cce4;stroke-width:1.8"></i><span style="font-size:11px;color:#b5cce4;font-weight:700;margin-top:6px">Click to upload</span>`;
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+    zone.innerHTML = `<input type="file" id="picInput" accept="image/jpeg,image/png,image/jpg" onchange="handlePic(this)"><i data-iconsax="image" style="width:30px;height:30px;color:#b5cce4;stroke-width:1.8"></i><span style="font-size:11px;color:#b5cce4;font-weight:700;margin-top:6px">Click to upload</span>`;
+    if (typeof iconsax !== 'undefined') iconsax.createIcons();
   }
   show();
 }
@@ -1194,35 +1194,50 @@ function renderProgramRadios(containerId, name, excludeBoardExam) {
         return;
       }
 
-      // 1. Filter out disabled/inactive/full programs
-      let active = programs.filter(p => {
-        const status = (p.status || '').toLowerCase();
-        const slotsLeft = Number(p.slots_left ?? 0);
-        const byStatus = status !== 'inactive' && status !== 'disabled' && status !== 'closed';
-        const byFlag = p.is_active !== false;
-        const bySlots = Number.isFinite(slotsLeft) ? slotsLeft > 0 : true;
-        return byStatus && byFlag && bySlots;
-      });
+      let visible = programs;
 
-      // 2. For 2nd choice: exclude board-exam programs
+      // For 2nd choice: exclude board-exam programs
       if (excludeBoardExam) {
-        active = active.filter(p => {
+        visible = visible.filter(p => {
           const cat = (p.category || '').trim();
           return !BOARD_EXAM_CATEGORIES.some(b => cat.toLowerCase() === b.toLowerCase());
         });
       }
 
-      if (active.length === 0) {
+      const programState = p => {
+        const status = (p.status || '').toLowerCase();
+        const slotsLeft = Number(p.slots_left ?? 0);
+        const byStatus = status !== 'inactive' && status !== 'disabled' && status !== 'closed';
+        const byFlag = p.is_active !== false;
+        const bySlots = Number.isFinite(slotsLeft) ? slotsLeft > 0 : true;
+        const selectable = byStatus && byFlag && bySlots;
+        const reason = !byFlag || !byStatus
+          ? 'Admissions closed'
+          : (!bySlots ? 'Full slot' : '');
+        return { selectable, reason, slotsLeft };
+      };
+
+      if (visible.length === 0) {
         el.innerHTML = '<p style="color:#6b7280;font-size:13px">No programs available at this time.</p>';
         return;
       }
 
-      el.innerHTML = active.map(p => {
+      const selectableCount = visible.filter(p => programState(p).selectable).length;
+      const notice = selectableCount < visible.length
+        ? '<p style="font-size:12px;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 10px;margin-bottom:10px">Programs marked closed or full cannot be selected.</p>'
+        : '';
+
+      el.innerHTML = notice + visible.map(p => {
+        const state = programState(p);
         const isBoardExam = BOARD_EXAM_CATEGORIES.some(b => (p.category || '').toLowerCase() === b.toLowerCase());
         const badge = (isBoardExam && !excludeBoardExam)
           ? ' <span style="font-size:10px;font-weight:700;color:#7c3aed;background:#ede9fe;padding:2px 7px;border-radius:99px;margin-left:6px;vertical-align:middle">Board Exam</span>'
           : '';
-        return `<label class="oc"><input type="radio" name="${name}" value="${escapeHtml(p.name)}" style="width:15px;height:15px;accent-color:var(--navy);margin-top:2px"><span style="margin-left:10px;font-size:13px;font-weight:600">${escapeHtml(p.name)}${badge}</span></label>`;
+        const availabilityBadge = state.selectable
+          ? `<span style="font-size:10px;font-weight:700;color:#047857;background:#d1fae5;padding:2px 7px;border-radius:99px;margin-left:6px;vertical-align:middle">${state.slotsLeft} slots left</span>`
+          : `<span style="font-size:10px;font-weight:700;color:#b91c1c;background:#fee2e2;padding:2px 7px;border-radius:99px;margin-left:6px;vertical-align:middle">${state.reason}</span>`;
+        const disabledStyle = state.selectable ? '' : 'opacity:.62;cursor:not-allowed;background:#f8fafc;';
+        return `<label class="oc" style="${disabledStyle}"><input type="radio" name="${name}" value="${escapeHtml(p.name)}" ${state.selectable ? '' : 'disabled'} style="width:15px;height:15px;accent-color:var(--navy);margin-top:2px"><span style="margin-left:10px;font-size:13px;font-weight:600">${escapeHtml(p.name)}${badge}${availabilityBadge}</span></label>`;
       }).join('');
 
       // Re-bind conflict check after new radios are injected
@@ -1257,16 +1272,17 @@ async function initPublicSettings() {
       document.body.innerHTML = `
         <div style="height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:sans-serif;padding:20px;text-align:center;background:#f8fafc">
           <div style="width:80px;height:80px;background:#fee2e2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
-            <svg style="color:#ef4444;width:40px;height:40px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            <i data-iconsax="lock" style="color:#ef4444;width:40px;height:40px"></i>
           </div>
           <h1 style="color:#1e293b;margin-bottom:10px;font-size:24px;font-weight:700">Applications are currently closed</h1>
           <p style="color:#64748b;max-width:400px;line-height:1.6">The online admission application for ${s.school_year || 'the current term'} is not yet open or has already ended. Please contact the admissions office for more information.</p>
           <a href="/" style="margin-top:24px;color:#254d82;text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px">
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            <i data-iconsax="arrow-left" style="width:16px;height:16px"></i>
             Back to Home
           </a>
         </div>
       `;
+      if (typeof iconsax !== 'undefined') iconsax.createIcons();
       return;
     }
 

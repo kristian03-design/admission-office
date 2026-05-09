@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BTECH — Admissions Admin Dashboard</title>
+  <title>BTECH â€” Admissions Admin Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
@@ -11,19 +11,19 @@
   @include('partials.iconsax')
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=7" />
+  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=8" />
   <script src="{{ asset('js/api-config.js') }}?v=7"></script>
-  <script src="{{ asset('js/admission-api.js') }}?v=12"></script>
+  <script src="{{ asset('js/admission-api.js') }}?v=13"></script>
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
     sessionStorage.setItem('_at', "{{ $admissionApiToken ?? session('admission_api_token') ?? '' }}");
   </script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=34" defer></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=35" defer></script>
 </head>
 <body>
   @include('partials.site-loader')
 
-<!-- ═══ SIDEBAR ═══ -->
+<!-- â•â•â• SIDEBAR â•â•â• -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-brand">
     <a href="#" class="brand-logo">
@@ -34,55 +34,55 @@
       <span class="brand-sub">Admissions Admin</span>
     </div>
     <button class="sidebar-close-btn" id="sidebarCloseBtn">
-      <i data-lucide="x"></i>
+      <i data-iconsax="x"></i>
     </button>
   </div>
 
   <nav class="sidebar-nav">
     <p class="nav-section-label">Main</p>
     <a class="nav-item active" data-page="dashboard">
-      <i data-lucide="layout-grid"></i>
+      <i data-iconsax="layout-grid"></i>
       <span>Dashboard</span>
     </a>
     <a class="nav-item" data-page="applications">
-      <i data-lucide="file-text"></i>
+      <i data-iconsax="file-text"></i>
       <span>Applications</span>
       <span class="nav-badge" id="pendingBadge">0</span>
     </a>
     <a class="nav-item" data-page="interviews">
-      <i data-lucide="calendar"></i>
+      <i data-iconsax="calendar"></i>
       <span>Interview Schedule</span>
     </a>
     <a class="nav-item" data-page="programs">
-      <i data-lucide="book-open"></i>
+      <i data-iconsax="book-open"></i>
       <span>Programs</span>
     </a>
     <p class="nav-section-label">Website</p>
     <a class="nav-item" data-page="website-content">
-      <i data-lucide="globe"></i>
+      <i data-iconsax="globe"></i>
       <span>Website Content</span>
     </a>
     <p class="nav-section-label">Analytics</p>
     <a class="nav-item" data-page="reports">
-      <i data-lucide="bar-chart-3"></i>
+      <i data-iconsax="bar-chart-3"></i>
       <span>Reports</span>
     </a>
     <p class="nav-section-label">System</p>
     <a class="nav-item" data-page="settings">
-      <i data-lucide="settings"></i>
+      <i data-iconsax="settings"></i>
       <span>Settings</span>
     </a>
   </nav>
 
   <div class="sidebar-footer">
     <div class="admin-profile">
-      <div class="admin-avatar" id="sidebarUserInitials">—</div>
+      <div class="admin-avatar" id="sidebarUserInitials">â€”</div>
       <div style="flex:1;min-width:0">
-        <span class="admin-name" id="sidebarUserName">—</span>
-        <span class="admin-role" id="sidebarUserRole">—</span>
+        <span class="admin-name" id="sidebarUserName">â€”</span>
+        <span class="admin-role" id="sidebarUserRole">â€”</span>
       </div>
       <button class="admin-logout" id="logoutBtn" title="Sign out">
-        <i data-lucide="log-out"></i>
+        <i data-iconsax="log-out"></i>
       </button>
     </div>
   </div>
@@ -90,14 +90,14 @@
 
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<!-- ═══ MAIN WRAP ═══ -->
+<!-- â•â•â• MAIN WRAP â•â•â• -->
 <div class="main-wrap">
 
   <!-- TOPBAR -->
   <header class="topbar">
     <div class="topbar-left">
       <button class="menu-toggle" id="menuToggle">
-        <i data-lucide="menu"></i>
+        <i data-iconsax="menu"></i>
       </button>
       <div class="page-breadcrumb">
         <span class="breadcrumb-school">BTECH</span>
@@ -107,32 +107,32 @@
     </div>
     <div class="topbar-right">
       <div class="topbar-school-year">
-        <i data-lucide="calendar-range" style="width:14px;height:14px"></i>
-        <span id="topbarSY">S.Y. {{ date('Y') }}–{{ date('Y') + 1 }}</span>
+        <i data-iconsax="calendar-range" style="width:14px;height:14px"></i>
+        <span id="topbarSY">S.Y. {{ date('Y') }}â€“{{ date('Y') + 1 }}</span>
       </div>
       <button class="topbar-btn" id="notifBtn">
-        <i data-lucide="bell"></i>
+        <i data-iconsax="bell"></i>
         <span class="notif-dot" id="notifDot"></span>
       </button>
       <div class="topbar-admin">
-        <div class="topbar-avatar" id="topbarUserInitials">—</div>
-        <span class="topbar-admin-name" id="topbarUserName">—</span>
+        <div class="topbar-avatar" id="topbarUserInitials">â€”</div>
+        <span class="topbar-admin-name" id="topbarUserName">â€”</span>
       </div>
     </div>
   </header>
 
-  <!-- ═══ NOTIFICATION PANEL ═══ -->
+  <!-- â•â•â• NOTIFICATION PANEL â•â•â• -->
   <div class="notif-overlay" id="notifOverlay"></div>
   <div class="notif-panel" id="notifPanel">
     <div class="notif-header">
       <div class="notif-title">Notifications</div>
       <button class="notif-close" id="notifClose">
-        <i data-lucide="x"></i>
+        <i data-iconsax="x"></i>
       </button>
     </div>
     <div class="notif-body" id="notifBody">
       <div class="notif-empty">
-        <i data-lucide="bell-off"></i>
+        <i data-iconsax="bell-off"></i>
         <p>No new notifications</p>
       </div>
     </div>
@@ -142,7 +142,7 @@
     </div>
   </div>
 
-  <!-- ─── DASHBOARD ─── -->
+  <!-- â”€â”€â”€ DASHBOARD â”€â”€â”€ -->
   <div class="page-content active" id="page-dashboard">
     <div class="page-header">
       <div>
@@ -151,7 +151,7 @@
       </div>
       <div class="page-actions">
         <span class="deadline-chip">
-          <i data-lucide="clock" style="width:13px;height:13px"></i>
+          <i data-iconsax="clock" style="width:13px;height:13px"></i>
           Deadline: <span id="deadline"></span>
         </span>
       </div>
@@ -164,7 +164,7 @@
         <div class="chart-card-header">
           <div>
             <div class="chart-title">Application Trend</div>
-            <div class="chart-sub">Monthly submissions — <span id="chartSY">{{ date('Y') }}–{{ date('Y') + 1 }}</span></div>
+            <div class="chart-sub">Monthly submissions â€” <span id="chartSY">{{ date('Y') }}â€“{{ date('Y') + 1 }}</span></div>
           </div>
         </div>
         <div class="chart-body"><canvas id="trendChart"></canvas></div>
@@ -198,7 +198,7 @@
           </div>
           <button class="link-btn" id="viewAllBtn">
             View all
-            <i data-lucide="arrow-right"></i>
+            <i data-iconsax="arrow-right"></i>
           </button>
         </div>
         <div class="recent-list" id="recentList"></div>
@@ -206,7 +206,7 @@
     </div>
   </div>
 
-  <!-- ─── APPLICATIONS ─── -->
+  <!-- â”€â”€â”€ APPLICATIONS â”€â”€â”€ -->
   <div class="page-content" id="page-applications">
     <div class="page-header">
       <div>
@@ -215,7 +215,7 @@
       </div>
       <div class="page-actions">
         <button class="btn-outline" id="exportCsvBtn">
-          <i data-lucide="download"></i>
+          <i data-iconsax="download"></i>
           Export CSV
         </button>
       </div>
@@ -224,9 +224,9 @@
     <div class="filter-bar">
       <div class="search-wrap">
         <span class="search-icon">
-          <i data-lucide="search"></i>
+          <i data-iconsax="search"></i>
         </span>
-        <input type="text" id="searchInput" placeholder="Search name or reference…" class="search-input" />
+        <input type="text" id="searchInput" placeholder="Search name or referenceâ€¦" class="search-input" />
       </div>
       <select class="filter-select" id="filterType">
         <option value="">All Types</option>
@@ -273,7 +273,7 @@
     </div>
   </div>
 
-  <!-- ─── INTERVIEW SCHEDULE ─── -->
+  <!-- â”€â”€â”€ INTERVIEW SCHEDULE â”€â”€â”€ -->
   <div class="page-content" id="page-interviews">
     <div class="page-header">
       <div>
@@ -310,12 +310,12 @@
     </div>
   </div>
 
-  <!-- ─── STUDENT SCHEDULING (SUB-PAGE) ─── -->
+  <!-- â”€â”€â”€ STUDENT SCHEDULING (SUB-PAGE) â”€â”€â”€ -->
   <div class="page-content" id="page-student-scheduling">
     <div class="page-header">
       <div style="flex:1;min-width:0;">
         <button class="btn-ghost" onclick="showPage('interviews')" style="margin-bottom:12px;padding-left:0;">
-          <i data-lucide="arrow-left"></i>
+          <i data-iconsax="arrow-left"></i>
           Back to Courses
         </button>
         <h1 class="page-title" id="schedulingCourseName" style="white-space:normal;word-wrap:break-word;">Schedule Students</h1>
@@ -324,15 +324,15 @@
       <div class="page-actions">
         <div style="display:flex;gap:12px">
           <button class="btn-outline" onclick="openSelectApplicantModal()">
-            <i data-lucide="users"></i>
+            <i data-iconsax="users"></i>
             Select Applicants
           </button>
           <button class="btn-outline" onclick="showAddStudentRow()">
-            <i data-lucide="plus"></i>
+            <i data-iconsax="plus"></i>
             Custom
           </button>
           <button class="btn-primary" onclick="saveAllStudentSchedules()">
-            <i data-lucide="save"></i>
+            <i data-iconsax="save"></i>
             Save All Schedules
           </button>
         </div>
@@ -342,7 +342,7 @@
     <div class="filter-bar" style="margin-bottom:20px;background:white;padding:12px 16px;border-radius:12px;border:1px solid var(--navy-pale)">
       <div class="search-wrap" style="flex:1">
         <span class="search-icon">
-          <i data-lucide="search"></i>
+          <i data-iconsax="search"></i>
         </span>
         <input type="text" id="schedulingSearchInput" placeholder="Search applicant name or reference..." class="search-input" oninput="applySchedulingSearch()" />
       </div>
@@ -367,7 +367,7 @@
     </div>
   </div>
 
-  <!-- ─── PROGRAMS ─── -->
+  <!-- â”€â”€â”€ PROGRAMS â”€â”€â”€ -->
   <div class="page-content" id="page-programs">
     <div class="page-header">
       <div>
@@ -376,7 +376,7 @@
       </div>
       <div class="page-actions">
         <button class="btn-primary" id="saveAllProgramSlotsBtn" type="button" onclick="saveAllProgramSlotsLeft()" disabled>
-          <i data-lucide="save"></i>
+          <i data-iconsax="save"></i>
           Save All Changes
         </button>
       </div>
@@ -411,20 +411,20 @@
     </div>
   </div>
 
-  <!-- ─── REPORTS ─── -->
+  <!-- â”€â”€â”€ REPORTS â”€â”€â”€ -->
   <div class="page-content" id="page-reports">
     <div class="page-header">
       <div>
         <h1 class="page-title">Reports</h1>
-        <p class="page-sub">Analytics and summary exports for S.Y. 2025–2026</p>
+        <p class="page-sub">Analytics and summary exports for S.Y. 2025â€“2026</p>
       </div>
       <div class="page-actions">
         <button class="btn-outline" id="rptCsvBtn">
-          <i data-lucide="download"></i>
+          <i data-iconsax="download"></i>
           Export CSV
         </button>
         <button class="btn-outline" onclick="window.print()">
-          <i data-lucide="printer"></i>
+          <i data-iconsax="printer"></i>
           Print
         </button>
       </div>
@@ -475,7 +475,7 @@
     </div>
   </div>
 
-  <!-- ─── WEBSITE CONTENT ─── -->
+  <!-- â”€â”€â”€ WEBSITE CONTENT â”€â”€â”€ -->
   <div class="page-content" id="page-website-content">
     <div class="page-header">
       <div>
@@ -487,27 +487,27 @@
     <div class="content-studio-layout">
       <aside class="content-studio-sidebar">
         <button type="button" class="studio-nav-item active" data-target="studio-panel-hero">
-          <i data-lucide="image"></i>
+          <i data-iconsax="image"></i>
           <span>Hero & CTA</span>
         </button>
         <button type="button" class="studio-nav-item" data-target="studio-panel-contact">
-          <i data-lucide="phone"></i>
+          <i data-iconsax="phone"></i>
           <span>Contact & Social</span>
         </button>
         <button type="button" class="studio-nav-item" data-target="studio-panel-announcements">
-          <i data-lucide="megaphone"></i>
+          <i data-iconsax="megaphone"></i>
           <span>Announcements</span>
         </button>
         <button type="button" class="studio-nav-item" data-target="studio-panel-news">
-          <i data-lucide="newspaper"></i>
+          <i data-iconsax="newspaper"></i>
           <span>News & Events</span>
         </button>
         <button type="button" class="studio-nav-item" data-target="studio-panel-testimonials">
-          <i data-lucide="messages-square"></i>
+          <i data-iconsax="messages-square"></i>
           <span>Testimonials</span>
         </button>
         <button type="button" class="studio-nav-item" data-target="studio-panel-faculty">
-          <i data-lucide="users-round"></i>
+          <i data-iconsax="users-round"></i>
           <span>Faculty & Staff</span>
         </button>
       </aside>
@@ -515,7 +515,7 @@
       <div class="content-studio-panels">
       <div class="settings-card studio-card studio-panel active" id="studio-panel-hero">
         <div class="settings-card-title">
-          <i data-lucide="image"></i>
+          <i data-iconsax="image"></i>
           Hero & CTA Section
         </div>
         <p class="studio-card-subtitle">Control the first impression of your landing page.</p>
@@ -529,7 +529,7 @@
         </div>
         <div class="settings-field">
           <label class="settings-label">School Year Label</label>
-          <input type="text" class="settings-input" id="settingSYLabel" placeholder="e.g. Admissions Open · S.Y. 2025–2026" />
+          <input type="text" class="settings-input" id="settingSYLabel" placeholder="e.g. Admissions Open Â· S.Y. 2025â€“2026" />
         </div>
         <div class="settings-field">
           <label class="settings-label">CTA Button Text</label>
@@ -539,7 +539,7 @@
 
       <div class="settings-card studio-card studio-panel" id="studio-panel-contact">
         <div class="settings-card-title">
-          <i data-lucide="phone"></i>
+          <i data-iconsax="phone"></i>
           Contact & Social Links
         </div>
         <p class="studio-card-subtitle">Keep public contact information accurate and consistent.</p>
@@ -564,11 +564,11 @@
       <div class="settings-card studio-table-card studio-panel" id="studio-panel-announcements">
         <div class="studio-table-card__header">
           <div class="settings-card-title">
-            <i data-lucide="megaphone"></i>
+            <i data-iconsax="megaphone"></i>
             Announcements & Popups
           </div>
           <button class="btn-ghost studio-add-btn" onclick="openAnnouncementModal()">
-            <i data-lucide="plus"></i> Add Announcement
+            <i data-iconsax="plus"></i> Add Announcement
           </button>
         </div>
         <p class="studio-card-subtitle">Manage ticker text and popup alerts shown on the public website.</p>
@@ -594,11 +594,11 @@
       <div class="settings-card studio-table-card studio-panel" id="studio-panel-news">
         <div class="studio-table-card__header">
           <div class="settings-card-title">
-            <i data-lucide="newspaper"></i>
+            <i data-iconsax="newspaper"></i>
             News & Events
           </div>
           <button class="btn-ghost studio-add-btn" onclick="openNewsEventModal()">
-            <i data-lucide="plus"></i> Add News/Event
+            <i data-iconsax="plus"></i> Add News/Event
           </button>
         </div>
         <p class="studio-card-subtitle">Publish stories and upcoming activities for applicants and visitors.</p>
@@ -625,11 +625,11 @@
       <div class="settings-card studio-table-card studio-panel" id="studio-panel-testimonials">
         <div class="studio-table-card__header">
           <div class="settings-card-title">
-            <i data-lucide="messages-square"></i>
+            <i data-iconsax="messages-square"></i>
             Testimonials
           </div>
           <button class="btn-ghost studio-add-btn" onclick="openTestimonialModal()">
-            <i data-lucide="plus"></i> Add Testimonial
+            <i data-iconsax="plus"></i> Add Testimonial
           </button>
         </div>
         <p class="studio-card-subtitle">Manage student stories shown on the public homepage.</p>
@@ -656,11 +656,11 @@
       <div class="settings-card studio-table-card studio-panel" id="studio-panel-faculty">
         <div class="studio-table-card__header">
           <div class="settings-card-title">
-            <i data-lucide="users-round"></i>
+            <i data-iconsax="users-round"></i>
             Faculty & Staff
           </div>
           <button class="btn-ghost studio-add-btn" onclick="openFacultyStaffModal()">
-            <i data-lucide="plus"></i> Add Member
+            <i data-iconsax="plus"></i> Add Member
           </button>
         </div>
         <p class="studio-card-subtitle">Manage the people shown on the About page. Stored in JSON for quick updates.</p>
@@ -688,13 +688,13 @@
 
     <div class="settings-save-row studio-save-row">
       <button class="btn-primary" id="saveWebsiteSettingsBtn">
-        <i data-lucide="save"></i>
+        <i data-iconsax="save"></i>
         Save Website Changes
       </button>
     </div>
   </div>
 
-  <!-- ─── SETTINGS ─── -->
+  <!-- â”€â”€â”€ SETTINGS â”€â”€â”€ -->
   <div class="page-content" id="page-settings">
     <div class="page-header">
       <div>
@@ -706,22 +706,22 @@
     <div class="settings-grid">
       <div class="settings-card">
         <div class="settings-card-title">
-          <i data-lucide="calendar-range"></i>
+          <i data-iconsax="calendar-range"></i>
           Academic Year & Deadline
         </div>
         <div class="settings-field">
           <label class="settings-label">School Year</label>
           <select class="filter-select" id="settingSY" style="width:100%">
-            <option>S.Y. 2026–2027</option>
-            <option>S.Y. 2027–2028</option>
-            <option>S.Y. 2028–2029</option>
-            <option>S.Y. 2029–2030</option>
-            <option>S.Y. 2030–2031</option>
-            <option>S.Y. 2031–2032</option>
-            <option>S.Y. 2032–2033</option>
-            <option>S.Y. 2033–2034</option>
-            <option>S.Y. 2034–2035</option>
-            <option>S.Y. 2035–2036</option>
+            <option>S.Y. 2026â€“2027</option>
+            <option>S.Y. 2027â€“2028</option>
+            <option>S.Y. 2028â€“2029</option>
+            <option>S.Y. 2029â€“2030</option>
+            <option>S.Y. 2030â€“2031</option>
+            <option>S.Y. 2031â€“2032</option>
+            <option>S.Y. 2032â€“2033</option>
+            <option>S.Y. 2033â€“2034</option>
+            <option>S.Y. 2034â€“2035</option>
+            <option>S.Y. 2035â€“2036</option>
           </select>
         </div>
         <div class="settings-field">
@@ -730,7 +730,7 @@
         </div>
         <div class="settings-field">
           <label class="settings-label">Interview Schedule</label>
-          <input type="text" class="settings-input" id="settingInterviewSchedule" value="Monday – Friday, 9:00 AM – 3:00 PM" />
+          <input type="text" class="settings-input" id="settingInterviewSchedule" value="Monday â€“ Friday, 9:00 AM â€“ 3:00 PM" />
         </div>
         <div class="settings-field">
           <label class="settings-label">Total Applications (read-only)</label>
@@ -740,7 +740,7 @@
 
       <div class="settings-card">
         <div class="settings-card-title">
-          <i data-lucide="shield-check"></i>
+          <i data-iconsax="shield-check"></i>
           Application Controls
         </div>
         <div class="settings-toggle-row">
@@ -768,7 +768,7 @@
 
       <div class="settings-card">
         <div class="settings-card-title">
-          <i data-lucide="key-round"></i>
+          <i data-iconsax="key-round"></i>
           Change Password
         </div>
         <div class="settings-field">
@@ -776,7 +776,7 @@
           <div style="position:relative;">
             <input type="password" class="settings-input" id="currentAdminPassword" autocomplete="current-password" style="padding-right:44px;" />
             <button type="button" class="password-toggle-btn" data-target="currentAdminPassword" aria-label="Show current password" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);border:none;background:transparent;color:#64748b;cursor:pointer;padding:4px;display:inline-flex;align-items:center;justify-content:center;">
-              <i data-lucide="eye" style="width:18px;height:18px;"></i>
+              <i data-iconsax="eye" style="width:18px;height:18px;"></i>
             </button>
           </div>
         </div>
@@ -785,7 +785,7 @@
           <div style="position:relative;">
             <input type="password" class="settings-input" id="newAdminPassword" autocomplete="new-password" style="padding-right:44px;" />
             <button type="button" class="password-toggle-btn" data-target="newAdminPassword" aria-label="Show new password" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);border:none;background:transparent;color:#64748b;cursor:pointer;padding:4px;display:inline-flex;align-items:center;justify-content:center;">
-              <i data-lucide="eye" style="width:18px;height:18px;"></i>
+              <i data-iconsax="eye" style="width:18px;height:18px;"></i>
             </button>
           </div>
         </div>
@@ -794,20 +794,20 @@
           <div style="position:relative;">
             <input type="password" class="settings-input" id="confirmAdminPassword" autocomplete="new-password" style="padding-right:44px;" />
             <button type="button" class="password-toggle-btn" data-target="confirmAdminPassword" aria-label="Show password confirmation" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);border:none;background:transparent;color:#64748b;cursor:pointer;padding:4px;display:inline-flex;align-items:center;justify-content:center;">
-              <i data-lucide="eye" style="width:18px;height:18px;"></i>
+              <i data-iconsax="eye" style="width:18px;height:18px;"></i>
             </button>
           </div>
         </div>
         <p id="changePasswordError" style="display:none;margin-top:8px;font-size:12px;color:#b91c1c;font-weight:600;"></p>
         <button type="button" class="btn-primary" id="changePasswordBtn" style="margin-top:16px;width:100%;justify-content:center;">
-          <i data-lucide="save"></i>
+          <i data-iconsax="save"></i>
           Save New Password
         </button>
       </div>
 
       <div class="settings-card">
         <div class="settings-card-title">
-          <i data-lucide="building-2"></i>
+          <i data-iconsax="building-2"></i>
           Institution Details
         </div>
         <div class="settings-field">
@@ -827,7 +827,7 @@
 
     <div class="settings-save-row">
       <button class="btn-primary" id="saveSettingsBtn">
-        <i data-lucide="save"></i>
+        <i data-iconsax="save"></i>
         Save Changes
       </button>
     </div>
@@ -835,7 +835,7 @@
 
 </div><!-- /main-wrap -->
 
-<!-- ═══ EDIT COURSE SCHEDULE MODAL ═══ -->
+<!-- â•â•â• EDIT COURSE SCHEDULE MODAL â•â•â• -->
 <div class="modal-overlay" id="editCourseModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,20,40,0.55);z-index:9999;align-items:center;justify-content:center;">
   <div style="background:#fff;border-radius:12px;width:90%;max-width:440px;box-shadow:0 10px 25px rgba(0,0,0,0.2);overflow:hidden;">
 
@@ -846,13 +846,13 @@
           <p style="font-size:11px;font-weight:500;color:#7c9ec7;letter-spacing:0.06em;text-transform:uppercase;margin:0 0 4px;">Edit Course Schedule</p>
           <h2 id="editCourseLabel" style="font-size:16px;font-weight:600;color:#e8f0fb;margin:0;line-height:1.3;">Course Name</h2>
         </div>
-        <button type="button" onclick="closeEditCourseModal()" style="background:rgba(255,255,255,0.08);border:none;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;color:#7c9ec7;font-size:16px;line-height:1;">✕</button>
+        <button type="button" onclick="closeEditCourseModal()" style="background:rgba(255,255,255,0.08);border:none;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;color:#7c9ec7;font-size:16px;line-height:1;">âœ•</button>
       </div>
       <div style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;background:rgba(255,255,255,0.07);border-radius:20px;padding:3px 10px 3px 6px;">
         <span style="width:6px;height:6px;border-radius:50%;background:#5DCAA5;display:inline-block;flex-shrink:0;"></span>
-        <span id="editCourseDept" style="font-size:12px;color:#9ec5e8;">—</span>
-        <span style="font-size:12px;color:rgba(156,197,232,0.4);">·</span>
-        <span id="editCourseCode" style="font-size:12px;color:#9ec5e8;">—</span>
+        <span id="editCourseDept" style="font-size:12px;color:#9ec5e8;">â€”</span>
+        <span style="font-size:12px;color:rgba(156,197,232,0.4);">Â·</span>
+        <span id="editCourseCode" style="font-size:12px;color:#9ec5e8;">â€”</span>
       </div>
     </div>
 
@@ -860,10 +860,10 @@
 
       <!-- Schedule Preview -->
       <div style="background:#f8fafc;border-radius:8px;padding:11px 14px;display:flex;align-items:center;gap:10px;margin-bottom:20px;border:1px solid #e2e8f0;">
-        <span style="font-size:15px;flex-shrink:0;">🕐</span>
+        <span style="font-size:15px;flex-shrink:0;">ðŸ•</span>
         <div>
           <p style="font-size:11px;color:#64748b;margin:0 0 1px;">Schedule preview</p>
-          <p style="font-size:13px;font-weight:600;color:#0f172a;margin:0;" id="editSchedulePreview">—</p>
+          <p style="font-size:13px;font-weight:600;color:#0f172a;margin:0;" id="editSchedulePreview">â€”</p>
         </div>
       </div>
 
@@ -926,15 +926,15 @@
         <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:8px;letter-spacing:0.03em;">Interview Status</label>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
           <div class="edit-status-opt" data-val="Ongoing" onclick="selectEditStatus(this)" style="border:1px solid #e2e8f0;border-radius:8px;padding:10px 8px;text-align:center;cursor:pointer;transition:all 0.15s;">
-            <div style="font-size:15px;margin-bottom:4px;">▶</div>
+            <div style="font-size:15px;margin-bottom:4px;">â–¶</div>
             <div style="font-size:12px;font-weight:500;color:#0f172a;">Ongoing</div>
           </div>
           <div class="edit-status-opt" data-val="Paused" onclick="selectEditStatus(this)" style="border:1px solid #e2e8f0;border-radius:8px;padding:10px 8px;text-align:center;cursor:pointer;transition:all 0.15s;">
-            <div style="font-size:15px;margin-bottom:4px;">⏸</div>
+            <div style="font-size:15px;margin-bottom:4px;">â¸</div>
             <div style="font-size:12px;font-weight:500;color:#0f172a;">Paused</div>
           </div>
           <div class="edit-status-opt" data-val="Completed" onclick="selectEditStatus(this)" style="border:1px solid #e2e8f0;border-radius:8px;padding:10px 8px;text-align:center;cursor:pointer;transition:all 0.15s;">
-            <div style="font-size:15px;margin-bottom:4px;">✓</div>
+            <div style="font-size:15px;margin-bottom:4px;">âœ“</div>
             <div style="font-size:12px;font-weight:500;color:#0f172a;">Completed</div>
           </div>
         </div>
@@ -950,7 +950,7 @@
   </div>
 </div>
 
-<!-- ═══ LOGOUT MODAL ═══ -->
+<!-- â•â•â• LOGOUT MODAL â•â•â• -->
 <!-- FACULTY & STAFF MODAL -->
 <div class="modal-overlay" id="facultyStaffModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,20,40,0.55);z-index:9999;align-items:center;justify-content:center;">
   <div style="background:#fff;border-radius:12px;width:90%;max-width:520px;box-shadow:0 10px 25px rgba(0,0,0,0.2);overflow:hidden;">
@@ -987,7 +987,7 @@
         <div id="facultyStaffImageDropzone" style="border:2px dashed #cbd5e1;border-radius:10px;padding:14px;background:#f8fafc;cursor:pointer;transition:all .2s ease;">
           <input type="file" class="settings-input" id="facultyStaffImageFile" accept="image/jpeg,image/png,image/webp,image/jpg" style="display:none;">
           <div style="display:flex;align-items:center;gap:10px;">
-            <i data-lucide="upload-cloud" style="width:18px;height:18px;color:#64748b;"></i>
+            <i data-iconsax="upload-cloud" style="width:18px;height:18px;color:#64748b;"></i>
             <p style="margin:0;font-size:13px;color:#334155;">
               Drag and drop an image here, or <span style="color:#0f1e3d;font-weight:600;">click to browse</span>
             </p>
@@ -1037,13 +1037,13 @@
   </div>
 </div>
 
-<!-- ═══ SELECT APPLICANT MODAL ═══ -->
+<!-- â•â•â• SELECT APPLICANT MODAL â•â•â• -->
 <div class="modal-overlay" id="selectApplicantModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
   <div class="modal-box" style="background:#fff;padding:24px;border-radius:12px;width:90%;max-width:600px;box-shadow:0 10px 25px rgba(0,0,0,0.2);max-height:80vh;display:flex;flex-direction:column;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
       <h3 style="margin:0;font-size:18px;font-weight:700;color:var(--navy);">Select Students to Schedule</h3>
       <button class="btn-ghost" onclick="closeSelectApplicantModal()" style="padding:4px;">
-        <i data-lucide="x"></i>
+        <i data-iconsax="x"></i>
       </button>
     </div>
     <div style="margin-bottom:16px;">
@@ -1064,12 +1064,12 @@
   </div>
 </div>
 
-<!-- ═══ ANNOUNCEMENT MODAL ═══ -->
+<!-- â•â•â• ANNOUNCEMENT MODAL â•â•â• -->
 <div class="modal-overlay" id="announcementModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,20,40,0.55);z-index:9999;align-items:center;justify-content:center;">
   <div style="background:#fff;border-radius:12px;width:90%;max-width:500px;box-shadow:0 10px 25px rgba(0,0,0,0.2);overflow:hidden;">
     <div style="background:#0f1e3d;padding:20px 24px 18px;display:flex;justify-content:space-between;align-items:center;">
       <h2 id="announcementModalTitle" style="font-size:16px;font-weight:600;color:#e8f0fb;margin:0;">Add Announcement</h2>
-      <button type="button" onclick="closeAnnouncementModal()" style="background:transparent;border:none;color:#7c9ec7;font-size:20px;cursor:pointer;">✕</button>
+      <button type="button" onclick="closeAnnouncementModal()" style="background:transparent;border:none;color:#7c9ec7;font-size:20px;cursor:pointer;">âœ•</button>
     </div>
     <div style="padding:24px;max-height:70vh;overflow-y:auto;">
       <input type="hidden" id="editAnnouncementId">
@@ -1126,12 +1126,12 @@
   </div>
 </div>
 
-<!-- ═══ NEWS & EVENTS MODAL ═══ -->
+<!-- â•â•â• NEWS & EVENTS MODAL â•â•â• -->
 <div class="modal-overlay" id="newsEventModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,20,40,0.55);z-index:9999;align-items:center;justify-content:center;">
   <div style="background:#fff;border-radius:12px;width:90%;max-width:560px;box-shadow:0 10px 25px rgba(0,0,0,0.2);overflow:hidden;">
     <div style="background:#0f1e3d;padding:20px 24px 18px;display:flex;justify-content:space-between;align-items:center;">
       <h2 id="newsEventModalTitle" style="font-size:16px;font-weight:600;color:#e8f0fb;margin:0;">Add News/Event</h2>
-      <button type="button" onclick="closeNewsEventModal()" style="background:transparent;border:none;color:#7c9ec7;font-size:20px;cursor:pointer;">✕</button>
+      <button type="button" onclick="closeNewsEventModal()" style="background:transparent;border:none;color:#7c9ec7;font-size:20px;cursor:pointer;">âœ•</button>
     </div>
     <div style="padding:24px;max-height:70vh;overflow-y:auto;">
       <input type="hidden" id="editNewsEventId">
@@ -1161,7 +1161,7 @@
         <div id="newsEventDropzone" style="border:2px dashed #cbd5e1;border-radius:10px;padding:14px;background:#f8fafc;cursor:pointer;transition:all .2s ease;">
           <input type="file" class="settings-input" id="newsEventImageFile" accept="image/jpeg,image/png,image/webp,image/jpg" style="display:none;" multiple>
           <div style="display:flex;align-items:center;gap:10px;">
-            <i data-lucide="upload-cloud" style="width:18px;height:18px;color:#64748b;"></i>
+            <i data-iconsax="upload-cloud" style="width:18px;height:18px;color:#64748b;"></i>
             <p style="margin:0;font-size:13px;color:#334155;">
               Drag and drop image/s here, or <span style="color:#0f1e3d;font-weight:600;">click to browse</span>
             </p>
@@ -1214,7 +1214,7 @@
         <div id="testimonialAvatarDropzone" style="border:2px dashed #cbd5e1;border-radius:10px;padding:14px;background:#f8fafc;cursor:pointer;transition:all .2s ease;">
           <input type="file" class="settings-input" id="testimonialAuthorAvatarFile" accept="image/jpeg,image/png,image/webp,image/jpg" style="display:none;">
           <div style="display:flex;align-items:center;gap:10px;">
-            <i data-lucide="upload-cloud" style="width:18px;height:18px;color:#64748b;"></i>
+            <i data-iconsax="upload-cloud" style="width:18px;height:18px;color:#64748b;"></i>
             <p style="margin:0;font-size:13px;color:#334155;">
               Drag and drop an image here, or <span style="color:#0f1e3d;font-weight:600;">click to browse</span>
             </p>
@@ -1249,26 +1249,26 @@
   </div>
 </div>
 
-<!-- ═══ SLIDE-OVER ═══ -->
+<!-- â•â•â• SLIDE-OVER â•â•â• -->
 <div class="slideover-overlay" id="slideoverOverlay"></div>
 <div class="slideover" id="slideover">
   <div class="slideover-header">
     <div>
       <div class="slideover-title" id="slideoverTitle">Applicant Details</div>
-      <div class="slideover-ref" id="slideoverRef">—</div>
+      <div class="slideover-ref" id="slideoverRef">â€”</div>
     </div>
     <button class="slideover-close" id="slideoverClose">
-      <i data-lucide="x"></i>
+      <i data-iconsax="x"></i>
     </button>
   </div>
   <div class="slideover-body" id="slideoverBody"></div>
 </div>
 
-<!-- ═══ TOAST ═══ -->
+<!-- â•â•â• TOAST â•â•â• -->
 <div class="toast" id="toast"></div>
 
 <script>
-  // ── Logout Modal ──────────────────────────────────────────────────
+  // â”€â”€ Logout Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   document.addEventListener('DOMContentLoaded', function () {
     const logoutBtn      = document.getElementById('logoutBtn');
     const logoutModal    = document.getElementById('logoutModal');
@@ -1298,18 +1298,18 @@
       });
     }
 
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+    if (typeof iconsax !== 'undefined') iconsax.createIcons();
   });
 
-  // ── Edit Course Modal ─────────────────────────────────────────────
+  // â”€â”€ Edit Course Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const editSelectedDays = new Set();
   const DAY_ORDER = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   function openEditCourseModal(courseId, courseName, dept, code, schedule, status) {
     document.getElementById('editCourseId').value          = courseId;
     document.getElementById('editCourseLabel').textContent = courseName;
-    document.getElementById('editCourseDept').textContent  = dept || '—';
-    document.getElementById('editCourseCode').textContent  = code || '—';
+    document.getElementById('editCourseDept').textContent  = dept || 'â€”';
+    document.getElementById('editCourseCode').textContent  = code || 'â€”';
 
     // Reset days
     editSelectedDays.clear();
@@ -1403,7 +1403,7 @@
 
   function updateEditPreview() {
     const days = DAY_ORDER.filter(d => editSelectedDays.has(d));
-    let dayStr = '—';
+    let dayStr = 'â€”';
     if (days.length === 1) {
       dayStr = days[0];
     } else if (days.length > 1) {
@@ -1413,16 +1413,16 @@
         if (DAY_ORDER.indexOf(days[i]) === DAY_ORDER.indexOf(prev) + 1) {
           prev = days[i];
         } else {
-          ranges.push(start === prev ? start : start + '–' + prev);
+          ranges.push(start === prev ? start : start + 'â€“' + prev);
           start = prev = days[i];
         }
       }
-      ranges.push(start === prev ? start : start + '–' + prev);
+      ranges.push(start === prev ? start : start + 'â€“' + prev);
       dayStr = ranges.join(', ');
     }
     const s = document.getElementById('editStartTime').value;
     const e = document.getElementById('editEndTime').value;
-    document.getElementById('editSchedulePreview').textContent = `${dayStr}, ${s} – ${e}`;
+    document.getElementById('editSchedulePreview').textContent = `${dayStr}, ${s} â€“ ${e}`;
   }
 
   function saveCourseSchedule() {
@@ -1449,7 +1449,7 @@
     });
   }
 
-  // ── Helpers ───────────────────────────────────────────────────────
+  // â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function setEditSelect(selectId, value) {
     const sel = document.getElementById(selectId);
     if (!sel || !value) return;
@@ -1477,3 +1477,4 @@
 
 </body>
 </html>
+

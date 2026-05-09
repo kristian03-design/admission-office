@@ -67,7 +67,7 @@
   <div class="card">
 
     <div class="icon-circle">
-      <i data-lucide="shield-check"></i>
+      <i data-iconsax="shield-check"></i>
     </div>
 
     <div class="card-badge">
@@ -79,7 +79,7 @@
 
     @if ($errors->any())
       <div class="form-error show">
-        <i data-lucide="alert-circle" style="width:14px;height:14px"></i>
+        <i data-iconsax="alert-circle" style="width:14px;height:14px"></i>
         <span>{{ $errors->first() }}</span>
       </div>
     @endif
@@ -92,7 +92,7 @@
         <label class="form-label" for="email">Email Address</label>
         <div class="input-wrap">
           <span class="input-icon">
-            <i data-lucide="mail"></i>
+            <i data-iconsax="mail"></i>
           </span>
           <input type="email" id="email" name="email" class="form-input"
                  placeholder="admin@admission.edu"
@@ -105,14 +105,14 @@
         <label class="form-label" for="password">New Password</label>
         <div class="input-wrap">
           <span class="input-icon">
-            <i data-lucide="lock"></i>
+            <i data-iconsax="lock"></i>
           </span>
           <input type="password" id="password" name="password" class="form-input"
                  placeholder="Enter new password"
                  autocomplete="new-password" required />
           <button class="toggle-pw" id="togglePw1" type="button" tabindex="-1">
-            <i id="eye1Open" data-lucide="eye"></i>
-            <i id="eye1Closed" data-lucide="eye-off" style="display:none"></i>
+            <i id="eye1Open" data-iconsax="eye"></i>
+            <i id="eye1Closed" data-iconsax="eye-off" style="display:none"></i>
           </button>
         </div>
       </div>
@@ -121,20 +121,20 @@
         <label class="form-label" for="password_confirmation">Confirm Password</label>
         <div class="input-wrap">
           <span class="input-icon">
-            <i data-lucide="lock"></i>
+            <i data-iconsax="lock"></i>
           </span>
           <input type="password" id="password_confirmation" name="password_confirmation" class="form-input"
                  placeholder="Re-enter new password"
                  autocomplete="new-password" required />
           <button class="toggle-pw" id="togglePw2" type="button" tabindex="-1">
-            <i id="eye2Open" data-lucide="eye"></i>
-            <i id="eye2Closed" data-lucide="eye-off" style="display:none"></i>
+            <i id="eye2Open" data-iconsax="eye"></i>
+            <i id="eye2Closed" data-iconsax="eye-off" style="display:none"></i>
           </button>
         </div>
       </div>
 
       <button type="submit" class="btn-primary">
-        <i data-lucide="check-circle" style="width:16px;height:16px"></i>
+        <i data-iconsax="check-circle" style="width:16px;height:16px"></i>
         Reset Password
       </button>
     </form>
@@ -157,8 +157,8 @@
   });
 </script>
 <script>
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
+  if (typeof iconsax !== 'undefined') {
+    iconsax.createIcons();
   }
 </script>
 </body>

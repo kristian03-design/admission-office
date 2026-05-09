@@ -1,5 +1,5 @@
-/**
- * Admission Office – frontend API helper (no modules)
+﻿/**
+ * Admission Office â€“ frontend API helper (no modules)
  * Load api-config.js before this. Use: AdmissionAPI.getPrograms(), AdmissionAPI.submitPublic(), etc.
  */
 (function () {
@@ -98,7 +98,7 @@
     clearToken,
     request,
 
-    /** GET /api/programs – returns array of { id, code, name, department, ... } */
+    /** GET /api/programs â€“ returns array of { id, code, name, department, ... } */
     async getPrograms() {
       try {
         const data = await request('/programs');
@@ -131,13 +131,34 @@
       return data.data || {};
     },
 
-    /** GET /api/settings – public settings */
+    /** PATCH /api/programs/:id/status */
+    async updateProgramStatus(id, isActive) {
+      let data;
+      try {
+        data = await request('/programs/' + id + '/status', {
+          method: 'PATCH',
+          body: JSON.stringify({ is_active: !!isActive }),
+        });
+      } catch (error) {
+        if (error && (error.status === 404 || error.status === 405)) {
+          data = await request('/programs/' + id + '/status', {
+            method: 'POST',
+            body: JSON.stringify({ is_active: !!isActive }),
+          });
+        } else {
+          throw error;
+        }
+      }
+      return data.data || {};
+    },
+
+    /** GET /api/settings â€“ public settings */
     async getPublicSettings() {
       const data = await request('/settings');
       return data.data || {};
     },
 
-    /** POST /api/applications/submit-public – full form submit (no auth) */
+    /** POST /api/applications/submit-public â€“ full form submit (no auth) */
     async submitPublic(payload) {
       const data = await request('/applications/submit-public', {
         method: 'POST',
@@ -163,7 +184,7 @@
       return '';
     },
 
-    /** POST /api/auth/login – returns { user, access_token?, refresh_token?, _tokenReceived } */
+    /** POST /api/auth/login â€“ returns { user, access_token?, refresh_token?, _tokenReceived } */
     async login(email, password) {
       const url = (API_BASE.replace(/\/$/, '') + '/auth/login');
       const res = await fetch(url, {
@@ -208,7 +229,7 @@
       return d;
     },
 
-    /** POST /api/applications/:id/documents – upload file (requires auth) */
+    /** POST /api/applications/:id/documents â€“ upload file (requires auth) */
     async uploadDocument(applicationId, documentType, file) {
       const form = new FormData();
       form.append('document_type', documentType);
@@ -226,7 +247,7 @@
       return data.data;
     },
 
-    /** GET /api/auth/me – current user (requires auth) */
+    /** GET /api/auth/me â€“ current user (requires auth) */
     async getMe() {
       const data = await request('/auth/me');
       return data.data || data;
@@ -250,7 +271,7 @@
       return [];
     },
 
-    /** GET /api/applications/:id – full application + applicant details */
+    /** GET /api/applications/:id â€“ full application + applicant details */
     async getApplication(id) {
       const data = await request('/applications/' + id);
       return data.data;
@@ -265,13 +286,13 @@
       return data.data;
     },
 
-    /** GET /api/admin/settings – returns key-value settings object */
+    /** GET /api/admin/settings â€“ returns key-value settings object */
     async getSettings() {
       const data = await request('/admin/settings');
       return data.data || {};
     },
 
-    /** PUT /api/admin/settings – saves key-value settings */
+    /** PUT /api/admin/settings â€“ saves key-value settings */
     async saveSettings(payload) {
       let data;
       try {
@@ -292,10 +313,11 @@
       return data.data || {};
     },
 
-    /** GET /api/admin/dashboard – full analytics (requires auth) */
+    /** GET /api/admin/dashboard â€“ full analytics (requires auth) */
     async getDashboardStats() {
       const data = await request('/admin/dashboard');
       return data.data || {};
     },
   };
 })();
+

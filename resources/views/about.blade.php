@@ -1,16 +1,16 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About BTECH Admission Office — Baliwag Polytechnic College</title>
+  <title>About BTECH Admission Office â€” Baliwag Polytechnic College</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   @include('partials.iconsax')
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=4" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=5" />
   <style>
     .team-grid {
       display: grid;
@@ -162,7 +162,7 @@
 <body>
   @include('partials.site-loader')
 
- <!-- ───────────────────────────────────── NAV ───────────────────────────────────── -->
+ <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
@@ -181,7 +181,7 @@
       </nav>
       <div class="flex items-center gap-3">
         <a href="{{ route('apply') }}" class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full transition-all">Inquire Now</a>
-        <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu"><i data-lucide="menu"></i></button>
+        <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu"><i data-iconsax="menu"></i></button>
       </div>
     </div>
     <div id="mobile-menu" class="hidden md:hidden mobile-menu">
@@ -214,11 +214,11 @@
           <div class="flex flex-wrap gap-4 mt-10" data-animate="fade-up" data-delay="300">
             <a href="#about-office" class="btn-hero-primary">
               <span>Learn About the Office</span>
-              <i data-lucide="arrow-right"></i>
+              <i data-iconsax="arrow-right"></i>
             </a>
             <a href="#faculty-staff" class="btn-hero-secondary">
               <span>Meet Faculty &amp; Staff</span>
-              <i data-lucide="users-round"></i>
+              <i data-iconsax="users-round"></i>
             </a>
           </div>
         </div>
@@ -237,17 +237,17 @@
 
         <div class="grid md:grid-cols-3 gap-6">
           <div class="feature-card feature-card--accent" data-animate="fade-up">
-            <div class="feature-icon-wrap"><i data-lucide="target"></i></div>
+            <div class="feature-icon-wrap"><i data-iconsax="target"></i></div>
             <h3 class="feature-title mt-5">Our Mission</h3>
             <p class="feature-desc mt-2">BTECH is committed to providing new academic programs for the youth, as well as delivering quality education through teachers and modern equipment that contribute to the development of the communities it serves.</p>
           </div>
           <div class="feature-card" data-animate="fade-up" data-delay="80">
-            <div class="feature-icon-wrap"><i data-lucide="eye"></i></div>
+            <div class="feature-icon-wrap"><i data-iconsax="eye"></i></div>
             <h3 class="feature-title mt-5">Our Vision</h3>
             <p class="feature-desc mt-2">A leading institution of higher education that offers quality education to the youth from various backgrounds, producing knowledgeable, morally upright, and globally competitive individuals in a rapidly changing world.</p>
           </div>
           <div class="feature-card feature-card--dark" data-animate="fade-up" data-delay="160">
-            <div class="feature-icon-wrap feature-icon-wrap--light"><i data-lucide="shield-check"></i></div>
+            <div class="feature-icon-wrap feature-icon-wrap--light"><i data-iconsax="shield-check"></i></div>
             <h3 class="feature-title feature-title--light mt-5">Core Values</h3>
             <p class="feature-desc feature-desc--light mt-2">BTECH is guided by its core values of discipline, cultural awareness, integrity, patriotism, creativity, excellence, and compassion in shaping responsible and empowered individuals.</p>
           </div>
@@ -300,7 +300,7 @@
                 </div>
                 <p class="team-note">{{ $member['note'] }}</p>
                 <div class="team-footer">
-                  <i data-lucide="{{ $member['icon'] ?? 'user-round' }}"></i>
+                  <i data-iconsax="{{ $member['icon'] ?? 'user-round' }}"></i>
                   <span>BTECH Admissions Team</span>
                 </div>
               </div>
@@ -327,16 +327,16 @@
           <div class="flex flex-col gap-4 min-w-64">
             <a href="{{ route('apply') }}" class="btn-cta-primary text-center">
               Start Your Application
-              <i data-lucide="arrow-right" style="display:inline-flex;margin-left:.5rem;vertical-align:middle;width:18px;height:18px;"></i>
+              <i data-iconsax="arrow-right" style="display:inline-flex;margin-left:.5rem;vertical-align:middle;width:18px;height:18px;"></i>
             </a>
-            <a href="{{ route('home') }}#contact" class="btn-cta-link text-center text-sm w-full">Contact Admissions Team →</a>
+            <a href="{{ route('home') }}#contact" class="btn-cta-link text-center text-sm w-full">Contact Admissions Team â†’</a>
           </div>
         </div>
       </div>
     </section>
   </main>
 
- <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
+ <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ FOOTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
  <footer class="footer-section pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-8">
       <div class="grid md:grid-cols-4 gap-10 pb-12 border-b footer-border">
@@ -348,18 +348,8 @@
           </div>
           <p class="text-sm footer-text leading-relaxed">Empowering Bulacan's future leaders through accessible, quality higher education since 2008.</p>
           <div class="social-links mt-5 flex gap-3">
-            <!-- Facebook brand icon — kept as a brand glyph; inline SVG only -->
-            <a href="https://www.facebook.com/BTECHAdmissionsOfficial" class="social-btn" aria-label="Facebook">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-              </svg>
-            </a>
-            <!-- Youtube Brand Icon -->
-            <a href="https://www.youtube.com/c/BaliwagPolytechnicCollege" class="social-btn" aria-label="Youtube">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-              </svg>
-            </a>
+            <a href="https://www.facebook.com/BTECHAdmissionsOfficial" class="social-btn" aria-label="Facebook"><i data-iconsax="facebook"></i></a>
+            <a href="https://www.youtube.com/c/BaliwagPolytechnicCollege" class="social-btn" aria-label="Youtube"><i data-iconsax="youtube"></i></a>
           </div>
         </div>
 
@@ -402,20 +392,16 @@
       </div>
 
       <div class="footer-bottom flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
-        <p class="text-sm footer-text">© 2026 Baliwag Polytechnic College. All rights reserved.</p>
+        <p class="text-sm footer-text">Â© 2026 Baliwag Polytechnic College. All rights reserved.</p>
             <div class="flex gap-4 mt-8">
               @if(isset($settings['facebook_link']))
-                <a href="{{ $settings['facebook_link'] }}" class="footer-social-link" aria-label="Facebook">
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                  </svg>
-                </a>
+                <a href="{{ $settings['facebook_link'] }}" class="footer-social-link" aria-label="Facebook"><i data-iconsax="facebook"></i></a>
               @endif
               @if(isset($settings['twitter_link']))
-                <a href="{{ $settings['twitter_link'] }}" class="footer-social-link"><i data-lucide="twitter"></i></a>
+                <a href="{{ $settings['twitter_link'] }}" class="footer-social-link"><i data-iconsax="twitter"></i></a>
               @endif
               @if(isset($settings['instagram_link']))
-                <a href="{{ $settings['instagram_link'] }}" class="footer-social-link"><i data-lucide="instagram"></i></a>
+                <a href="{{ $settings['instagram_link'] }}" class="footer-social-link"><i data-iconsax="instagram"></i></a>
               @endif
             </div>
       </div>
@@ -423,14 +409,16 @@
   </footer>
 
   <button id="back-to-top" class="back-to-top" aria-label="Back to top">
-    <i data-lucide="arrow-up"></i>
+    <i data-iconsax="arrow-up"></i>
   </button>
 
   <script src="{{ asset('js/home-page.js') }}?v=5"></script>
   <script>
-    if (window.lucide) {
-      lucide.createIcons();
+    if (window.iconsax) {
+      iconsax.createIcons();
     }
   </script>
 </body>
 </html>
+
+

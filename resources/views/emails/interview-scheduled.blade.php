@@ -211,7 +211,15 @@
     }
     .em-notice p { font-size: 12px !important; color: #2563EB !important; line-height: 1.65 !important; }
 
-    .em-icon { width: 15px; height: 15px; flex-shrink: 0; margin-top: 1px; }
+    .em-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-size: 15px;
+      line-height: 15px;
+      text-align: center;
+    }
 
     .em-hr { border: none; border-top: 1px solid #EDF2F7; margin: 28px 0 0; }
 
@@ -317,19 +325,13 @@
 
     <!-- DRESS CODE NOTE -->
     <div class="em-dress">
-      <svg class="em-icon" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="1.5">
-        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-      </svg>
+      <span class="em-icon" style="color:#D97706">!</span>
       <p><strong>Dress appropriately.</strong> Business casual or formal attire is required for the interview. Avoid casual clothing such as shorts, sleeveless tops, or slippers. Present yourself professionally.</p>
     </div>
 
     <!-- RESCHEDULE NOTICE -->
     <div class="em-notice">
-      <svg class="em-icon" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.5">
-        <circle cx="12" cy="12" r="10"/>
-        <line x1="12" y1="8" x2="12" y2="12"/>
-        <line x1="12" y1="16" x2="12.01" y2="16"/>
-      </svg>
+      <span class="em-icon" style="color:#3B82F6">i</span>
       <p>Need to reschedule? Contact the admissions office or visit the BTECH Admission Office at Main Campus as soon as possible.</p>
     </div>
 
