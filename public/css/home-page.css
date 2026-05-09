@@ -2141,6 +2141,13 @@ body.site-loader-lock {
   border-bottom: 2px solid var(--gold-pale);
 }
 
+.guide-category i,
+.guide-category svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
 .guide-list {
   display: flex;
   flex-direction: column;

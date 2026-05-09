@@ -39,10 +39,9 @@ class ProgramController extends Controller
 
         $program = Program::findOrFail($id);
         $slotsLeft = (int) $validated['slots_left'];
-        $program->update([
-            'slots_left' => $slotsLeft,
-            'is_active' => $slotsLeft > 0,
-        ]);
+        $program->slots_left = $slotsLeft;
+        $program->is_active = $slotsLeft > 0;
+        $program->save();
 
         return response()->json([
             'message' => 'Program slots left updated successfully',
