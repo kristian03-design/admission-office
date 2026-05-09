@@ -12,7 +12,7 @@ class NewsEventController extends Controller
 {
     public function publicIndex()
     {
-        $items = NewsEvent::where('is_active', true)
+        $items = NewsEvent::whereRaw('is_active = true')
             ->orderBy('sort_order')
             ->orderBy('event_date', 'desc')
             ->orderBy('created_at', 'desc')

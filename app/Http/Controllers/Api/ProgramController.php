@@ -16,7 +16,7 @@ class ProgramController extends Controller
         // Admin/staff dashboard (authenticated) can see all programs.
         if (!$request->user('sanctum')) {
             // Public endpoints (e.g. apply form) only see selectable programs.
-            $query->where('is_active', true)
+            $query->whereRaw('is_active = true')
                 ->where('slots_left', '>', 0);
         }
 
@@ -50,4 +50,3 @@ class ProgramController extends Controller
         ]);
     }
 }
-

@@ -19,7 +19,7 @@ class WelcomeController extends Controller
     {
         // Cache data for 5 minutes to ensure high performance
         $data = Cache::remember('welcome_page_data', 300, function () {
-            $announcements = Announcement::where('is_active', true)
+            $announcements = Announcement::whereRaw('is_active = true')
                 ->orderBy('sort_order')
                 ->orderBy('created_at', 'desc')
                 ->get();
@@ -30,7 +30,7 @@ class WelcomeController extends Controller
                 'tickerAnnouncements' => $announcements->where('is_popup', false)->values(),
                 'popupAnn' => $announcements->firstWhere('is_popup', true),
                 'programs' => Program::orderBy('name')->get(),
-                'testimonials' => \App\Models\Testimonial::where('is_active', true)
+                'testimonials' => \App\Models\Testimonial::whereRaw('is_active = true')
                     ->orderBy('order')
                     ->get()
             ];
@@ -72,7 +72,7 @@ class WelcomeController extends Controller
     {
         return view('news-events', [
             'settings' => SystemSetting::all_as_array(),
-            'newsEvents' => NewsEvent::where('is_active', true)
+            'newsEvents' => NewsEvent::whereRaw('is_active = true')
                 ->orderBy('sort_order')
                 ->orderBy('event_date', 'desc')
                 ->orderBy('created_at', 'desc')
@@ -87,7 +87,7 @@ class WelcomeController extends Controller
     public function showNewsEvent(string $id)
     {
         $settings = SystemSetting::all_as_array();
-        $item = NewsEvent::where('is_active', true)->findOrFail($id);
+        $item = NewsEvent::whereRaw('is_active = true')->findOrFail($id);
 
         $gallery = (is_array($item->image_urls) && count($item->image_urls))
             ? $item->image_urls
