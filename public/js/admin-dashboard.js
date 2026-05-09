@@ -1466,8 +1466,22 @@ function closeSlideover() {
 
 /* ─── PROGRAMS TABLE ─── */
 function renderProgramsTable() {
-  const progCounts = {};
-  getApplications().forEach(a => { progCounts[a.firstChoice] = (progCounts[a.firstChoice] || 0) + 1; });
+  // Calculate accurate counts directly from the applications list
+  const countMap = {};
+  const apps = getApplications();
+  
+  if (Array.isArray(apps)) {
+    apps.forEach(a => {
+      // Count by ID
+      if (a.programId) {
+        countMap[String(a.programId)] = (countMap[String(a.programId)] || 0) + 1;
+      }
+      // Also count by name/code as fallback
+      if (a.firstChoice) {
+        countMap[String(a.firstChoice).toLowerCase()] = (countMap[String(a.firstChoice).toLowerCase()] || 0) + 1;
+      }
+    });
+  }
 
   let programs = getPrograms();
   if (programFilter !== 'All') {
@@ -1482,7 +1496,16 @@ function renderProgramsTable() {
     return;
   }
   tbody.innerHTML = programs.map(p => {
-    const count = p.applications_count || 0;
+    // Determine the most accurate count: check ID first, then Name, then Code, then fallback to API count
+    const idCount = countMap[String(p.id)] || 0;
+    const nameCount = countMap[String(p.name).toLowerCase()] || 0;
+    const code = (p.code && String(p.code).trim()) ? String(p.code).trim() : shortProg(p.name || '');
+    const codeCount = countMap[String(code).toLowerCase()] || 0;
+    
+    // Pick the highest found count (manually calculated) or fall back to the API-provided count
+    const calculatedCount = Math.max(idCount, nameCount, codeCount);
+    const count = calculatedCount > 0 ? calculatedCount : (p.applications_count || 0);
+
     const enabled = (programEnabled[p.name] !== undefined) ? !!programEnabled[p.name] : !!p.is_active;
     const dept = p.department || '—';
     const slotsLeftVal = p.slots_left != null ? Number(p.slots_left) : 0;
