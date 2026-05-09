@@ -15,6 +15,7 @@ use Illuminate\Validation\ValidationException;
 use App\Mail\ApplicationSubmitted;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 
 class ApplicationController extends Controller
@@ -28,6 +29,13 @@ class ApplicationController extends Controller
         }
         $data['status'] = 'pending';
         $data['submitted_at'] = now();
+
+        // Check if system is accepting applications
+        if (SystemSetting::get('accept_applications', '1') === '0') {
+            return response()->json([
+                'message' => 'The application portal is currently closed. Please check back later.'
+            ], 403);
+        }
 
         $application = DB::transaction(function () use ($data) {
             // First choice must be available for public submission.
@@ -62,6 +70,9 @@ class ApplicationController extends Controller
 
             return Application::create($data);
         });
+
+        // Clear welcome page cache to reflect slot changes immediately
+        Cache::forget('welcome_page_data');
 
         // Send email to applicant
         if ($application->email && SystemSetting::get('email_notifications', '1') !== '0') {

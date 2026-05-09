@@ -283,13 +283,13 @@ function showPage(page) {
 
   document.getElementById('breadcrumbPage').textContent = labels[page] || page;
 
-  if (page === 'dashboard') initDashboard();
-  if (page === 'applications') renderApplicationsTable();
-  if (page === 'interviews') renderInterviewsTable();
-  if (page === 'programs') renderProgramsTable();
-  if (page === 'website-content') initWebsiteContent();
-  if (page === 'reports') initReports();
-  if (page === 'settings') initSettings();
+  if (page === 'dashboard') requestAnimationFrame(() => initDashboard());
+  if (page === 'applications') requestAnimationFrame(() => renderApplicationsTable());
+  if (page === 'interviews') requestAnimationFrame(() => renderInterviewsTable());
+  if (page === 'programs') requestAnimationFrame(() => renderProgramsTable());
+  if (page === 'website-content') requestAnimationFrame(() => initWebsiteContent());
+  if (page === 'reports') requestAnimationFrame(() => initReports());
+  if (page === 'settings') requestAnimationFrame(() => initSettings());
 
   if (window.innerWidth < 768) closeSidebar();
 }
@@ -1439,6 +1439,7 @@ function updateProgramSaveAllState() {
   if (!btn) return;
   const count = Object.keys(pendingProgramSlots).length;
   btn.disabled = count === 0;
+  btn.classList.toggle('has-pending-changes', count > 0);
   btn.innerHTML = `<i data-iconsax="save"></i> ${count ? `Save All Changes (${count})` : 'Save All Changes'}`;
   if (typeof iconsax !== 'undefined') iconsax.createIcons();
 }

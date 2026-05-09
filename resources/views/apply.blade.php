@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -23,6 +23,22 @@
   <i data-iconsax="check" style="width:14px;height:14px;stroke-width:3"></i>
   Progress saved
 </div>
+
+@if(($settings['accept_applications'] ?? '1') === '0')
+<div class="fixed inset-0 z-[9999] bg-[#0f1e3d]/95 backdrop-blur-sm flex items-center justify-center p-6 text-center">
+  <div class="max-w-md bg-white rounded-3xl p-10 shadow-2xl">
+    <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+      <i data-iconsax="lock" class="text-red-600 w-10 h-10"></i>
+    </div>
+    <h2 class="text-2xl font-bold text-[#0f1e3d] mb-4">Application Portal Closed</h2>
+    <p class="text-slate-600 mb-8 leading-relaxed">We are currently not accepting new applications. Please check back during the next enrollment period or contact our admissions office for more information.</p>
+    <a href="{{ route('home') }}" class="inline-flex items-center gap-2 px-8 py-3 bg-[#0f1e3d] text-white rounded-xl font-bold hover:bg-[#1b3557] transition-all">
+      <i data-iconsax="arrow-left" class="w-4 h-4"></i>
+      Back to Home
+    </a>
+  </div>
+</div>
+@endif
 
 <header class="hdr no-print">
   <div class="hdr-inner">

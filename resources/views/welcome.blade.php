@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admissions — Baliwag Polytechnic College</title>
+  <title>Baliwag Polytechnic College — Admissions</title>
+  <script>window.ICONSAX_SPRITE_PATH = "{{ asset('assets/iconsax-sprite.svg') }}";</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
@@ -317,7 +318,7 @@
                     {{ $isOpen ? 'Open' : ($slotsLeft <= 0 ? 'Full Slot' : 'Closed') }}
                   </span>
                 </div>
-                <a href="{{ route('programs.show', $program->id) }}" class="program-cta group">
+                <a href="{{ route('programs.show', ['id' => $program->id ?? 0]) }}" class="program-cta group">
                   Learn more <i data-iconsax="chevron-right"></i>
                 </a>
               </div>
