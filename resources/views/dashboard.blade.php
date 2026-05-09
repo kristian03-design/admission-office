@@ -17,6 +17,7 @@
   <script src="{{ asset('js/admission-api.js') }}?v=13"></script>
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
+    window.ADMISSION_API_BASE = "{{ url('/api') }}";
     sessionStorage.setItem('_at', "{{ $admissionApiToken ?? session('admission_api_token') ?? '' }}");
   </script>
   <script src="{{ asset('js/admin-dashboard.js') }}?v=35" defer></script>
