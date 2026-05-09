@@ -47,7 +47,7 @@ class ApplicationController extends Controller
                 // Decrease slots and auto-disable once full.
                 $newSlotsLeft = max(0, (int) $program->slots_left - 1);
                 $program->slots_left = $newSlotsLeft;
-                $program->is_active = $newSlotsLeft > 0;
+                $program->is_active = $newSlotsLeft > 0 ? true : false;
                 $program->save();
             }
 
@@ -87,7 +87,10 @@ class ApplicationController extends Controller
 
         $type = $request->document_type;
         $path = $request->file('file')->store('applications/'.$id, 'supabase');
-        $url = Storage::disk('supabase')->url($path);
+        
+        /** @var \Illuminate\Filesystem\FilesystemAdapter $supabase */
+        $supabase = Storage::disk('supabase');
+        $url = $supabase->url($path);
 
         // Map document_type to column name
         $columnMap = [

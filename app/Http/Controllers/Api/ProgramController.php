@@ -35,14 +35,17 @@ class ProgramController extends Controller
         $program = Program::findOrFail($id);
         $slotsLeft = (int) $validated['slots_left'];
         $program->slots_left = $slotsLeft;
+        
+        // Auto-deactivate if slots reach 0
         if ($slotsLeft <= 0) {
             $program->is_active = false;
         }
+        
         $program->save();
         Cache::forget('welcome_page_data');
 
         return response()->json([
-            'message' => 'Program slots left updated successfully',
+            'message' => 'Program slots updated and status synced',
             'data' => $program,
         ]);
     }
@@ -54,10 +57,16 @@ class ProgramController extends Controller
         ]);
 
         $program = Program::findOrFail($id);
-        $program->is_active = (bool) $validated['is_active'];
-        if (!$program->is_active && (int) ($program->slots_left ?? 0) < 0) {
-            $program->slots_left = 0;
+        $isActive = filter_var($validated['is_active'], FILTER_VALIDATE_BOOLEAN);
+        
+        // If trying to activate but slots are 0, prevent it or handle gracefully
+        if ($isActive && (int)($program->slots_left ?? 0) <= 0) {
+            return response()->json([
+                'message' => 'Cannot activate a program with 0 slots. Please add slots first.',
+            ], 422);
         }
+
+        $program->is_active = $isActive;
         $program->save();
         Cache::forget('welcome_page_data');
 

@@ -344,16 +344,16 @@ function renderKPIs() {
 
   const kpis = [
     { label: 'Total Applications', value: total, icon: 'file-text', cls: 'kpi-icon--navy', delta: `S.Y. ${new Date().getFullYear()}–${new Date().getFullYear() + 1}`, dc: '' },
-    { label: 'Pending Review', value: pending, icon: 'alert-circle', cls: 'kpi-icon--gold', delta: `${interview} in interview`, dc: 'warn' },
-    { label: 'Approved', value: approved, icon: 'check-circle', cls: 'kpi-icon--green', delta: `${Math.round(approved / total * 100 || 0)}% acceptance rate`, dc: 'up' },
+    { label: 'Pending Review', value: pending, icon: 'danger', cls: 'kpi-icon--gold', delta: `${interview} in interview`, dc: 'warn' },
+    { label: 'Approved', value: approved, icon: 'tick-circle', cls: 'kpi-icon--green', delta: `${Math.round(approved / total * 100 || 0)}% acceptance rate`, dc: 'up' },
     { label: 'Interview Scheduled', value: interview, icon: 'calendar', cls: 'kpi-icon--blue', delta: 'Awaiting results', dc: '' },
-    { label: 'Rejected', value: rejected, icon: 'x-circle', cls: 'kpi-icon--red', delta: `${Math.round(rejected / total * 100 || 0)}% rejection rate`, dc: '' },
+    { label: 'Rejected', value: rejected, icon: 'close-circle', cls: 'kpi-icon--red', delta: `${Math.round(rejected / total * 100 || 0)}% rejection rate`, dc: '' },
   ];
 
   document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
     <div class="kpi-card">
       <div class="kpi-icon ${k.cls}">
-        <i data-iconsax="${k.icon}"></i>
+        <i data-iconsax="${k.icon}" data-iconsax-style="bulk"></i>
       </div>
       <div class="kpi-body">
         <div class="kpi-value">${k.value}</div>
@@ -364,8 +364,18 @@ function renderKPIs() {
   `).join('');
 
   if (typeof iconsax !== 'undefined') iconsax.createIcons();
-
   updatePendingBadge();
+}
+
+/** Initial empty state for Scheduling Table */
+function renderSchedulingSkeleton() {
+  const tbody = document.getElementById('studentSchedulingTableBody');
+  if (!tbody) return;
+  tbody.innerHTML = Array(5).fill(0).map(() => `
+    <tr class="skeleton-row">
+      <td colspan="6"><div class="skeleton-line" style="height:20px;margin:10px 0;"></div></td>
+    </tr>
+  `).join('');
 }
 
 /** Initial empty state for KPIs */
@@ -1372,10 +1382,15 @@ function renderProgramsTable() {
     const slotsLeft = pendingProgramSlots[String(p.id)] != null ? pendingProgramSlots[String(p.id)] : savedSlotsLeft;
     const programCode = (p.code && String(p.code).trim()) ? String(p.code).trim() : shortProg(p.name || '');
     const dirtyStyle = pendingProgramSlots[String(p.id)] != null ? 'border-color:var(--gold);background:#fffbeb;' : '';
+    const isFull = slotsLeft <= 0;
+    const statusText = enabled ? (isFull ? 'Full' : 'Active') : 'Disabled';
+    const statusClass = enabled ? (isFull ? 'full' : 'on') : 'off';
+    const statusIcon = enabled ? (isFull ? 'info-circle' : 'check-circle') : 'x';
+
     return `<tr>
       <td>
         <div style="font-weight:600;color:var(--navy)">${p.name}</div>
-        <div style="font-size:12px;color:var(--text-3)">${escapeHtml(programCode)}</div>
+        <div style="font-size:12px;color:var(--text-3)">${escapeHtml(programCode)} ${isFull && enabled ? '<span style="color:var(--red);font-weight:700;">(FULL)</span>' : ''}</div>
       </td>
       <td><span class="badge" style="background:var(--navy-pale);color:var(--navy-mid)">${dept}</span></td>
       <td>${p.duration_years || 4} Years</td>
@@ -1389,9 +1404,9 @@ function renderProgramsTable() {
         </div>
       </td>
       <td>
-        <button class="prog-toggle ${enabled ? 'on' : 'off'}" onclick="toggleProgram('${String(p.id).replace(/'/g, "\\'")}', '${String(p.name).replace(/'/g, "\\'")}', this)">
-          <i data-iconsax="${enabled ? 'check-circle' : 'x'}" style="width:13px;height:13px"></i>
-          ${enabled ? 'Active' : 'Disabled'}
+        <button class="prog-toggle ${statusClass}" onclick="toggleProgram('${String(p.id).replace(/'/g, "\\'")}', '${String(p.name).replace(/'/g, "\\'")}', this)">
+          <i data-iconsax="${statusIcon}" style="width:13px;height:13px"></i>
+          ${statusText}
         </button>
       </td>
     </tr>`;
@@ -1468,17 +1483,17 @@ async function saveAllProgramSlotsLeft() {
   results.forEach((result, index) => {
     if (result.status !== 'fulfilled') return;
     const { programId, value } = changes[index];
-    const updated = result.value;
     const program = API_PROGRAMS.find(p => Number(p.id) === Number(programId));
     if (program) {
       program.slots_left = value;
-      if (value <= 0) program.is_active = false;
+      // Backend auto-deactivates if slots are 0, so sync local state
+      if (value <= 0) {
+        program.is_active = false;
+        programEnabled[program.name] = false;
+      }
     }
     savedProgramSlots[String(programId)] = value;
     delete pendingProgramSlots[String(programId)];
-    if (updated && typeof updated === 'object' && updated.name) {
-      programEnabled[updated.name] = updated.is_active !== false;
-    }
   });
 
   if (failed.length) {
@@ -1494,6 +1509,12 @@ async function saveAllProgramSlotsLeft() {
   }
 
   renderProgramsTable();
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i data-iconsax="save"></i> Save All Changes';
+    if (typeof iconsax !== 'undefined') iconsax.createIcons();
+  }
 }
 
 /* ─── WEBSITE CONTENT & ANNOUNCEMENTS ─── */
@@ -3063,9 +3084,15 @@ async function toggleProgram(id, name, btn) {
     const updated = await AdmissionAPI.updateProgramStatus(id, next);
     if (program) program.is_active = updated.is_active !== false;
     programEnabled[name] = updated.is_active !== false;
-    btn.className = `prog-toggle ${programEnabled[name] ? 'on' : 'off'}`;
-    btn.innerHTML = `<i data-iconsax="${programEnabled[name] ? 'check-circle' : 'x'}" style="width:13px;height:13px"></i> ${programEnabled[name] ? 'Active' : 'Disabled'}`;
-    showToast(`"${shortProg(name)}" is now ${programEnabled[name] ? 'Active' : 'Disabled'}`);
+    
+    const isFull = Number(program && program.slots_left != null ? program.slots_left : 0) <= 0;
+    const statusText = programEnabled[name] ? (isFull ? 'Full' : 'Active') : 'Disabled';
+    const statusClass = programEnabled[name] ? (isFull ? 'full' : 'on') : 'off';
+    const statusIcon = programEnabled[name] ? (isFull ? 'info-circle' : 'check-circle') : 'x';
+
+    btn.className = `prog-toggle ${statusClass}`;
+    btn.innerHTML = `<i data-iconsax="${statusIcon}" style="width:13px;height:13px"></i> ${statusText}`;
+    showToast(`"${shortProg(name)}" is now ${statusText}`);
   } catch (err) {
     programEnabled[name] = current;
     btn.className = `prog-toggle ${current ? 'on' : 'off'}`;
@@ -3149,6 +3176,10 @@ async function openStudentScheduling(courseName) {
   const header = document.getElementById('schedulingCourseName');
   if (header) header.textContent = 'Schedule Students — ' + courseName;
 
+  // Switch page immediately to improve perceived performance
+  showPage('student-scheduling');
+  renderSchedulingSkeleton();
+
   // Find the program ID for this course name
   const prog = getPrograms().find(p => p.name === courseName);
   const progId = prog ? prog.id : null;
@@ -3168,7 +3199,6 @@ async function openStudentScheduling(courseName) {
 
     currentSchedulingData = combined;
     renderSchedulingRows(combined);
-    showPage('student-scheduling');
 
     // Clear search input
     const searchInput = document.getElementById('schedulingSearchInput');

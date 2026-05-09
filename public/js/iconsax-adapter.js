@@ -124,11 +124,11 @@
     return spritePromise;
   }
 
-  function toIconsaxName(name) {
-    if (!name) return `${ICONSAX_STYLE}-element-3`;
+  function toIconsaxName(name, style) {
+    if (!name) return `${style || ICONSAX_STYLE}-element-3`;
     const normalized = String(name).trim().toLowerCase();
     const mapped = iconMap[normalized] || normalized;
-    return `${ICONSAX_STYLE}-${mapped}`;
+    return `${style || ICONSAX_STYLE}-${mapped}`;
   }
 
   function copyAttributes(from, to) {
@@ -140,9 +140,10 @@
 
   function renderIcon(node) {
     const iconsaxName = node.getAttribute('data-iconsax');
-    const symbolId = iconsaxName && iconsaxName.startsWith(`${ICONSAX_STYLE}-`)
+    const style = node.getAttribute('data-iconsax-style') || ICONSAX_STYLE;
+    const symbolId = iconsaxName && iconsaxName.startsWith(`${style}-`)
       ? iconsaxName
-      : toIconsaxName(iconsaxName);
+      : toIconsaxName(iconsaxName, style);
 
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');

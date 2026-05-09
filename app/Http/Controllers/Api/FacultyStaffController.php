@@ -23,7 +23,9 @@ class FacultyStaffController extends Controller
 
         if ($request->hasFile('image_file')) {
             $path = $request->file('image_file')->store('faculty-staff', 'supabase');
-            $validated['image'] = Storage::disk('supabase')->url($path);
+            /** @var \Illuminate\Filesystem\FilesystemAdapter $supabase */
+            $supabase = Storage::disk('supabase');
+            $validated['image'] = $supabase->url($path);
         }
 
         $validated['id'] = $this->uniqueId($validated['name'], $items);
@@ -55,7 +57,9 @@ class FacultyStaffController extends Controller
             if ($request->hasFile('image_file')) {
                 $this->deleteStoredImage($item['image'] ?? null);
                 $path = $request->file('image_file')->store('faculty-staff', 'supabase');
-                $item['image'] = Storage::disk('supabase')->url($path);
+                /** @var \Illuminate\Filesystem\FilesystemAdapter $supabase */
+                $supabase = Storage::disk('supabase');
+                $item['image'] = $supabase->url($path);
             } elseif ($request->boolean('clear_image')) {
                 $this->deleteStoredImage($item['image'] ?? null);
                 $item['image'] = '';
