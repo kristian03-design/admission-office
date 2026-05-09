@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=5" />
 
   <style>
-    /* ─── Page-level token overrides to match home-page.css ─── */
+    /* â”€â”€â”€ Page-level token overrides to match home-page.css â”€â”€â”€ */
     :root {
       --gold:        #c9933a; /* home-page uses --gold-mid for this */
       --gold-light:  #dfb36a;
@@ -27,7 +27,7 @@
       --radius-xl:   24px;    /* matches home-page --radius-xl */
     }
 
-    /* ─── Page-level overrides ─── */
+    /* â”€â”€â”€ Page-level overrides â”€â”€â”€ */
     /* Navbar is always scrolled/dark on this interior page */
     #navbar {
   background: transparent;
@@ -44,7 +44,7 @@
     #navbar .nav-link { color: rgba(255,255,255,.75); }
     #navbar .nav-link:hover { color: #fff; }
 
-    /* ─── Breadcrumb Strip ─── */
+    /* â”€â”€â”€ Breadcrumb Strip â”€â”€â”€ */
     .breadcrumb-strip {
       margin-top: 72px; /* matches nav-inner py-4 height */
       background: var(--navy);
@@ -56,7 +56,7 @@
     .breadcrumb-inner .sep { color: rgba(255,255,255,.25); font-size: .7rem; }
     .breadcrumb-inner .current { font-size: .78rem; color: var(--gold-light); font-weight: 500; }
 
-    /* ─── Hero ─── */
+    /* â”€â”€â”€ Hero â”€â”€â”€ */
     .program-hero {
       background: var(--navy);
       position: relative;
@@ -168,7 +168,7 @@
     .btn-hero-secondary:hover { background: rgba(255,255,255,.12); color: #fff; }
     .btn-hero-secondary svg { width: 16px; height: 16px; opacity: .6; }
 
-    /* ─── Apply Card (right col of hero) ─── */
+    /* â”€â”€â”€ Apply Card (right col of hero) â”€â”€â”€ */
     .apply-card {
       background: rgba(255,255,255,.05);
       border: 1px solid rgba(255,255,255,.12);
@@ -231,7 +231,7 @@
     }
     .slots-count { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: var(--gold-light); }
 
-    /* ─── Body Sections ─── */
+    /* â”€â”€â”€ Body Sections â”€â”€â”€ */
     .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
     .overview-section { padding: 5rem 0; }
@@ -338,7 +338,7 @@
     .contact-btn svg { width: 17px; height: 17px; color: var(--navy); flex-shrink: 0; }
     .contact-btn span { font-size: .85rem; font-weight: 600; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* ─── Highlights Strip ─── */
+    /* â”€â”€â”€ Highlights Strip â”€â”€â”€ */
     .highlights-section {
       padding: 4rem 0;
       background: var(--navy);
@@ -372,7 +372,7 @@
     .highlight-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
     .highlight-desc { font-size: .84rem; line-height: 1.65; color: rgba(255,255,255,.5); }
 
-    /* ─── Footer CTA ─── */
+    /* â”€â”€â”€ Footer CTA â”€â”€â”€ */
     .footer-cta-section {
       padding: 5rem 0;
       background: var(--cream);
@@ -436,7 +436,7 @@
     .btn-cta-ghost svg { width: 18px; height: 18px; opacity: .7; transition: transform .2s; }
     .btn-cta-ghost:hover svg { transform: translateX(4px); opacity: 1; }
 
-    /* ─── Footer ─── */
+    /* â”€â”€â”€ Footer â”€â”€â”€ */
     .site-footer {
       background: var(--navy);
       padding: 3.5rem 0 2rem;
@@ -455,7 +455,7 @@
     .footer-links-row a:hover { color: var(--gold-light); }
     .footer-copy { font-size: .78rem; color: rgba(255,255,255,.25); margin-top: 2rem; max-width: 1200px; margin-left: auto; margin-right: auto; padding: 0 2rem; border-top: 1px solid rgba(255,255,255,.06); padding-top: 1.5rem; }
 
-    /* ─── Reveal Animations ─── */
+    /* â”€â”€â”€ Reveal Animations â”€â”€â”€ */
     [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
     [data-reveal].visible { opacity: 1; transform: none; }
     [data-reveal][data-delay="100"] { transition-delay: .1s; }
@@ -463,7 +463,7 @@
     [data-reveal][data-delay="300"] { transition-delay: .3s; }
     [data-reveal][data-delay="400"] { transition-delay: .4s; }
 
-    /* ─── Responsive ─── */
+    /* â”€â”€â”€ Responsive â”€â”€â”€ */
     @media (max-width: 1024px) {
       .hero-grid { grid-template-columns: 1fr; }
       .apply-card { max-width: 480px; }
@@ -490,7 +490,7 @@
 <body>
   @include('partials.site-loader')
 
-  <!-- ─── NAV (exact from welcome.blade.php) ─── -->
+  <!-- â”€â”€â”€ NAV (exact from welcome.blade.php) â”€â”€â”€ -->
   <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
@@ -521,7 +521,7 @@
     </div>
   </header>
 
-  <!-- ─── Breadcrumb Strip ─── -->
+  <!-- Breadcrumb Strip -->
   <div class="breadcrumb-strip">
     <div class="breadcrumb-inner">
       <a href="{{ url('/') }}">Programs</a>
@@ -530,7 +530,6 @@
     </div>
   </div>
 
-  <!-- ─── Hero ─── -->
   <section class="program-hero">
     <div class="hero-deco-ring r1"></div>
     <div class="hero-deco-ring r2"></div>
@@ -628,7 +627,7 @@
             <div class="apply-divider"></div>
             <div class="apply-card-slots">
               <span>Available Slots</span>
-              <span class="slots-count">{{ $program->slots_left ?? '—' }}</span>
+              <span class="slots-count">{{ $program->slots_left ?? 'â€”' }}</span>
             </div>
           </div>
         </div>
@@ -637,7 +636,7 @@
     </div>
   </section>
 
-  <!-- ─── Highlights Strip ─── -->
+  <!-- â”€â”€â”€ Highlights Strip â”€â”€â”€ -->
   <section class="highlights-section">
     <div class="section-wrap">
       <div class="highlights-grid">
@@ -680,7 +679,7 @@
                 The <strong>{{ $program->name }}</strong> is designed to produce globally competitive professionals equipped with technical expertise and professional integrity. Our curriculum is constantly reviewed and updated to meet the evolving demands of the industry.
               </p>
               <p>
-                Students will undergo intensive training through a combination of theoretical learning, laboratory sessions, and industry immersion. Our state-of-the-art facilities provide a conducive environment for learning and innovation — nurturing graduates who don't just find jobs, they lead industries.
+                Students will undergo intensive training through a combination of theoretical learning, laboratory sessions, and industry immersion. Our state-of-the-art facilities provide a conducive environment for learning and innovation â€” nurturing graduates who don't just find jobs, they lead industries.
               </p>
             </div>
           </div>
@@ -775,7 +774,7 @@
             Your Future Begins<br><em>This Enrollment Season.</em>
           </h2>
           <p class="footer-cta-sub">
-            Don't wait. Seats are limited and scholarship slots fill quickly. Take the first step toward the career — and the life — you've been working toward.
+            Don't wait. Seats are limited and scholarship slots fill quickly. Take the first step toward the career â€” and the life â€” you've been working toward.
           </p>
         </div>
         <div class="footer-cta-actions">
@@ -839,7 +838,7 @@
       </div>
 
       <div class="footer-bottom flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
-        <p class="text-sm footer-text">© 2026 Baliwag Polytechnic College. All rights reserved.</p>
+        <p class="text-sm footer-text">Â© 2026 Baliwag Polytechnic College. All rights reserved.</p>
             <div class="flex gap-4 mt-8">
               @if(isset($settings['facebook_link']))
                 <a href="{{ $settings['facebook_link'] }}" class="footer-social-link" aria-label="Facebook"><i data-iconsax="facebook"></i></a>
@@ -882,7 +881,7 @@
       });
     }
 
-    // Navbar is always dark on this page — no scroll toggle needed
+    // Navbar is always dark on this page â€” no scroll toggle needed
     // (home-page.css .scrolled styles already applied via !important override)
 
     // Reveal on scroll
