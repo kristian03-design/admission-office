@@ -10,19 +10,31 @@
   const apiSegment = isVercel ? '/backend' : '/api';
 
   // Strategy 1: Derive base from current page path
-  // We want to find the "app root" by stripping known page paths
+  // We want to find the "app root" by stripping known page paths and segments
   let path = loc.pathname.replace(/\/+$/, '');
-  const pages = ['/dashboard', '/apply', '/about', '/news-events', '/news-event-details', '/course-details', '/welcome'];
+  
+  // List of possible route segments to strip to find the actual app root folder
+  const pages = [
+    '/dashboard', '/apply', '/about', '/news-events', '/news-event-details', 
+    '/course-details', '/welcome', '/admin/dashboard', '/admin/login', '/admin'
+  ];
   
   let rootPath = path;
-  pages.forEach(p => {
+  
+  // Sort pages by length descending to strip longest segments first
+  const sortedPages = [...pages].sort((a, b) => b.length - a.length);
+  
+  sortedPages.forEach(p => {
     if (rootPath.endsWith(p)) {
       rootPath = rootPath.slice(0, -p.length);
     }
   });
 
-  // Remove /public if present at the end of rootPath
+  // Remove /public if present at the end of rootPath (common in XAMPP)
   rootPath = rootPath.replace(/\/public$/, '');
+  
+  // Final clean up of trailing slashes before appending api segment
+  rootPath = rootPath.replace(/\/+$/, '');
 
   window.ADMISSION_API_BASE = loc.origin + rootPath + apiSegment;
   console.log('[API Config] Base URL:', window.ADMISSION_API_BASE);

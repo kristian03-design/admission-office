@@ -11,16 +11,20 @@
     const segment = isVercel ? '/backend' : '/api';
     
     let path = loc.pathname.replace(/\/+$/, '');
-    const pages = ['/dashboard', '/apply', '/about', '/news-events', '/news-event-details', '/course-details', '/welcome'];
+    const pages = [
+      '/dashboard', '/apply', '/about', '/news-events', '/news-event-details', 
+      '/course-details', '/welcome', '/admin/dashboard', '/admin/login', '/admin'
+    ];
     
     let rootPath = path;
-    pages.forEach(p => {
+    const sortedPages = [...pages].sort((a, b) => b.length - a.length);
+    sortedPages.forEach(p => {
       if (rootPath.endsWith(p)) {
         rootPath = rootPath.slice(0, -p.length);
       }
     });
 
-    rootPath = rootPath.replace(/\/public$/, '');
+    rootPath = rootPath.replace(/\/public$/, '').replace(/\/+$/, '');
     return loc.origin + rootPath + segment;
   }
 

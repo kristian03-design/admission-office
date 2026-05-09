@@ -24,7 +24,7 @@ class AdminDashboardController extends Controller
         $recent = Application::with('program')->latest()->take(10)->get();
 
         // ── Monthly trend (submissions per month) ───────────────────
-        $trend = Application::selectRaw("DATE_FORMAT(submitted_at, '%Y-%m') as month, COUNT(*) as count")
+        $trend = Application::selectRaw("TO_CHAR(submitted_at, 'YYYY-MM') as month, COUNT(*) as count")
             ->whereNotNull('submitted_at')
             ->groupBy('month')
             ->orderBy('month')
@@ -43,9 +43,9 @@ class AdminDashboardController extends Controller
                 SUM(CASE WHEN status IN (\'pending\',\'submitted\',\'under_review\',\'pending_docs\',\'for_interview\') THEN 1 ELSE 0 END) as pending,
                 SUM(CASE WHEN status IN (\'rejected\',\'cancelled\') THEN 1 ELSE 0 END) as rejected,
                 AVG(CASE
-                    WHEN gwa_grade_11 IS NOT NULL AND gwa_grade_12 IS NOT NULL THEN ((gwa_grade_11 + 0) + (gwa_grade_12 + 0)) / 2.0
-                    WHEN gwa_grade_11 IS NOT NULL THEN (gwa_grade_11 + 0)
-                    WHEN gwa_grade_12 IS NOT NULL THEN (gwa_grade_12 + 0)
+                    WHEN gwa_grade_11 IS NOT NULL AND gwa_grade_11 != \'\' AND gwa_grade_12 IS NOT NULL AND gwa_grade_12 != \'\' THEN (CAST(NULLIF(gwa_grade_11, \'\') AS NUMERIC) + CAST(NULLIF(gwa_grade_12, \'\') AS NUMERIC)) / 2.0
+                    WHEN gwa_grade_11 IS NOT NULL AND gwa_grade_11 != \'\' THEN CAST(NULLIF(gwa_grade_11, \'\') AS NUMERIC)
+                    WHEN gwa_grade_12 IS NOT NULL AND gwa_grade_12 != \'\' THEN CAST(NULLIF(gwa_grade_12, \'\') AS NUMERIC)
                     ELSE NULL END) as avg_gwa')
             ->whereNotNull('first_choice')
             ->groupBy('first_choice')
@@ -74,9 +74,9 @@ class AdminDashboardController extends Controller
 
         // ── Overall average GWA ───────────────────────────────────────
         $avgGwa = Application::selectRaw('AVG(CASE
-                WHEN gwa_grade_11 IS NOT NULL AND gwa_grade_12 IS NOT NULL THEN ((gwa_grade_11 + 0) + (gwa_grade_12 + 0)) / 2.0
-                WHEN gwa_grade_11 IS NOT NULL THEN (gwa_grade_11 + 0)
-                WHEN gwa_grade_12 IS NOT NULL THEN (gwa_grade_12 + 0)
+                WHEN gwa_grade_11 IS NOT NULL AND gwa_grade_11 != \'\' AND gwa_grade_12 IS NOT NULL AND gwa_grade_12 != \'\' THEN (CAST(NULLIF(gwa_grade_11, \'\') AS NUMERIC) + CAST(NULLIF(gwa_grade_12, \'\') AS NUMERIC)) / 2.0
+                WHEN gwa_grade_11 IS NOT NULL AND gwa_grade_11 != \'\' THEN CAST(NULLIF(gwa_grade_11, \'\') AS NUMERIC)
+                WHEN gwa_grade_12 IS NOT NULL AND gwa_grade_12 != \'\' THEN CAST(NULLIF(gwa_grade_12, \'\') AS NUMERIC)
                 ELSE NULL END) as avg_gwa')
             ->value('avg_gwa');
 

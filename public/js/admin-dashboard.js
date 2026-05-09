@@ -373,9 +373,11 @@ function initDashboard() {
     const recentListEl = document.getElementById('recentList');
     if (recentListEl) recentListEl.innerHTML = '<p class="empty-state">Loading latest applications...</p>';
   } else if (API_APPLICATIONS === 'error') {
-    renderKPIError();
+    renderKPIError(window.LAST_API_ERROR || 'Failed to load data');
     const recentListEl = document.getElementById('recentList');
-    if (recentListEl) recentListEl.innerHTML = '<p class="empty-state" style="color:var(--red)">Failed to load data. Please refresh the page.</p>';
+    if (recentListEl) {
+      recentListEl.innerHTML = `<p class="empty-state" style="color:var(--red)">${escapeHtml(window.LAST_API_ERROR || 'Failed to load data. Please refresh the page.')}</p>`;
+    }
   } else {
     renderKPIs();
     renderRecentList();
@@ -461,7 +463,7 @@ function renderKPILoading() {
 }
 
 /** Error state for KPIs */
-function renderKPIError() {
+function renderKPIError(errorMessage = 'Failed to load') {
   const grid = document.getElementById('kpiGrid');
   if (!grid) return;
   grid.innerHTML = Array(5).fill(0).map(() => `
@@ -469,7 +471,7 @@ function renderKPIError() {
       <div class="kpi-icon kpi-icon--red"><i data-iconsax="alert-triangle"></i></div>
       <div class="kpi-body">
         <div class="kpi-value" style="font-size:16px;color:var(--red)">Error</div>
-        <div class="kpi-label">Failed to load</div>
+        <div class="kpi-label">${escapeHtml(errorMessage)}</div>
       </div>
     </div>
   `).join('');
@@ -3253,9 +3255,9 @@ async function deleteFacultyStaff(id) {
 }
 
 async function toggleProgram(id, name, btn) {
-  const current = (programEnabled[name] !== undefined) ? !!programEnabled[name] : !!program.is_active;
-  const next = !current;
   const program = API_PROGRAMS.find(p => Number(p.id) === Number(id));
+  const current = (programEnabled[name] !== undefined) ? !!programEnabled[name] : !!(program && program.is_active);
+  const next = !current;
   const slotsLeft = Number(program && program.slots_left != null ? program.slots_left : 0);
 
   if (next && Number.isFinite(slotsLeft) && slotsLeft <= 0) {
@@ -4453,6 +4455,8 @@ async function refreshData(isInitial = false) {
     });
     filteredApps = [...API_APPLICATIONS];
     if (appsResult.status === 'rejected') {
+      console.warn('Applications API failed:', appsResult.reason);
+      window.LAST_API_ERROR = appsResult.reason?.message || 'API request failed';
       API_APPLICATIONS = 'error';
       filteredApps = [];
     }
