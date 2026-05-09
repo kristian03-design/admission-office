@@ -16,6 +16,7 @@ setTimeout(hideSiteLoader, 4500); // fallback
 let API_PROGRAMS = [];
 const programEnabled = {};
 const savedProgramSlots = {};
+const pendingProgramSlots = {};
 let isRefreshingData = false;
 let programFilter = 'All';
 let interviewFilter = 'All';
@@ -1351,6 +1352,7 @@ function renderProgramsTable() {
   if (!tbody) return;
   if (programs.length === 0) {
     tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No programs loaded. Data comes from the API.</td></tr>';
+    updateProgramSaveAllState();
     return;
   }
   tbody.innerHTML = programs.map(p => {
@@ -1358,8 +1360,10 @@ function renderProgramsTable() {
     const enabled = programEnabled[p.name] !== false;
     const dept = p.department || '—';
     const slotsLeftRaw = p.slots_left != null ? Number(p.slots_left) : (p.slots != null ? Number(p.slots) : 0);
-    const slotsLeft = Number.isFinite(slotsLeftRaw) ? Math.max(0, Math.min(3000, slotsLeftRaw)) : 0;
+    const savedSlotsLeft = Number.isFinite(slotsLeftRaw) ? Math.max(0, Math.min(3000, slotsLeftRaw)) : 0;
+    const slotsLeft = pendingProgramSlots[String(p.id)] != null ? pendingProgramSlots[String(p.id)] : savedSlotsLeft;
     const programCode = (p.code && String(p.code).trim()) ? String(p.code).trim() : shortProg(p.name || '');
+    const dirtyStyle = pendingProgramSlots[String(p.id)] != null ? 'border-color:var(--gold);background:#fffbeb;' : '';
     return `<tr>
       <td>
         <div style="font-weight:600;color:var(--navy)">${p.name}</div>
@@ -1370,10 +1374,10 @@ function renderProgramsTable() {
       <td>Day / Afternoon </td>
       <td style="font-weight:700;color:var(--navy-mid);text-align:center;">${count}</td>
       <td>
-        <div style="display:flex;align-items:center;gap:6px;min-width:150px">
+        <div style="display:flex;align-items:center;gap:6px;min-width:96px">
           <input type="number" min="0" max="3000" step="1" class="fi program-slot-input"
-            data-program-id="${p.id}" value="${slotsLeft}" style="padding:5px 8px;font-size:12px;width:86px;height:30px">
-          <button type="button" class="btn-outline" style="padding:5px 10px;font-size:11px" onclick="saveProgramSlotsLeft(${p.id}, this)">Save</button>
+            data-program-id="${p.id}" data-saved-value="${savedSlotsLeft}" value="${slotsLeft}"
+            oninput="markProgramSlotChanged(this)" style="padding:5px 8px;font-size:12px;width:86px;height:30px;${dirtyStyle}">
         </div>
       </td>
       <td>
@@ -1384,20 +1388,56 @@ function renderProgramsTable() {
       </td>
     </tr>`;
   }).join('');
+  updateProgramSaveAllState();
 }
 
-function saveProgramSlotsLeft(programId, btn) {
-  const input = document.querySelector(`.program-slot-input[data-program-id="${programId}"]`);
-  if (!input) {
-    showToast('Slot input not found.');
+function markProgramSlotChanged(input) {
+  if (!input) return;
+  const programId = String(input.dataset.programId || '');
+  const savedValue = Number(input.dataset.savedValue);
+  const value = Number(input.value);
+
+  if (!programId) return;
+  if (Number.isInteger(value) && value === savedValue) {
+    delete pendingProgramSlots[programId];
+    input.style.borderColor = '';
+    input.style.background = '';
+  } else {
+    pendingProgramSlots[programId] = input.value;
+    input.style.borderColor = 'var(--gold)';
+    input.style.background = '#fffbeb';
+  }
+
+  updateProgramSaveAllState();
+}
+
+function updateProgramSaveAllState() {
+  const btn = document.getElementById('saveAllProgramSlotsBtn');
+  if (!btn) return;
+  const count = Object.keys(pendingProgramSlots).length;
+  btn.disabled = count === 0;
+  btn.innerHTML = `<i data-lucide="save"></i> ${count ? `Save All Changes (${count})` : 'Save All Changes'}`;
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+async function saveAllProgramSlotsLeft() {
+  const changes = Object.entries(pendingProgramSlots).map(([programId, rawValue]) => ({
+    programId,
+    value: Number(rawValue)
+  }));
+
+  if (!changes.length) {
+    showToast('No program changes to save.');
     return;
   }
 
-  const value = Number(input.value);
-  if (!Number.isInteger(value) || value < 0 || value > 3000) {
-    showToast('Slots Left must be a whole number between 0 and 3000.');
-    input.focus();
-    return;
+  for (const change of changes) {
+    if (!Number.isInteger(change.value) || change.value < 0 || change.value > 3000) {
+      const input = document.querySelector(`.program-slot-input[data-program-id="${change.programId}"]`);
+      showToast('Slots Left must be a whole number between 0 and 3000.');
+      if (input) input.focus();
+      return;
+    }
   }
 
   if (typeof AdmissionAPI === 'undefined' || !AdmissionAPI.getToken()) {
@@ -1405,36 +1445,48 @@ function saveProgramSlotsLeft(programId, btn) {
     return;
   }
 
-  const prevText = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = 'Saving...';
+  const btn = document.getElementById('saveAllProgramSlotsBtn');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i data-lucide="loader"></i> Saving...';
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  }
 
-  AdmissionAPI.updateProgramSlotsLeft(programId, value)
-    .then((updated) => {
-      const program = API_PROGRAMS.find(p => Number(p.id) === Number(programId));
-      const isEnabled = value > 0;
-      if (program) {
-        program.slots_left = value;
-        program.is_active = isEnabled;
-      }
-      savedProgramSlots[String(programId)] = value;
-      if (updated && typeof updated === 'object' && updated.name) {
-        programEnabled[updated.name] = isEnabled;
-      }
-      showToast(isEnabled ? 'Slots left updated.' : 'Slots reached 0. Program disabled automatically.');
-      renderProgramsTable();
-    })
-    .catch((err) => {
-      let msg = err && err.message ? err.message : 'Failed to update slots left.';
-      if (err && err.data && err.data.errors && err.data.errors.slots_left && err.data.errors.slots_left[0]) {
-        msg = err.data.errors.slots_left[0];
-      }
-      showToast(msg);
-    })
-    .finally(() => {
-      btn.disabled = false;
-      btn.textContent = prevText;
-    });
+  const results = await Promise.allSettled(
+    changes.map(change => AdmissionAPI.updateProgramSlotsLeft(change.programId, change.value))
+  );
+  const failed = results.filter(result => result.status === 'rejected');
+
+  results.forEach((result, index) => {
+    if (result.status !== 'fulfilled') return;
+    const { programId, value } = changes[index];
+    const updated = result.value;
+    const program = API_PROGRAMS.find(p => Number(p.id) === Number(programId));
+    const isEnabled = value > 0;
+    if (program) {
+      program.slots_left = value;
+      program.is_active = isEnabled;
+    }
+    savedProgramSlots[String(programId)] = value;
+    delete pendingProgramSlots[String(programId)];
+    if (updated && typeof updated === 'object' && updated.name) {
+      programEnabled[updated.name] = isEnabled;
+    }
+  });
+
+  if (failed.length) {
+    const savedCount = changes.length - failed.length;
+    const err = failed[0].reason;
+    let msg = err && err.message ? err.message : 'Some program changes failed to save.';
+    if (err && err.data && err.data.errors && err.data.errors.slots_left && err.data.errors.slots_left[0]) {
+      msg = err.data.errors.slots_left[0];
+    }
+    showToast(`${savedCount} saved, ${failed.length} failed. ${msg}`);
+  } else {
+    showToast('All program changes saved.');
+  }
+
+  renderProgramsTable();
 }
 
 /* ─── WEBSITE CONTENT & ANNOUNCEMENTS ─── */

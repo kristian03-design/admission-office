@@ -29,7 +29,8 @@ class TestimonialController extends Controller
         ]);
 
         if ($request->hasFile('author_avatar_file')) {
-            $validated['author_avatar'] = $request->file('author_avatar_file')->store('testimonials', 'public');
+            $path = $request->file('author_avatar_file')->store('testimonials', 'supabase');
+            $validated['author_avatar'] = Storage::disk('supabase')->url($path);
         }
 
         unset($validated['author_avatar_file']);
@@ -57,7 +58,8 @@ class TestimonialController extends Controller
 
         if ($request->hasFile('author_avatar_file')) {
             $this->deleteStoredAvatar($testimonial->author_avatar);
-            $validated['author_avatar'] = $request->file('author_avatar_file')->store('testimonials', 'public');
+            $path = $request->file('author_avatar_file')->store('testimonials', 'supabase');
+            $validated['author_avatar'] = Storage::disk('supabase')->url($path);
         } elseif (!empty($validated['clear_avatar'])) {
             $this->deleteStoredAvatar($testimonial->author_avatar);
             $validated['author_avatar'] = null;
@@ -86,9 +88,19 @@ class TestimonialController extends Controller
             return;
         }
 
-        // Handle both full URLs/prefixed paths and relative paths
+        // Handle Supabase full URLs
+        if (str_starts_with($path, 'https://')) {
+            $bucket = env('SUPABASE_S3_BUCKET', 'file_image');
+            $prefix = '/storage/v1/object/public/' . $bucket . '/';
+            if (str_contains($path, $prefix)) {
+                $key = substr($path, strpos($path, $prefix) + strlen($prefix));
+                Storage::disk('supabase')->delete($key);
+            }
+            return;
+        }
+
+        // Handle legacy local paths
         $cleanPath = str_replace('/storage/', '', $path);
-        
         if (Storage::disk('public')->exists($cleanPath)) {
             Storage::disk('public')->delete($cleanPath);
         }

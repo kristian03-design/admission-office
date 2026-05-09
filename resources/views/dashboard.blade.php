@@ -18,7 +18,7 @@
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
     sessionStorage.setItem('_at', "{{ $admissionApiToken ?? session('admission_api_token') ?? '' }}");
   </script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=33" defer></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=34" defer></script>
 </head>
 <body>
   @include('partials.site-loader')
@@ -373,6 +373,12 @@
       <div>
         <h1 class="page-title">Programs</h1>
         <p class="page-sub">Manage available degree programs for admission</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn-primary" id="saveAllProgramSlotsBtn" type="button" onclick="saveAllProgramSlotsLeft()" disabled>
+          <i data-lucide="save"></i>
+          Save All Changes
+        </button>
       </div>
     </div>
 

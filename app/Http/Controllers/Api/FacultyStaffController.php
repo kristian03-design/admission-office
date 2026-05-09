@@ -22,7 +22,8 @@ class FacultyStaffController extends Controller
         $items = $this->readItems();
 
         if ($request->hasFile('image_file')) {
-            $validated['image'] = $request->file('image_file')->store('faculty-staff', 'public');
+            $path = $request->file('image_file')->store('faculty-staff', 'supabase');
+            $validated['image'] = Storage::disk('supabase')->url($path);
         }
 
         $validated['id'] = $this->uniqueId($validated['name'], $items);
@@ -53,7 +54,8 @@ class FacultyStaffController extends Controller
 
             if ($request->hasFile('image_file')) {
                 $this->deleteStoredImage($item['image'] ?? null);
-                $item['image'] = $request->file('image_file')->store('faculty-staff', 'public');
+                $path = $request->file('image_file')->store('faculty-staff', 'supabase');
+                $item['image'] = Storage::disk('supabase')->url($path);
             } elseif ($request->boolean('clear_image')) {
                 $this->deleteStoredImage($item['image'] ?? null);
                 $item['image'] = '';
@@ -144,9 +146,19 @@ class FacultyStaffController extends Controller
             return;
         }
 
-        // Handle both full URLs/prefixed paths and relative paths
+        // Handle Supabase full URLs
+        if (str_starts_with($path, 'https://')) {
+            $bucket = env('SUPABASE_S3_BUCKET', 'file_image');
+            $prefix = '/storage/v1/object/public/' . $bucket . '/';
+            if (str_contains($path, $prefix)) {
+                $key = substr($path, strpos($path, $prefix) + strlen($prefix));
+                Storage::disk('supabase')->delete($key);
+            }
+            return;
+        }
+
+        // Handle legacy local paths
         $cleanPath = str_replace('/storage/', '', $path);
-        
         if (Storage::disk('public')->exists($cleanPath)) {
             Storage::disk('public')->delete($cleanPath);
         }

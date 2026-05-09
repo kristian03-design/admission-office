@@ -172,8 +172,8 @@ class NewsEventController extends Controller
 
         $uploadedUrls = [];
         foreach ($files as $file) {
-            $path = $file->store('news-events', 'public');
-            $uploadedUrls[] = $path;
+            $path = $file->store('news-events', 'supabase');
+            $uploadedUrls[] = Storage::disk('supabase')->url($path);
         }
 
         return $uploadedUrls;
@@ -229,6 +229,19 @@ class NewsEventController extends Controller
     {
         foreach ($urls as $url) {
             if (!$url) continue;
+
+            // Handle Supabase full URLs
+            if (str_starts_with($url, 'https://')) {
+                $bucket = env('SUPABASE_S3_BUCKET', 'file_image');
+                $prefix = '/storage/v1/object/public/' . $bucket . '/';
+                if (str_contains($url, $prefix)) {
+                    $key = substr($url, strpos($url, $prefix) + strlen($prefix));
+                    Storage::disk('supabase')->delete($key);
+                }
+                continue;
+            }
+
+            // Handle legacy local paths
             $cleanPath = str_replace('/storage/', '', $url);
             if (Storage::disk('public')->exists($cleanPath)) {
                 Storage::disk('public')->delete($cleanPath);

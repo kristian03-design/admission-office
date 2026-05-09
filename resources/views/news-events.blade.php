@@ -72,7 +72,7 @@
               $galleryUrls = is_array($item->image_urls) && count($item->image_urls)
                 ? $item->image_urls
                 : ($item->image_url ? [$item->image_url] : []);
-              $gallery = array_map(fn($url) => str_starts_with($url, 'http') ? $url : asset(str_starts_with($url, 'storage/') || str_starts_with($url, '/storage/') ? ltrim($url, '/') : 'storage/' . $url), $galleryUrls);
+              $gallery = array_map(fn($url) => str_starts_with($url, 'http') ? $url : asset(ltrim(str_replace('/storage/', 'storage/', $url), '/')), $galleryUrls);
               $previewText = $item->summary ?: $item->content ?: '';
             @endphp
             <article class="program-card">

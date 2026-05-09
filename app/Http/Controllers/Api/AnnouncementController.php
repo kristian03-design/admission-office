@@ -41,7 +41,8 @@ class AnnouncementController extends Controller
         ]);
 
         if ($request->hasFile('popup_image_file')) {
-            $validated['popup_image'] = $request->file('popup_image_file')->store('announcements', 'public');
+            $path = $request->file('popup_image_file')->store('announcements', 'supabase');
+            $validated['popup_image'] = Storage::disk('supabase')->url($path);
         }
         unset($validated['popup_image_file'], $validated['clear_popup_image']);
 
@@ -80,7 +81,8 @@ class AnnouncementController extends Controller
 
         if ($request->hasFile('popup_image_file')) {
             $this->deleteStoredImage($announcement->popup_image);
-            $validated['popup_image'] = $request->file('popup_image_file')->store('announcements', 'public');
+            $path = $request->file('popup_image_file')->store('announcements', 'supabase');
+            $validated['popup_image'] = Storage::disk('supabase')->url($path);
         } elseif (!empty($validated['clear_popup_image'])) {
             $this->deleteStoredImage($announcement->popup_image);
             $validated['popup_image'] = null;
@@ -126,6 +128,19 @@ class AnnouncementController extends Controller
         if (!$path) {
             return;
         }
+
+        // Handle Supabase full URLs
+        if (str_starts_with($path, 'https://')) {
+            $bucket = env('SUPABASE_S3_BUCKET', 'file_image');
+            $prefix = '/storage/v1/object/public/' . $bucket . '/';
+            if (str_contains($path, $prefix)) {
+                $key = substr($path, strpos($path, $prefix) + strlen($prefix));
+                Storage::disk('supabase')->delete($key);
+            }
+            return;
+        }
+
+        // Handle legacy local paths
         $cleanPath = str_replace('/storage/', '', $path);
         if (Storage::disk('public')->exists($cleanPath)) {
             Storage::disk('public')->delete($cleanPath);
