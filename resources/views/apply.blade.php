@@ -25,16 +25,17 @@
 </div>
 
 @if(($settings['accept_applications'] ?? '1') === '0')
-<div class="fixed inset-0 z-[9999] bg-[#0f1e3d]/95 backdrop-blur-sm flex items-center justify-center p-6 text-center">
-  <div class="max-w-md bg-white rounded-3xl p-10 shadow-2xl">
-    <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-      <i data-iconsax="lock" class="text-red-600 w-10 h-10"></i>
+<div class="fixed inset-0 z-[9999] bg-[#0f1e3d]/90 backdrop-blur-xl flex items-center justify-center p-6 text-center">
+  <div class="max-w-md w-full bg-white p-10 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/10 relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-500 to-orange-500"></div>
+    <div class="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse">
+      <i data-iconsax="lock" class="text-red-500 w-12 h-12"></i>
     </div>
-    <h2 class="text-2xl font-bold text-[#0f1e3d] mb-4">Application Portal Closed</h2>
-    <p class="text-slate-600 mb-8 leading-relaxed">We are currently not accepting new applications. Please check back during the next enrollment period or contact our admissions office for more information.</p>
-    <a href="{{ route('home') }}" class="inline-flex items-center gap-2 px-8 py-3 bg-[#0f1e3d] text-white rounded-xl font-bold hover:bg-[#1b3557] transition-all">
-      <i data-iconsax="arrow-left" class="w-4 h-4"></i>
-      Back to Home
+    <h2 class="text-3xl font-bold text-[#0f1e3d] mb-4 tracking-tight">Application is already closed</h2>
+    <p class="text-slate-500 mb-10 text-lg leading-relaxed">The application portal is currently closed. We are not accepting new submissions at this time.</p>
+    <a href="{{ route('home') }}" class="inline-flex items-center justify-center gap-3 w-full px-8 py-4 bg-[#0f1e3d] text-white rounded-2xl font-bold hover:bg-[#1b3557] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-[#0f1e3d]/20">
+      <i data-iconsax="home" class="w-5 h-5"></i>
+      Return to Homepage
     </a>
   </div>
 </div>

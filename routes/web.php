@@ -33,11 +33,7 @@ Route::get('/news-events/{id}', [WelcomeController::class, 'showNewsEvent'])->na
 
 //Application Form//
 Route::get('/apply', function () {
-    $settings = \App\Models\SystemSetting::all_as_array();
-    if (($settings['accept_applications'] ?? '1') === '0') {
-        return redirect()->route('home')->with('error', 'The application portal is currently closed.');
-    }
-    return view('apply', ['settings' => $settings]);
+    return view('apply', ['settings' => \App\Models\SystemSetting::all_as_array()]);
 })->name('apply');
 Route::redirect('/inquire', '/apply', 301);
 Route::redirect('/inquiry', '/apply', 301);

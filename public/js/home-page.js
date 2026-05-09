@@ -55,22 +55,44 @@ function updateNavbar() {
 window.addEventListener('scroll', updateNavbar, { passive: true });
 updateNavbar(); // init
 
-// Mobile menu toggle
+// ─────────────────────────────────────────
+// MOBILE MENU PREMIUM REDESIGN
+// ─────────────────────────────────────────
+
 const menuToggle = $('#menu-toggle');
 const mobileMenu = $('#mobile-menu');
 let menuOpen = false;
 
-menuToggle?.addEventListener('click', () => {
-  menuOpen = !menuOpen;
-  mobileMenu.classList.toggle('hidden', !menuOpen);
+function toggleMenu(forceClose = false) {
+  menuOpen = forceClose ? false : !menuOpen;
+  
+  menuToggle?.classList.toggle('active', menuOpen);
+  mobileMenu?.classList.toggle('active', menuOpen);
+  document.body.classList.toggle('menu-open', menuOpen);
+
+  // Update burger icon
+  const icon = menuToggle?.querySelector('i');
+  if (icon) {
+    icon.setAttribute('data-iconsax', menuOpen ? 'x' : 'menu');
+    if (window.iconsax) iconsax.createIcons();
+  }
+}
+
+menuToggle?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  toggleMenu();
 });
 
 // Close mobile menu on link click
-$$('#mobile-menu a').forEach(link => {
+$$('.mobile-nav-link, .mobile-btn-primary').forEach(link => {
   link.addEventListener('click', () => {
-    menuOpen = false;
-    mobileMenu.classList.add('hidden');
+    toggleMenu(true);
   });
+});
+
+// Close on escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && menuOpen) toggleMenu(true);
 });
 
 // ─────────────────────────────────────────

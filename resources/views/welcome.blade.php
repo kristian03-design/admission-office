@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -39,19 +39,40 @@
         <a href="{{ route('home') }}#contact" class="nav-link text-sm font-medium tracking-wide">Contact Us</a>
       </nav>
       <div class="flex items-center gap-3">
-        @if(($settings['accept_applications'] ?? '1') === '0')
-          <span class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full opacity-60 cursor-not-allowed">Portal Closed</span>
-        @else
-          <a href="{{ route('apply') }}" class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full transition-all">Inquire Now</a>
-        @endif
+        <a href="{{ route('apply') }}" class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full transition-all">Inquire Now</a>
         <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu"><i data-iconsax="menu"></i></button>
       </div>
     </div>
-    <div id="mobile-menu" class="hidden md:hidden mobile-menu">
-      <div class="px-8 pb-6 pt-2 flex flex-col gap-4">
-        <a href="{{ route('home') }}" class="mobile-nav-link text-base font-medium">Home</a>
-        <a href="{{ route('about') }}" class="mobile-nav-link text-base font-medium">About</a>
-        <a href="{{ route('news-events') }}" class="mobile-nav-link text-base font-medium">News &amp; Events</a>
+    <div id="mobile-menu" class="mobile-menu md:hidden">
+      <div class="mobile-menu-inner">
+        <nav class="mobile-nav">
+          <a href="{{ route('home') }}" class="mobile-nav-link" style="--i:1">
+            <i data-iconsax="home"></i>
+            <span>Home</span>
+          </a>
+          <a href="{{ route('about') }}" class="mobile-nav-link" style="--i:2">
+            <i data-iconsax="info-circle"></i>
+            <span>About</span>
+          </a>
+          <a href="{{ route('home') }}#programs" class="mobile-nav-link" style="--i:3">
+            <i data-iconsax="book"></i>
+            <span>Programs</span>
+          </a>
+          <a href="{{ route('news-events') }}" class="mobile-nav-link" style="--i:4">
+            <i data-iconsax="notification"></i>
+            <span>News & Events</span>
+          </a>
+          <a href="{{ route('home') }}#contact" class="mobile-nav-link" style="--i:5">
+            <i data-iconsax="message"></i>
+            <span>Contact Us</span>
+          </a>
+        </nav>
+        <div class="mobile-menu-footer" style="--i:6">
+          <a href="{{ route('apply') }}" class="mobile-btn-primary">
+            <span>Inquire Now</span>
+            <i data-iconsax="arrow-right"></i>
+          </a>
+        </div>
       </div>
     </div>
   </header>
@@ -97,17 +118,10 @@
             </p>
 
             <div class="flex flex-wrap gap-4 mt-10" data-animate="fade-up" data-delay="300">
-              @if(($settings['accept_applications'] ?? '1') === '0')
-                <button class="btn-hero-primary opacity-60 cursor-not-allowed" disabled>
-                  <span>Portal Closed</span>
-                  <i data-iconsax="lock" style="opacity:0.5"></i>
-                </button>
-              @else
-                <a href="{{ route('apply') }}" class="btn-hero-primary group">
-                  <span>{{ $settings['cta_text'] ?? 'Start Your Application' }}</span>
-                  <i data-iconsax="arrow-right"></i>
-                </a>
-              @endif
+              <a href="{{ route('apply') }}" class="btn-hero-primary group">
+                <span>{{ $settings['cta_text'] ?? 'Start Your Application' }}</span>
+                <i data-iconsax="arrow-right"></i>
+              </a>
               <a href="#process" class="btn-hero-secondary group">
                 <span>How It Works</span>
                 <i data-iconsax="chevron-down" style="opacity:.6"></i>
