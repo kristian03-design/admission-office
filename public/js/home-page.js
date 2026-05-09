@@ -69,6 +69,12 @@ function toggleMenu(forceClose = false) {
   menuToggle?.classList.toggle('active', menuOpen);
   mobileMenu?.classList.toggle('active', menuOpen);
   document.body.classList.toggle('menu-open', menuOpen);
+  
+  // Hide navbar CTA on mobile when menu is open to reduce clutter
+  const navCta = $('.btn-primary-nav');
+  if (navCta) {
+    navCta.style.display = (menuOpen && window.innerWidth < 768) ? 'none' : '';
+  }
 
   // Update burger icon
   const icon = menuToggle?.querySelector('i');

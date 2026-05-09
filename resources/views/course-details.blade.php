@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -512,11 +512,36 @@
         <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu"><i data-iconsax="menu"></i></button>
       </div>
     </div>
-    <div id="mobile-menu" class="hidden md:hidden mobile-menu">
-      <div class="px-8 pb-6 pt-2 flex flex-col gap-4">
-        <a href="{{ route('home') }}" class="mobile-nav-link text-base font-medium">Home</a>
-        <a href="{{ route('about') }}" class="mobile-nav-link text-base font-medium">About</a>
-        <a href="{{ route('news-events') }}" class="mobile-nav-link text-base font-medium">News &amp; Events</a>
+    <div id="mobile-menu" class="mobile-menu md:hidden">
+      <div class="mobile-menu-inner">
+        <nav class="mobile-nav">
+          <a href="{{ route('home') }}" class="mobile-nav-link" style="--i:1">
+            <i data-iconsax="home"></i>
+            <span>Home</span>
+          </a>
+          <a href="{{ route('about') }}" class="mobile-nav-link" style="--i:2">
+            <i data-iconsax="info-circle"></i>
+            <span>About</span>
+          </a>
+          <a href="{{ route('home') }}#programs" class="mobile-nav-link" style="--i:3">
+            <i data-iconsax="book"></i>
+            <span>Programs</span>
+          </a>
+          <a href="{{ route('news-events') }}" class="mobile-nav-link" style="--i:4">
+            <i data-iconsax="notification"></i>
+            <span>News & Events</span>
+          </a>
+          <a href="{{ route('home') }}#contact" class="mobile-nav-link" style="--i:5">
+            <i data-iconsax="message"></i>
+            <span>Contact Us</span>
+          </a>
+        </nav>
+        <div class="mobile-menu-footer" style="--i:6">
+          <a href="{{ route('apply') }}" class="mobile-btn-primary">
+            <span>Inquire Now</span>
+            <i data-iconsax="arrow-right"></i>
+          </a>
+        </div>
       </div>
     </div>
   </header>
