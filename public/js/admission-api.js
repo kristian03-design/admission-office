@@ -279,18 +279,10 @@
 
     /** GET /api/applications (with optional ?status= & page= & per_page=) */
     async getApplications(params = {}) {
-      try {
-        console.log('[API] Fetching applications...');
-        const qs = new URLSearchParams(params).toString();
-        const data = await request('/applications' + (qs ? '?' + qs : ''));
-        const payload = data.data || data;
-        const list = Array.isArray(payload) ? payload : (payload && Array.isArray(payload.data) ? payload.data : []);
-        console.log('[API] Applications loaded:', list.length);
-        return list;
-      } catch (error) {
-        console.error('[API] Applications fetch failed:', error.message);
-        return [];
-      }
+      const qs = new URLSearchParams(params).toString();
+      const data = await request('/applications' + (qs ? '?' + qs : ''));
+      const payload = data.data || data;
+      return Array.isArray(payload) ? payload : (payload && Array.isArray(payload.data) ? payload.data : []);
     },
 
     /** GET /api/applications/:id â€“ full application + applicant details */
@@ -350,7 +342,16 @@
 
     /** POST /api/admin/clear-cache */
     async clearPublicCache() {
-      return request('/admin/clear-cache', { method: 'POST' });
+      try {
+        return await request('/admin/clear-cache', { method: 'POST' });
+      } catch (error) {
+        if (error && error.status === 404) {
+          const loc = window.location;
+          const rootPath = loc.pathname.split('/admin')[0].replace(/\/+$/, '');
+          return request(loc.origin + rootPath + '/admin/clear-cache', { method: 'POST' });
+        }
+        throw error;
+      }
     },
   };
 })();

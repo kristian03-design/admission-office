@@ -15,13 +15,16 @@
   <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=8" />
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
-    // Dynamically detect API root relative to the current admin path
-    window.ADMISSION_API_BASE = window.location.origin + window.location.pathname.split('/admin')[0].replace(/\/+$/, '') + '/api';
+    (function () {
+      const root = window.location.pathname.split('/admin')[0].replace(/\/+$/, '');
+      const apiSegment = /\.vercel\.app$/i.test(window.location.hostname) ? '/backend' : '/api';
+      window.ADMISSION_API_BASE = window.location.origin + root + apiSegment;
+    })();
     sessionStorage.setItem('_at', "{{ $admissionApiToken ?? session('admission_api_token') ?? '' }}");
   </script>
-  <script src="{{ asset('js/api-config.js') }}?v=7"></script>
-  <script src="{{ asset('js/admission-api.js') }}?v=14"></script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=36" defer></script>
+  <script src="{{ asset('js/api-config.js') }}?v=8"></script>
+  <script src="{{ asset('js/admission-api.js') }}?v=15"></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=37" defer></script>
 </head>
 <body>
   @include('partials.site-loader')
@@ -1513,4 +1516,3 @@
 
 </body>
 </html>
-

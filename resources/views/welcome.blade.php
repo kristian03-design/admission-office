@@ -793,62 +793,54 @@
     <div id="announcementPopup" 
          data-id="{{ $popupAnn->id }}"
          data-always-show="{{ $popupAnn->popup_always_show ? 'true' : 'false' }}"
-         class="fixed inset-0 z-[9999] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-700">
+         data-cookie-days="30"
+         class="announcement-popup"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="announcementPopupTitle"
+         aria-describedby="announcementPopupMessage"
+         hidden>
       
-      <!-- Modal Container -->
-      <div class="relative bg-white rounded-[2rem] overflow-hidden max-w-xl w-full shadow-[0_32px_80px_-16px_rgba(27,53,87,0.4)] transform scale-90 translate-y-10 transition-all duration-700 ease-out border border-white/20" id="popupCard">
-        
-        <!-- Top Section: Image or Gradient -->
-        <div class="relative">
+      <div class="announcement-popup__card" id="popupCard" tabindex="-1">
+        <button type="button" class="announcement-popup__close" onclick="closePopup()" aria-label="Close announcement">
+          <i data-iconsax="x"></i>
+        </button>
+
+        <div class="announcement-popup__media">
           @if($popupAnn->popup_image)
-            <div class="h-72 overflow-hidden">
-              <img src="{{ str_starts_with($popupAnn->popup_image, 'http') ? $popupAnn->popup_image : asset(str_starts_with($popupAnn->popup_image, 'storage/') || str_starts_with($popupAnn->popup_image, '/storage/') ? ltrim($popupAnn->popup_image, '/') : 'storage/' . $popupAnn->popup_image) }}" alt="Announcement" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000" loading="lazy" decoding="async">
-              <!-- Overlay for better text readability and depth -->
-              <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-black/20"></div>
-            </div>
+            <img src="{{ str_starts_with($popupAnn->popup_image, 'http') ? $popupAnn->popup_image : asset(str_starts_with($popupAnn->popup_image, 'storage/') || str_starts_with($popupAnn->popup_image, '/storage/') ? ltrim($popupAnn->popup_image, '/') : 'storage/' . $popupAnn->popup_image) }}" alt="Announcement" class="announcement-popup__image" loading="lazy" decoding="async">
           @else
-            <div class="h-44 bg-gradient-to-br from-[#0f1e3d] via-[#1b3557] to-[#254d82] flex flex-col items-center justify-center relative overflow-hidden">
-              <!-- Decorative elements -->
-              <div class="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
-              <div class="absolute bottom-[-10%] left-[-5%] w-48 h-48 bg-gold-mid/10 rounded-full blur-2xl"></div>
-              
-              <div class="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-2 border border-white/10 shadow-inner">
-                <i data-iconsax="megaphone" class="w-10 h-10 text-white shadow-sm"></i>
-              </div>
-              <span class="text-white/40 text-[10px] font-bold tracking-[0.2em] uppercase">Official Bulletin</span>
+            <div class="announcement-popup__fallback">
+              <i data-iconsax="megaphone"></i>
+              <span>Official Bulletin</span>
             </div>
           @endif
-          
-          <!-- Important Badge -->
-          <div class="absolute -bottom-4 left-10">
-            <span class="px-5 py-2.5 bg-[#c9933a] text-white text-[11px] font-extrabold tracking-wider uppercase rounded-full shadow-[0_8px_20px_-4px_rgba(201,147,58,0.5)] flex items-center gap-2">
-              <i data-iconsax="sparkles" class="w-3.5 h-3.5"></i>
-              Important Notice
-            </span>
-          </div>
+
+          <div class="announcement-popup__media-shade"></div>
         </div>
 
-        <!-- Content Section -->
-        <div class="p-10 pt-12">
-          <h2 class="text-3xl font-extrabold text-[#0f1e3d] leading-tight tracking-tight" style="font-family: 'Playfair Display', serif;">
+        <div class="announcement-popup__content">
+          <span class="announcement-popup__badge">
+            <i data-iconsax="notification"></i>
+            Important Notice
+          </span>
+
+          <h2 id="announcementPopupTitle" class="announcement-popup__title">
             {{ $popupAnn->title ?? 'Announcement' }}
           </h2>
           
-          <div class="w-12 h-1 bg-gradient-to-r from-[#c9933a] to-transparent my-6 rounded-full"></div>
-          
-          <p class="text-slate-700 leading-relaxed text-[17px] font-medium">
+          <p id="announcementPopupMessage" class="announcement-popup__message">
             {{ $popupAnn->message }}
           </p>
 
-          <!-- Footer Actions -->
-          <div class="mt-10 flex flex-col sm:flex-row gap-4">
+          <div class="announcement-popup__actions">
             @if($popupAnn->popup_button_link)
-              <a href="{{ $popupAnn->popup_button_link }}" class="flex-[2] px-8 py-4 bg-[#0f1e3d] text-white rounded-[1.2rem] font-bold text-center hover:bg-[#1b3557] hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group">
+              <a href="{{ $popupAnn->popup_button_link }}" class="announcement-popup__primary">
                 <span>{{ $popupAnn->popup_button_text ?? 'Learn More' }}</span>
-                <i data-iconsax="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                <i data-iconsax="arrow-right"></i>
               </a>
             @endif
-            <button onclick="closePopup()" class="flex-1 px-8 py-4 bg-white text-[#0f1e3d] border-2 border-[#0f1e3d]/5 rounded-[1.2rem] font-bold text-center hover:bg-gray-50 hover:border-[#0f1e3d]/10 transition-all">
+            <button type="button" onclick="closePopup()" class="announcement-popup__secondary">
               Close
             </button>
           </div>
@@ -857,38 +849,74 @@
     </div>
 
     <script>
-      window.addEventListener('DOMContentLoaded', () => {
+      (function () {
         const popup = document.getElementById('announcementPopup');
         if (!popup) return;
 
-        const popupId = 'announcement_popup_' + popup.getAttribute('data-id');
-        const hasSeen = localStorage.getItem(popupId);
+        const cookieName = 'btech_announcement_' + popup.getAttribute('data-id');
         const alwaysShow = popup.getAttribute('data-always-show') === 'true';
+        const cookieDays = parseInt(popup.getAttribute('data-cookie-days') || '30', 10);
+        let lastFocusedElement = null;
 
-        if (!hasSeen || alwaysShow) {
-          setTimeout(() => {
+        function getCookie(name) {
+          return document.cookie
+            .split('; ')
+            .find((row) => row.startsWith(name + '='))
+            ?.split('=')[1] || '';
+        }
+
+        function setCookie(name, value, days) {
+          const expires = new Date(Date.now() + days * 864e5).toUTCString();
+          document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/; SameSite=Lax';
+        }
+
+        function openPopup() {
+          lastFocusedElement = document.activeElement;
+          popup.hidden = false;
+          document.body.classList.add('announcement-popup-open');
+          requestAnimationFrame(() => {
             const card = document.getElementById('popupCard');
-            popup.classList.remove('opacity-0', 'pointer-events-none');
-            card.classList.remove('scale-90', 'translate-y-10');
-          }, 1500);
+            popup.classList.add('is-visible');
+            card?.focus();
+          });
         }
-      });
 
-      function closePopup() {
-        const popup = document.getElementById('announcementPopup');
-        const card = document.getElementById('popupCard');
-        if (!popup || !card) return;
+        window.closePopup = function closePopup() {
+          const card = document.getElementById('popupCard');
+          popup.classList.remove('is-visible');
+          document.body.classList.remove('announcement-popup-open');
 
-        popup.classList.add('opacity-0', 'pointer-events-none');
-        card.classList.add('scale-90', 'translate-y-10');
-        
-        const popupId = 'announcement_popup_' + popup.getAttribute('data-id');
-        const alwaysShow = popup.getAttribute('data-always-show') === 'true';
-        
-        if (!alwaysShow) {
-          localStorage.setItem(popupId, 'true');
-        }
-      }
+          if (!alwaysShow) {
+            setCookie(cookieName, 'dismissed', cookieDays);
+          }
+
+          setTimeout(() => {
+            popup.hidden = true;
+            if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+              lastFocusedElement.focus();
+            }
+          }, 260);
+        };
+
+        popup.addEventListener('click', (event) => {
+          if (event.target === popup) {
+            window.closePopup();
+          }
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && popup.classList.contains('is-visible')) {
+            window.closePopup();
+          }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+          const hasSeen = getCookie(cookieName) === 'dismissed';
+          if (!hasSeen || alwaysShow) {
+            setTimeout(openPopup, 900);
+          }
+        });
+      })();
     </script>
   @endif
 
@@ -1090,5 +1118,4 @@
   </script>
 </body>
 </html>
-
 

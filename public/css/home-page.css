@@ -2188,6 +2188,251 @@ body.menu-open .logo-badge {
   max-height: calc(90vh - 70px);
 }
 
+/* Announcement popup */
+.announcement-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 32px);
+  background: rgba(5, 12, 22, .66);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  backdrop-filter: blur(14px) saturate(130%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .28s ease, visibility .28s ease;
+}
+
+.announcement-popup[hidden] {
+  display: none;
+}
+
+.announcement-popup.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+body.announcement-popup-open {
+  overflow: hidden;
+}
+
+.announcement-popup__card {
+  position: relative;
+  width: min(620px, 100%);
+  max-height: min(90vh, 780px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border-radius: 24px;
+  background: #fff;
+  border: 1px solid rgba(255, 255, 255, .55);
+  box-shadow: 0 30px 90px rgba(4, 10, 20, .36), 0 1px 0 rgba(255, 255, 255, .7) inset;
+  transform: translateY(22px) scale(.96);
+  opacity: 0;
+  transition: transform .34s cubic-bezier(.16, 1, .3, 1), opacity .24s ease;
+  outline: none;
+}
+
+.announcement-popup.is-visible .announcement-popup__card {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.announcement-popup__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 4;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, .42);
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(15, 30, 61, .42);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+
+.announcement-popup__close:hover,
+.announcement-popup__close:focus-visible {
+  transform: translateY(-1px);
+  background: rgba(15, 30, 61, .68);
+  border-color: rgba(255, 255, 255, .72);
+}
+
+.announcement-popup__close .iconsax-icon,
+.announcement-popup__close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.announcement-popup__media {
+  position: relative;
+  min-height: 230px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0f1e3d, #1b3557);
+}
+
+.announcement-popup__image {
+  width: 100%;
+  height: 100%;
+  min-height: 230px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.announcement-popup__media-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 16, 30, .14) 0%, rgba(7, 16, 30, .02) 42%, rgba(255, 255, 255, .96) 100%);
+  pointer-events: none;
+}
+
+.announcement-popup__fallback {
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, .86);
+  background: linear-gradient(135deg, #0f1e3d, #254d82 58%, #2d6a4f);
+}
+
+.announcement-popup__fallback .iconsax-icon,
+.announcement-popup__fallback svg {
+  width: 46px;
+  height: 46px;
+}
+
+.announcement-popup__fallback span {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.announcement-popup__content {
+  position: relative;
+  margin-top: -28px;
+  padding: 0 clamp(22px, 4vw, 40px) clamp(22px, 4vw, 36px);
+  overflow-y: auto;
+}
+
+.announcement-popup__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--gold-mid), var(--gold));
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(184, 134, 11, .28);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.announcement-popup__badge .iconsax-icon,
+.announcement-popup__badge svg {
+  width: 16px;
+  height: 16px;
+}
+
+.announcement-popup__title {
+  margin: 28px 0 0;
+  color: #0f1e3d;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.85rem, 4vw, 2.65rem);
+  font-weight: 800;
+  line-height: 1.08;
+}
+
+.announcement-popup__title::after {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 4px;
+  margin: 18px 0 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--gold-mid), rgba(201, 147, 58, 0));
+}
+
+.announcement-popup__message {
+  margin: 24px 0 0;
+  color: #344258;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.72;
+  white-space: pre-line;
+}
+
+.announcement-popup__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.announcement-popup__primary,
+.announcement-popup__secondary {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 14px;
+  padding: 0 22px;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+}
+
+.announcement-popup__primary {
+  flex: 1.6;
+  color: #fff;
+  background: linear-gradient(135deg, #0f1e3d, #1b3557);
+  box-shadow: 0 14px 28px rgba(15, 30, 61, .22);
+}
+
+.announcement-popup__primary:hover,
+.announcement-popup__primary:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 34px rgba(15, 30, 61, .28);
+}
+
+.announcement-popup__primary .iconsax-icon,
+.announcement-popup__primary svg {
+  width: 18px;
+  height: 18px;
+}
+
+.announcement-popup__secondary {
+  flex: 1;
+  border: 1px solid rgba(15, 30, 61, .12);
+  color: #0f1e3d;
+  background: #fff;
+  cursor: pointer;
+}
+
+.announcement-popup__secondary:hover,
+.announcement-popup__secondary:focus-visible {
+  background: #f7f9fc;
+  border-color: rgba(15, 30, 61, .22);
+}
+
 .guide-section {
   margin-bottom: 2.5rem;
 }
@@ -2800,6 +3045,44 @@ body.menu-open .logo-badge {
 
   #popupCard .flex.flex-col.sm\:flex-row {
     flex-direction: column;
+  }
+
+  .announcement-popup {
+    padding: 0.75rem;
+    align-items: flex-end;
+  }
+
+  .announcement-popup__card {
+    max-height: 92vh;
+    border-radius: 22px 22px 14px 14px;
+  }
+
+  .announcement-popup__media,
+  .announcement-popup__image,
+  .announcement-popup__fallback {
+    min-height: 190px;
+  }
+
+  .announcement-popup__content {
+    padding: 0 1.25rem 1.4rem;
+  }
+
+  .announcement-popup__title {
+    margin-top: 22px;
+  }
+
+  .announcement-popup__message {
+    font-size: .95rem;
+    line-height: 1.62;
+  }
+
+  .announcement-popup__actions {
+    flex-direction: column;
+  }
+
+  .announcement-popup__primary,
+  .announcement-popup__secondary {
+    width: 100%;
   }
 }
 

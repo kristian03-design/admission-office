@@ -612,11 +612,13 @@ function renderTable() {
   const tbody = document.getElementById('appTableBody');
 
   if (!slice.length) {
+    const appLoadFailed = API_APPLICATIONS === 'error';
     tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">
-      <i data-iconsax="zoom-in" style="width:20px;height:20px"></i>
-      <p>No applications match your filters.</p>
+      <i data-iconsax="${appLoadFailed ? 'warning-2' : 'zoom-in'}" style="width:20px;height:20px"></i>
+      <p>${appLoadFailed ? 'Applications could not be loaded. Please refresh or sign in again.' : 'No applications match your filters.'}</p>
     </div></td></tr>`;
-    document.getElementById('tableInfo').textContent = 'No results found';
+    document.getElementById('tableInfo').textContent = appLoadFailed ? (window.LAST_API_ERROR || 'Failed to load applications') : 'No results found';
+    if (typeof iconsax !== 'undefined') iconsax.createIcons();
     return;
   }
 
@@ -4370,7 +4372,7 @@ async function refreshData(isInitial = false) {
     if (topbarInitials) topbarInitials.textContent = initials;
 
     const [appsResult, programsResult, statsResult, settingsResult] = await Promise.allSettled([
-      AdmissionAPI.getApplications({ per_page: 1000 }),
+      AdmissionAPI.getApplications({ per_page: 100 }),
       AdmissionAPI.getPrograms(),
       AdmissionAPI.getDashboardStats(),
       AdmissionAPI.getSettings()
@@ -4423,6 +4425,8 @@ async function refreshData(isInitial = false) {
       window.LAST_API_ERROR = appsResult.reason?.message || 'API request failed';
       API_APPLICATIONS = 'error';
       filteredApps = [];
+      renderApplicationsTable();
+      return;
     }
     syncNotificationToasts({ silent: isInitial });
 

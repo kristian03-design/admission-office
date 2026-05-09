@@ -209,7 +209,7 @@ class ApplicationController extends Controller
                 'pending', 'submitted', 'under_review', 'pending_docs', 'for_interview',
                 'approved', 'accepted', 'enrolled', 'rejected', 'cancelled',
             ])],
-            'per_page' => ['nullable', 'integer', 'min:1', 'max:100'],
+            'per_page' => ['nullable', 'integer', 'min:1', 'max:1000'],
         ]);
 
         if (!empty($validated['status'])) {

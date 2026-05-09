@@ -129,6 +129,12 @@ Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(functi
     Route::post('/faculty-staff/{id}', [FacultyStaffController::class, 'update']);
     Route::patch('/faculty-staff/{id}', [FacultyStaffController::class, 'update']);
     Route::delete('/faculty-staff/{id}', [FacultyStaffController::class, 'destroy']);
+
+    Route::post('/admin/clear-cache', function() {
+        \Illuminate\Support\Facades\Cache::forget('welcome_page_data');
+        \Illuminate\Support\Facades\Cache::forget('news_events_page_data');
+        return response()->json(['message' => 'Cache cleared.']);
+    });
 });
 
 Route::middleware('auth')->group(function () {
