@@ -830,7 +830,7 @@
                 <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
               </a>
             @endif
-            <button onclick="closePopup()" class="flex-1 px-8 py-4 bg-white text-[#0f1e3d] border-2 border-[#0f1e3d]/5 rounded-[1.2rem] font-bold text-center hover:bg-gray-50 hover:border-[#0f1e3d]/10 transition-all">
+            <button onclick="closePopup()" class="flex-1 px-8 py-4 bg-var(--navy-light) text-[#0f1e3d] border-2 border-[#0f1e3d]/5 rounded-[1.2rem] font-bold text-center hover:bg-gray-50 hover:border-[#0f1e3d]/10 transition-all">
               Close
             </button>
           </div>
