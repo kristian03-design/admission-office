@@ -46,6 +46,9 @@ class AnnouncementController extends Controller
         }
         unset($validated['popup_image_file'], $validated['clear_popup_image']);
 
+        if (isset($validated['is_active'])) {
+            $validated['is_active'] = \Illuminate\Support\Facades\DB::raw($validated['is_active'] ? 'TRUE' : 'FALSE');
+        }
         $announcement = Announcement::create($validated);
         
         $this->clearCache();
@@ -89,6 +92,9 @@ class AnnouncementController extends Controller
         }
         unset($validated['popup_image_file'], $validated['clear_popup_image']);
 
+        if (isset($validated['is_active'])) {
+            $validated['is_active'] = \Illuminate\Support\Facades\DB::raw($validated['is_active'] ? 'TRUE' : 'FALSE');
+        }
         $announcement->update($validated);
         
         $this->clearCache();

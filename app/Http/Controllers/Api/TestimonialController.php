@@ -35,6 +35,9 @@ class TestimonialController extends Controller
 
         unset($validated['author_avatar_file']);
 
+        if (isset($validated['is_active'])) {
+            $validated['is_active'] = \Illuminate\Support\Facades\DB::raw($validated['is_active'] ? 'TRUE' : 'FALSE');
+        }
         $testimonial = Testimonial::create($validated);
         Cache::forget('welcome_page_data');
 
@@ -67,6 +70,9 @@ class TestimonialController extends Controller
 
         unset($validated['author_avatar_file'], $validated['clear_avatar']);
 
+        if (isset($validated['is_active'])) {
+            $validated['is_active'] = \Illuminate\Support\Facades\DB::raw($validated['is_active'] ? 'TRUE' : 'FALSE');
+        }
         $testimonial->update($validated);
         Cache::forget('welcome_page_data');
 

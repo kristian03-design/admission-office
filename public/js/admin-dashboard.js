@@ -1493,7 +1493,8 @@ function renderProgramsTable() {
     const statusClass = enabled ? (isFull ? 'full' : 'on') : 'off';
     const statusIcon = enabled ? (isFull ? 'info-circle' : 'check-circle') : 'x';
 
-    return `<tr>
+    return `<tr data-id="${p.id}">
+      <td><input type="checkbox" class="program-row-checkbox" value="${p.id}" onchange="updateBulkActionsBar()"></td>
       <td>
         <div style="font-weight:600;color:var(--navy)">${p.name}</div>
         <div style="font-size:12px;color:var(--text-3)">${escapeHtml(programCode)} ${isFull && enabled ? '<span style="color:var(--red);font-weight:700;">(FULL)</span>' : ''}</div>
@@ -1623,10 +1624,71 @@ async function saveAllProgramSlotsLeft() {
   renderProgramsTable();
 
   if (btn) {
-    btn.disabled = true;
+    btn.disabled = false;
     btn.innerHTML = '<i data-iconsax="save"></i> Save All Changes';
     if (typeof iconsax !== 'undefined') iconsax.createIcons();
   }
+}
+
+// ── BULK ACTIONS ──
+function toggleAllPrograms(master) {
+  const checks = document.querySelectorAll('.program-row-checkbox');
+  checks.forEach(c => c.checked = master.checked);
+  updateBulkActionsBar();
+}
+
+function updateBulkActionsBar() {
+  const checks = document.querySelectorAll('.program-row-checkbox:checked');
+  const bar = document.getElementById('programBulkActions');
+  const countSpan = document.getElementById('bulkSelectCount');
+  
+  if (!bar || !countSpan) return;
+  
+  if (checks.length > 0) {
+    bar.style.display = 'flex';
+    countSpan.textContent = `${checks.length} Selected`;
+  } else {
+    bar.style.display = 'none';
+    const master = document.getElementById('selectAllPrograms');
+    if (master) master.checked = false;
+  }
+}
+
+async function bulkUpdatePrograms(isActive) {
+  const checks = document.querySelectorAll('.program-row-checkbox:checked');
+  const ids = Array.from(checks).map(c => c.value);
+  if (!ids.length) return;
+
+  const action = isActive ? 'Enable' : 'Disable';
+  const confirm = await showConfirmModal(
+    `${action} ${ids.length} Programs?`,
+    `This will set the status of all selected programs to ${action.toLowerCase()}d.`,
+    'Confirm',
+    isActive ? 'var(--navy)' : '#ef4444'
+  );
+
+  if (!confirm) return;
+
+  showToast(`Updating ${ids.length} programs...`);
+  
+  const results = await Promise.allSettled(
+    ids.map(id => {
+      const p = API_PROGRAMS.find(prog => String(prog.id) === String(id));
+      return AdmissionAPI.updateProgramStatus(id, isActive, p ? p.name : '');
+    })
+  );
+
+  const failed = results.filter(r => r.status === 'rejected');
+  if (failed.length > 0) {
+    const err = failed[0].reason;
+    showToast(`${ids.length - failed.length} updated, ${failed.length} failed. ${err.message || 'Error occurred.'}`, 'error');
+  } else {
+    showToast(`Successfully ${action.toLowerCase()}d ${ids.length} programs.`);
+  }
+
+  // Clear selection
+  document.getElementById('selectAllPrograms').checked = false;
+  await refreshData(false);
 }
 
 /* ─── WEBSITE CONTENT & ANNOUNCEMENTS ─── */

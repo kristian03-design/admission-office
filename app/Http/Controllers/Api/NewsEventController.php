@@ -69,6 +69,9 @@ class NewsEventController extends Controller
         }
         unset($validated['images'], $validated['images.*'], $validated['image_urls.*'], $validated['image_urls_json'], $validated['image_items_json'], $validated['clear_images']);
 
+        if (isset($validated['is_active'])) {
+            $validated['is_active'] = \Illuminate\Support\Facades\DB::raw($validated['is_active'] ? 'TRUE' : 'FALSE');
+        }
         $item = NewsEvent::create($validated);
         $this->clearCache();
 
@@ -133,6 +136,9 @@ class NewsEventController extends Controller
         }
         unset($validated['images'], $validated['images.*'], $validated['image_urls.*'], $validated['image_urls_json'], $validated['image_items_json'], $validated['clear_images']);
 
+        if (isset($validated['is_active'])) {
+            $validated['is_active'] = \Illuminate\Support\Facades\DB::raw($validated['is_active'] ? 'true' : 'false');
+        }
         $item->update($validated);
         $this->clearCache();
 

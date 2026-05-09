@@ -37,7 +37,7 @@ class ProgramController extends Controller
         $updateData = ['slots_left' => $slotsLeft];
         // Auto-deactivate if slots reach 0
         if ($slotsLeft <= 0) {
-            $updateData['is_active'] = false;
+            $updateData['is_active'] = \Illuminate\Support\Facades\DB::raw('FALSE');
         }
 
         $program->update($updateData);
@@ -68,7 +68,7 @@ class ProgramController extends Controller
 
         // Use DB::raw to force literal true/false for PostgreSQL compatibility
         $program->update([
-            'is_active' => $isActive
+            'is_active' => \Illuminate\Support\Facades\DB::raw($isActive ? 'TRUE' : 'FALSE')
         ]);
         $program->refresh();
         Cache::forget('welcome_page_data');
