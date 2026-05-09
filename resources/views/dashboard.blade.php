@@ -13,14 +13,14 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=8" />
-  <script src="{{ asset('js/api-config.js') }}?v=7"></script>
-  <script src="{{ asset('js/admission-api.js') }}?v=13"></script>
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
     window.ADMISSION_API_BASE = "{{ url('/api') }}";
     sessionStorage.setItem('_at', "{{ $admissionApiToken ?? session('admission_api_token') ?? '' }}");
   </script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=35" defer></script>
+  <script src="{{ asset('js/api-config.js') }}?v=7"></script>
+  <script src="{{ asset('js/admission-api.js') }}?v=14"></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=36" defer></script>
 </head>
 <body>
   @include('partials.site-loader')
