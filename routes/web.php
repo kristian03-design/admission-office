@@ -49,6 +49,7 @@ Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(functi
     Route::get('/applications/{id}', [ApplicationController::class, 'show']);
     Route::patch('/applications/{id}/status', [ApplicationController::class, 'updateStatus']);
     Route::post('/applications/{id}/status', [ApplicationController::class, 'updateStatus']);
+    Route::get('/programs', [ProgramController::class, 'index']);
 });
 
 

@@ -30,6 +30,22 @@
 
   const API_BASE = normalizeApiBase(window.ADMISSION_API_BASE);
 
+  function alternateApiBase() {
+    const loc = window.location;
+    const rootPath = loc.pathname.split('/admin')[0].replace(/\/+$/, '');
+    const current = API_BASE.replace(/\/+$/, '');
+
+    if (/\/api$/i.test(current)) {
+      return loc.origin + rootPath + '/backend';
+    }
+
+    if (/\/backend$/i.test(current)) {
+      return loc.origin + rootPath + '/api';
+    }
+
+    return '';
+  }
+
   function getToken() {
     return sessionStorage.getItem('_at');
   }
@@ -45,7 +61,15 @@
   }
 
   async function request(endpoint, options = {}) {
-    const url = endpoint.startsWith('http') ? endpoint : API_BASE + endpoint;
+    const isAbsolute = endpoint.startsWith('http');
+    const normalizedEndpoint = endpoint.startsWith('/') ? endpoint : '/' + endpoint;
+    const urls = isAbsolute ? [endpoint] : [API_BASE + normalizedEndpoint];
+    const fallbackBase = !isAbsolute ? alternateApiBase() : '';
+
+    if (fallbackBase) {
+      urls.push(fallbackBase.replace(/\/+$/, '') + normalizedEndpoint);
+    }
+
     const headers = {
       'Accept': 'application/json',
       ...options.headers,
@@ -62,32 +86,46 @@
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), 10000); // 10s timeout
 
-    let res;
-    try {
-      res = await fetch(url, { ...options, headers, signal: controller.signal });
-    } catch (e) {
-      if (e.name === 'AbortError') throw new Error('Request timed out');
-      throw e;
-    } finally {
-      clearTimeout(id);
-    }
+    let lastError;
 
-    const rawText = await res.text();
-    let data = {};
-    try {
-      data = JSON.parse(rawText.replace(/^\s*\uFEFF/, '')); // strip BOM
-    } catch (_) {
-      data = {};
-    }
+    for (const url of urls) {
+      let res;
+      try {
+        res = await fetch(url, { ...options, headers, signal: controller.signal });
+      } catch (e) {
+        if (e.name === 'AbortError') throw new Error('Request timed out');
+        lastError = e;
+        continue;
+      }
 
-    if (!res.ok) {
+      const rawText = await res.text();
+      let data = {};
+      try {
+        data = JSON.parse(rawText.replace(/^\s*\uFEFF/, '')); // strip BOM
+      } catch (_) {
+        data = {};
+      }
+
+      if (res.ok) {
+        clearTimeout(id);
+        return data;
+      }
+
       const err = new Error(data.message || `Request failed (${res.status})`);
       err.status = res.status;
       err.data = data;
       err.url = url;
-      throw err;
+      lastError = err;
+
+      const shouldTryFallback = res.status === 404 && urls.length > 1 && url === urls[0];
+      if (!shouldTryFallback) {
+        clearTimeout(id);
+        throw err;
+      }
     }
-    return data;
+
+    clearTimeout(id);
+    throw lastError || new Error('Request failed');
   }
 
   async function getJsonProgramsFallback() {
