@@ -1476,6 +1476,25 @@
   });
 </script>
 
+<!-- GLOBAL CONFIRMATION MODAL -->
+<div class="modal-overlay" id="confirmModal" style="display:none; align-items:center; justify-content:center; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.6); backdrop-filter:blur(4px); z-index:9999;">
+  <div class="modal-box" style="width:100%; max-width:400px; background:white; border-radius:16px; padding:24px; box-shadow:0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); animation:modalSlideIn 0.3s ease-out;">
+    <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:16px;">
+      <div id="confirmModalIcon" style="width:56px; height:56px; background:#fee2e2; color:#ef4444; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+        <i id="confirmModalIconInner" data-iconsax="trash" style="width:28px; height:28px;"></i>
+      </div>
+      <div>
+        <h3 id="confirmModalTitle" style="font-size:18px; font-weight:700; color:var(--navy); margin-bottom:8px;">Confirm Action</h3>
+        <p id="confirmModalMessage" style="font-size:14px; color:var(--text-3); line-height:1.5;"></p>
+      </div>
+      <div style="display:flex; width:100%; gap:12px; margin-top:8px;">
+        <button type="button" class="btn-ghost" id="confirmModalCancelBtn" style="flex:1; padding:12px; border:1px solid var(--navy-pale); border-radius:10px; font-weight:600;">Cancel</button>
+        <button type="button" id="confirmModalConfirmBtn" style="flex:1; padding:12px; background:#ef4444; color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer;">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
 

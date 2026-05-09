@@ -12,6 +12,57 @@ window.addEventListener('load', () => {
 });
 setTimeout(hideSiteLoader, 4500); // fallback
 
+function showConfirmModal(options) {
+  const { title, message, onConfirm, confirmText = "Confirm", cancelText = "Cancel", icon = "trash", danger = true } = options;
+  const modal = document.getElementById('confirmModal');
+  const titleEl = document.getElementById('confirmModalTitle');
+  const msgEl = document.getElementById('confirmModalMessage');
+  const confirmBtn = document.getElementById('confirmModalConfirmBtn');
+  const cancelBtn = document.getElementById('confirmModalCancelBtn');
+  const iconWrap = document.getElementById('confirmModalIcon');
+  const iconInner = document.getElementById('confirmModalIconInner');
+
+  if (!modal) {
+    if (confirm(message.replace(/<[^>]*>?/gm, ''))) onConfirm();
+    return;
+  }
+
+  titleEl.textContent = title;
+  msgEl.innerHTML = message;
+  confirmBtn.textContent = confirmText;
+  cancelBtn.textContent = cancelText;
+  
+  if (danger) {
+    confirmBtn.style.background = "#ef4444";
+    iconWrap.style.background = "#fee2e2";
+    iconWrap.style.color = "#ef4444";
+  } else {
+    confirmBtn.style.background = "var(--navy)";
+    iconWrap.style.background = "var(--navy-pale)";
+    iconWrap.style.color = "var(--navy)";
+  }
+
+  if (iconInner) {
+    iconInner.setAttribute('data-iconsax', icon);
+    if (typeof iconsax !== 'undefined') iconsax.createIcons();
+  }
+
+  modal.style.display = 'flex';
+
+  const cleanup = () => {
+    modal.style.display = 'none';
+    confirmBtn.onclick = null;
+    cancelBtn.onclick = null;
+  };
+
+  confirmBtn.onclick = () => {
+    cleanup();
+    onConfirm();
+  };
+
+  cancelBtn.onclick = cleanup;
+}
+
 /* ─── DATA (from API only) ─── */
 let API_PROGRAMS = [];
 const programEnabled = {};
@@ -644,10 +695,15 @@ function changeStatusById(appId, newStatus) {
 }
 
 function deleteApplicationById(appId, ref) {
-  if (!confirm(`Are you sure you want to delete application ${ref}? This will permanently remove the record and restore the program slot.`)) {
-    return;
-  }
+  showConfirmModal({
+    title: "Delete Application?",
+    message: `Are you sure you want to delete application <strong>${ref}</strong>? This will permanently remove the record and restore the program slot.`,
+    confirmText: "Delete",
+    onConfirm: () => performDelete(appId, ref)
+  });
+}
 
+function performDelete(appId, ref) {
   if (typeof AdmissionAPI === 'undefined' || !AdmissionAPI.getToken()) {
     showToast('Please log in to delete applications.');
     return;
@@ -1567,7 +1623,7 @@ let announcementPopupImageRemoved = false;
 let facultyStaffImageFile = null;
 let facultyStaffExistingImage = "";
 let facultyStaffImageRemoved = false;
-const CONTENT_TABLE_PAGE_SIZE = 5;
+const CONTENT_TABLE_PAGE_SIZE = 10;
 const CONTENT_TABLE_PAGES = {
   announcements: 1,
   newsEvents: 1,
@@ -1998,26 +2054,31 @@ async function saveAnnouncement() {
 }
 
 async function deleteAnnouncement(id) {
-  if (!confirm("Are you sure you want to delete this announcement?")) return;
+  showConfirmModal({
+    title: "Delete Announcement?",
+    message: "Are you sure you want to delete this announcement? This action cannot be undone.",
+    confirmText: "Delete",
+    onConfirm: async () => {
+      try {
+        const res = await apiFetch(`/api/announcements/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Authorization": "Bearer " + sessionStorage.getItem("_at"),
+            "Accept": "application/json"
+          }
+        });
 
-  try {
-    const res = await apiFetch(`/api/announcements/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Authorization": "Bearer " + sessionStorage.getItem("_at"),
-        "Accept": "application/json"
+        if (res.ok) {
+          showToast("Announcement deleted");
+          reloadContentSoon(loadAnnouncements);
+        } else {
+          throw new Error("Failed to delete");
+        }
+      } catch (err) {
+        showToast(err.message);
       }
-    });
-
-    if (res.ok) {
-      showToast("Announcement deleted");
-      reloadContentSoon(loadAnnouncements);
-    } else {
-      throw new Error("Failed to delete");
     }
-  } catch (err) {
-    showToast(err.message);
-  }
+  });
 }
 
 async function loadNewsEvents() {
@@ -2458,26 +2519,31 @@ async function saveNewsEvent() {
 }
 
 async function deleteNewsEvent(id) {
-  if (!confirm("Are you sure you want to delete this item?")) return;
+  showConfirmModal({
+    title: "Delete News/Event?",
+    message: "Are you sure you want to delete this item? This action will permanently remove it from the website.",
+    confirmText: "Delete",
+    onConfirm: async () => {
+      try {
+        const res = await apiFetch(`/api/admin/news-events/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Authorization": "Bearer " + sessionStorage.getItem("_at"),
+            "Accept": "application/json"
+          }
+        });
 
-  try {
-    const res = await apiFetch(`/api/admin/news-events/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Authorization": "Bearer " + sessionStorage.getItem("_at"),
-        "Accept": "application/json"
+        if (res.ok) {
+          showToast("News/Event deleted");
+          reloadContentSoon(loadNewsEvents);
+        } else {
+          throw new Error("Failed to delete");
+        }
+      } catch (err) {
+        showToast(err.message);
       }
-    });
-
-    if (res.ok) {
-      showToast("News/Event deleted");
-      reloadContentSoon(loadNewsEvents);
-    } else {
-      throw new Error("Failed to delete");
     }
-  } catch (err) {
-    showToast(err.message);
-  }
+  });
 }
 
 async function loadTestimonials() {
@@ -2768,26 +2834,31 @@ async function saveTestimonial() {
 }
 
 async function deleteTestimonial(id) {
-  if (!confirm("Are you sure you want to delete this testimonial?")) return;
+  showConfirmModal({
+    title: "Delete Testimonial?",
+    message: "Are you sure you want to delete this testimonial? It will no longer be visible on the homepage.",
+    confirmText: "Delete",
+    onConfirm: async () => {
+      try {
+        const res = await apiFetch(`/api/testimonials/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Authorization": "Bearer " + sessionStorage.getItem("_at"),
+            "Accept": "application/json"
+          }
+        });
 
-  try {
-    const res = await apiFetch(`/api/testimonials/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Authorization": "Bearer " + sessionStorage.getItem("_at"),
-        "Accept": "application/json"
+        if (res.ok) {
+          showToast("Testimonial deleted");
+          reloadContentSoon(loadTestimonials);
+        } else {
+          throw new Error("Failed to delete testimonial");
+        }
+      } catch (err) {
+        showToast(err.message);
       }
-    });
-
-    if (res.ok) {
-      showToast("Testimonial deleted");
-      reloadContentSoon(loadTestimonials);
-    } else {
-      throw new Error("Failed to delete testimonial");
     }
-  } catch (err) {
-    showToast(err.message);
-  }
+  });
 }
 
 async function loadFacultyStaff() {
@@ -3077,26 +3148,31 @@ async function saveFacultyStaff() {
 }
 
 async function deleteFacultyStaff(id) {
-  if (!confirm("Are you sure you want to delete this faculty/staff member?")) return;
+  showConfirmModal({
+    title: "Delete Faculty Member?",
+    message: "Are you sure you want to remove this faculty member? This will update the About page immediately.",
+    confirmText: "Delete",
+    onConfirm: async () => {
+      try {
+        const res = await apiFetch(`/api/faculty-staff/${encodeURIComponent(id)}`, {
+          method: "DELETE",
+          headers: {
+            "Authorization": "Bearer " + sessionStorage.getItem("_at"),
+            "Accept": "application/json"
+          }
+        });
 
-  try {
-    const res = await apiFetch(`/api/faculty-staff/${encodeURIComponent(id)}`, {
-      method: "DELETE",
-      headers: {
-        "Authorization": "Bearer " + sessionStorage.getItem("_at"),
-        "Accept": "application/json"
+        if (res.ok) {
+          showToast("Faculty member deleted");
+          reloadContentSoon(loadFacultyStaff);
+        } else {
+          throw new Error("Failed to delete faculty member");
+        }
+      } catch (err) {
+        showToast(err.message);
       }
-    });
-
-    if (res.ok) {
-      showToast("Faculty/staff member deleted");
-      reloadContentSoon(loadFacultyStaff);
-    } else {
-      throw new Error("Failed to delete faculty/staff member");
     }
-  } catch (err) {
-    showToast(err.message);
-  }
+  });
 }
 
 async function toggleProgram(id, name, btn) {
@@ -3333,22 +3409,31 @@ function onSchedulingStatusChange(sel) {
 
 function removeSchedulingRow(btn) {
   const tr = btn.closest('tr');
-  const appId = tr.querySelector('[name="app_id"]')?.value;
-  const refNum = tr.querySelector('[name="ref_num"]')?.value;
+  const studentName = tr.querySelector('[name="student_name"]')?.value || "this student";
 
-  if (appId) {
-    currentSchedulingData = currentSchedulingData.filter(ci => String(ci.application_id) !== String(appId));
-  } else if (refNum) {
-    currentSchedulingData = currentSchedulingData.filter(ci => ci.reference_number !== refNum);
-  }
+  showConfirmModal({
+    title: "Remove from Schedule?",
+    message: `Are you sure you want to remove <strong>${studentName}</strong> from this session?`,
+    confirmText: "Remove",
+    onConfirm: () => {
+      const appId = tr.querySelector('[name="app_id"]')?.value;
+      const refNum = tr.querySelector('[name="ref_num"]')?.value;
 
-  tr.remove();
+      if (appId) {
+        currentSchedulingData = currentSchedulingData.filter(ci => String(ci.application_id) !== String(appId));
+      } else if (refNum) {
+        currentSchedulingData = currentSchedulingData.filter(ci => ci.reference_number !== refNum);
+      }
 
-  // If table is now empty, show empty state message
-  const tbody = document.getElementById('studentSchedulingTableBody');
-  if (tbody && tbody.querySelectorAll('tr').length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" class="empty-state" id="noStudentsMsg">No students found. Click "Add Student" or "Select Applicants" to start scheduling.</td></tr>`;
-  }
+      tr.remove();
+
+      // If table is now empty, show empty state message
+      const tbody = document.getElementById('studentSchedulingTableBody');
+      if (tbody && tbody.querySelectorAll('tr').length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="empty-state" id="noStudentsMsg">No students found. Click "Add Student" or "Select Applicants" to start scheduling.</td></tr>`;
+      }
+    }
+  });
 }
 
 function showAddStudentRow() {

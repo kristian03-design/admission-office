@@ -34,14 +34,13 @@ class ProgramController extends Controller
 
         $program = Program::findOrFail($id);
         $slotsLeft = (int) $validated['slots_left'];
-        $program->slots_left = $slotsLeft;
-        
+        $updateData = ['slots_left' => $slotsLeft];
         // Auto-deactivate if slots reach 0
         if ($slotsLeft <= 0) {
-            $program->update(['is_active' => false]);
-        } else {
-            $program->save();
+            $updateData['is_active'] = \Illuminate\Support\Facades\DB::raw('false');
         }
+
+        $program->update($updateData);
         Cache::forget('welcome_page_data');
 
         return response()->json([
@@ -66,7 +65,10 @@ class ProgramController extends Controller
             ], 422);
         }
 
-        $program->update(['is_active' => (bool)$isActive]);
+        // Use DB::raw to force literal true/false for PostgreSQL compatibility
+        $program->update([
+            'is_active' => \Illuminate\Support\Facades\DB::raw($isActive ? 'true' : 'false')
+        ]);
         Cache::forget('welcome_page_data');
 
         return response()->json([
