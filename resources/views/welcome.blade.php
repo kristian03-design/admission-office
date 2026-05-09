@@ -11,8 +11,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
 
-  <!-- ✦ Lucide Icons ✦ -->
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <!-- ✦ Iconsax Icons ✦ -->
+  @include('partials.iconsax')
 
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=4" />
 
@@ -685,7 +685,7 @@
           </div>
           <p class="text-sm footer-text leading-relaxed">Empowering Bulacan's future leaders through accessible, quality higher education since 2008.</p>
           <div class="social-links mt-5 flex gap-3">
-            <!-- Facebook brand icon — not available in Lucide; inline SVG only -->
+            <!-- Facebook brand icon — kept as a brand glyph; inline SVG only -->
             <a href="https://www.facebook.com/BTECHAdmissionsOfficial" class="social-btn" aria-label="Facebook">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -765,7 +765,7 @@
   </button>
 
 
-  <!-- Initialize Lucide after DOM + your JS have both run -->
+  <!-- Initialize Iconsax after DOM + your JS have both run -->
   <!-- ─── ANNOUNCEMENT POPUP ─── -->
   @php
     $popupAnn = $popupAnn ?? $announcements->firstWhere('is_popup', true);

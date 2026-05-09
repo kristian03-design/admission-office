@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use App\Mail\ApplicationSubmitted;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 
 class ApplicationController extends Controller
@@ -76,7 +77,8 @@ class ApplicationController extends Controller
         ]);
 
         $type = $request->document_type;
-        $path = $request->file('file')->store('applications/'.$id, 'public');
+        $path = $request->file('file')->store('applications/'.$id, 'supabase');
+        $url = Storage::disk('supabase')->url($path);
 
         // Map document_type to column name
         $columnMap = [
@@ -90,7 +92,7 @@ class ApplicationController extends Controller
         ];
 
         if (array_key_exists($type, $columnMap)) {
-            $application->update([$columnMap[$type] => $path]);
+            $application->update([$columnMap[$type] => $url]);
         }
 
         return response()->json(['data' => $application]);

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,4 +31,32 @@ class Announcement extends Model
         'starts_at' => 'datetime',
         'ends_at' => 'datetime',
     ];
+
+    protected function popupImage(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $this->publicImageUrl($value),
+        );
+    }
+
+    private function publicImageUrl($url): ?string
+    {
+        if (!is_string($url) || $url === '') {
+            return null;
+        }
+
+        $bucket = env('SUPABASE_S3_BUCKET', 'file_image');
+        $publicBase = rtrim(env('SUPABASE_S3_URL', ''), '/');
+
+        if ($publicBase !== '') {
+            $s3Prefix = '/storage/v1/s3/' . $bucket . '/';
+            if (str_contains($url, $s3Prefix)) {
+                $key = substr($url, strpos($url, $s3Prefix) + strlen($s3Prefix));
+
+                return $publicBase . '/' . ltrim($key, '/');
+            }
+        }
+
+        return $url;
+    }
 }

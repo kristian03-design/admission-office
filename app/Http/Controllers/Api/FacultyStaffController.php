@@ -116,6 +116,14 @@ class FacultyStaffController extends Controller
 
         usort($decoded, fn ($a, $b) => ($a['order'] ?? 0) <=> ($b['order'] ?? 0));
 
+        $decoded = array_map(function ($item) {
+            if (is_array($item)) {
+                $item['image'] = $this->publicStorageUrl($item['image'] ?? null) ?? '';
+            }
+
+            return $item;
+        }, $decoded);
+
         return array_values($decoded);
     }
 
@@ -162,5 +170,26 @@ class FacultyStaffController extends Controller
         if (Storage::disk('public')->exists($cleanPath)) {
             Storage::disk('public')->delete($cleanPath);
         }
+    }
+
+    private function publicStorageUrl(?string $url): ?string
+    {
+        if (!$url) {
+            return null;
+        }
+
+        $bucket = env('SUPABASE_S3_BUCKET', 'file_image');
+        $publicBase = rtrim(env('SUPABASE_S3_URL', ''), '/');
+
+        if ($publicBase !== '') {
+            $s3Prefix = '/storage/v1/s3/' . $bucket . '/';
+            if (str_contains($url, $s3Prefix)) {
+                $key = substr($url, strpos($url, $s3Prefix) + strlen($s3Prefix));
+
+                return $publicBase . '/' . ltrim($key, '/');
+            }
+        }
+
+        return $url;
     }
 }

@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  @include('partials.iconsax')
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=4" />
 
   <style>
@@ -158,7 +158,7 @@
   <!-- ───────────────────────────────────── NEWS EVENT DETAILS ───────────────────────────────────── --> 
   <main>
   @php
-    $gallery = array_map(fn($url) => asset(ltrim($url, '/')), $gallery);
+    $gallery = array_map(fn($url) => str_starts_with($url, 'http') ? $url : asset(ltrim(str_replace('/storage/', 'storage/', $url), '/')), $gallery);
   @endphp
   <section id="gallery-section" class="pt-32 pb-20" style="background: var(--gray-50);" data-gallery="{{ json_encode(array_values($gallery)) }}">
     <div style="max-width: 860px; margin: 0 auto; padding: 0 2rem;">
@@ -259,7 +259,7 @@
           </div>
           <p class="text-sm footer-text leading-relaxed">Empowering Bulacan's future leaders through accessible, quality higher education since 2008.</p>
           <div class="social-links mt-5 flex gap-3">
-            <!-- Facebook brand icon — not available in Lucide; inline SVG only -->
+            <!-- Facebook brand icon — kept as a brand glyph; inline SVG only -->
             <a href="https://www.facebook.com/BTECHAdmissionsOfficial" class="social-btn" aria-label="Facebook">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>

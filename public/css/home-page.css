@@ -1939,8 +1939,8 @@ body.site-loader-lock {
   transition: width .1s linear;
 }
 
-/* ─── LUCIDE ICON SIZING ─── */
-i[data-lucide] {
+/* ─── ICONSAX ICON SIZING ─── */
+.iconsax-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1948,46 +1948,46 @@ i[data-lucide] {
   vertical-align: middle;
 }
 
-.feature-icon-wrap i[data-lucide] {
+.feature-icon-wrap .iconsax-icon {
   width: 24px;
   height: 24px;
 }
 
-.contact-icon-wrap i[data-lucide] {
+.contact-icon-wrap .iconsax-icon {
   width: 20px;
   height: 20px;
 }
 
-.step-highlight i[data-lucide] {
+.step-highlight .iconsax-icon {
   width: 18px;
   height: 18px;
   margin-top: 1px;
 }
 
-.meta-item i[data-lucide] {
+.meta-item .iconsax-icon {
   width: 14px;
   height: 14px;
 }
 
-.program-cta i[data-lucide],
-.btn-hero-primary i[data-lucide],
-.btn-hero-secondary i[data-lucide],
-.btn-cta-primary i[data-lucide] {
+.program-cta .iconsax-icon,
+.btn-hero-primary .iconsax-icon,
+.btn-hero-secondary .iconsax-icon,
+.btn-cta-primary .iconsax-icon {
   width: 16px;
   height: 16px;
 }
 
-.carousel-btn i[data-lucide] {
+.carousel-btn .iconsax-icon {
   width: 20px;
   height: 20px;
 }
 
-.back-to-top i[data-lucide] {
+.back-to-top .iconsax-icon {
   width: 20px;
   height: 20px;
 }
 
-#menu-toggle i[data-lucide] {
+#menu-toggle .iconsax-icon {
   width: 20px;
   height: 20px;
 }
@@ -2025,17 +2025,18 @@ i[data-lucide] {
   }
 }
 
-.btn-spinner i[data-lucide] {
+.btn-spinner .iconsax-icon {
   width: 20px;
   height: 20px;
 }
 
-.select-arrow i[data-lucide] {
+.select-arrow.iconsax-icon,
+.select-arrow .iconsax-icon {
   width: 16px;
   height: 16px;
 }
 
-.success-icon i[data-lucide] {
+.success-icon .iconsax-icon {
   width: 28px;
   height: 28px;
   color: #fff;

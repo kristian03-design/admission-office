@@ -24,7 +24,7 @@
                     <!-- Status Notification Bar -->
                     <tr>
                         <td style="padding: 12px 40px; background-color: #fdf6e3; border-bottom: 1px solid #f1e4c8; text-align: center;">
-                            <span style="color: #856404; font-size: 12px; font-weight: 700; text-transform: uppercase;">🔔 New Website Inquiry Received</span>
+                            <span style="color: #856404; font-size: 12px; font-weight: 700; text-transform: uppercase;">ðŸ”” New Website Inquiry Received</span>
                         </td>
                     </tr>
 

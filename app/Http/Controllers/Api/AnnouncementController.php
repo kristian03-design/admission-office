@@ -132,10 +132,17 @@ class AnnouncementController extends Controller
         // Handle Supabase full URLs
         if (str_starts_with($path, 'https://')) {
             $bucket = env('SUPABASE_S3_BUCKET', 'file_image');
-            $prefix = '/storage/v1/object/public/' . $bucket . '/';
-            if (str_contains($path, $prefix)) {
-                $key = substr($path, strpos($path, $prefix) + strlen($prefix));
-                Storage::disk('supabase')->delete($key);
+            $prefixes = [
+                '/storage/v1/object/public/' . $bucket . '/',
+                '/storage/v1/s3/' . $bucket . '/',
+            ];
+
+            foreach ($prefixes as $prefix) {
+                if (str_contains($path, $prefix)) {
+                    $key = substr($path, strpos($path, $prefix) + strlen($prefix));
+                    Storage::disk('supabase')->delete($key);
+                    break;
+                }
             }
             return;
         }

@@ -230,6 +230,13 @@ function escapeHtml(str) {
 function storageUrl(path) {
   const value = String(path || '').trim();
   if (!value) return '';
+  const supabaseS3Match = value.match(/^(https?:\/\/[^/]+)?\/storage\/v1\/s3\/([^/]+)\/(.+)$/i);
+  if (supabaseS3Match) {
+    const origin = supabaseS3Match[1] || '';
+    const bucket = supabaseS3Match[2];
+    const key = supabaseS3Match[3].replace(/^\/+/, '');
+    return `${origin}/storage/v1/object/public/${bucket}/${key}`;
+  }
   if (/^(https?:|data:|blob:)/i.test(value)) return value;
 
   const clean = value.replace(/^\/+/, '').replace(/^storage\//, '');
@@ -1882,7 +1889,7 @@ async function saveAnnouncement() {
   const btn = document.getElementById("saveAnnouncementBtn");
   const originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i class="lucide-loader animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
+  btn.innerHTML = '<i data-lucide="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
 
   try {
     const url = id ? `/api/announcements/${id}` : "/api/announcements";
@@ -2335,7 +2342,7 @@ async function saveNewsEvent() {
   const btn = document.getElementById("saveNewsEventBtn");
   const originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i class="lucide-loader animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
+  btn.innerHTML = '<i data-lucide="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
 
   try {
     const url = id ? `/api/admin/news-events/${id}` : "/api/admin/news-events";
@@ -2653,7 +2660,7 @@ async function saveTestimonial() {
   const btn = document.getElementById("saveTestimonialBtn");
   const originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i class="lucide-loader animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
+  btn.innerHTML = '<i data-lucide="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
 
   try {
     const payload = new FormData();
@@ -2961,7 +2968,7 @@ async function saveFacultyStaff() {
   const btn = document.getElementById("saveFacultyStaffBtn");
   const originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i class="lucide-loader animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
+  btn.innerHTML = '<i data-lucide="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
 
   try {
     const payload = new FormData();
