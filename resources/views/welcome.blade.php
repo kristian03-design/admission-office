@@ -39,7 +39,11 @@
         <a href="{{ route('home') }}#contact" class="nav-link text-sm font-medium tracking-wide">Contact Us</a>
       </nav>
       <div class="flex items-center gap-3">
-        <a href="{{ route('apply') }}" class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full transition-all">Inquire Now</a>
+        @if(($settings['accept_applications'] ?? '1') === '0')
+          <span class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full opacity-60 cursor-not-allowed">Portal Closed</span>
+        @else
+          <a href="{{ route('apply') }}" class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full transition-all">Inquire Now</a>
+        @endif
         <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu"><i data-iconsax="menu"></i></button>
       </div>
     </div>
@@ -93,10 +97,17 @@
             </p>
 
             <div class="flex flex-wrap gap-4 mt-10" data-animate="fade-up" data-delay="300">
-              <a href="{{ route('apply') }}" class="btn-hero-primary group">
-                <span>{{ $settings['cta_text'] ?? 'Start Your Application' }}</span>
-                <i data-iconsax="arrow-right"></i>
-              </a>
+              @if(($settings['accept_applications'] ?? '1') === '0')
+                <button class="btn-hero-primary opacity-60 cursor-not-allowed" disabled>
+                  <span>Portal Closed</span>
+                  <i data-iconsax="lock" style="opacity:0.5"></i>
+                </button>
+              @else
+                <a href="{{ route('apply') }}" class="btn-hero-primary group">
+                  <span>{{ $settings['cta_text'] ?? 'Start Your Application' }}</span>
+                  <i data-iconsax="arrow-right"></i>
+                </a>
+              @endif
               <a href="#process" class="btn-hero-secondary group">
                 <span>How It Works</span>
                 <i data-iconsax="chevron-down" style="opacity:.6"></i>

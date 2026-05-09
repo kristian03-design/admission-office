@@ -353,7 +353,7 @@ function renderKPIs() {
   document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
     <div class="kpi-card">
       <div class="kpi-icon ${k.cls}">
-        <i data-iconsax="${k.icon}" data-iconsax-style="bulk"></i>
+        <i data-iconsax="${k.icon}"></i>
       </div>
       <div class="kpi-body">
         <div class="kpi-value">${k.value}</div>
@@ -428,7 +428,11 @@ function renderRecentList() {
   });
 }
 
+
+
 function initCharts() {
+  if (trendChart && typeChart && programChart) return;
+
   Chart.defaults.font.family = "'DM Sans', sans-serif";
   Chart.defaults.color = '#64748b';
   const NAVY2 = '#254d82', GOLD = '#c9933a', GREEN = '#16a34a', BLUE = '#2563eb', NAVY = '#1b3557';
@@ -1400,7 +1404,8 @@ function renderProgramsTable() {
         <div style="display:flex;align-items:center;gap:6px;min-width:96px">
           <input type="number" min="0" max="3000" step="1" class="fi program-slot-input"
             data-program-id="${p.id}" data-saved-value="${savedSlotsLeft}" value="${slotsLeft}"
-            oninput="markProgramSlotChanged(this)" style="padding:5px 8px;font-size:12px;width:86px;height:30px;${dirtyStyle}">
+            oninput="markProgramSlotChanged(this)" onchange="markProgramSlotChanged(this)"
+            style="padding:5px 8px;font-size:12px;width:86px;height:30px;${dirtyStyle}">
         </div>
       </td>
       <td>
@@ -1440,8 +1445,13 @@ function updateProgramSaveAllState() {
   const count = Object.keys(pendingProgramSlots).length;
   btn.disabled = count === 0;
   btn.classList.toggle('has-pending-changes', count > 0);
-  btn.innerHTML = `<i data-iconsax="save"></i> ${count ? `Save All Changes (${count})` : 'Save All Changes'}`;
-  if (typeof iconsax !== 'undefined') iconsax.createIcons();
+  
+  // Use a simple text-based icon update to avoid expensive createIcons() on every keystroke
+  const iconHtml = count ? '<span class="pulse-dot"></span>' : '<i data-iconsax="save"></i>';
+  btn.innerHTML = `${iconHtml} ${count ? `Save All Changes (${count})` : 'Save All Changes'}`;
+  
+  // Only create icons if we are showing the default save icon
+  if (!count && typeof iconsax !== 'undefined') iconsax.createIcons();
 }
 
 async function saveAllProgramSlotsLeft() {
@@ -4255,6 +4265,10 @@ async function refreshData(isInitial = false) {
       if (currentPage === 'dashboard') initDashboard();
       else showPage(currentPage);
     } else {
+      // Clear charts to force re-init on next show or immediate update if on dashboard
+      if (trendChart) { trendChart.destroy(); trendChart = null; }
+      if (typeChart) { typeChart.destroy(); typeChart = null; }
+      if (programChart) { programChart.destroy(); programChart = null; }
       rerenderCurrentPageAfterRefresh();
     }
   } catch (err) {
