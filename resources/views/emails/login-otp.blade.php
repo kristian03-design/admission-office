@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your OTP Code â€” BTECH Admin</title>
+  <title>Your OTP Code — BTECH Admin</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -210,7 +210,7 @@
       </div>
       <div>
         <div class="school">BTECH Admin Portal</div>
-        <div class="dept">Baliwag Polytechnic College â€” Admissions System</div>
+        <div class="dept">Baliwag Polytechnic College — Admissions System</div>
       </div>
     </div>
   </div>
@@ -218,7 +218,7 @@
   <!-- SECURITY STRIP -->
   <div class="security-strip">
     <span class="mail-icon">&#9670;</span>
-    <span>Secure Authentication â€” <strong>One-Time Password</strong></span>
+    <span>Secure Authentication — <strong>One-Time Password</strong></span>
   </div>
 
   <!-- BODY -->
@@ -240,15 +240,15 @@
 
     <div class="warning-box">
       <span class="mail-icon">!</span>
-      <p><strong>Didn't request this?</strong> Ignore this email â€” your account remains secure. If this continues, consider changing your password immediately.</p>
+      <p><strong>Didn't request this?</strong> Ignore this email — your account remains secure. If this continues, consider changing your password immediately.</p>
     </div>
   </div>
 
   <!-- FOOTER -->
   <div class="footer">
     <div class="footer-left">
-      Â© {{ date('Y') }} Baliwag Polytechnic College<br>
-      Baliwag, Bulacan Â· Philippines
+      © {{ date('Y') }} Baliwag Polytechnic College<br>
+      Baliwag, Bulacan · Philippines
     </div>
     <div class="footer-right">Automated message.<br>Do not reply.</div>
   </div>

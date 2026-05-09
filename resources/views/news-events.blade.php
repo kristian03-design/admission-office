@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>News & Events â€” BTECH Admission Office</title>
+  <title>News & Events — BTECH Admission Office</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
@@ -15,7 +15,7 @@
 <body>
   @include('partials.site-loader')
   
-  <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+  <!-- ───────────────────────────────────── NAV ───────────────────────────────────── -->
 <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
@@ -117,7 +117,7 @@
     </section>
   </main>
 
-  <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ FOOTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+  <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
   <footer class="footer-section pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-8">
       <div class="grid md:grid-cols-4 gap-10 pb-12 border-b footer-border">
@@ -173,7 +173,7 @@
       </div>
 
       <div class="footer-bottom flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
-        <p class="text-sm footer-text">Â© 2026 Baliwag Polytechnic College. All rights reserved.</p>
+        <p class="text-sm footer-text">© 2026 Baliwag Polytechnic College. All rights reserved.</p>
             <div class="flex gap-4 mt-8">
               @if(isset($settings['facebook_link']))
                 <a href="{{ $settings['facebook_link'] }}" class="footer-social-link" aria-label="Facebook"><i data-iconsax="facebook"></i></a>

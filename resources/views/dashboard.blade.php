@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BTECH â€” Admissions Admin Dashboard</title>
+  <title>BTECH — Admissions Admin Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
@@ -76,10 +76,10 @@
 
   <div class="sidebar-footer">
     <div class="admin-profile">
-      <div class="admin-avatar" id="sidebarUserInitials">â€”</div>
+      <div class="admin-avatar" id="sidebarUserInitials">—</div>
       <div style="flex:1;min-width:0">
-        <span class="admin-name" id="sidebarUserName">â€”</span>
-        <span class="admin-role" id="sidebarUserRole">â€”</span>
+        <span class="admin-name" id="sidebarUserName">—</span>
+        <span class="admin-role" id="sidebarUserRole">—</span>
       </div>
       <button class="admin-logout" id="logoutBtn" title="Sign out">
         <i data-iconsax="log-out"></i>
@@ -108,15 +108,15 @@
     <div class="topbar-right">
       <div class="topbar-school-year">
         <i data-iconsax="calendar-range" style="width:14px;height:14px"></i>
-        <span id="topbarSY">S.Y. {{ date('Y') }}â€“{{ date('Y') + 1 }}</span>
+        <span id="topbarSY">S.Y. {{ date('Y') }}–{{ date('Y') + 1 }}</span>
       </div>
       <button class="topbar-btn" id="notifBtn">
         <i data-iconsax="bell"></i>
         <span class="notif-dot" id="notifDot"></span>
       </button>
       <div class="topbar-admin">
-        <div class="topbar-avatar" id="topbarUserInitials">â€”</div>
-        <span class="topbar-admin-name" id="topbarUserName">â€”</span>
+        <div class="topbar-avatar" id="topbarUserInitials">—</div>
+        <span class="topbar-admin-name" id="topbarUserName">—</span>
       </div>
     </div>
   </header>
@@ -142,7 +142,7 @@
     </div>
   </div>
 
-  <!-- â”€â”€â”€ DASHBOARD â”€â”€â”€ -->
+  <!-- ─── DASHBOARD ─── -->
   <div class="page-content active" id="page-dashboard">
     <div class="page-header">
       <div>
@@ -164,7 +164,7 @@
         <div class="chart-card-header">
           <div>
             <div class="chart-title">Application Trend</div>
-            <div class="chart-sub">Monthly submissions â€” <span id="chartSY">{{ date('Y') }}â€“{{ date('Y') + 1 }}</span></div>
+            <div class="chart-sub">Monthly submissions — <span id="chartSY">{{ date('Y') }}–{{ date('Y') + 1 }}</span></div>
           </div>
         </div>
         <div class="chart-body"><canvas id="trendChart"></canvas></div>
@@ -206,7 +206,7 @@
     </div>
   </div>
 
-  <!-- â”€â”€â”€ APPLICATIONS â”€â”€â”€ -->
+  <!-- ─── APPLICATIONS ─── -->
   <div class="page-content" id="page-applications">
     <div class="page-header">
       <div>
@@ -226,7 +226,7 @@
         <span class="search-icon">
           <i data-iconsax="search"></i>
         </span>
-        <input type="text" id="searchInput" placeholder="Search name or referenceâ€¦" class="search-input" />
+        <input type="text" id="searchInput" placeholder="Search name or reference”¦" class="search-input" />
       </div>
       <select class="filter-select" id="filterType">
         <option value="">All Types</option>
@@ -273,7 +273,7 @@
     </div>
   </div>
 
-  <!-- â”€â”€â”€ INTERVIEW SCHEDULE â”€â”€â”€ -->
+  <!-- ─── INTERVIEW SCHEDULE ─── -->
   <div class="page-content" id="page-interviews">
     <div class="page-header">
       <div>
@@ -310,7 +310,7 @@
     </div>
   </div>
 
-  <!-- â”€â”€â”€ STUDENT SCHEDULING (SUB-PAGE) â”€â”€â”€ -->
+  <!-- ─── STUDENT SCHEDULING (SUB-PAGE) ─── -->
   <div class="page-content" id="page-student-scheduling">
     <div class="page-header">
       <div style="flex:1;min-width:0;">
@@ -367,7 +367,7 @@
     </div>
   </div>
 
-  <!-- â”€â”€â”€ PROGRAMS â”€â”€â”€ -->
+  <!-- ─── PROGRAMS ─── -->
   <div class="page-content" id="page-programs">
     <div class="page-header">
       <div>
@@ -411,12 +411,12 @@
     </div>
   </div>
 
-  <!-- â”€â”€â”€ REPORTS â”€â”€â”€ -->
+  <!-- ─── REPORTS ─── -->
   <div class="page-content" id="page-reports">
     <div class="page-header">
       <div>
         <h1 class="page-title">Reports</h1>
-        <p class="page-sub">Analytics and summary exports for S.Y. 2025â€“2026</p>
+        <p class="page-sub">Analytics and summary exports for S.Y. 2025–2026</p>
       </div>
       <div class="page-actions">
         <button class="btn-outline" id="rptCsvBtn">
@@ -475,7 +475,7 @@
     </div>
   </div>
 
-  <!-- â”€â”€â”€ WEBSITE CONTENT â”€â”€â”€ -->
+  <!-- ─── WEBSITE CONTENT ─── -->
   <div class="page-content" id="page-website-content">
     <div class="page-header">
       <div>
@@ -529,7 +529,7 @@
         </div>
         <div class="settings-field">
           <label class="settings-label">School Year Label</label>
-          <input type="text" class="settings-input" id="settingSYLabel" placeholder="e.g. Admissions Open Â· S.Y. 2025â€“2026" />
+          <input type="text" class="settings-input" id="settingSYLabel" placeholder="e.g. Admissions Open · S.Y. 2025–2026" />
         </div>
         <div class="settings-field">
           <label class="settings-label">CTA Button Text</label>
@@ -694,7 +694,7 @@
     </div>
   </div>
 
-  <!-- â”€â”€â”€ SETTINGS â”€â”€â”€ -->
+  <!-- ─── SETTINGS ─── -->
   <div class="page-content" id="page-settings">
     <div class="page-header">
       <div>
@@ -712,16 +712,16 @@
         <div class="settings-field">
           <label class="settings-label">School Year</label>
           <select class="filter-select" id="settingSY" style="width:100%">
-            <option>S.Y. 2026â€“2027</option>
-            <option>S.Y. 2027â€“2028</option>
-            <option>S.Y. 2028â€“2029</option>
-            <option>S.Y. 2029â€“2030</option>
-            <option>S.Y. 2030â€“2031</option>
-            <option>S.Y. 2031â€“2032</option>
-            <option>S.Y. 2032â€“2033</option>
-            <option>S.Y. 2033â€“2034</option>
-            <option>S.Y. 2034â€“2035</option>
-            <option>S.Y. 2035â€“2036</option>
+            <option>S.Y. 2026–2027</option>
+            <option>S.Y. 2027–2028</option>
+            <option>S.Y. 2028–2029</option>
+            <option>S.Y. 2029–2030</option>
+            <option>S.Y. 2030–2031</option>
+            <option>S.Y. 2031–2032</option>
+            <option>S.Y. 2032–2033</option>
+            <option>S.Y. 2033–2034</option>
+            <option>S.Y. 2034–2035</option>
+            <option>S.Y. 2035–2036</option>
           </select>
         </div>
         <div class="settings-field">
@@ -730,7 +730,7 @@
         </div>
         <div class="settings-field">
           <label class="settings-label">Interview Schedule</label>
-          <input type="text" class="settings-input" id="settingInterviewSchedule" value="Monday â€“ Friday, 9:00 AM â€“ 3:00 PM" />
+          <input type="text" class="settings-input" id="settingInterviewSchedule" value="Monday – Friday, 9:00 AM – 3:00 PM" />
         </div>
         <div class="settings-field">
           <label class="settings-label">Total Applications (read-only)</label>
@@ -850,9 +850,9 @@
       </div>
       <div style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;background:rgba(255,255,255,0.07);border-radius:20px;padding:3px 10px 3px 6px;">
         <span style="width:6px;height:6px;border-radius:50%;background:#5DCAA5;display:inline-block;flex-shrink:0;"></span>
-        <span id="editCourseDept" style="font-size:12px;color:#9ec5e8;">â€”</span>
-        <span style="font-size:12px;color:rgba(156,197,232,0.4);">Â·</span>
-        <span id="editCourseCode" style="font-size:12px;color:#9ec5e8;">â€”</span>
+        <span id="editCourseDept" style="font-size:12px;color:#9ec5e8;">—</span>
+        <span style="font-size:12px;color:rgba(156,197,232,0.4);">·</span>
+        <span id="editCourseCode" style="font-size:12px;color:#9ec5e8;">—</span>
       </div>
     </div>
 
@@ -863,7 +863,7 @@
         <span style="font-size:15px;flex-shrink:0;">ðŸ•</span>
         <div>
           <p style="font-size:11px;color:#64748b;margin:0 0 1px;">Schedule preview</p>
-          <p style="font-size:13px;font-weight:600;color:#0f172a;margin:0;" id="editSchedulePreview">â€”</p>
+          <p style="font-size:13px;font-weight:600;color:#0f172a;margin:0;" id="editSchedulePreview">—</p>
         </div>
       </div>
 
@@ -1255,7 +1255,7 @@
   <div class="slideover-header">
     <div>
       <div class="slideover-title" id="slideoverTitle">Applicant Details</div>
-      <div class="slideover-ref" id="slideoverRef">â€”</div>
+      <div class="slideover-ref" id="slideoverRef">—</div>
     </div>
     <button class="slideover-close" id="slideoverClose">
       <i data-iconsax="x"></i>
@@ -1268,7 +1268,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  // â”€â”€ Logout Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Logout Modal ──────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', function () {
     const logoutBtn      = document.getElementById('logoutBtn');
     const logoutModal    = document.getElementById('logoutModal');
@@ -1301,15 +1301,15 @@
     if (typeof iconsax !== 'undefined') iconsax.createIcons();
   });
 
-  // â”€â”€ Edit Course Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Edit Course Modal ─────────────────────────────────────────────
   const editSelectedDays = new Set();
   const DAY_ORDER = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   function openEditCourseModal(courseId, courseName, dept, code, schedule, status) {
     document.getElementById('editCourseId').value          = courseId;
     document.getElementById('editCourseLabel').textContent = courseName;
-    document.getElementById('editCourseDept').textContent  = dept || 'â€”';
-    document.getElementById('editCourseCode').textContent  = code || 'â€”';
+    document.getElementById('editCourseDept').textContent  = dept || '—';
+    document.getElementById('editCourseCode').textContent  = code || '—';
 
     // Reset days
     editSelectedDays.clear();
@@ -1403,7 +1403,7 @@
 
   function updateEditPreview() {
     const days = DAY_ORDER.filter(d => editSelectedDays.has(d));
-    let dayStr = 'â€”';
+    let dayStr = '—';
     if (days.length === 1) {
       dayStr = days[0];
     } else if (days.length > 1) {
@@ -1413,16 +1413,16 @@
         if (DAY_ORDER.indexOf(days[i]) === DAY_ORDER.indexOf(prev) + 1) {
           prev = days[i];
         } else {
-          ranges.push(start === prev ? start : start + 'â€“' + prev);
+          ranges.push(start === prev ? start : start + '–' + prev);
           start = prev = days[i];
         }
       }
-      ranges.push(start === prev ? start : start + 'â€“' + prev);
+      ranges.push(start === prev ? start : start + '–' + prev);
       dayStr = ranges.join(', ');
     }
     const s = document.getElementById('editStartTime').value;
     const e = document.getElementById('editEndTime').value;
-    document.getElementById('editSchedulePreview').textContent = `${dayStr}, ${s} â€“ ${e}`;
+    document.getElementById('editSchedulePreview').textContent = `${dayStr}, ${s} – ${e}`;
   }
 
   function saveCourseSchedule() {
@@ -1449,7 +1449,7 @@
     });
   }
 
-  // â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Helpers ───────────────────────────────────────────────────────
   function setEditSelect(selectId, value) {
     const sel = document.getElementById(selectId);
     if (!sel || !value) return;

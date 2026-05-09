@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admissions â€” Baliwag Polytechnic College</title>
+  <title>Admissions — Baliwag Polytechnic College</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
@@ -11,7 +11,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
 
-  <!-- âœ¦ Iconsax Icons âœ¦ -->
+  <!-- ✦ Iconsax Icons ✦ -->
   @include('partials.iconsax')
 
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=5" />
@@ -20,7 +20,7 @@
 <body>
   @include('partials.site-loader')
 
-  <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+  <!-- ───────────────────────────────────── NAV ───────────────────────────────────── -->
   <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
@@ -52,7 +52,7 @@
   </header>
   <main>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ───────────────────────────────────── HERO ───────────────────────────────────── -->
     <section id="hero" class="hero-section relative min-h-screen flex items-center overflow-hidden">
       <div class="hero-bg-overlay absolute inset-0"></div>
       <div class="hero-pattern absolute inset-0"></div>
@@ -69,7 +69,7 @@
           <div class="hero-content">
             <div class="inline-flex items-center gap-2 pill-badge mb-8" data-animate="fade-up" data-delay="0">
               <span class="pill-dot"></span>
-              <span class="text-xs font-semibold tracking-widest uppercase">{{ $settings['school_year_label'] ?? 'Admissions Open Â· S.Y. 2026â€“2027' }}</span>
+              <span class="text-xs font-semibold tracking-widest uppercase">{{ $settings['school_year_label'] ?? 'Admissions Open · S.Y. 2026–2027' }}</span>
             </div>
 
             <h1 class="hero-headline" data-animate="fade-up" data-delay="100">
@@ -183,7 +183,7 @@
       </div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ TICKER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ───────────────────────────────────── TICKER ───────────────────────────────────── -->
     @php
       $tickerAnnouncements = $tickerAnnouncements ?? $announcements->where('is_popup', false)->values();
     @endphp
@@ -217,14 +217,14 @@
       </div>
     </div>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ WHY BTECH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ───────────────────────────────────── WHY BTECH ───────────────────────────────────── -->
     <section id="why" class="why-section py-28">
       <div class="max-w-7xl mx-auto px-8">
         <div class="section-header text-center mb-20" data-animate="fade-up">
           <span class="section-tag">Why Choose BTECH</span>
           <h2 class="section-title mt-3">More Than a Degree.<br/>A Launchpad.</h2>
           <p class="section-desc mt-4 max-w-2xl mx-auto">
-            We combine academic rigor with real-world readiness, preparing graduates who don't just find jobs â€” they lead industries.
+            We combine academic rigor with real-world readiness, preparing graduates who don't just find jobs — they lead industries.
           </p>
         </div>
 
@@ -242,7 +242,7 @@
                   3 => ['title' => 'Scholarship Support', 'desc' => 'We believe talent shouldn\'t be limited by finances. Our scholarship programs make education accessible.', 'icon' => 'badge-percent'],
                   4 => ['title' => 'Modern Facilities', 'desc' => 'State-of-the-art computer laboratories, science facilities, and collaborative spaces for learning.', 'icon' => 'building-2'],
                   5 => ['title' => 'Industry Partnerships', 'desc' => 'OJT placements and employment connections with over 200 local and national partner companies.', 'icon' => 'handshake'],
-                  6 => ['title' => 'Strategic Location', 'desc' => 'Located in the heart of Baliwag, Bulacan â€” accessible from the entire region.', 'icon' => 'map-pin'],
+                  6 => ['title' => 'Strategic Location', 'desc' => 'Located in the heart of Baliwag, Bulacan — accessible from the entire region.', 'icon' => 'map-pin'],
                 ];
                 $title = $fallbacks[$i]['title'];
                 $desc = $fallbacks[$i]['desc'];
@@ -263,7 +263,7 @@
       </div>
     </section>
 
-     <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ PROGRAMS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+     <!-- ───────────────────────────────────── PROGRAMS ───────────────────────────────────── -->
     <section id="programs" class="programs-section py-28">
       <div class="max-w-7xl mx-auto px-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16" data-animate="fade-up">
@@ -327,7 +327,7 @@
       </div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ PROCESS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ───────────────────────────────────── PROCESS ───────────────────────────────────── -->
     <section id="process" class="process-section py-28">
       <div class="max-w-7xl mx-auto px-8">
         <div class="section-header text-center mb-20" data-animate="fade-up">
@@ -415,7 +415,7 @@
               <!-- step-highlight uses display:flex align-items:flex-start gap:.6rem in your CSS -->
               <div class="step-highlight">
                 <i data-iconsax="calendar-days"></i>
-                <span>Tests are held every <strong>Monday to Friday</strong> â€” 9:00 AM to 3:00 PM</span>
+                <span>Tests are held every <strong>Monday to Friday</strong> — 9:00 AM to 3:00 PM</span>
               </div>
             </div>
           </div>
@@ -431,7 +431,7 @@
               <p class="step-desc">Schedule and complete the BTC College Admission Test. This evaluates your academic readiness and helps us tailor your academic support.</p>
               <div class="step-highlight">
                 <i data-iconsax="clipboard-list"></i>
-                <span>Schedule will be announced â€” <strong>TBA</strong></span>
+                <span>Schedule will be announced — <strong>TBA</strong></span>
               </div>
             </div>
           </div>
@@ -444,7 +444,7 @@
             </div>
             <div class="step-content">
               <h3 class="step-title">Receive Your Admission Result</h3>
-              <p class="step-desc">Results are released within 3â€“5 working days. Qualifying students will receive an Admission Notice via email.</p>
+              <p class="step-desc">Results are released within 3–5 working days. Qualifying students will receive an Admission Notice via email.</p>
               <div class="step-highlight">
                 <i data-iconsax="mail-check"></i>
                 <span>Results sent directly to your registered email and available at the Admissions Office.</span>
@@ -476,10 +476,10 @@
       </div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ TESTIMONIALS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ───────────────────────────────────── TESTIMONIALS ───────────────────────────────────── -->
     <section id="testimonials" class="testimonials-section py-28">
       <div class="max-w-7xl mx-auto px-8">
-        <div class="section-header text-center mb-16" data-animate="fade-up">
+                <div class="section-header text-center mb-16" data-animate="fade-up">
           <span class="section-tag">Student Stories</span>
           <h2 class="section-title mt-3">Life After BTECH</h2>
           <p class="section-desc mt-4 max-w-xl mx-auto">Hear directly from our graduates and current students about their BTECH experience.</p>
@@ -520,28 +520,26 @@
                   <div class="author-avatar" style="background: var(--navy); color: white; display: flex; align-items: center; justify-content: center;">JR</div>
                   <div>
                     <p class="author-name">Jose Reyes</p>
-                    <p class="author-role">BSIT Graduate, 2023 Â· Software Developer</p>
+                    <p class="author-role">BSIT Graduate, 2023 – Software Developer</p>
                   </div>
                 </div>
               </div>
             @endforelse
           </div>
 
-          <!-- Carousel controls â€” your JS targets #carousel-prev, #carousel-next, #carousel-dots -->
+          <!-- Carousel controls — your JS targets #carousel-prev, #carousel-next, #carousel-dots -->
           <div class="carousel-controls mt-10 flex items-center justify-center gap-4">
             <button class="carousel-btn" id="carousel-prev" aria-label="Previous">
-              <i data-iconsax="chevron-left"></i>
+              <i data-iconsax="arrow-left"></i>
             </button>
             <div class="carousel-dots" id="carousel-dots"></div>
             <button class="carousel-btn" id="carousel-next" aria-label="Next">
-              <i data-iconsax="chevron-right"></i>
+              <i data-iconsax="arrow-right"></i>
             </button>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ APPLY CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+      <!-- ───────────────────────────────────── APPLY CTA ───────────────────────────────────── -->
     <section id="apply" class="apply-cta-section py-28">
       <div class="apply-cta-inner max-w-7xl mx-auto px-8 relative overflow-hidden rounded-3xl">
         <div class="apply-cta-bg"></div>
@@ -549,7 +547,7 @@
         <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 py-20 px-8">
           <div class="text-center lg:text-left">
             <h2 class="apply-cta-title">{!! $settings['cta_section_headline'] ?? 'Your Future Begins<br/><em>This Enrollment Season.</em>' !!}</h2>
-            <p class="apply-cta-sub mt-4 max-w-xl">{{ $settings['cta_section_subheadline'] ?? "Don't wait. Seats are limited and scholarship slots fill quickly. Take the first step toward the career â€” and the life â€” you've been working toward." }}</p>
+            <p class="apply-cta-sub mt-4 max-w-xl">{{ $settings['cta_section_subheadline'] ?? "Don't wait. Seats are limited and scholarship slots fill quickly. Take the first step toward the career — and the life — you've been working toward." }}</p>
             <div class="apply-deadline mt-6">
               <span class="deadline-label">Application Deadline</span>
               <span class="deadline-date">{{ $settings['application_deadline'] ?? 'April 17, 2026' }}</span>
@@ -560,13 +558,13 @@
               {{ $settings['cta_section_button_text'] ?? 'Apply Online Now' }}
               <i data-iconsax="arrow-right" style="display:inline-flex;margin-left:.5rem;vertical-align:middle;width:18px;height:18px;"></i>
             </a>
-            <button id="open-guide" class="btn-cta-link text-center text-sm w-full">Admission Guidelines & Guide â†’</button>
+            <button id="open-guide" class="btn-cta-link text-center text-sm w-full">Admission Guidelines & Guide →</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ CONTACT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ───────────────────────────────────── CONTACT ───────────────────────────────────── -->
     <section id="contact" class="contact-section py-28">
       <div class="max-w-7xl mx-auto px-8">
         <div class="grid lg:grid-cols-2 gap-16 items-start">
@@ -619,7 +617,7 @@
                 </div>
                 <div>
                   <p class="contact-label">Office Hours</p>
-                  <p class="contact-value">{{ $settings['contact_office_hours'] ?? 'Monâ€“Fri, 8:00 AM â€“ 5:00 PM' }}</p>
+                  <p class="contact-value">{{ $settings['contact_office_hours'] ?? 'Mon–Fri, 8:00 AM – 5:00 PM' }}</p>
                 </div>
               </div>
 
@@ -681,7 +679,7 @@
 
   </main>
 
-  <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ FOOTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+  <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
   <footer class="footer-section pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-8">
       <div class="grid md:grid-cols-4 gap-10 pb-12 border-b footer-border">
@@ -737,7 +735,7 @@
       </div>
 
       <div class="footer-bottom flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
-        <p class="text-sm footer-text">Â© 2026 Baliwag Polytechnic College. All rights reserved.</p>
+        <p class="text-sm footer-text">© 2026 Baliwag Polytechnic College. All rights reserved.</p>
             <div class="flex gap-4 mt-8">
               @if(isset($settings['facebook_link']))
                 <a href="{{ $settings['facebook_link'] }}" class="footer-social-link" aria-label="Facebook"><i data-iconsax="facebook"></i></a>
@@ -753,14 +751,14 @@
     </div>
   </footer>
 
-  <!-- Back to top â€” your CSS targets #back-to-top.visible -->
+  <!-- Back to top — your CSS targets #back-to-top.visible -->
   <button id="back-to-top" class="back-to-top" aria-label="Back to top">
     <i data-iconsax="arrow-up"></i>
   </button>
 
 
   <!-- Initialize Iconsax after DOM + your JS have both run -->
-  <!-- â”€â”€â”€ ANNOUNCEMENT POPUP â”€â”€â”€ -->
+  <!-- ─── ANNOUNCEMENT POPUP ─── -->
   @php
     $popupAnn = $popupAnn ?? $announcements->firstWhere('is_popup', true);
   @endphp
@@ -893,7 +891,7 @@
 
     document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
   </script>
-  <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ ADMISSION GUIDE MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+  <!-- ───────────────────────────────────── ADMISSION GUIDE MODAL ───────────────────────────────────── -->
   <div id="guide-modal" class="modal-overlay">
     <div class="modal-container">
       <div class="modal-header">
@@ -913,7 +911,7 @@
         <section class="guide-section">
           <h3 class="guide-category">
             <i data-iconsax="user-plus"></i>
-            New Students (Freshmen â€“ Graduate & Undergraduate)
+            New Students (Freshmen – Graduate & Undergraduate)
           </h3>
           <div class="guide-list">
             <div class="guide-item">
