@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -286,8 +286,7 @@
                       >
                     @endif
                   <div
-                    class="team-fallback"
-                    style="{{ $memberImageUrl ? '' : 'display:flex;' }}"
+                    class="team-fallback {{ $memberImageUrl ? 'hidden' : 'flex' }}"
                     aria-label="{{ $member['name'] }}"
                   >
                     {{ strtoupper(substr($member['name'], 0, 1)) }}
