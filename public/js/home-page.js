@@ -319,7 +319,8 @@ document.head.appendChild(styleEl);
     const max = getMaxIndex();
     current = Math.max(0, Math.min(index, max));
 
-    const cardWidth = cards[0].offsetWidth + 24; // gap 1.5rem = 24px
+    const gap = parseFloat(getComputedStyle(carousel).columnGap || getComputedStyle(carousel).gap) || 0;
+    const cardWidth = cards[0].offsetWidth + gap;
     carousel.style.transform = `translateX(-${current * cardWidth}px)`;
     updateDots();
   }

@@ -1307,12 +1307,15 @@ body.menu-open .logo-badge {
 .testimonials-carousel-wrap {
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 .testimonials-carousel {
+  --testimonial-gap: 1.5rem;
   display: flex;
-  gap: 1.5rem;
+  gap: var(--testimonial-gap);
   transition: transform .5s cubic-bezier(.4, 0, .2, 1);
+  will-change: transform;
 }
 
 .testimonial-card {
@@ -1320,10 +1323,12 @@ body.menu-open .logo-badge {
   border: 1.5px solid var(--gray-200);
   border-radius: var(--radius-xl);
   padding: 2.5rem;
-  min-width: calc(50% - .75rem);
-  flex-shrink: 0;
+  flex: 0 0 calc((100% - var(--testimonial-gap)) / 2);
+  min-width: 0;
+  max-width: calc((100% - var(--testimonial-gap)) / 2);
   transition: var(--transition);
   position: relative;
+  overflow: hidden;
 }
 
 .testimonial-card:hover {
@@ -1348,6 +1353,11 @@ body.menu-open .logo-badge {
   color: var(--gray-600);
   line-height: 1.75;
   font-style: italic;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  hyphens: auto;
 }
 
 .testimonial-author {
@@ -1356,6 +1366,11 @@ body.menu-open .logo-badge {
   gap: 1rem;
   padding-top: 1.25rem;
   border-top: 1px solid var(--gray-100);
+  min-width: 0;
+}
+
+.testimonial-author>div:last-child {
+  min-width: 0;
 }
 
 .author-avatar {
@@ -1391,12 +1406,18 @@ body.menu-open .logo-badge {
   font-weight: 600;
   font-size: .9rem;
   color: var(--navy);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .author-role {
   font-size: .78rem;
   color: var(--gray-400);
   margin-top: .15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .carousel-btn {
@@ -2626,7 +2647,8 @@ body.announcement-popup-open {
 /* ─── 900px and below ─── */
 @media (max-width: 900px) {
   .testimonial-card {
-    min-width: 100%;
+    flex-basis: 100%;
+    max-width: 100%;
   }
 }
 
@@ -2932,7 +2954,8 @@ body.announcement-popup-open {
 
   /* Testimonials */
   .testimonial-card {
-    min-width: 88vw;
+    flex-basis: 100%;
+    max-width: 100%;
     padding: 1.5rem;
   }
 
