@@ -16,7 +16,7 @@
   <!-- ✦ Iconsax Icons ✦ -->
   @include('partials.iconsax')
 
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=9" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=20" />
 
 </head>
 <body>
@@ -81,8 +81,8 @@
 
     <!-- ───────────────────────────────────── HERO ───────────────────────────────────── -->
     <section id="hero" class="hero-section relative min-h-[85vh] flex items-center overflow-hidden">
-      <div class="hero-bg-overlay absolute inset-0"></div>
-      <div class="hero-pattern absolute inset-0"></div>
+      <div class="hero-bg-overlay" style="position:absolute;top:0;right:0;bottom:0;left:0;"></div>
+      <div class="hero-pattern" style="position:absolute;top:0;right:0;bottom:0;left:0;"></div>
 
       <div class="deco-circle deco-circle-1"></div>
       <div class="deco-circle deco-circle-2"></div>

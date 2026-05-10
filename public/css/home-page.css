@@ -227,36 +227,60 @@ body.site-loader-lock {
 .nav-inner {
   position: relative;
   z-index: 60;
-  min-height: var(--navbar-height);
+  height: var(--navbar-height) !important;
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   align-items: center !important;
   justify-content: space-between !important;
-  width: 100%;
+  width: 100% !important;
+  box-sizing: border-box;
 }
 
-.nav-inner>a .leading-tight {
-  min-width: 0;
-  overflow: hidden;
+.nav-inner > a {
+  display: flex !important;
+  align-items: center !important;
+  flex-shrink: 1 !important;
+  min-width: 0 !important;
+  gap: 0.75rem;
+  text-decoration: none;
+  height: 100%;
+}
+
+.nav-inner > a .leading-tight {
+  min-width: 0 !important;
+  overflow: hidden !important;
+  flex-shrink: 1 !important;
+  max-width: 180px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
-.nav-main {
+.nav-main,
+.nav-sub {
   white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: block !important;
 }
 
+/* Desktop nav — hidden by default, shown on wide screens */
 .nav-desktop {
-  display: none;
+  display: none !important;
+  flex-shrink: 0;
 }
 
+/* Action group (Inquire Now + hamburger) — never wraps */
 .nav-actions {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   align-items: center !important;
   gap: 0.75rem !important;
+  flex-shrink: 0 !important;
+  margin-left: auto;
+  height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -265,6 +289,13 @@ body.site-loader-lock {
     flex-direction: row !important;
     align-items: center !important;
     gap: 2rem !important;
+    flex-shrink: 0;
+  }
+  .nav-inner > a .leading-tight {
+    max-width: 280px;
+  }
+  .nav-actions {
+    margin-left: 0;
   }
 }
 
@@ -588,12 +619,22 @@ body.menu-open {
   padding-top: calc(var(--navbar-height) + 2rem) !important;
 }
 
+/* ─── HERO SECTION ─── */
+.hero-section {
+  background: linear-gradient(135deg, #0f2340 0%, #1b3557 45%, #254d82 100%);
+  min-height: 85vh;
+  min-height: 85dvh;
+  overflow-x: hidden !important;  /* Prevent horizontal scroll on mobile */
+  position: relative;
+}
+
 /* ─── HERO GRID ─── */
 .hero-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
+  width: 100%;
 }
 
 /* Decorative circles */
@@ -3307,15 +3348,15 @@ body.announcement-popup-open {
   }
 
   .text-line-1 {
-    font-size: clamp(2.2rem, 9vw, 2.8rem);
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
   }
 
   .text-line-2 {
-    font-size: clamp(3.2rem, 13vw, 4rem);
+    font-size: clamp(2.4rem, 11vw, 3.2rem);
   }
 
   .text-line-3 {
-    font-size: clamp(2.2rem, 9vw, 2.8rem);
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
   }
 
   .hero-program-label {
@@ -3484,36 +3525,40 @@ body.announcement-popup-open {
 }
 
 /* ─── TAILWIND FALLBACKS ─── */
-.fixed {
-  position: fixed;
+.fixed { position: fixed; }
+.absolute { position: absolute; }
+.relative { position: relative; }
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.top-0 { top: 0; }
+.left-0 { left: 0; }
+.right-0 { right: 0; }
+.bottom-0 { bottom: 0; }
+.z-10 { z-index: 10; }
+.z-50 { z-index: 50; }
+.hidden { display: none !important; }
+
+/* ─── PREVENT HORIZONTAL OVERFLOW ON ALL BROWSERS ─── */
+html,
+body {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+  position: relative;
 }
 
-.top-0 {
-  top: 0;
+#hero,
+.hero-section {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
 }
 
-.left-0 {
-  left: 0;
-}
-
-.right-0 {
-  right: 0;
-}
-
-.z-50 {
-  z-index: 50;
-}
-
-.hidden {
-  display: none !important;
+/* Hero inner container — must not exceed viewport */
+#hero > .relative,
+.hero-section > .relative {
+  overflow: hidden;
 }
 
 @media (min-width: 768px) {
-  .md\:flex {
-    display: flex !important;
-  }
-
-  .md\:hidden {
-    display: none !important;
-  }
+  .md\:flex { display: flex !important; }
+  .md\:hidden { display: none !important; }
 }
