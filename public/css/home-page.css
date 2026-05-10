@@ -1007,15 +1007,6 @@ body.menu-open .logo-badge {
   justify-content: space-between !important;
   align-items: flex-end !important;
   width: 100% !important;
-  text-align: left !important;
-}
-
-.programs-section .max-w-7xl > .flex > div:first-child {
-  order: 1 !important; /* Title block */
-}
-
-.programs-section .max-w-7xl > .flex > .program-filters {
-  order: 2 !important; /* Filters */
 }
 
 @media (max-width: 768px) {
@@ -1500,7 +1491,7 @@ body.menu-open .logo-badge {
 
 /* ─── APPLY CTA ─── */
 .apply-cta-section {
-  padding: 2.5rem 0; /* Reduced padding from 4rem */
+  padding: 4rem 0; /* Standardized vertical padding */
   background: var(--cream);
 }
 
@@ -2952,8 +2943,8 @@ body.announcement-popup-open {
 
   /* Section vertical padding */
   .py-28 {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
   }
 }
 

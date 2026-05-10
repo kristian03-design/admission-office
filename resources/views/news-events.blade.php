@@ -17,7 +17,7 @@
   
   <!-- ───────────────────────────────────── NAV ───────────────────────────────────── -->
 <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-    <div class="nav-inner flex items-center justify-between px-8 py-3 max-w-7xl mx-auto">
+    <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
         <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="52" height="52" decoding="async"></div>
         <div class="leading-tight">
