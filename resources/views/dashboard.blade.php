@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -153,9 +153,6 @@
   <div class="inquiry-modal-overlay" id="inquiryModal" style="display:none;">
     <div class="inquiry-modal-card" role="dialog" aria-modal="true" aria-labelledby="inquiryModalSubject">
       <div class="inquiry-modal-header">
-        <div class="inquiry-modal-icon">
-          <i data-iconsax="mail"></i>
-        </div>
         <button type="button" class="inquiry-modal-close" id="inquiryModalClose" aria-label="Close inquiry">
           <i data-iconsax="x"></i>
         </button>
