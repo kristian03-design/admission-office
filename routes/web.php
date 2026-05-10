@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\AnnouncementController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FacultyStaffController;
+use App\Http\Controllers\Api\InquiryController;
 use App\Http\Controllers\Api\InterviewController;
 use App\Http\Controllers\Api\NewsEventController as ApiNewsEventController;
 use App\Http\Controllers\Api\ProgramController;
@@ -43,6 +44,7 @@ Route::redirect('/admissions/apply', '/apply', 301);
 
 // Compatibility for stale public form assets that call the endpoint without
 // the /api or /backend prefix.
+Route::post('/contact', [InquiryController::class, 'store'])->middleware('throttle:public-form');
 Route::post('/applications/submit-public', [ApplicationController::class, 'submitPublic'])->middleware('throttle:public-form');
 Route::post('/applications/{id}/documents', [ApplicationController::class, 'uploadDocument'])->middleware('throttle:document-upload');
 Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(function () {

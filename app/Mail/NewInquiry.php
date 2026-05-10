@@ -27,8 +27,13 @@ class NewInquiry extends Mailable
 
     public function envelope(): Envelope
     {
+        $replyTo = filter_var($this->inquiry->email ?? null, FILTER_VALIDATE_EMAIL)
+            ? [new Address($this->inquiry->email, trim(($this->inquiry->first_name ?? '') . ' ' . ($this->inquiry->last_name ?? '')) ?: '')]
+            : [];
+
         return new Envelope(
             from: new Address(config('mail.from.address'), config('mail.from.name')),
+            replyTo: $replyTo,
             subject: 'New Inquiry: ' . ($this->inquiry->subject ?? 'General Inquiry'),
         );
     }

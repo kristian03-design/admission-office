@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>BTECH — Admissions Office</title>
   <script>window.ICONSAX_SPRITE_PATH = "{{ asset('assets/iconsax-sprite.svg') }}";</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1121,7 +1122,7 @@
     </div>
   </div>
 
-  <script src="{{ asset('js/home-page.js') }}?v=5"></script>
+  <script src="{{ asset('js/home-page.js') }}?v=6"></script>
   <script>
     // Initialize all icons including those in the modal and footer
     if (window.iconsax) {

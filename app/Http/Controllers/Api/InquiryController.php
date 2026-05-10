@@ -7,7 +7,6 @@ use App\Models\ContactInquiry;
 use App\Models\SystemSetting;
 use App\Mail\NewInquiry;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 
@@ -27,17 +26,29 @@ class InquiryController extends Controller
             'message'    => 'required|string',
         ]);
 
-        $inquiry = (object) $validated;
-        $inquiry->created_at = now(); // Add timestamp for the email template
+        $inquiry = null;
 
-        // Send email notification to admin
         try {
-            $adminEmail = SystemSetting::where('key', 'admissions_email')->first()?->value 
-                        ?? config('mail.from.address');
-            
-            Mail::to($adminEmail)->send(new NewInquiry($inquiry));
+            $inquiry = ContactInquiry::create($validated + ['status' => 'pending']);
         } catch (\Exception $e) {
-            // Log error but don't fail the response
+            Log::error('Contact Inquiry Save Error: ' . $e->getMessage());
+
+            $inquiry = (object) $validated;
+            $inquiry->created_at = now();
+        }
+
+        try {
+            $recipients = array_values(array_unique(array_filter([
+                SystemSetting::where('key', 'admissions_email')->first()?->value,
+                config('mail.from.address'),
+            ], fn ($email) => filter_var($email, FILTER_VALIDATE_EMAIL))));
+
+            if ($recipients === []) {
+                Log::warning('Contact inquiry email skipped: no valid recipient configured.');
+            } else {
+                Mail::to($recipients)->send(new NewInquiry($inquiry));
+            }
+        } catch (\Exception $e) {
             Log::error('Mail Error: ' . $e->getMessage());
         }
 

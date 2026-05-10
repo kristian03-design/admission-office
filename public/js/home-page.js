@@ -33,6 +33,12 @@ function apiUrl(path) {
   return base.replace(/\/$/, '') + (normalized.startsWith('/') ? normalized : '/' + normalized);
 }
 
+function csrfToken() {
+  return document.querySelector('meta[name="csrf-token"]')?.content
+    || document.querySelector('input[name="_token"]')?.value
+    || '';
+}
+
 function debounce(fn, ms = 150) {
   let t;
   return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
@@ -451,9 +457,13 @@ function clearError(inputEl, errorEl) {
       const firstName = nameParts[0];
       const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '---';
 
+      const headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
+      const token = csrfToken();
+      if (token) headers['X-CSRF-TOKEN'] = token;
+
       const response = await fetch(apiUrl('/contact'), {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        headers,
         body: JSON.stringify({
           first_name: firstName,
           last_name: lastName,
@@ -550,9 +560,13 @@ function clearError(inputEl, errorEl) {
     setSubmitting(true);
 
     try {
+      const headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
+      const token = csrfToken();
+      if (token) headers['X-CSRF-TOKEN'] = token;
+
       const response = await fetch(apiUrl('/contact'), {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        headers,
         body: JSON.stringify({
           first_name: form.querySelector('[name="first_name"]').value,
           last_name: form.querySelector('[name="last_name"]').value,
@@ -562,7 +576,10 @@ function clearError(inputEl, errorEl) {
         })
       });
 
-      if (!response.ok) throw new Error('Failed to send message');
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to send message');
+      }
 
       form.reset();
       inputs.forEach(inp => inp.classList.remove('error'));
