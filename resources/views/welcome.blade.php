@@ -569,8 +569,8 @@
         </div>
 
       <!-- ───────────────────────────────────── APPLY CTA ───────────────────────────────────── -->
-    <section id="apply" class="apply-cta-section py-28">
-      <div class="apply-cta-inner max-w-7xl mx-auto px-8 relative overflow-hidden rounded-3xl">
+    <section id="apply" class="apply-cta-section">
+      <div class="apply-cta-inner relative overflow-hidden">
         <div class="apply-cta-bg"></div>
         <div class="apply-cta-pattern"></div>
         <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 py-20 px-8">

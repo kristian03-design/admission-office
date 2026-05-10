@@ -1001,6 +1001,21 @@ body.menu-open .logo-badge {
   background: var(--gray-50);
 }
 
+.programs-section .max-w-7xl > .flex {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: flex-end !important;
+  width: 100% !important;
+}
+
+@media (max-width: 768px) {
+  .programs-section .max-w-7xl > .flex {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+}
+
 .filter-btn {
   padding: .45rem 1rem;
   font-size: .82rem;
@@ -1476,12 +1491,16 @@ body.menu-open .logo-badge {
 
 /* ─── APPLY CTA ─── */
 .apply-cta-section {
-  padding: 2rem 2rem;
+  padding: 4rem 0; /* Standardized vertical padding */
+  background: var(--cream);
 }
 
 .apply-cta-inner {
   position: relative;
   overflow: hidden;
+  width: 100%;
+  max-width: 100% !important; /* Force full width */
+  margin: 0;
 }
 
 .apply-cta-bg {
@@ -1991,7 +2010,7 @@ body.menu-open .logo-badge {
   position: absolute;
   bottom: 2rem;
   left: -1.5rem;
-  z-index: 10;
+  z-index: 20; /* Ensure it's above rings */
   display: flex;
   align-items: center;
   gap: .75rem;
@@ -2627,6 +2646,7 @@ body.announcement-popup-open {
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
   }
 
   .hero-sub {
