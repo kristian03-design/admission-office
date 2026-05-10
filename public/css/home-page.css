@@ -101,7 +101,10 @@ body.site-loader-lock {
 
 .site-loader {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 99999;
   display: flex;
   align-items: center;
@@ -178,7 +181,10 @@ body.site-loader-lock {
 
 .site-loader__bar span {
   position: absolute;
-  inset: 0 auto 0 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: auto;
   width: 42%;
   border-radius: inherit;
   background: linear-gradient(90deg, var(--navy), var(--gold-mid));
@@ -222,17 +228,44 @@ body.site-loader-lock {
   position: relative;
   z-index: 60;
   min-height: var(--navbar-height);
-  display: flex;
-  align-items: center;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100%;
 }
 
 .nav-inner>a .leading-tight {
   min-width: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .nav-main {
-  white-space: nowrap;
+  white-space: nowrap !important;
+}
+
+.nav-desktop {
+  display: none;
+}
+
+.nav-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+}
+
+@media (min-width: 768px) {
+  .nav-desktop {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 2rem !important;
+  }
 }
 
 /* ─── MOBILE TOGGLE BUTTON ─── */
@@ -630,20 +663,21 @@ body.menu-open {
 }
 
 .text-line-1 {
-  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  font-size: clamp(1.8rem, 5vw, 3.8rem);
   font-weight: 400;
   opacity: .85;
 }
 
 .text-line-2 {
-  font-size: clamp(3.2rem, 9vw, 5.8rem);
+  font-size: clamp(2.4rem, 9vw, 5.8rem);
   font-weight: 600;
   color: var(--gold-mid);
   text-shadow: 0 0 60px rgba(201, 147, 58, .4);
+  line-height: 1.15;
 }
 
 .text-line-3 {
-  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  font-size: clamp(1.8rem, 5vw, 3.8rem);
   font-weight: 400;
   opacity: .9;
 }
@@ -1639,13 +1673,19 @@ body.menu-open {
 
 .apply-cta-bg {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: linear-gradient(135deg, #0f2340 0%, var(--navy) 50%, #1a3f6e 100%);
 }
 
 .apply-cta-pattern {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-image:
     radial-gradient(circle at 80% 20%, rgba(212, 168, 67, .2) 0%, transparent 50%),
     radial-gradient(circle at 10% 80%, rgba(45, 106, 79, .15) 0%, transparent 40%),
@@ -2093,7 +2133,10 @@ body.menu-open {
 
 .hero-img-slide {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -2264,7 +2307,10 @@ body.menu-open {
 /* ─── MODAL ─── */
 .modal-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: rgba(15, 35, 64, .85);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
@@ -2342,7 +2388,10 @@ body.menu-open {
 /* Announcement popup */
 .announcement-popup {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -2444,7 +2493,10 @@ body.announcement-popup-open {
 
 .announcement-popup__media-shade {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: linear-gradient(180deg, rgba(7, 16, 30, .14) 0%, rgba(7, 16, 30, .02) 42%, rgba(255, 255, 255, .96) 100%);
   pointer-events: none;
 }
@@ -2857,9 +2909,9 @@ body.announcement-popup-open {
 
   /* Hero image */
   .hero-img-stage {
-    max-width: 300px;
-    height: 360px;
-    border-radius: 20px 20px 60px 60px;
+    max-width: 260px;
+    height: 300px;
+    border-radius: 20px 20px 50px 50px;
     margin: 0 auto;
   }
 
@@ -3070,8 +3122,8 @@ body.announcement-popup-open {
   }
 
   .hero-img-stage {
-    max-width: 270px;
-    height: 320px;
+    max-width: 220px;
+    height: 260px;
   }
 
   .hero-visual-ring:nth-child(1) {
