@@ -737,7 +737,9 @@ body {
 }
 
 @keyframes btnSpin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .btn-outline {
@@ -2131,10 +2133,29 @@ body {
 
 .inquiry-email-line {
   margin-top: 12px;
-  color: var(--blue);
-  font-size: 13px;
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  border-radius: 999px;
+  padding: 5px 12px 5px 8px;
   word-break: break-word;
+}
+
+.inquiry-email-line a {
+  color: var(--blue);
+  font-size: 12.5px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.inquiry-email-line svg,
+.inquiry-email-line .iconsax-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--blue);
+  flex-shrink: 0;
 }
 
 .inquiry-message-box {

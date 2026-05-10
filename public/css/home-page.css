@@ -228,16 +228,36 @@ body.site-loader-lock {
 .nav-inner>a .leading-tight {
   min-width: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .nav-inner {
   position: relative;
   z-index: 60;
-  /* Higher than mobile-menu (40) */
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100%;
 }
 
 .nav-main {
-  white-space: nowrap;
+  white-space: nowrap !important;
+}
+
+.nav-desktop {
+  display: none; /* Hidden by default, shown on md */
+}
+
+@media (min-width: 768px) {
+  .nav-desktop {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 2rem !important;
+  }
 }
 
 /* ─── MOBILE TOGGLE BUTTON ─── */
@@ -2631,7 +2651,8 @@ body.announcement-popup-open {
 
   .hero-content {
     text-align: center;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
+    padding-top: 0 !important;
   }
 
   .hero-headline {
@@ -2778,9 +2799,9 @@ body.announcement-popup-open {
 
   /* Hero image */
   .hero-img-stage {
-    max-width: 300px;
-    height: 360px;
-    border-radius: 20px 20px 60px 60px;
+    max-width: 260px;
+    height: 300px;
+    border-radius: 20px 20px 50px 50px;
   }
 
   .hero-visual-ring:nth-child(1) {
@@ -3000,8 +3021,8 @@ body.announcement-popup-open {
   }
 
   .hero-img-stage {
-    max-width: 270px;
-    height: 320px;
+    max-width: 220px;
+    height: 260px;
   }
 
   .hero-visual-ring:nth-child(1) {
@@ -3227,7 +3248,7 @@ body.announcement-popup-open {
 
   .hero-program-label {
     font-size: 0.9rem;
-    min-width: unset;
+    min-width: unset !important;
     width: auto;
   }
 
@@ -3250,8 +3271,8 @@ body.announcement-popup-open {
   }
 
   .hero-img-stage {
-    max-width: 240px;
-    height: 290px;
+    max-width: 200px;
+    height: 240px;
   }
 
   .hero-visual-ring:nth-child(1) {
@@ -3567,10 +3588,33 @@ body.menu-open #menu-toggle svg {
 .right-0 { right: 0; }
 .z-50 { z-index: 50; }
 .hidden { display: none !important; }
+.nav-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  flex-shrink: 0;
+}
+
 @media (max-width: 767px) {
   .nav-desktop {
     display: none !important;
   }
+}
+
+/* Fix for browsers not supporting gap in flexbox */
+.flex {
+  display: flex;
+}
+.flex-row {
+  flex-direction: row;
+}
+.items-center {
+  align-items: center;
+}
+.justify-between {
+  justify-content: space-between;
 }
 
 @media (min-width: 768px) {
