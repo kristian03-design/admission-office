@@ -2034,8 +2034,8 @@ body {
 .inquiry-modal-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 20px 22px 10px;
+  justify-content: flex-end;
+  padding: 16px 20px 0;
 }
 
 .inquiry-modal-icon {
@@ -2056,16 +2056,22 @@ body {
 }
 
 .inquiry-modal-close {
-  width: 34px;
-  height: 34px;
-  border: 2px solid var(--border);
-  background: #8d8b8b;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  background: #f1f5f9;
   color: var(--text-2);
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s;
+}
+
+.inquiry-modal-close:hover {
+  background: #e2e8f0;
+  color: var(--text-1);
 }
 
 .inquiry-modal-body {
@@ -2203,12 +2209,25 @@ body {
   border-top: 1px solid var(--border);
 }
 
+.inquiry-modal-secondary {
+  background: #f1f5f9;
+  color: var(--text-2);
+  border: 1px solid var(--border) !important;
+  font-weight: 600;
+}
+
+.inquiry-modal-secondary:hover {
+  background: #e2e8f0;
+  color: var(--text-1);
+}
+
 .inquiry-modal-secondary,
 .inquiry-modal-reply {
   flex: 1;
   min-height: 44px;
   justify-content: center;
   text-align: center;
+  border-radius: 12px;
 }
 
 .inquiry-modal-reply {

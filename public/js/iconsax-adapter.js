@@ -1,6 +1,6 @@
 (function () {
   const ICONSAX_STYLE = 'linear';
-  const ICONSAX_SPRITE_URL = 'https://cdn.jsdelivr.net/npm/web-elements-icons@0.1.3/iconsax-sprite.svg';
+  const ICONSAX_SPRITE_URL = window.ICONSAX_SPRITE_PATH || 'https://cdn.jsdelivr.net/npm/web-elements-icons@0.1.3/iconsax-sprite.svg';
   let spritePromise = null;
 
   const iconMap = {
@@ -102,6 +102,7 @@
     }
 
     if (!spritePromise) {
+      console.log('Iconsax: Fetching sprite from', ICONSAX_SPRITE_URL);
       spritePromise = fetch(ICONSAX_SPRITE_URL)
         .then((response) => {
           if (!response.ok) throw new Error('Unable to load Iconsax sprite');
@@ -115,8 +116,23 @@
           holder.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;';
           holder.innerHTML = svgText;
           document.body.prepend(holder);
+          console.log('Iconsax: Sprite loaded successfully');
         })
-        .catch(() => {
+        .catch((err) => {
+          console.error('Iconsax Error:', err);
+          // If local fails, try CDN as extreme fallback if not already using it
+          if (ICONSAX_SPRITE_URL !== 'https://cdn.jsdelivr.net/npm/web-elements-icons@0.1.3/iconsax-sprite.svg') {
+            console.log('Iconsax: Retrying with CDN fallback...');
+            return fetch('https://cdn.jsdelivr.net/npm/web-elements-icons@0.1.3/iconsax-sprite.svg')
+              .then(r => r.text())
+              .then(svgText => {
+                const holder = document.createElement('div');
+                holder.id = 'iconsax-inline-sprite';
+                holder.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;';
+                holder.innerHTML = svgText;
+                document.body.prepend(holder);
+              });
+          }
           spritePromise = null;
         });
     }
