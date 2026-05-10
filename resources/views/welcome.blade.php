@@ -80,7 +80,7 @@
   <main>
 
     <!-- ───────────────────────────────────── HERO ───────────────────────────────────── -->
-    <section id="hero" class="hero-section relative min-h-screen flex items-center overflow-hidden">
+    <section id="hero" class="hero-section relative min-h-[85vh] flex items-center overflow-hidden">
       <div class="hero-bg-overlay absolute inset-0"></div>
       <div class="hero-pattern absolute inset-0"></div>
 
@@ -89,7 +89,7 @@
       <div class="deco-line deco-line-1"></div>
       <div class="deco-line deco-line-2"></div>
 
-      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full pt-28 pb-16">
+      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full pt-20 pb-16">
         <div class="hero-grid">
 
           <!-- LEFT: Text -->

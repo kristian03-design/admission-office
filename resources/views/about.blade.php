@@ -268,10 +268,10 @@
   </header>
 
   <main>
-    <section class="hero-section relative min-h-[70vh] flex items-center overflow-hidden">
+    <section class="hero-section relative min-h-[45vh] flex items-center overflow-hidden">
       <div class="hero-bg-overlay absolute inset-0"></div>
       <div class="hero-pattern absolute inset-0"></div>
-      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full pt-32 pb-16">
+      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full pt-24 pb-12">
         <div class="max-w-3xl">
           <div class="inline-flex items-center gap-2 pill-badge mb-8" data-animate="fade-up">
             <span class="pill-dot"></span>
