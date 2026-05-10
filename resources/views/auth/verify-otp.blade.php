@@ -87,10 +87,6 @@
       Back to Login
     </a>
 
-    <div class="icon-circle">
-      <i data-iconsax="mail"></i>
-    </div>
-
     <div class="card-badge">
       <div class="card-badge-dot"></div>
       2-Factor Authentication

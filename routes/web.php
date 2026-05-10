@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\AnnouncementController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FacultyStaffController;
 use App\Http\Controllers\Api\InterviewController;
 use App\Http\Controllers\Api\NewsEventController as ApiNewsEventController;
@@ -93,6 +94,8 @@ Route::get('/admin/dashboard', function (Request $request) {
 // Compatibility for stale dashboard assets that call /admin/settings instead of
 // /api/admin/settings. Keep Sanctum auth so this remains admin-only.
 Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(function () {
+    Route::post('/auth/password', [AuthController::class, 'updatePassword']);
+
     Route::get('/admin/settings', [SettingsController::class, 'show']);
     Route::post('/admin/settings', [SettingsController::class, 'update']);
     Route::put('/admin/settings', [SettingsController::class, 'update']);

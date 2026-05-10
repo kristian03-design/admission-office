@@ -12,7 +12,7 @@
   @include('partials.iconsax')
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=8" />
+  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=9" />
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
     (function () {
@@ -24,7 +24,7 @@
   </script>
   <script src="{{ asset('js/api-config.js') }}?v=8"></script>
   <script src="{{ asset('js/admission-api.js') }}?v=17"></script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=40" defer></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=41" defer></script>
 </head>
 <body>
   @include('partials.site-loader')
@@ -866,7 +866,7 @@
           <p style="font-size:11px;font-weight:500;color:#7c9ec7;letter-spacing:0.06em;text-transform:uppercase;margin:0 0 4px;">Edit Course Schedule</p>
           <h2 id="editCourseLabel" style="font-size:16px;font-weight:600;color:#e8f0fb;margin:0;line-height:1.3;">Course Name</h2>
         </div>
-        <button type="button" onclick="closeEditCourseModal()" style="background:rgba(255,255,255,0.08);border:none;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;color:#7c9ec7;font-size:16px;line-height:1;">âœ•</button>
+        <button type="button" onclick="closeEditCourseModal()" aria-label="Close modal" style="background:rgba(255,255,255,0.08);border:none;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;color:#7c9ec7;font-size:20px;line-height:1;">&times;</button>
       </div>
       <div style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;background:rgba(255,255,255,0.07);border-radius:20px;padding:3px 10px 3px 6px;">
         <span style="width:6px;height:6px;border-radius:50%;background:#5DCAA5;display:inline-block;flex-shrink:0;"></span>
@@ -1089,7 +1089,7 @@
   <div style="background:#fff;border-radius:12px;width:90%;max-width:500px;box-shadow:0 10px 25px rgba(0,0,0,0.2);overflow:hidden;">
     <div style="background:#0f1e3d;padding:20px 24px 18px;display:flex;justify-content:space-between;align-items:center;">
       <h2 id="announcementModalTitle" style="font-size:16px;font-weight:600;color:#e8f0fb;margin:0;">Add Announcement</h2>
-      <button type="button" onclick="closeAnnouncementModal()" style="background:transparent;border:none;color:#7c9ec7;font-size:20px;cursor:pointer;">âœ•</button>
+      <button type="button" onclick="closeAnnouncementModal()" aria-label="Close modal" style="background:transparent;border:none;color:#7c9ec7;font-size:22px;line-height:1;cursor:pointer;">&times;</button>
     </div>
     <div style="padding:24px;max-height:70vh;overflow-y:auto;">
       <input type="hidden" id="editAnnouncementId">
@@ -1097,19 +1097,17 @@
         <label class="settings-label">Announcement Message</label>
         <textarea class="settings-input" id="annMessage" rows="3" style="height:auto;" required></textarea>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
-        <div class="settings-field">
-          <label class="settings-label">Starts At</label>
-          <input type="date" class="settings-input" id="annStartsAt">
-        </div>
-        <div class="settings-field">
-          <label class="settings-label">Ends At</label>
-          <input type="date" class="settings-input" id="annEndsAt">
-        </div>
-      </div>
       <div class="settings-field" style="margin-top:16px;">
         <label class="settings-label">Announcement Image</label>
-        <input type="file" class="settings-input" id="annPopupImageFile" accept="image/jpeg,image/png,image/webp,image/jpg">
+        <div id="annPopupImageDropzone" style="border:2px dashed #cbd5e1;border-radius:10px;padding:14px;background:#f8fafc;cursor:pointer;transition:all .2s ease;">
+          <input type="file" class="settings-input" id="annPopupImageFile" accept="image/jpeg,image/png,image/webp,image/jpg" style="display:none;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <i data-iconsax="upload-cloud" style="width:18px;height:18px;color:#64748b;"></i>
+            <p style="margin:0;font-size:13px;color:#334155;">
+              Drag and drop an image here, or <span style="color:#0f1e3d;font-weight:600;">click to browse</span>
+            </p>
+          </div>
+        </div>
         <p style="margin-top:6px;font-size:12px;color:var(--text-3);">Shown in ticker and popup announcements. Allowed: JPG, PNG, WEBP. Max size: 2MB.</p>
         <p id="annPopupImageError" style="display:none;margin-top:6px;font-size:12px;color:#b91c1c;font-weight:500;"></p>
         <div id="annPopupImagePreview" style="display:none;margin-top:10px;position:relative;width:160px;">
@@ -1151,7 +1149,7 @@
   <div style="background:#fff;border-radius:12px;width:90%;max-width:560px;box-shadow:0 10px 25px rgba(0,0,0,0.2);overflow:hidden;">
     <div style="background:#0f1e3d;padding:20px 24px 18px;display:flex;justify-content:space-between;align-items:center;">
       <h2 id="newsEventModalTitle" style="font-size:16px;font-weight:600;color:#e8f0fb;margin:0;">Add News/Event</h2>
-      <button type="button" onclick="closeNewsEventModal()" style="background:transparent;border:none;color:#7c9ec7;font-size:20px;cursor:pointer;">âœ•</button>
+      <button type="button" onclick="closeNewsEventModal()" aria-label="Close modal" style="background:transparent;border:none;color:#7c9ec7;font-size:22px;line-height:1;cursor:pointer;">&times;</button>
     </div>
     <div style="padding:24px;max-height:70vh;overflow-y:auto;">
       <input type="hidden" id="editNewsEventId">

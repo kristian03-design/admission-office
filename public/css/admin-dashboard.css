@@ -728,6 +728,8 @@ body {
 .btn-outline {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   gap: 7px;
   background: #fff;
   color: var(--text-1);
@@ -755,6 +757,8 @@ body {
 .btn-ghost {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   gap: 6px;
   background: none;
   border: none;

@@ -1756,24 +1756,65 @@ function initWebsiteContent() {
   }
 
   const annPopupImageFile = document.getElementById("annPopupImageFile");
+  const annPopupImageDropzone = document.getElementById("annPopupImageDropzone");
+  function applyAnnouncementImageFile(file) {
+    if (!file) return;
+
+    const error = validateAnnouncementImage(file);
+    if (error) {
+      if (annPopupImageFile) annPopupImageFile.value = "";
+      setAnnouncementImageError(error);
+      showToast(error);
+      return;
+    }
+
+    announcementPopupImageRemoved = false;
+    setAnnouncementImageError("");
+    showAnnouncementImagePreview(URL.createObjectURL(file));
+  }
+
   if (annPopupImageFile && !annPopupImageFile.dataset.bound) {
     annPopupImageFile.addEventListener("change", function () {
       const file = this.files && this.files[0] ? this.files[0] : null;
-      if (!file) return;
-
-      const error = validateAnnouncementImage(file);
-      if (error) {
-        this.value = "";
-        setAnnouncementImageError(error);
-        showToast(error);
-        return;
-      }
-
-      announcementPopupImageRemoved = false;
-      setAnnouncementImageError("");
-      showAnnouncementImagePreview(URL.createObjectURL(file));
+      applyAnnouncementImageFile(file);
     });
     annPopupImageFile.dataset.bound = "1";
+  }
+
+  if (annPopupImageDropzone && !annPopupImageDropzone.dataset.bound) {
+    annPopupImageDropzone.addEventListener("click", function () {
+      if (annPopupImageFile) annPopupImageFile.click();
+    });
+
+    annPopupImageDropzone.addEventListener("dragover", function (e) {
+      e.preventDefault();
+      annPopupImageDropzone.style.borderColor = "#0f1e3d";
+      annPopupImageDropzone.style.background = "#eff6ff";
+    });
+
+    annPopupImageDropzone.addEventListener("dragleave", function () {
+      annPopupImageDropzone.style.borderColor = "#cbd5e1";
+      annPopupImageDropzone.style.background = "#f8fafc";
+    });
+
+    annPopupImageDropzone.addEventListener("drop", function (e) {
+      e.preventDefault();
+      annPopupImageDropzone.style.borderColor = "#cbd5e1";
+      annPopupImageDropzone.style.background = "#f8fafc";
+
+      const file = e.dataTransfer && e.dataTransfer.files ? e.dataTransfer.files[0] : null;
+      if (!file) return;
+
+      if (annPopupImageFile) {
+        const transfer = new DataTransfer();
+        transfer.items.add(file);
+        annPopupImageFile.files = transfer.files;
+      }
+
+      applyAnnouncementImageFile(file);
+    });
+
+    annPopupImageDropzone.dataset.bound = "1";
   }
 
   const annPopupImageRemoveBtn = document.getElementById("annPopupImageRemoveBtn");
@@ -1988,8 +2029,6 @@ function openAnnouncementModal(id = null) {
   // Clear fields
   idInput.value = id || "";
   document.getElementById("annMessage").value = "";
-  document.getElementById("annStartsAt").value = "";
-  document.getElementById("annEndsAt").value = "";
   document.getElementById("annIsPopup").checked = false;
   document.getElementById("annIsActive").checked = true;
   document.getElementById("annPopupButtonText").value = "";
@@ -2006,8 +2045,6 @@ function openAnnouncementModal(id = null) {
     const ann = API_ANNOUNCEMENTS.find(a => a.id === id);
     if (ann) {
       document.getElementById("annMessage").value = ann.message || "";
-      if (ann.starts_at) document.getElementById("annStartsAt").value = ann.starts_at.split("T")[0];
-      if (ann.ends_at) document.getElementById("annEndsAt").value = ann.ends_at.split("T")[0];
       document.getElementById("annIsPopup").checked = !!ann.is_popup;
       document.getElementById("annIsActive").checked = !!ann.is_active;
       document.getElementById("annPopupButtonText").value = ann.popup_button_text || "";
@@ -2030,8 +2067,8 @@ async function saveAnnouncement() {
   const id = document.getElementById("editAnnouncementId").value;
   const data = {
     message: document.getElementById("annMessage").value,
-    starts_at: document.getElementById("annStartsAt").value || "",
-    ends_at: document.getElementById("annEndsAt").value || "",
+    starts_at: "",
+    ends_at: "",
     is_popup: document.getElementById("annIsPopup").checked ? "1" : "0",
     is_active: document.getElementById("annIsActive").checked ? "1" : "0",
     popup_button_text: document.getElementById("annPopupButtonText").value,

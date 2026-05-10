@@ -1594,6 +1594,8 @@ body.menu-open .logo-badge {
 /* ─── CONTACT ─── */
 .contact-section {
   background: var(--cream);
+  box-shadow: 0 0 0 100vmax var(--cream);
+  clip-path: inset(0 -100vmax);
 }
 
 .contact-item {
