@@ -11,17 +11,18 @@
     body {
       font-family: 'Inter', Arial, sans-serif;
       background: #E8EDF5;
-      padding: 48px 16px;
+      margin: 0;
+      padding: 32px 14px;
       -webkit-font-smoothing: antialiased;
     }
 
-    .em-wrap { max-width: 580px; margin: 0 auto; }
+    .em-wrap { max-width: 580px; margin: 0 auto; width: 100%; }
 
     /* HEADER */
     .em-head {
       background: #0B1D35;
-      border-radius: 20px 20px 0 0;
-      padding: 40px 44px 36px;
+      border-radius: 14px 14px 0 0;
+      padding: 32px 40px 30px;
       position: relative;
       overflow: hidden;
     }
@@ -46,22 +47,22 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 30px;
+      margin-bottom: 24px;
       position: relative;
     }
     .em-logo-box {
-      width: 44px; height: 44px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.1);
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: #fff;
       border: 1px solid rgba(255,255,255,0.15);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
-    .em-logo-box img { width: 26px; height: 26px; object-fit: contain; }
-    .em-school { font-size: 13px; font-weight: 600; color: #fff; line-height: 1.3; }
-    .em-dept { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+    .em-logo-box img { display: block; width: 42px; max-width: 42px; height: 42px; object-fit: contain; border: 0; outline: none; text-decoration: none; }
+    .em-school { font-size: 14px; font-weight: 600; color: #fff; line-height: 1.35; }
+    .em-dept { font-size: 12px; color: rgba(255,255,255,0.56); margin-top: 2px; line-height: 1.35; }
 
     .em-tag {
       font-size: 10px;
@@ -74,24 +75,25 @@
     }
     .em-title {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 40px;
+      font-size: 34px;
       color: #fff;
-      line-height: 1.05;
+      line-height: 1.12;
       margin-bottom: 10px;
       position: relative;
     }
     .em-title em { font-style: italic; color: #7DC4F5; }
     .em-subtitle {
-      font-size: 13px;
-      color: rgba(255,255,255,0.35);
+      font-size: 14px;
+      color: rgba(255,255,255,0.58);
       font-weight: 300;
+      line-height: 1.55;
       position: relative;
     }
 
     /* ACTION STRIP */
     .em-pill-row {
       background: #1A5FA8;
-      padding: 11px 44px;
+      padding: 11px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -108,11 +110,11 @@
     .em-step { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; }
 
     /* SCHEDULE CARD */
-    .em-sched-bg { background: #1A3C66; padding: 24px 44px 0; }
+    .em-sched-bg { background: #1A3C66; padding: 22px 40px 0; }
     .em-sched {
       background: #0F2D54;
       border-radius: 14px;
-      padding: 26px 30px;
+      padding: 22px 26px;
       display: flex;
       gap: 0;
       border: 1px solid rgba(78,159,229,0.12);
@@ -133,13 +135,13 @@
     }
     .em-col-big {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 24px;
+      font-size: 23px;
       color: #fff;
       line-height: 1.15;
     }
     .em-col-day { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 6px; }
     .em-time-num {
-      font-size: 32px;
+      font-size: 30px;
       font-weight: 600;
       color: #4E9FE5;
       letter-spacing: -0.5px;
@@ -158,15 +160,16 @@
     .em-cap { background: #fff; border-radius: 14px 14px 0 0; height: 22px; }
 
     /* BODY */
-    .em-body { background: #fff; padding: 0 44px 44px; }
+    .em-body { background: #fff; padding: 0 40px 40px; }
     .em-greeting {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 24px;
+      font-size: 23px;
       color: #0B1D35;
-      padding-top: 34px;
+      padding-top: 30px;
       margin-bottom: 14px;
+      line-height: 1.25;
     }
-    .em-body p { font-size: 14px; color: #4A5568; line-height: 1.8; }
+    .em-body p { font-size: 14px; color: #4A5568; line-height: 1.7; }
 
     .em-section-lbl {
       font-size: 9px;
@@ -181,7 +184,7 @@
     .em-table { width: 100%; border-collapse: collapse; }
     .em-table tr { border-bottom: 1px solid #EDF2F7; }
     .em-table tr:last-child { border-bottom: none; }
-    .em-table td { padding: 12px 0; font-size: 13px; vertical-align: middle; }
+    .em-table td { padding: 12px 0; font-size: 13px; line-height: 1.45; vertical-align: middle; }
     .em-table .lbl { color: #A0AEC0; width: 45%; }
     .em-table .val { color: #0B1D35; font-weight: 600; text-align: right; }
 
@@ -234,8 +237,8 @@
     /* FOOTER */
     .em-footer {
       background: #0B1D35;
-      border-radius: 0 0 20px 20px;
-      padding: 22px 44px;
+      border-radius: 0 0 14px 14px;
+      padding: 20px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -244,13 +247,19 @@
     .em-footer-r { font-size: 10px; color: rgba(255,255,255,0.2); text-align: right; }
 
     @media (max-width: 500px) {
-      .em-head, .em-body, .em-pill-row, .em-sched-bg { padding-left: 24px; padding-right: 24px; }
+      body { padding: 18px 10px; }
+      .em-head, .em-body, .em-pill-row, .em-sched-bg { padding-left: 22px; padding-right: 22px; }
       .em-sched { flex-direction: column; gap: 20px; }
       .em-date-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); padding-right: 0; padding-bottom: 20px; }
       .em-time-col { padding-left: 0; }
       .em-footer { flex-direction: column; padding: 20px 24px; text-align: center; }
       .em-footer-r { text-align: center; }
-      .em-title { font-size: 30px; }
+      .em-title { font-size: 28px; }
+      .em-logo-box { width: 48px; height: 48px; }
+      .em-logo-box img { width: 38px; max-width: 38px; height: 38px; }
+      .em-table .lbl, .em-table .val { display: block; width: 100%; text-align: left; }
+      .em-table .lbl { padding-bottom: 2px; }
+      .em-table .val { padding-top: 0; }
     }
   </style>
 </head>
@@ -261,7 +270,7 @@
   <div class="em-head">
     <div class="em-logo-row">
       <div class="em-logo-box">
-        <img src="{{ $logo }}" alt="BTECH Logo">
+        <img src="{{ $message->embed(public_path('assets/images/logo.jpg')) }}" width="42" height="42" alt="BTECH Logo">
       </div>
       <div>
         <div class="em-school">Baliwag Polytechnic College</div>

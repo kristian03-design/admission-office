@@ -43,9 +43,6 @@ class InterviewScheduled extends Mailable
     {
         return new Content(
             view: 'emails.interview-scheduled',
-            with: [
-                'logo' => asset('assets/images/logo.jpg'),
-            ]
         );
     }
 

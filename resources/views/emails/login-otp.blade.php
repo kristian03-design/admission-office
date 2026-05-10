@@ -11,17 +11,18 @@
     body {
       font-family: 'Inter', Arial, sans-serif;
       background: #080F1A;
-      padding: 48px 16px;
+      margin: 0;
+      padding: 32px 14px;
       -webkit-font-smoothing: antialiased;
     }
 
-    .wrapper { max-width: 520px; margin: 0 auto; }
+    .wrapper { max-width: 520px; margin: 0 auto; width: 100%; }
 
     /* HEADER */
     .header {
       background: #0B1D35;
-      border-radius: 20px 20px 0 0;
-      padding: 36px 44px 32px;
+      border-radius: 14px 14px 0 0;
+      padding: 32px 40px 28px;
       position: relative;
       overflow: hidden;
       border-bottom: 1px solid rgba(200,168,75,0.15);
@@ -50,23 +51,23 @@
       position: relative;
     }
     .logo-box {
-      width: 44px; height: 44px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.1);
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: #fff;
       border: 1px solid rgba(255,255,255,0.15);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
-    .logo-box img { width: 26px; height: 26px; object-fit: contain; }
-    .school { font-size: 13px; font-weight: 600; color: #fff; line-height: 1.3; }
-    .dept { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+    .logo-box img { display: block; width: 42px; max-width: 42px; height: 42px; object-fit: contain; border: 0; outline: none; text-decoration: none; }
+    .school { font-size: 14px; font-weight: 600; color: #fff; line-height: 1.35; }
+    .dept { font-size: 12px; color: rgba(255,255,255,0.56); margin-top: 2px; line-height: 1.35; }
 
     /* SECURITY STRIP */
     .security-strip {
       background: #111D2E;
-      padding: 10px 44px;
+      padding: 10px 40px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -87,21 +88,22 @@
     .security-strip strong { color: #C8A84B; font-weight: 600; }
 
     /* BODY */
-    .body { background: #0E1F38; padding: 38px 44px; }
+    .body { background: #0E1F38; padding: 34px 40px; }
 
     .greeting {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 28px;
+      font-size: 26px;
       color: #fff;
       margin-bottom: 10px;
+      line-height: 1.25;
     }
     .greeting em { font-style: italic; color: #E8C96A; }
 
     .greeting-text {
       font-size: 13px;
       color: rgba(255,255,255,0.4);
-      line-height: 1.75;
-      margin-bottom: 32px;
+      line-height: 1.65;
+      margin-bottom: 28px;
     }
 
     /* OTP BLOCK */
@@ -116,8 +118,8 @@
     .otp-box {
       background: #091525;
       border: 1px solid rgba(200,168,75,0.22);
-      border-radius: 16px;
-      padding: 32px 24px;
+      border-radius: 14px;
+      padding: 28px 22px;
       text-align: center;
       margin-bottom: 24px;
       position: relative;
@@ -133,9 +135,9 @@
     }
     .otp-digits {
       font-family: 'JetBrains Mono', 'Courier New', monospace;
-      font-size: 50px;
+      font-size: 42px;
       font-weight: 500;
-      letter-spacing: 14px;
+      letter-spacing: 10px;
       color: #C8A84B;
       padding-left: 14px;
     }
@@ -181,8 +183,8 @@
     /* FOOTER */
     .footer {
       background: #080F1A;
-      border-radius: 0 0 20px 20px;
-      padding: 22px 44px;
+      border-radius: 0 0 14px 14px;
+      padding: 20px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -192,10 +194,13 @@
     .footer-right { font-size: 10px; color: rgba(255,255,255,0.15); text-align: right; }
 
     @media (max-width: 480px) {
-      .header, .body, .security-strip { padding-left: 24px; padding-right: 24px; }
+      body { padding: 18px 10px; }
+      .header, .body, .security-strip { padding-left: 22px; padding-right: 22px; }
       .footer { flex-direction: column; padding: 20px 24px; text-align: center; }
       .footer-right { text-align: center; }
-      .otp-digits { font-size: 38px; letter-spacing: 10px; padding-left: 10px; }
+      .logo-box { width: 48px; height: 48px; }
+      .logo-box img { width: 38px; max-width: 38px; height: 38px; }
+      .otp-digits { font-size: 32px; letter-spacing: 7px; padding-left: 7px; }
     }
   </style>
 </head>
@@ -206,7 +211,7 @@
   <div class="header">
     <div class="logo-row">
       <div class="logo-box">
-        <img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH" />
+        <img src="{{ $message->embed(public_path('assets/images/logo.jpg')) }}" width="42" height="42" alt="BTECH Logo" />
       </div>
       <div>
         <div class="school">BTECH Admin Portal</div>

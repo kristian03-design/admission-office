@@ -11,17 +11,18 @@
     body {
       font-family: 'Inter', Arial, sans-serif;
       background: #EEF2F7;
-      padding: 48px 16px;
+      margin: 0;
+      padding: 32px 14px;
       -webkit-font-smoothing: antialiased;
     }
 
-    .wrapper { max-width: 580px; margin: 0 auto; }
+    .wrapper { max-width: 580px; margin: 0 auto; width: 100%; }
 
     /* HEADER */
     .header {
       background: #0B1D35;
-      border-radius: 20px 20px 0 0;
-      padding: 40px 44px 36px;
+      border-radius: 14px 14px 0 0;
+      padding: 32px 40px 30px;
       position: relative;
       overflow: hidden;
     }
@@ -46,44 +47,45 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 30px;
+      margin-bottom: 24px;
       position: relative;
     }
     .logo-box {
-      width: 44px; height: 44px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.1);
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: #fff;
       border: 1px solid rgba(255,255,255,0.15);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
-    .logo-box img { width: 26px; height: 26px; object-fit: contain; }
-    .school { font-size: 13px; font-weight: 600; color: #fff; line-height: 1.3; }
-    .dept { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+    .logo-box img { display: block; width: 42px; max-width: 42px; height: 42px; object-fit: contain; border: 0; outline: none; text-decoration: none; }
+    .school { font-size: 14px; font-weight: 600; color: #fff; line-height: 1.35; }
+    .dept { font-size: 12px; color: rgba(255,255,255,0.56); margin-top: 2px; line-height: 1.35; }
 
     .header-title {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 40px;
+      font-size: 34px;
       color: #fff;
-      line-height: 1.05;
+      line-height: 1.12;
       margin-bottom: 10px;
       position: relative;
     }
     .header-title em { font-style: italic; color: #E8C96A; }
 
     .header-sub {
-      font-size: 13px;
-      color: rgba(255,255,255,0.35);
+      font-size: 14px;
+      color: rgba(255,255,255,0.58);
       font-weight: 300;
+      line-height: 1.55;
       position: relative;
     }
 
     /* STATUS STRIP */
     .status-strip {
       background: #C8A84B;
-      padding: 11px 44px;
+      padding: 11px 40px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -98,22 +100,23 @@
     }
 
     /* BODY */
-    .body { background: #fff; padding: 36px 44px 44px; }
+    .body { background: #fff; padding: 32px 40px 40px; }
 
     .greeting {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 24px;
+      font-size: 23px;
       color: #0B1D35;
       margin-bottom: 14px;
+      line-height: 1.25;
     }
-    .body p { font-size: 14px; color: #4A5568; line-height: 1.8; }
+    .body p { font-size: 14px; color: #4A5568; line-height: 1.7; }
 
     /* REFERENCE BOX */
     .ref-section {
-      margin: 32px 0;
+      margin: 28px 0;
       border: 1.5px dashed #CBD5E0;
       border-radius: 14px;
-      padding: 28px;
+      padding: 24px 22px;
       text-align: center;
       background: #FAFBFC;
     }
@@ -127,9 +130,11 @@
     }
     .ref-number {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 36px;
+      font-size: 30px;
       color: #0B1D35;
-      letter-spacing: 3px;
+      letter-spacing: 1.5px;
+      line-height: 1.2;
+      word-break: break-word;
     }
     .ref-note { margin-top: 10px; font-size: 11px; color: #A0AEC0; }
 
@@ -147,7 +152,7 @@
     .info-table { width: 100%; border-collapse: collapse; }
     .info-table tr { border-bottom: 1px solid #EDF2F7; }
     .info-table tr:last-child { border-bottom: none; }
-    .info-table td { padding: 12px 0; font-size: 13px; vertical-align: middle; }
+    .info-table td { padding: 12px 0; font-size: 13px; line-height: 1.45; vertical-align: middle; }
     .info-table .lbl { color: #A0AEC0; width: 45%; }
     .info-table .val { color: #0B1D35; font-weight: 600; text-align: right; }
 
@@ -164,8 +169,8 @@
     /* FOOTER */
     .footer {
       background: #0B1D35;
-      border-radius: 0 0 20px 20px;
-      padding: 22px 44px;
+      border-radius: 0 0 14px 14px;
+      padding: 20px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -174,10 +179,17 @@
     .footer-right { font-size: 10px; color: rgba(255,255,255,0.2); text-align: right; }
 
     @media (max-width: 500px) {
-      .header, .body, .status-strip { padding-left: 24px; padding-right: 24px; }
+      body { padding: 18px 10px; }
+      .header, .body, .status-strip { padding-left: 22px; padding-right: 22px; }
       .footer { flex-direction: column; padding: 20px 24px; text-align: center; }
       .footer-right { text-align: center; }
-      .header-title { font-size: 30px; }
+      .header-title { font-size: 28px; }
+      .logo-box { width: 48px; height: 48px; }
+      .logo-box img { width: 38px; max-width: 38px; height: 38px; }
+      .info-table .lbl, .info-table .val { display: block; width: 100%; text-align: left; }
+      .info-table .lbl { padding-bottom: 2px; }
+      .info-table .val { padding-top: 0; }
+      .ref-number { font-size: 24px; letter-spacing: 1px; }
     }
   </style>
 </head>
@@ -188,7 +200,7 @@
   <div class="header">
     <div class="logo-row">
       <div class="logo-box">
-        <img src="{{ $logo }}" alt="BTECH Logo">
+        <img src="{{ $message->embed(public_path('assets/images/logo.jpg')) }}" width="42" height="42" alt="BTECH Logo">
       </div>
       <div>
         <div class="school">Baliwag Polytechnic College</div>

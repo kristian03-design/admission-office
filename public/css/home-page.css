@@ -66,10 +66,21 @@ html {
   will-change: opacity, transform;
 }
 
-[data-animate="fade-up"] { transform: translateY(30px); }
-[data-animate="fade-down"] { transform: translateY(-30px); }
-[data-animate="fade-left"] { transform: translateX(30px); }
-[data-animate="fade-right"] { transform: translateX(-30px); }
+[data-animate="fade-up"] {
+  transform: translateY(30px);
+}
+
+[data-animate="fade-down"] {
+  transform: translateY(-30px);
+}
+
+[data-animate="fade-left"] {
+  transform: translateX(30px);
+}
+
+[data-animate="fade-right"] {
+  transform: translateX(-30px);
+}
 
 [data-animate].is-visible {
   opacity: 1;

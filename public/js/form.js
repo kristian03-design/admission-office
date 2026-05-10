@@ -974,6 +974,25 @@ function buildReview() {
 
 function trySubmit()  { openModal('moConfirm'); }
 
+function setSubmitState(isSubmitting) {
+  const confirmBtn = document.getElementById('submitBtn');
+  if (confirmBtn) {
+    confirmBtn.disabled = isSubmitting;
+    confirmBtn.innerHTML = isSubmitting
+      ? '<i data-iconsax="refresh" style="width:13px;height:13px"></i>Submitting...'
+      : '<i data-iconsax="check" style="width:13px;height:13px"></i>Confirm &amp; Submit';
+  }
+
+  document.querySelectorAll('.review-action-bar .bsub').forEach(function (button) {
+    button.disabled = isSubmitting;
+    button.innerHTML = isSubmitting
+      ? '<i data-iconsax="refresh" style="width:14px;height:14px"></i>Submitting...'
+      : '<i data-iconsax="check" style="width:14px;height:14px"></i>Submit Application';
+  });
+
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
+}
+
 function buildAddress(prefix) {
   const parts = [
     gv(prefix + 'Barangay') ? 'Brgy. ' + gv(prefix + 'Barangay') : '',
@@ -995,8 +1014,7 @@ async function doSubmit() {
     alert('Cannot submit: API is not loaded. Make sure the backend is running and you opened this page from the correct URL (e.g. http://localhost/admission-office/...).');
     return;
   }
-  const btn = document.getElementById('submitBtn');
-  if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
+  setSubmitState(true);
   try {
     const year = new Date().getFullYear();
     const payload = {
@@ -1068,10 +1086,10 @@ async function doSubmit() {
       if (list.length) msg = 'Validation failed:\n\n' + list.join('\n');
     }
     alert(msg);
-    if (btn) { btn.disabled = false; btn.textContent = 'Submit application'; }
+    setSubmitState(false);
     return;
   }
-  if (btn) { btn.disabled = false; btn.textContent = 'Submit application'; }
+  setSubmitState(false);
 }
 
 async function uploadSubmittedFiles(data) {

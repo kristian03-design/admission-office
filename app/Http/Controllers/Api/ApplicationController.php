@@ -127,19 +127,21 @@ class ApplicationController extends Controller
         // Clear welcome page cache to reflect slot changes immediately
         Cache::forget('welcome_page_data');
 
-        // Send email to applicant
-        if ($application->email && SystemSetting::get('email_notifications', '1') !== '0') {
-            try {
-                Mail::to($application->email)->send(new ApplicationSubmitted($application));
-            } catch (\Exception $e) {
-                // Log error but don't fail the request
-                Log::error('Failed to send application submission email: ' . $e->getMessage());
-            }
-        }
-
         $payload = $application->toArray();
         unset($payload['document_upload_token']);
         $payload['upload_token'] = $uploadToken;
+
+        // Keep the public submit response fast; email can finish after the browser
+        // already has the reference number and can show the success modal.
+        if ($application->email && SystemSetting::get('email_notifications', '1') !== '0') {
+            app()->terminating(function () use ($application) {
+                try {
+                    Mail::to($application->email)->send(new ApplicationSubmitted($application));
+                } catch (\Exception $e) {
+                    Log::error('Failed to send application submission email: ' . $e->getMessage());
+                }
+            });
+        }
 
         return response()->json(['data' => $payload], 201);
     }

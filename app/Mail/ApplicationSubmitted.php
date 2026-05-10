@@ -41,9 +41,6 @@ class ApplicationSubmitted extends Mailable
     {
         return new Content(
             view: 'emails.application-submitted',
-            with: [
-                'logo' => asset('assets/images/logo.jpg'),
-            ]
         );
     }
 
