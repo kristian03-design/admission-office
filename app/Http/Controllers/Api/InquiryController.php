@@ -9,6 +9,7 @@ use App\Mail\NewInquiry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 
 class InquiryController extends Controller
 {
@@ -29,7 +30,12 @@ class InquiryController extends Controller
         $inquiry = null;
 
         try {
-            $inquiry = ContactInquiry::create($validated + ['status' => 'pending']);
+            $payload = $validated;
+            if (Schema::hasColumn('contact_inquiries', 'status')) {
+                $payload['status'] = 'pending';
+            }
+
+            $inquiry = ContactInquiry::create($payload);
         } catch (\Exception $e) {
             Log::error('Contact Inquiry Save Error: ' . $e->getMessage());
 
@@ -63,8 +69,48 @@ class InquiryController extends Controller
      */
     public function index()
     {
-        $inquiries = ContactInquiry::orderBy('created_at', 'desc')->get();
-        return response()->json(['data' => $inquiries]);
+        try {
+            if (! Schema::hasTable('contact_inquiries')) {
+                return response()->json(['data' => []]);
+            }
+
+            $query = ContactInquiry::query();
+            if (Schema::hasColumn('contact_inquiries', 'created_at')) {
+                $query->orderBy('created_at', 'desc');
+            } else {
+                $query->orderBy('id', 'desc');
+            }
+
+            return response()->json(['data' => $query->get()]);
+        } catch (\Exception $e) {
+            Log::error('Contact Inquiry List Error: ' . $e->getMessage());
+
+            return response()->json(['data' => []]);
+        }
+    }
+
+    /**
+     * PATCH /api/admin/inquiries/{id}/status
+     */
+    public function updateStatus(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'status' => ['required', 'string', 'in:pending,read,replied'],
+        ]);
+
+        if (! Schema::hasColumn('contact_inquiries', 'status')) {
+            return response()->json([
+                'message' => 'Inquiry status column is not available yet.',
+            ]);
+        }
+
+        $inquiry = ContactInquiry::findOrFail($id);
+        $inquiry->update(['status' => $validated['status']]);
+
+        return response()->json([
+            'message' => 'Inquiry status updated.',
+            'data' => $inquiry,
+        ]);
     }
 
     /**
@@ -72,6 +118,10 @@ class InquiryController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! Schema::hasTable('contact_inquiries')) {
+            return response()->json(['message' => 'Inquiry deleted.']);
+        }
+
         ContactInquiry::findOrFail($id)->delete();
         return response()->json(['message' => 'Inquiry deleted.']);
     }

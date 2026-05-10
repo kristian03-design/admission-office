@@ -80,6 +80,7 @@ let currentPage = 'dashboard';
 let appPage = 1;
 const APP_PER_PAGE = 10;
 let API_APPLICATIONS = null;
+let API_INQUIRIES = [];
 let filteredApps = [];
 let SYSTEM_SETTINGS = null;
 const ADMIN_LOGIN_URL = window.ADMIN_LOGIN_URL || '/admin/login';
@@ -187,6 +188,18 @@ function fullNameDisplay(app) {
 
 function formatDate(d) {
   return new Date(d).toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function formatDateTime(d) {
+  const date = new Date(d);
+  if (isNaN(date.getTime())) return 'Just now';
+  return date.toLocaleString('en-PH', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit'
+  });
 }
 
 function showToast(msg) {
@@ -4031,20 +4044,44 @@ function dashboardNotificationsEnabled() {
 
 function getUnreadNotifications() {
   const pending = getApplications().filter(a => a.status === 'Pending');
-  return pending.map(a => {
+  const applicationNotifications = pending.map(a => {
     const ref = a.ref || (a.id != null ? `app-${a.id}` : '');
     return {
       id: ref,
       appId: a.id != null ? Number(a.id) : null,
-      type: 'pending',
+      type: 'application',
       title: fullNameDisplay(a),
       program: shortProg(a.firstChoice),
       message: `Application pending review`,
       time: formatDate(a.filed),
+      sortKey: new Date(a.filed || 0).getTime() || 0,
       read: false,
       ref
     };
   });
+
+  const inquiryNotifications = (Array.isArray(API_INQUIRIES) ? API_INQUIRIES : [])
+    .filter(i => String(i.status || 'pending').toLowerCase() !== 'read')
+    .map(i => {
+      const name = [i.first_name, i.last_name].filter(Boolean).join(' ').trim() || 'Website visitor';
+      const ref = `inq-${i.id || `${i.email || ''}-${i.created_at || ''}`}`;
+      return {
+        id: ref,
+        inquiryId: i.id != null ? Number(i.id) : null,
+        type: 'inquiry',
+        title: name,
+        subject: i.subject || 'Website inquiry',
+        email: i.email || '',
+        message: i.message || 'New website inquiry received.',
+        time: formatDateTime(i.created_at),
+        sortKey: new Date(i.created_at || 0).getTime() || 0,
+        read: false,
+        ref
+      };
+    });
+
+  return [...inquiryNotifications, ...applicationNotifications]
+    .sort((a, b) => (b.sortKey || 0) - (a.sortKey || 0));
 }
 
 function syncNotificationToasts(options = {}) {
@@ -4057,9 +4094,29 @@ function syncNotificationToasts(options = {}) {
   if (silent || !fresh.length || !dashboardNotificationsEnabled()) return;
 
   if (fresh.length === 1) {
-    showToast(`New admin notification: ${fresh[0].title} has a pending application.`);
+    const item = fresh[0];
+    showToast(item.type === 'inquiry'
+      ? `New website inquiry from ${item.title}.`
+      : `New admin notification: ${item.title} has a pending application.`);
   } else {
-    showToast(`Admin received ${fresh.length} new application notifications.`);
+    showToast(`Admin received ${fresh.length} new notifications.`);
+  }
+}
+
+async function markInquiryRead(id, status = 'read') {
+  if (id == null || id === '') return;
+  const inquiry = API_INQUIRIES.find(i => String(i.id) === String(id));
+  if (inquiry) inquiry.status = status;
+
+  try {
+    const response = await apiFetch(`/api/admin/inquiries/${id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status })
+    });
+    if (!response.ok) throw new Error('Failed to update inquiry status');
+  } catch (error) {
+    console.warn('Could not mark inquiry notification as read:', error);
   }
 }
 
@@ -4069,6 +4126,46 @@ function renderNotifications() {
   const body = document.getElementById('notifBody');
   const hasNotif = notifications.length > 0;
   const buttons = document.getElementById('markReadBtn').parentElement;
+
+  if (hasNotif) {
+    body.innerHTML = notifications.map(n => `
+      <div class="notif-item notif-item--unread notif-item--${escapeHtml(n.type || 'application')}"
+        data-notif-type="${escapeHtml(n.type || 'application')}"
+        data-app-id="${n.appId != null ? n.appId : ''}"
+        data-app-ref="${escapeHtml(n.ref || '')}"
+        data-inquiry-id="${n.inquiryId != null ? n.inquiryId : ''}"
+        role="button" tabindex="0">
+        <div class="notif-icon">
+          <i data-iconsax="${n.type === 'inquiry' ? 'mail' : 'file-text'}"></i>
+        </div>
+        <div class="notif-content">
+          <div class="notif-text">
+            <div class="notif-row">
+              <span class="notif-kind">${n.type === 'inquiry' ? 'Website Inquiry' : 'Application'}</span>
+              <span class="notif-time">${escapeHtml(n.time)}</span>
+            </div>
+            <div class="notif-msg"><strong>${escapeHtml(n.title)}</strong> ${n.type === 'inquiry' ? 'sent a message.' : 'needs review.'}</div>
+            <div class="notif-detail">${escapeHtml(n.type === 'inquiry' ? n.subject : n.program)}</div>
+            ${n.type === 'inquiry' && n.email ? `<div class="notif-email">${escapeHtml(n.email)}</div>` : ''}
+            ${n.type === 'inquiry' ? `<div class="notif-preview">${escapeHtml(n.message)}</div>` : ''}
+          </div>
+        </div>
+      </div>
+    `).join('');
+    buttons.querySelectorAll('.notif-btn').forEach(b => b.style.display = 'block');
+  } else {
+    body.innerHTML = `
+      <div class="notif-empty">
+        <div class="notif-empty-icon"><i data-iconsax="bell-off"></i></div>
+        <strong>You're all caught up</strong>
+        <p>No new notifications</p>
+      </div>
+    `;
+    buttons.querySelectorAll('.notif-btn').forEach(b => b.style.display = 'none');
+  }
+
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
+  return;
 
   if (hasNotif) {
     body.innerHTML = notifications.map(n => `
@@ -4289,6 +4386,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!item) return;
     e.preventDefault();
     closeNotifications();
+    const type = item.getAttribute('data-notif-type');
+    if (type === 'inquiry') {
+      const inquiryId = item.getAttribute('data-inquiry-id');
+      const inquiry = API_INQUIRIES.find(i => String(i.id) === String(inquiryId));
+      const ref = item.getAttribute('data-app-ref');
+      if (ref) readNotifRefs.add(ref);
+      markInquiryRead(inquiryId);
+      updatePendingBadge();
+      if (inquiry && inquiry.email) {
+        const subject = encodeURIComponent(`Re: ${inquiry.subject || 'Admissions Inquiry'}`);
+        window.location.href = `mailto:${inquiry.email}?subject=${subject}`;
+      }
+      return;
+    }
     const id = item.getAttribute('data-app-id');
     const ref = item.getAttribute('data-app-ref');
     if (id != null && id !== '' && id !== 'null' && !isNaN(Number(id))) {
@@ -4304,6 +4415,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('markReadBtn').addEventListener('click', () => {
     const list = getUnreadNotifications().filter(n => !readNotifRefs.has(n.ref));
     list.forEach(n => readNotifRefs.add(n.ref));
+    list.filter(n => n.type === 'inquiry' && n.inquiryId != null).forEach(n => markInquiryRead(n.inquiryId));
     renderNotifications();
     updatePendingBadge();
     showToast('All notifications marked as read');
@@ -4311,6 +4423,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('clearNotifBtn').addEventListener('click', () => {
     const list = getUnreadNotifications().filter(n => !readNotifRefs.has(n.ref));
     list.forEach(n => readNotifRefs.add(n.ref));
+    list.filter(n => n.type === 'inquiry' && n.inquiryId != null).forEach(n => markInquiryRead(n.inquiryId));
     renderNotifications();
     updatePendingBadge();
     closeNotifications();
@@ -4468,26 +4581,35 @@ async function refreshData(isInitial = false) {
     if (topbarName) topbarName.textContent = name;
     if (topbarInitials) topbarInitials.textContent = initials;
 
-    const [appsResult, programsResult, statsResult, settingsResult] = await Promise.allSettled([
+    const [appsResult, programsResult, statsResult, settingsResult, inquiriesResult] = await Promise.allSettled([
       AdmissionAPI.getApplications({ per_page: 100 }),
       AdmissionAPI.getPrograms({ allowFallback: false }),
       AdmissionAPI.getDashboardStats(),
-      AdmissionAPI.getSettings()
+      AdmissionAPI.getSettings(),
+      apiFetch('/api/admin/inquiries').then(async response => {
+        if (!response.ok) throw new Error('Failed to load inquiries');
+        return response.json();
+      })
     ]);
 
     if (appsResult.status === 'rejected') console.warn('Applications API failed:', appsResult.reason);
     if (programsResult.status === 'rejected') console.warn('Programs API and fallback failed:', programsResult.reason);
     if (statsResult.status === 'rejected') console.warn('Dashboard stats API failed:', statsResult.reason);
     if (settingsResult.status === 'rejected') console.warn('Settings API failed:', settingsResult.reason);
+    if (inquiriesResult.status === 'rejected') console.warn('Inquiries API failed:', inquiriesResult.reason);
 
     const res = appsResult.status === 'fulfilled' ? appsResult.value : null;
     const progList = programsResult.status === 'fulfilled' ? programsResult.value : [];
     const stats = statsResult.status === 'fulfilled' ? statsResult.value : null;
     const settings = settingsResult.status === 'fulfilled' ? settingsResult.value : {};
+    const inquiriesPayload = inquiriesResult.status === 'fulfilled' ? inquiriesResult.value : {};
 
     DASHBOARD_STATS = stats && typeof stats === 'object' && Object.prototype.hasOwnProperty.call(stats, 'total_applications') ? stats : null;
     reportsRenderKey = '';
     applySystemSettingsUI(settings);
+    API_INQUIRIES = Array.isArray(inquiriesPayload)
+      ? inquiriesPayload
+      : (inquiriesPayload && Array.isArray(inquiriesPayload.data)) ? inquiriesPayload.data : [];
 
     const raw = Array.isArray(res) ? res : (res && Array.isArray(res.data)) ? res.data : [];
     API_APPLICATIONS = raw.map(a => {

@@ -11,6 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('contact_inquiries')) {
+            Schema::table('contact_inquiries', function (Blueprint $table) {
+                if (! Schema::hasColumn('contact_inquiries', 'status')) {
+                    $table->string('status')->default('pending');
+                }
+
+                if (! Schema::hasColumn('contact_inquiries', 'created_at')) {
+                    $table->timestamp('created_at')->nullable();
+                }
+
+                if (! Schema::hasColumn('contact_inquiries', 'updated_at')) {
+                    $table->timestamp('updated_at')->nullable();
+                }
+            });
+
+            return;
+        }
+
         Schema::create('contact_inquiries', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');

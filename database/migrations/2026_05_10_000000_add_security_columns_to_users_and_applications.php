@@ -29,12 +29,16 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('applications', function (Blueprint $table) {
-            $table->dropColumn('document_upload_token');
-        });
+        if (Schema::hasTable('applications') && Schema::hasColumn('applications', 'document_upload_token')) {
+            Schema::table('applications', function (Blueprint $table) {
+                $table->dropColumn('document_upload_token');
+            });
+        }
 
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('is_admin');
-        });
+        if (Schema::hasTable('users') && Schema::hasColumn('users', 'is_admin')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('is_admin');
+            });
+        }
     }
 };

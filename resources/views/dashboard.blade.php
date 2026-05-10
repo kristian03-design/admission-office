@@ -12,7 +12,7 @@
   @include('partials.iconsax')
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=10" />
+  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=11" />
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
     (function () {
@@ -24,7 +24,7 @@
   </script>
   <script src="{{ asset('js/api-config.js') }}?v=8"></script>
   <script src="{{ asset('js/admission-api.js') }}?v=17"></script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=42" defer></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=43" defer></script>
 </head>
 <body>
   @include('partials.site-loader')
@@ -138,7 +138,8 @@
     </div>
     <div class="notif-body" id="notifBody">
       <div class="notif-empty">
-        <i data-iconsax="bell-off"></i>
+        <div class="notif-empty-icon"><i data-iconsax="bell-off"></i></div>
+        <strong>You're all caught up</strong>
         <p>No new notifications</p>
       </div>
     </div>
