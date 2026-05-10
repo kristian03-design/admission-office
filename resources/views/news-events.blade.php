@@ -25,7 +25,7 @@
           <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
         </div>
       </a>
-      <nav class="hidden md:flex items-center gap-8">
+      <nav class="nav-desktop hidden md:flex items-center gap-8">
         <a href="{{ route('home') }}" class="nav-link text-sm font-medium tracking-wide">Home</a>
         <a href="{{ route('about') }}" class="nav-link text-sm font-medium tracking-wide">About</a>
         <a href="{{ route('home') }}#programs" class="nav-link text-sm font-medium tracking-wide">Programs</a>
@@ -73,8 +73,8 @@
 
   <main>
     <section class="hero-section relative min-h-[40vh] flex items-center overflow-hidden">
-      <div class="hero-bg-overlay absolute inset-0"></div>
-      <div class="hero-pattern absolute inset-0"></div>
+      <div class="hero-bg-overlay absolute top-0 left-0 right-0 bottom-0"></div>
+      <div class="hero-pattern absolute top-0 left-0 right-0 bottom-0"></div>
       <div class="relative z-10 max-w-7xl mx-auto px-8 w-full pt-24 pb-12">
         <div class="max-w-3xl">
           <span class="section-tag">Stay Updated</span>

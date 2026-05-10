@@ -101,7 +101,10 @@ body.site-loader-lock {
 
 .site-loader {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 99999;
   display: flex;
   align-items: center;
@@ -178,7 +181,10 @@ body.site-loader-lock {
 
 .site-loader__bar span {
   position: absolute;
-  inset: 0 auto 0 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: auto;
   width: 42%;
   border-radius: inherit;
   background: linear-gradient(90deg, var(--navy), var(--gold-mid));
@@ -477,20 +483,20 @@ body.menu-open .logo-badge {
 }
 
 .text-line-1 {
-  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  font-size: clamp(1.8rem, 5vw, 3.8rem);
   font-weight: 400;
   opacity: .85;
 }
 
 .text-line-2 {
-  font-size: clamp(3.2rem, 9vw, 5.8rem);
+  font-size: clamp(2.4rem, 9vw, 5.8rem);
   font-weight: 600;
   color: var(--gold-mid);
   text-shadow: 0 0 60px rgba(201, 147, 58, .4);
 }
 
 .text-line-3 {
-  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  font-size: clamp(1.8rem, 5vw, 3.8rem);
   font-weight: 400;
   opacity: .9;
 }
@@ -1486,13 +1492,19 @@ body.menu-open .logo-badge {
 
 .apply-cta-bg {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: linear-gradient(135deg, #0f2340 0%, var(--navy) 50%, #1a3f6e 100%);
 }
 
 .apply-cta-pattern {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-image:
     radial-gradient(circle at 80% 20%, rgba(212, 168, 67, .2) 0%, transparent 50%),
     radial-gradient(circle at 10% 80%, rgba(45, 106, 79, .15) 0%, transparent 40%),
@@ -1949,7 +1961,10 @@ body.menu-open .logo-badge {
 /* Each slide */
 .hero-img-slide {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -2177,7 +2192,10 @@ body.menu-open #menu-toggle svg {
 /* ─── MODAL ─── */
 .modal-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: rgba(15, 35, 64, .85);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
@@ -2255,7 +2273,10 @@ body.menu-open #menu-toggle svg {
 /* Announcement popup */
 .announcement-popup {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -2357,7 +2378,10 @@ body.announcement-popup-open {
 
 .announcement-popup__media-shade {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: linear-gradient(180deg, rgba(7, 16, 30, .14) 0%, rgba(7, 16, 30, .02) 42%, rgba(255, 255, 255, .96) 100%);
   pointer-events: none;
 }
@@ -2607,6 +2631,11 @@ body.announcement-popup-open {
 
   .hero-content {
     text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .hero-headline {
+    line-height: 1.15 !important;
   }
 
   .hero-content .inline-flex,
@@ -2683,7 +2712,11 @@ body.announcement-popup-open {
   }
 
   #hero .pt-28 {
-    padding-top: 6rem;
+    padding-top: 5rem;
+  }
+  
+  .hero-section {
+    padding-top: 80px; /* offset for fixed nav */
   }
 }
 
@@ -2714,8 +2747,8 @@ body.announcement-popup-open {
 
   .nav-main {
     font-size: 0.72rem;
-    max-width: 180px;
-    white-space: nowrap;
+    max-width: 220px;
+    white-space: nowrap !important;
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -3534,6 +3567,12 @@ body.menu-open #menu-toggle svg {
 .right-0 { right: 0; }
 .z-50 { z-index: 50; }
 .hidden { display: none !important; }
+@media (max-width: 767px) {
+  .nav-desktop {
+    display: none !important;
+  }
+}
+
 @media (min-width: 768px) {
   .md\:flex { display: flex !important; }
   .md\:hidden { display: none !important; }
