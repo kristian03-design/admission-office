@@ -237,10 +237,11 @@ body.site-loader-lock {
   box-sizing: border-box;
 }
 
+/* Logo area — fixed width to help center the links */
 .nav-inner > a {
   display: flex !important;
   align-items: center !important;
-  flex-shrink: 1 !important;
+  flex: 0 1 300px !important; /* Allow it to shrink but aim for 300px */
   min-width: 0 !important;
   gap: 0.75rem;
   text-decoration: none;
@@ -251,7 +252,7 @@ body.site-loader-lock {
   min-width: 0 !important;
   overflow: hidden !important;
   flex-shrink: 1 !important;
-  max-width: 180px;
+  max-width: 400px !important; /* Increased to prevent wrapping */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -265,21 +266,23 @@ body.site-loader-lock {
   display: block !important;
 }
 
-/* Desktop nav — hidden by default, shown on wide screens */
+/* Desktop nav — center it */
 .nav-desktop {
   display: none !important;
-  flex-shrink: 0;
+  flex: 1 !important;
+  justify-content: center !important;
+  gap: 2.5rem !important; /* Balanced gap */
 }
 
-/* Action group (Inquire Now + hamburger) — never wraps */
+/* Action group — fixed width to balance the logo */
 .nav-actions {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   align-items: center !important;
+  justify-content: flex-end !important;
   gap: 0.75rem !important;
-  flex-shrink: 0 !important;
-  margin-left: auto;
+  flex: 0 1 300px !important;
   height: 100%;
 }
 
@@ -288,14 +291,16 @@ body.site-loader-lock {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    gap: 2rem !important;
-    flex-shrink: 0;
+    flex: 1 !important;
+    justify-content: center !important;
+    gap: 2.5rem !important;
   }
   .nav-inner > a .leading-tight {
-    max-width: 280px;
+    max-width: 450px !important;
   }
   .nav-actions {
-    margin-left: 0;
+    flex: 0 1 300px !important;
+    justify-content: flex-end !important;
   }
 }
 
