@@ -154,17 +154,56 @@
     @media (max-width: 640px) {
       .team-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
       }
 
       .team-card-inner {
         padding: 24px;
       }
 
+      .team-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+
       .team-photo,
       .team-fallback {
-        width: 76px;
-        height: 76px;
-        border-radius: 19px;
+        width: 72px;
+        height: 72px;
+        border-radius: 18px;
+      }
+
+      .team-name {
+        font-size: 1.35rem;
+        margin-top: 8px;
+      }
+
+      .team-role {
+        font-size: 10px;
+        padding: 4px 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .team-card-inner {
+        padding: 20px;
+        align-items: center;
+        text-align: center;
+      }
+      
+      .team-card-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .team-name {
+        font-size: 1.25rem;
+      }
+
+      .team-note {
+        font-size: 0.9rem;
       }
     }
   </style>
@@ -324,7 +363,11 @@
                     class="team-fallback {{ $memberImageUrl ? 'hidden' : 'flex' }}"
                     aria-label="{{ $member['name'] }}"
                   >
-                    {{ strtoupper(substr($member['name'], 0, 1)) }}
+                    @php
+                      $nameParts = explode(' ', preg_replace('/^(Mr\.|Mrs\.|Ms\.|Dr\.)\s+/i', '', trim($member['name'])));
+                      $initial = strtoupper(substr($nameParts[0] ?? '?', 0, 1));
+                    @endphp
+                    {{ $initial }}
                   </div>
                   </div>
                   <div>

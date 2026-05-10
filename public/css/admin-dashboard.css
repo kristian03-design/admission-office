@@ -726,20 +726,18 @@ body {
 }
 
 .btn-inline-spinner {
-  width: 14px;
-  height: 14px;
-  border: 2px solid rgba(255, 255, 255, .45);
+  width: 16px;
+  height: 16px;
+  border: 2.5px solid rgba(255, 255, 255, .3);
   border-top-color: #fff;
-  border-radius: 999px;
+  border-radius: 50%;
   display: inline-block;
-  flex: 0 0 auto;
-  animation: btnSpin .7s linear infinite;
+  flex-shrink: 0;
+  animation: btnSpin .6s linear infinite;
 }
 
 @keyframes btnSpin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 .btn-outline {

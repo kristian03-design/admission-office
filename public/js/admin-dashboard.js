@@ -13,7 +13,7 @@ window.addEventListener('load', () => {
 setTimeout(hideSiteLoader, 4500); // fallback
 
 function savingButtonMarkup(label = 'Saving...') {
-  return `<span class="btn-inline-spinner" aria-hidden="true"></span><span>${label}</span>`;
+  return `<span class="btn-inline-spinner" style="vertical-align: middle; margin-right: 8px;"></span><span style="vertical-align: middle;">${label}</span>`;
 }
 
 function showConfirmModal(options) {
@@ -3200,9 +3200,10 @@ async function saveFacultyStaff() {
   }
 
   const btn = document.getElementById("saveFacultyStaffBtn");
+  if (!btn) return;
   const originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = savingButtonMarkup();
+  btn.innerHTML = savingButtonMarkup("Saving Member...");
 
   try {
     const payload = new FormData();
