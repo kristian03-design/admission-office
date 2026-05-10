@@ -1,130 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Admission Inquiry</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #EEF2F7;
-            font-family: Arial, Helvetica, sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Admission Inquiry — Baliwag Polytechnic College</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        table { border-collapse: collapse; }
-        img { border: 0; outline: none; text-decoration: none; display: block; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: #F1F5F9;
+      margin: 0;
+      padding: 32px 14px;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        .page { width: 100%; background: #EEF2F7; padding: 32px 14px; }
-        .card { width: 100%; max-width: 580px; background: #ffffff; border-radius: 14px; overflow: hidden; }
-        .header { background: #0B1D35; padding: 32px 40px 28px; }
-        .logo-cell { width: 52px; height: 52px; background: #ffffff; border-radius: 12px; text-align: center; vertical-align: middle; }
-        .logo { width: 42px; max-width: 42px; height: 42px; margin: 5px auto; object-fit: contain; }
-        .school { color: #ffffff; font-size: 14px; font-weight: 700; line-height: 1.35; }
-        .dept { color: rgba(255,255,255,0.56); font-size: 12px; line-height: 1.35; padding-top: 2px; }
-        .title { color: #ffffff; font-size: 26px; line-height: 1.2; font-weight: 700; padding-top: 24px; margin: 0; }
-        .subtitle { color: rgba(255,255,255,0.58); font-size: 14px; line-height: 1.55; padding-top: 8px; }
-        .status { background: #C8A84B; color: #0B1D35; font-size: 10px; line-height: 1.4; letter-spacing: 1.6px; font-weight: 700; text-transform: uppercase; padding: 11px 40px; }
-        .body { padding: 32px 40px 40px; }
-        .intro { color: #4A5568; font-size: 14px; line-height: 1.7; margin: 0 0 24px; }
-        .section-label { color: #A0AEC0; font-size: 9px; line-height: 1.3; letter-spacing: 2px; font-weight: 700; text-transform: uppercase; padding: 0 0 12px; }
-        .details { width: 100%; }
-        .details td { border-bottom: 1px solid #EDF2F7; padding: 12px 0; font-size: 13px; line-height: 1.45; vertical-align: top; }
-        .details .label { width: 38%; color: #A0AEC0; }
-        .details .value { color: #0B1D35; font-weight: 700; text-align: right; word-break: break-word; }
-        .message-box { background: #FAFBFC; border-left: 3px solid #C8A84B; border-radius: 0 10px 10px 0; padding: 16px 18px; margin-top: 28px; }
-        .message-title { color: #0B1D35; font-size: 12px; line-height: 1.4; letter-spacing: 1.2px; font-weight: 700; text-transform: uppercase; margin: 0 0 8px; }
-        .message-text { color: #4A5568; font-size: 14px; line-height: 1.7; margin: 0; }
-        .button-wrap { padding-top: 30px; text-align: center; }
-        .button { background: #0B1D35; color: #ffffff !important; display: inline-block; border-radius: 10px; font-size: 14px; line-height: 1; font-weight: 700; text-decoration: none; padding: 14px 24px; }
-        .footer { background: #0B1D35; color: rgba(255,255,255,0.34); font-size: 10px; line-height: 1.8; padding: 20px 40px; }
-        .footer a { color: rgba(255,255,255,0.72); font-weight: 700; text-decoration: none; }
+    .wrapper { max-width: 560px; margin: 0 auto; width: 100%; }
 
-        @media (max-width: 500px) {
-            .page { padding: 18px 10px !important; }
-            .header, .body, .status, .footer { padding-left: 22px !important; padding-right: 22px !important; }
-            .title { font-size: 23px !important; }
-            .logo-cell { width: 48px !important; height: 48px !important; }
-            .logo { width: 38px !important; max-width: 38px !important; height: 38px !important; }
-            .details .label, .details .value { display: block; width: 100% !important; text-align: left !important; }
-            .details .label { border-bottom: 0 !important; padding-bottom: 2px !important; }
-            .details .value { padding-top: 0 !important; }
-        }
-    </style>
+    /* HEADER */
+    .em-head {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-bottom: none;
+      border-radius: 14px 14px 0 0;
+      padding: 28px 36px 24px;
+    }
+    .em-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .logo-box {
+      width: 48px; height: 48px;
+      border-radius: 10px;
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-box img { display: block; width: 32px; height: 32px; object-fit: contain; }
+    .em-brand { font-size: 14px; font-weight: 600; color: #0F172A; }
+    .em-brand-sub { font-size: 12px; color: #64748B; margin-top: 2px; }
+    .em-hed { font-size: 26px; font-weight: 600; color: #0F172A; line-height: 1.2; margin-bottom: 8px; }
+    .em-hed span { color: #D97706; }
+    .em-hed-desc { font-size: 13px; color: #64748B; line-height: 1.6; }
+
+    /* ALERT STRIP */
+    .alert-strip {
+      background: #FFFBEB;
+      border: 1px solid #E2E8F0;
+      border-top: none;
+      border-bottom: none;
+      padding: 10px 36px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .alert-dot { width: 7px; height: 7px; border-radius: 50%; background: #F59E0B; }
+    .alert-strip span { font-size: 11px; font-weight: 600; color: #D97706; letter-spacing: 0.5px; }
+
+    /* BODY */
+    .em-body {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-top: none;
+      border-bottom: none;
+      padding: 32px 36px 28px;
+    }
+    .em-body p { font-size: 13px; color: #64748B; line-height: 1.7; margin-bottom: 24px; }
+
+    .section-lbl {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #94A3B8;
+      margin-bottom: 10px;
+    }
+
+    .info-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+    .info-table tr { border-bottom: 1px solid #F1F5F9; }
+    .info-table tr:last-child { border-bottom: none; }
+    .info-table td { padding: 11px 0; font-size: 13px; vertical-align: middle; }
+    .info-table .lbl { color: #94A3B8; width: 40%; }
+    .info-table .val { color: #0F172A; font-weight: 600; text-align: right; word-break: break-word; }
+    .info-table .val a { color: #2563EB; text-decoration: none; }
+
+    /* MESSAGE BOX */
+    .msg-box {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+    }
+    .msg-title {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #94A3B8;
+      margin-bottom: 10px;
+    }
+    .msg-text { font-size: 13px; color: #475569; line-height: 1.7; }
+
+    /* CTA BUTTON */
+    .cta-wrap { text-align: center; padding-top: 4px; }
+    .cta-btn {
+      display: inline-block;
+      background: #0F172A;
+      color: #ffffff !important;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 13px 26px;
+      letter-spacing: 0.2px;
+    }
+
+    /* FOOTER */
+    .em-footer {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-top: none;
+      border-radius: 0 0 14px 14px;
+      padding: 18px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-left { font-size: 11px; color: #94A3B8; line-height: 1.7; }
+    .footer-right { font-size: 11px; }
+    .footer-right a { color: #2563EB; text-decoration: none; font-weight: 500; }
+
+    @media (max-width: 500px) {
+      body { padding: 18px 10px; }
+      .em-head, .em-body, .alert-strip { padding-left: 22px; padding-right: 22px; }
+      .em-footer { flex-direction: column; gap: 6px; padding: 18px 24px; text-align: center; }
+      .em-hed { font-size: 22px; }
+      .info-table .lbl, .info-table .val { display: block; width: 100%; text-align: left; }
+    }
+  </style>
 </head>
 <body>
-    <table role="presentation" class="page" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td align="center">
-                <table role="presentation" class="card" border="0" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td class="header">
-                            <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td class="logo-cell">
-                                        <img class="logo" src="{{ $message->embed(public_path('assets/images/logo.jpg')) }}" width="42" height="42" alt="BTECH Logo">
-                                    </td>
-                                    <td style="padding-left: 12px;">
-                                        <div class="school">Baliwag Polytechnic College</div>
-                                        <div class="dept">Office of Admissions</div>
-                                    </td>
-                                </tr>
-                            </table>
-                            <h1 class="title">New website inquiry</h1>
-                            <div class="subtitle">A sender submitted a message through the admission landing page.</div>
-                        </td>
-                    </tr>
+<div class="wrapper">
 
-                    <tr>
-                        <td class="status">New Inquiry Received</td>
-                    </tr>
+  <!-- HEADER -->
+  <div class="em-head">
+    <div class="em-logo-row">
+      <div class="logo-box">
+        <img src="{{ $message->embed(public_path('assets/images/logo.jpg')) }}" width="32" height="32" alt="BTECH Logo" />
+      </div>
+      <div>
+        <div class="em-brand">Baliwag Polytechnic College</div>
+        <div class="em-brand-sub">Office of Admissions</div>
+      </div>
+    </div>
+    <div class="em-hed">New website <span>inquiry.</span></div>
+    <div class="em-hed-desc">A sender submitted a message through the admissions landing page.</div>
+  </div>
 
-                    <tr>
-                        <td class="body">
-                            <p class="intro">Greetings! Below are the details provided by the sender. You can reply directly to the email address or review the message in the admin dashboard.</p>
+  <!-- ALERT STRIP -->
+  <div class="alert-strip">
+    <div class="alert-dot"></div>
+    <span>New Inquiry Received</span>
+  </div>
 
-                            <div class="section-label">Sender Details</div>
-                            <table role="presentation" class="details" border="0" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td class="label">Full Name</td>
-                                    <td class="value">{{ $inquiry->first_name }} {{ $inquiry->last_name }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="label">Email Address</td>
-                                    <td class="value"><a href="mailto:{{ $inquiry->email }}" style="color:#0B1D35; text-decoration:none;">{{ $inquiry->email }}</a></td>
-                                </tr>
-                                <tr>
-                                    <td class="label">Subject</td>
-                                    <td class="value">{{ $inquiry->subject }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="label">Date/Time</td>
-                                    <td class="value">{{ $inquiry->created_at->format('M d, Y h:i A') }}</td>
-                                </tr>
-                            </table>
+  <!-- BODY -->
+  <div class="em-body">
+    <p>Greetings! Below are the details provided by the sender. You can reply directly to the email address or review the message in the admin dashboard.</p>
 
-                            <div class="message-box">
-                                <p class="message-title">Message Content</p>
-                                <p class="message-text">{{ $inquiry->message }}</p>
-                            </div>
-
-                            <div class="button-wrap">
-                                <a class="button" href="{{ url('/admin/dashboard') }}">View in Admin Dashboard</a>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="footer">
-                            &copy; {{ date('Y') }} Baliwag Polytechnic College<br>
-                            Baliwag, Bulacan &middot; Philippines<br>
-                            <a href="mailto:{{ $inquiry->email }}">Reply to Sender</a>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+    <div class="section-lbl">Sender Details</div>
+    <table class="info-table">
+      <tr>
+        <td class="lbl">Full Name</td>
+        <td class="val">{{ $inquiry->first_name }} {{ $inquiry->last_name }}</td>
+      </tr>
+      <tr>
+        <td class="lbl">Email Address</td>
+        <td class="val"><a href="mailto:{{ $inquiry->email }}">{{ $inquiry->email }}</a></td>
+      </tr>
+      <tr>
+        <td class="lbl">Subject</td>
+        <td class="val">{{ $inquiry->subject }}</td>
+      </tr>
+      <tr>
+        <td class="lbl">Date / Time</td>
+        <td class="val">{{ $inquiry->created_at->format('M d, Y h:i A') }}</td>
+      </tr>
     </table>
+
+    <div class="section-lbl">Message Content</div>
+    <div class="msg-box">
+      <div class="msg-text">{{ $inquiry->message }}</div>
+    </div>
+
+    <div class="cta-wrap">
+      <a class="cta-btn" href="{{ url('/admin/dashboard') }}">View in Admin Dashboard</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="em-footer">
+    <div class="footer-left">
+      &copy; {{ date('Y') }} Baliwag Polytechnic College<br>
+      Baliwag, Bulacan &middot; Philippines
+    </div>
+    <div class="footer-right">
+      <a href="mailto:{{ $inquiry->email }}">Reply to Sender</a>
+    </div>
+  </div>
+
+</div>
 </body>
 </html>
