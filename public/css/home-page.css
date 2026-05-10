@@ -237,11 +237,10 @@ body.site-loader-lock {
   box-sizing: border-box;
 }
 
-/* Logo area — fixed width to help center the links */
 .nav-inner > a {
   display: flex !important;
   align-items: center !important;
-  flex: 0 1 300px !important; /* Allow it to shrink but aim for 300px */
+  flex-shrink: 1 !important;
   min-width: 0 !important;
   gap: 0.75rem;
   text-decoration: none;
@@ -252,7 +251,7 @@ body.site-loader-lock {
   min-width: 0 !important;
   overflow: hidden !important;
   flex-shrink: 1 !important;
-  max-width: 400px !important; /* Increased to prevent wrapping */
+  max-width: 180px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -266,24 +265,28 @@ body.site-loader-lock {
   display: block !important;
 }
 
-/* Desktop nav — center it */
+/* Desktop nav — hidden by default, shown on wide screens */
 .nav-desktop {
   display: none !important;
-  flex: 1 !important;
-  justify-content: center !important;
-  gap: 2.5rem !important; /* Balanced gap */
+  flex-shrink: 0;
 }
 
-/* Action group — fixed width to balance the logo */
+/* Action group (Inquire Now + hamburger) — never wraps */
 .nav-actions {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   align-items: center !important;
-  justify-content: flex-end !important;
   gap: 0.75rem !important;
-  flex: 0 1 300px !important;
+  flex-shrink: 0 !important;
+  margin-left: auto;
   height: 100%;
+}
+
+@media (min-width: 768px) {
+  .nav-desktop {
+    display: flex !important;
+  }
 }
 
 @media (min-width: 768px) {
@@ -291,16 +294,14 @@ body.site-loader-lock {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    flex: 1 !important;
-    justify-content: center !important;
-    gap: 2.5rem !important;
+    gap: 2rem !important;
+    flex-shrink: 0;
   }
   .nav-inner > a .leading-tight {
-    max-width: 450px !important;
+    max-width: 280px;
   }
   .nav-actions {
-    flex: 0 1 300px !important;
-    justify-content: flex-end !important;
+    margin-left: 0;
   }
 }
 
