@@ -24,7 +24,7 @@
 
   <!-- ───────────────────────────────────── NAV ───────────────────────────────────── -->
   <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-    <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
+    <div class="nav-inner flex items-center justify-between px-8 py-3 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
         <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
         <div class="leading-tight">
@@ -89,7 +89,7 @@
       <div class="deco-line deco-line-1"></div>
       <div class="deco-line deco-line-2"></div>
 
-      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full pt-28 pb-16">
+      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full pt-24 pb-16">
         <div class="hero-grid">
 
           <!-- LEFT: Text -->
@@ -247,9 +247,9 @@
     </div>
 
     <!-- ───────────────────────────────────── WHY BTECH ───────────────────────────────────── -->
-    <section id="why" class="why-section py-28">
+    <section id="why" class="why-section py-16">
       <div class="max-w-7xl mx-auto px-8">
-        <div class="section-header text-center mb-20" data-animate="fade-up">
+        <div class="section-header text-center mb-10" data-animate="fade-up">
           <span class="section-tag">Why Choose BTECH</span>
           <h2 class="section-title mt-3">More Than a Degree.<br/>A Launchpad.</h2>
           <p class="section-desc mt-4 max-w-2xl mx-auto">
@@ -293,9 +293,9 @@
     </section>
 
      <!-- ───────────────────────────────────── PROGRAMS ───────────────────────────────────── -->
-    <section id="programs" class="programs-section py-28">
+    <section id="programs" class="programs-section py-16">
       <div class="max-w-7xl mx-auto px-8">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16" data-animate="fade-up">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10" data-animate="fade-up">
           <div>
             <span class="section-tag">Academic Programs</span>
             <h2 class="section-title mt-3">Find Your Path</h2>
@@ -357,9 +357,9 @@
     </section>
 
     <!-- ───────────────────────────────────── PROCESS ───────────────────────────────────── -->
-    <section id="process" class="process-section py-28">
+    <section id="process" class="process-section py-16">
       <div class="max-w-7xl mx-auto px-8">
-        <div class="section-header text-center mb-20" data-animate="fade-up">
+        <div class="section-header text-center mb-10" data-animate="fade-up">
           <span class="section-tag">Admissions Process</span>
           <h2 class="section-title mt-3">Your Path to Enrollment</h2>
           <p class="section-desc mt-4 max-w-xl mx-auto">We've made the process simple, transparent, and welcoming. Here's everything you need to know.</p>
@@ -506,9 +506,9 @@
     </section>
 
     <!-- ───────────────────────────────────── TESTIMONIALS ───────────────────────────────────── -->
-    <section id="testimonials" class="testimonials-section py-28">
+    <section id="testimonials" class="testimonials-section py-16">
       <div class="max-w-7xl mx-auto px-8">
-                <div class="section-header text-center mb-16" data-animate="fade-up">
+                <div class="section-header text-center mb-10" data-animate="fade-up">
           <span class="section-tag">Student Stories</span>
           <h2 class="section-title mt-3">Life After BTECH</h2>
           <p class="section-desc mt-4 max-w-xl mx-auto">Hear directly from our graduates and current students about their BTECH experience.</p>
@@ -594,7 +594,7 @@
     </section>
 
     <!-- ───────────────────────────────────── CONTACT ───────────────────────────────────── -->
-    <section id="contact" class="contact-section py-28">
+    <section id="contact" class="contact-section py-16">
       <div class="max-w-7xl mx-auto px-8">
         <div class="grid lg:grid-cols-2 gap-16 items-start">
 
