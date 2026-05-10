@@ -4104,8 +4104,6 @@ textarea:focus-visible,
 .btn-form-submit,
 .filter-btn,
 .carousel-btn,
-.hero-slider-dot,
-.carousel-dot,
 .modal-close,
 .announcement-popup__close,
 .back-to-top,
@@ -4170,6 +4168,14 @@ textarea:focus-visible,
   flex-direction: column;
 }
 
+.program-badge {
+  align-self: flex-start;
+  display: inline-flex;
+  width: auto;
+  max-width: 100%;
+  align-items: center;
+}
+
 .program-desc {
   flex: 1;
 }
@@ -4196,6 +4202,45 @@ textarea:focus-visible,
   align-items: center;
   justify-content: center;
   border-radius: 999px;
+}
+
+.hero-slider-nav,
+.carousel-dots {
+  gap: .5rem;
+}
+
+.hero-slider-nav > * + * {
+  margin-left: 0;
+}
+
+.hero-slider-dot {
+  width: 8px;
+  min-width: 8px;
+  height: 8px;
+  min-height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .28);
+}
+
+.hero-slider-dot.active {
+  width: 28px;
+  min-width: 28px;
+  background: var(--gold-mid);
+}
+
+.carousel-dot {
+  width: 8px;
+  min-width: 8px;
+  height: 8px;
+  min-height: 8px;
+  border-radius: 999px;
+  background: var(--gray-200);
+}
+
+.carousel-dot.active {
+  width: 24px;
+  min-width: 24px;
+  background: var(--navy);
 }
 
 .process-timeline {
@@ -4352,23 +4397,6 @@ textarea:focus-visible,
     margin-left: 0;
   }
 
-  .hero-slider-dot {
-    width: 44px;
-    height: 44px;
-    border-radius: 999px;
-    background:
-      radial-gradient(circle at center, rgba(255, 255, 255, .35) 0 4px, transparent 5px),
-      transparent;
-  }
-
-  .hero-slider-dot.active {
-    width: 44px;
-    border-radius: 999px;
-    background:
-      radial-gradient(circle at center, var(--gold-mid) 0 6px, transparent 7px),
-      transparent;
-  }
-
   .program-card-inner,
   .feature-card,
   .testimonial-card {
@@ -4406,5 +4434,156 @@ textarea:focus-visible,
 
   .contact-form-card .grid.grid-cols-2 {
     gap: .85rem;
+  }
+}
+
+/* Hero visibility guard: prevents the landing hero from collapsing or being
+   skipped visually in browsers that restore scroll before assets settle. */
+#hero.hero-section {
+  display: flex !important;
+  min-height: 720px !important;
+  background: linear-gradient(135deg, #0f2340 0%, #1b3557 45%, #254d82 100%);
+}
+
+@media (max-width: 1024px) {
+  #hero.hero-section {
+    min-height: auto !important;
+  }
+}
+
+/* Consistent navigation arrows. These use inline SVG instead of the icon
+   sprite so left/right controls cannot render as different glyph families. */
+.nav-arrow-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  color: currentColor;
+}
+
+.nav-arrow-icon path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.carousel-btn .nav-arrow-icon {
+  pointer-events: none;
+}
+
+/* Popup announcements show one image, so previous/next overlay controls are
+   visual noise and can show mismatched icons in some browsers/extensions. */
+.announcement-popup [aria-label="Previous"],
+.announcement-popup [aria-label="Next"],
+.announcement-popup [aria-label="Previous image"],
+.announcement-popup [aria-label="Next image"] {
+  display: none !important;
+}
+
+/* Mobile navbar logo + hamburger polish only */
+.logo-badge {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.logo-badge img {
+  width: 44px !important;
+  height: 44px !important;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
+}
+
+#menu-toggle {
+  width: 44px !important;
+  height: 44px !important;
+  padding: 0 !important;
+  border-radius: 10px;
+}
+
+.hamburger-icon,
+.hamburger-icon::before,
+.hamburger-icon::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.hamburger-icon {
+  position: relative;
+}
+
+.hamburger-icon::before,
+.hamburger-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+
+.hamburger-icon::before {
+  top: -6px;
+}
+
+.hamburger-icon::after {
+  top: 6px;
+}
+
+#menu-toggle.active .hamburger-icon {
+  background: transparent;
+}
+
+#menu-toggle.active .hamburger-icon::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+#menu-toggle.active .hamburger-icon::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+@media (max-width: 480px) {
+  .logo-badge {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+  }
+
+  .logo-badge img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+
+/* Compact hero used by About and News pages. Keeps subpages from inheriting
+   the oversized landing-page hero height. */
+.subpage-hero.hero-section {
+  min-height: 45vh !important;
+  min-height: 45dvh !important;
+}
+
+.subpage-hero .relative.z-10 {
+  padding-top: calc(var(--navbar-height) + 2rem) !important;
+  padding-bottom: 3rem !important;
+}
+
+@media (max-width: 768px) {
+  .subpage-hero.hero-section {
+    min-height: auto !important;
+  }
+
+  .subpage-hero .relative.z-10 {
+    padding-top: calc(var(--navbar-height) + 1.5rem) !important;
+    padding-bottom: 2.75rem !important;
   }
 }

@@ -5,6 +5,18 @@
 
 'use strict';
 
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
+function resetLandingScrollPosition() {
+  if (window.location.hash) return;
+  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+}
+
+resetLandingScrollPosition();
+window.addEventListener('pageshow', resetLandingScrollPosition);
+
 function hideSiteLoader() {
   const loader = document.getElementById('site-loader');
   if (!loader) return;
@@ -82,12 +94,7 @@ function toggleMenu(forceClose = false) {
     navCta.style.display = (menuOpen && window.innerWidth < 768) ? 'none' : '';
   }
 
-  // Update burger icon
-  const icon = menuToggle?.querySelector('i');
-  if (icon) {
-    icon.setAttribute('data-iconsax', menuOpen ? 'x' : 'menu');
-    if (window.iconsax) iconsax.createIcons();
-  }
+  menuToggle?.setAttribute('aria-expanded', menuOpen ? 'true' : 'false');
 }
 
 menuToggle?.addEventListener('click', (e) => {

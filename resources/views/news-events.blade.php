@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}?v=1" />
   @include('partials.iconsax')
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=12" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=16" />
 </head>
 <body>
   @include('partials.site-loader')
@@ -19,7 +19,7 @@
 <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-        <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="52" height="52" decoding="async"></div>
+        <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
         <div class="leading-tight">
           <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSION OFFICE' }}</p>
           <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
@@ -34,7 +34,9 @@
       </nav>
       <div class="nav-actions flex items-center gap-3">
         <a href="{{ route('apply') }}" class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full transition-all">Inquire Now</a>
-        <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu"><i data-iconsax="menu"></i></button>
+        <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu" aria-expanded="false">
+          <span class="hamburger-icon" aria-hidden="true"></span>
+        </button>
       </div>
     </div>
     <div id="mobile-menu" class="mobile-menu md:hidden">
@@ -72,7 +74,7 @@
   </header>
 
   <main>
-    <section class="hero-section relative min-h-[40vh] flex items-center overflow-hidden">
+    <section class="hero-section subpage-hero relative min-h-[45vh] flex items-center overflow-hidden">
       <div class="hero-bg-overlay absolute top-0 left-0 right-0 bottom-0"></div>
       <div class="hero-pattern absolute top-0 left-0 right-0 bottom-0"></div>
       <div class="relative z-10 max-w-7xl mx-auto px-8 w-full pt-24 pb-12">
@@ -224,11 +226,10 @@
     </div>
   </footer>
 
-  <script src="{{ asset('js/home-page.js') }}?v=5"></script>
+  <script src="{{ asset('js/home-page.js') }}?v=8"></script>
   <script>
     if (window.iconsax) iconsax.createIcons();
   </script>
 </body>
 </html>
-
 

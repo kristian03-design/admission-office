@@ -16,7 +16,7 @@
   <!-- ✦ Iconsax Icons ✦ -->
   @include('partials.iconsax')
 
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=11" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=16" />
 
 </head>
 <body>
@@ -41,7 +41,9 @@
       </nav>
       <div class="nav-actions flex items-center gap-3">
         <a href="{{ route('apply') }}" class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full transition-all">Inquire Now</a>
-        <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu"><i data-iconsax="menu"></i></button>
+        <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu" aria-expanded="false">
+          <span class="hamburger-icon" aria-hidden="true"></span>
+        </button>
       </div>
     </div>
     <div id="mobile-menu" class="mobile-menu md:hidden">
@@ -559,11 +561,15 @@
           <!-- Carousel controls — your JS targets #carousel-prev, #carousel-next, #carousel-dots -->
           <div class="carousel-controls mt-10 flex items-center justify-center gap-4">
             <button class="carousel-btn" id="carousel-prev" aria-label="Previous">
-              <i data-iconsax="arrow-left"></i>
+              <svg class="nav-arrow-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M15 6 9 12l6 6" />
+              </svg>
             </button>
             <div class="carousel-dots" id="carousel-dots"></div>
             <button class="carousel-btn" id="carousel-next" aria-label="Next">
-              <i data-iconsax="arrow-right"></i>
+              <svg class="nav-arrow-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="m9 6 6 6-6 6" />
+              </svg>
             </button>
           </div>
         </div>
@@ -1122,7 +1128,7 @@
     </div>
   </div>
 
-  <script src="{{ asset('js/home-page.js') }}?v=6"></script>
+  <script src="{{ asset('js/home-page.js') }}?v=8"></script>
   <script>
     // Initialize all icons including those in the modal and footer
     if (window.iconsax) {

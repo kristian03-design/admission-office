@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}?v=1" />
   @include('partials.iconsax')
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=12" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=16" />
   <style>
     .team-grid {
       display: grid;
@@ -270,7 +270,7 @@
   </header>
 
   <main>
-    <section class="hero-section relative min-h-[45vh] flex items-center overflow-hidden">
+    <section class="hero-section subpage-hero relative min-h-[45vh] flex items-center overflow-hidden">
       <div class="hero-bg-overlay absolute top-0 left-0 right-0 bottom-0"></div>
       <div class="hero-pattern absolute top-0 left-0 right-0 bottom-0"></div>
       <div class="relative z-10 max-w-7xl mx-auto px-8 w-full pt-24 pb-12">
@@ -501,7 +501,7 @@
     <i data-iconsax="arrow-up"></i>
   </button>
 
-  <script src="{{ asset('js/home-page.js') }}?v=5"></script>
+  <script src="{{ asset('js/home-page.js') }}?v=8"></script>
   <script>
     if (window.iconsax) {
       iconsax.createIcons();
@@ -509,5 +509,4 @@
   </script>
 </body>
 </html>
-
 
