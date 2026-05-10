@@ -227,34 +227,20 @@ body.site-loader-lock {
 .nav-inner {
   position: relative;
   z-index: 60;
-  height: var(--navbar-height) !important;
+  min-height: var(--navbar-height);
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   align-items: center !important;
   justify-content: space-between !important;
-  width: 100% !important;
-  box-sizing: border-box;
+  width: 100%;
 }
 
-.nav-inner > a {
-  display: flex !important;
-  align-items: center !important;
-  flex-shrink: 1 !important;
-  min-width: 0 !important;
-  gap: 0.75rem;
-  text-decoration: none;
-  height: 100%;
-}
-
-.nav-inner > a .leading-tight {
-  min-width: 0 !important;
-  overflow: hidden !important;
-  flex-shrink: 1 !important;
-  max-width: 180px;
+.nav-inner>a .leading-tight {
+  min-width: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
 .nav-main,
@@ -3531,40 +3517,36 @@ body.announcement-popup-open {
 }
 
 /* ─── TAILWIND FALLBACKS ─── */
-.fixed { position: fixed; }
-.absolute { position: absolute; }
-.relative { position: relative; }
-.w-full { width: 100%; }
-.h-full { height: 100%; }
-.top-0 { top: 0; }
-.left-0 { left: 0; }
-.right-0 { right: 0; }
-.bottom-0 { bottom: 0; }
-.z-10 { z-index: 10; }
-.z-50 { z-index: 50; }
-.hidden { display: none !important; }
-
-/* ─── PREVENT HORIZONTAL OVERFLOW ON ALL BROWSERS ─── */
-html,
-body {
-  overflow-x: hidden !important;
-  max-width: 100% !important;
-  position: relative;
+.fixed {
+  position: fixed;
 }
 
-#hero,
-.hero-section {
-  overflow-x: hidden !important;
-  max-width: 100% !important;
+.top-0 {
+  top: 0;
 }
 
-/* Hero inner container — must not exceed viewport */
-#hero > .relative,
-.hero-section > .relative {
-  overflow: hidden;
+.left-0 {
+  left: 0;
+}
+
+.right-0 {
+  right: 0;
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+.hidden {
+  display: none !important;
 }
 
 @media (min-width: 768px) {
-  .md\:flex { display: flex !important; }
-  .md\:hidden { display: none !important; }
+  .md\:flex {
+    display: flex !important;
+  }
+
+  .md\:hidden {
+    display: none !important;
+  }
 }
