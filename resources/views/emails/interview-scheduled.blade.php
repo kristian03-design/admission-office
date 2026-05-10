@@ -5,308 +5,185 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interview Scheduled — Baliwag Polytechnic College</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-      background: #F1F5F9;
-      margin: 0;
-      padding: 32px 14px;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .wrapper { max-width: 560px; margin: 0 auto; width: 100%; }
-
-    /* HEADER */
-    .em-head {
-      background: #F8FAFC;
-      border: 1px solid #E2E8F0;
-      border-bottom: none;
-      border-radius: 14px 14px 0 0;
-      padding: 28px 36px 24px;
-    }
-    .em-logo-row {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 22px;
-    }
-    .logo-box {
-      width: 48px; height: 48px;
-      border-radius: 10px;
-      background: #EFF6FF;
-      border: 1px solid #BFDBFE;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .logo-box img { display: block; width: 32px; height: 32px; object-fit: contain; }
-    .em-brand { font-size: 14px; font-weight: 600; color: #0F172A; }
-    .em-brand-sub { font-size: 12px; color: #64748B; margin-top: 2px; }
-    .em-eyebrow {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #3B82F6;
-      margin-bottom: 8px;
-    }
-    .em-hed { font-size: 26px; font-weight: 600; color: #0F172A; line-height: 1.2; margin-bottom: 8px; }
-    .em-hed span { color: #2563EB; }
-    .em-hed-desc { font-size: 13px; color: #64748B; line-height: 1.6; }
-
-    /* ACTION STRIP */
-    .action-strip {
-      background: #EFF6FF;
-      border: 1px solid #E2E8F0;
-      border-top: none;
-      border-bottom: none;
-      padding: 10px 36px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .action-badge { display: flex; align-items: center; gap: 7px; }
-    .action-dot { width: 7px; height: 7px; border-radius: 50%; background: #3B82F6; }
-    .action-badge span { font-size: 11px; font-weight: 600; color: #2563EB; letter-spacing: 0.5px; }
-    .action-step { font-size: 11px; color: #94A3B8; }
-
-    /* SCHEDULE CARD */
-    .sched-wrap {
-      background: #F8FAFC;
-      border: 1px solid #E2E8F0;
-      border-top: none;
-      border-bottom: none;
-      padding: 20px 36px;
-    }
-    .sched-card {
-      background: #FFFFFF;
-      border: 1px solid #E2E8F0;
-      border-radius: 12px;
-      display: flex;
-      overflow: hidden;
-    }
-    .sched-date {
-      flex: 1;
-      padding: 20px 24px;
-      border-right: 1px solid #F1F5F9;
-    }
-    .sched-time { flex: 1; padding: 20px 24px; }
-    .sched-micro {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: #94A3B8;
-      margin-bottom: 8px;
-    }
-    .sched-big { font-size: 22px; font-weight: 600; color: #0F172A; line-height: 1.15; }
-    .sched-small { font-size: 11px; color: #94A3B8; margin-top: 6px; }
-    .sched-time-num {
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 30px;
-      font-weight: 700;
-      color: #2563EB;
-      line-height: 1;
-    }
-    .sched-ampm { font-size: 12px; color: #64748B; margin-top: 4px; }
-    .sched-note { font-size: 11px; color: #94A3B8; margin-top: 4px; }
-
-    /* BODY */
-    .em-body {
-      background: #FFFFFF;
-      border: 1px solid #E2E8F0;
-      border-top: none;
-      border-bottom: none;
-      padding: 32px 36px 28px;
-    }
-
-    .greeting { font-size: 20px; font-weight: 600; color: #0F172A; margin-bottom: 10px; }
-    .em-body p { font-size: 13px; color: #64748B; line-height: 1.7; }
-
-    .section-lbl {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: #94A3B8;
-      margin: 24px 0 10px;
-    }
-
-    .info-table { width: 100%; border-collapse: collapse; }
-    .info-table tr { border-bottom: 1px solid #F1F5F9; }
-    .info-table tr:last-child { border-bottom: none; }
-    .info-table td { padding: 11px 0; font-size: 13px; vertical-align: middle; }
-    .info-table .lbl { color: #94A3B8; width: 45%; }
-    .info-table .val { color: #0F172A; font-weight: 600; text-align: right; }
-
-    /* CALLOUT */
-    .callout {
-      border-radius: 10px;
-      padding: 13px 15px;
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      margin-top: 8px;
-    }
-    .callout-icon {
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      font-size: 11px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .callout p { font-size: 12px; line-height: 1.65; }
-    .callout-warn { background: #FFFBEB; border: 1px solid #FDE68A; }
-    .callout-warn .callout-icon { background: #FDE68A; color: #92400E; }
-    .callout-warn p { color: #64748B; }
-    .callout-warn strong { color: #D97706; }
-    .callout-info { background: #EFF6FF; border: 1px solid #BFDBFE; }
-    .callout-info .callout-icon { background: #BFDBFE; color: #1E40AF; }
-    .callout-info p { color: #2563EB; }
-
-    .divider { height: 1px; background: #F1F5F9; margin: 24px 0 0; }
-
-    /* CLOSING */
-    .closing { padding: 20px 0 0; }
-    .closing p { font-size: 13px; color: #64748B; line-height: 1.7; }
-    .sig { margin-top: 18px; display: flex; align-items: center; gap: 12px; }
-    .sig-bar { width: 3px; height: 36px; background: #3B82F6; border-radius: 2px; flex-shrink: 0; }
-    .sig-name { font-size: 13px; font-weight: 600; color: #0F172A; }
-    .sig-role { font-size: 11px; color: #94A3B8; margin-top: 2px; }
-
-    /* FOOTER */
-    .em-footer {
-      background: #F8FAFC;
-      border: 1px solid #E2E8F0;
-      border-top: none;
-      border-radius: 0 0 14px 14px;
-      padding: 18px 36px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .footer-left { font-size: 11px; color: #94A3B8; line-height: 1.7; }
-    .footer-right { font-size: 11px; color: #CBD5E1; text-align: right; }
-
-    @media (max-width: 500px) {
-      body { padding: 18px 10px; }
-      .em-head, .em-body, .action-strip, .sched-wrap { padding-left: 22px; padding-right: 22px; }
-      .sched-card { flex-direction: column; }
-      .sched-date { border-right: none; border-bottom: 1px solid #F1F5F9; }
-      .em-footer { flex-direction: column; gap: 6px; padding: 18px 24px; text-align: center; }
-      .footer-right { text-align: center; }
-      .em-hed { font-size: 22px; }
-      .info-table .lbl, .info-table .val { display: block; width: 100%; text-align: left; }
-    }
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { border: 0; outline: none; text-decoration: none; display: block; }
+    body { margin: 0; padding: 0; background-color: #F1F5F9; font-family: Arial, Helvetica, sans-serif; }
   </style>
 </head>
-<body>
-<div class="wrapper">
+<body style="margin:0; padding:0; background-color:#F1F5F9;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F1F5F9; padding:32px 14px;">
+  <tr>
+    <td align="center">
+      <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px; width:100%; background-color:#ffffff; border-radius:14px; border:1px solid #E2E8F0;">
 
-  <!-- HEADER -->
-  <div class="em-head">
-    <div class="em-logo-row">
-      <div class="logo-box">
-        <img src="{{ $message->embed(public_path('assets/images/logo.jpg')) }}" width="32" height="32" alt="BTECH Logo" />
-      </div>
-      <div>
-        <div class="em-brand">Baliwag Polytechnic College</div>
-        <div class="em-brand-sub">Office of Admissions</div>
-      </div>
-    </div>
-    <div class="em-eyebrow">Admissions Update</div>
-    <div class="em-hed">You're in for <span>an interview.</span></div>
-    <div class="em-hed-desc">Your application has progressed to the interview phase.</div>
-  </div>
+        <!-- HEADER -->
+        <tr>
+          <td style="background-color:#F8FAFC; padding:28px 36px 24px; border-bottom:1px solid #E2E8F0; border-radius:14px 14px 0 0;">
+            <!-- Logo row -->
+            <table role="presentation" cellpadding="0" cellspacing="0" style="margin-bottom:22px;">
+              <tr>
+                <td width="48" height="48" style="width:48px; height:48px; background-color:#EFF6FF; border-radius:10px; border:1px solid #BFDBFE; text-align:center; vertical-align:middle;">
+                  <img src="{{ $message->embed(public_path('assets/images/logo.jpg')) }}" width="32" height="32" alt="BTECH" style="margin:8px; border-radius:4px; display:block;" />
+                </td>
+                <td style="padding-left:12px; vertical-align:middle;">
+                  <div style="font-size:14px; font-weight:bold; color:#0F172A; line-height:1.35; font-family:Arial,Helvetica,sans-serif;">Baliwag Polytechnic College</div>
+                  <div style="font-size:12px; color:#64748B; padding-top:3px; font-family:Arial,Helvetica,sans-serif;">Office of Admissions</div>
+                </td>
+              </tr>
+            </table>
+            <p style="font-size:10px; font-weight:bold; letter-spacing:1.5px; text-transform:uppercase; color:#3B82F6; margin:0 0 8px; font-family:Arial,Helvetica,sans-serif;">Admissions Update</p>
+            <p style="font-size:26px; font-weight:bold; color:#0F172A; line-height:1.2; margin:0 0 8px; font-family:Arial,Helvetica,sans-serif;">You're in for <span style="color:#2563EB;">an interview.</span></p>
+            <p style="font-size:13px; color:#64748B; line-height:1.6; margin:0; font-family:Arial,Helvetica,sans-serif;">Your application has progressed to the interview phase.</p>
+          </td>
+        </tr>
 
-  <!-- ACTION STRIP -->
-  <div class="action-strip">
-    <div class="action-badge">
-      <div class="action-dot"></div>
-      <span>Action Required</span>
-    </div>
-    <span class="action-step">Step 2 of 3</span>
-  </div>
+        <!-- ACTION STRIP -->
+        <tr>
+          <td style="background-color:#EFF6FF; padding:10px 36px; border-bottom:1px solid #BFDBFE;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="vertical-align:middle;">
+                  <table role="presentation" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="8" style="vertical-align:middle;">
+                        <div style="width:7px; height:7px; background-color:#3B82F6; border-radius:50%;"></div>
+                      </td>
+                      <td style="font-size:11px; font-weight:bold; color:#2563EB; padding-left:7px; font-family:Arial,Helvetica,sans-serif;">Action Required</td>
+                    </tr>
+                  </table>
+                </td>
+                <td style="font-size:11px; color:#94A3B8; text-align:right; font-family:Arial,Helvetica,sans-serif;">Step 2 of 3</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
 
-  <!-- SCHEDULE CARD -->
-  <div class="sched-wrap">
-    <div class="sched-card">
-      <div class="sched-date">
-        <div class="sched-micro">Date</div>
-        <div class="sched-big">{{ date('F d', strtotime($interview->interview_date)) }}<br>{{ date('Y', strtotime($interview->interview_date)) }}</div>
-        <div class="sched-small">{{ date('l', strtotime($interview->interview_date)) }}</div>
-      </div>
-      <div class="sched-time">
-        <div class="sched-micro">Time</div>
-        <div class="sched-time-num">{{ date('h:i', strtotime($interview->interview_time)) }}</div>
-        <div class="sched-ampm">{{ date('A', strtotime($interview->interview_time)) }}</div>
-        <div class="sched-note">Arrive 15 min early</div>
-      </div>
-    </div>
-  </div>
+        <!-- SCHEDULE CARD -->
+        <tr>
+          <td style="background-color:#F8FAFC; padding:20px 36px; border-bottom:1px solid #E2E8F0;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border:1px solid #E2E8F0; border-radius:12px;">
+              <tr>
+                <!-- Date -->
+                <td width="50%" style="padding:20px 24px; border-right:1px solid #F1F5F9; vertical-align:top;">
+                  <p style="font-size:10px; font-weight:bold; letter-spacing:1.2px; text-transform:uppercase; color:#94A3B8; margin:0 0 8px; font-family:Arial,Helvetica,sans-serif;">Date</p>
+                  <p style="font-size:22px; font-weight:bold; color:#0F172A; line-height:1.15; margin:0 0 6px; font-family:Arial,Helvetica,sans-serif;">
+                    {{ date('F d', strtotime($interview->interview_date)) }}<br>
+                    {{ date('Y', strtotime($interview->interview_date)) }}
+                  </p>
+                  <p style="font-size:11px; color:#94A3B8; margin:0; font-family:Arial,Helvetica,sans-serif;">{{ date('l', strtotime($interview->interview_date)) }}</p>
+                </td>
+                <!-- Time -->
+                <td width="50%" style="padding:20px 24px; vertical-align:top;">
+                  <p style="font-size:10px; font-weight:bold; letter-spacing:1.2px; text-transform:uppercase; color:#94A3B8; margin:0 0 8px; font-family:Arial,Helvetica,sans-serif;">Time</p>
+                  <p style="font-size:30px; font-weight:bold; color:#2563EB; line-height:1; margin:0 0 4px; font-family:'Courier New',Courier,monospace;">{{ date('h:i', strtotime($interview->interview_time)) }}</p>
+                  <p style="font-size:12px; color:#64748B; margin:0 0 4px; font-family:Arial,Helvetica,sans-serif;">{{ date('A', strtotime($interview->interview_time)) }}</p>
+                  <p style="font-size:11px; color:#94A3B8; margin:0; font-family:Arial,Helvetica,sans-serif;">Arrive 15 min early</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
 
-  <!-- BODY -->
-  <div class="em-body">
-    <div class="greeting">Hello, {{ $application->first_name ?? $interview->student_name }}!</div>
-    <p>Congratulations on reaching the interview stage. Please review your schedule carefully and come prepared — bring any documents requested during your application and be ready to discuss your academic goals.</p>
+        <!-- BODY -->
+        <tr>
+          <td style="background-color:#ffffff; padding:32px 36px 28px;">
 
-    <div class="section-lbl">Application Details</div>
-    <table class="info-table">
-      <tr>
-        <td class="lbl">Reference No.</td>
-        <td class="val">{{ $interview->reference_number ?? $application->reference_number ?? 'N/A' }}</td>
-      </tr>
-      <tr>
-        <td class="lbl">Course Choice</td>
-        <td class="val">{{ $application->first_choice ?? $interview->program->name ?? 'N/A' }}</td>
-      </tr>
-      <tr>
-        <td class="lbl">Location</td>
-        <td class="val">BTECH Main Campus</td>
-      </tr>
-    </table>
+            <p style="font-size:20px; font-weight:bold; color:#0F172A; margin:0 0 10px; font-family:Arial,Helvetica,sans-serif;">Hello, {{ $application->first_name ?? $interview->student_name }}!</p>
+            <p style="font-size:13px; color:#64748B; line-height:1.7; margin:0; font-family:Arial,Helvetica,sans-serif;">Congratulations on reaching the interview stage. Please review your schedule carefully and come prepared &mdash; bring any documents requested during your application and be ready to discuss your academic goals.</p>
 
-    <div class="section-lbl">Reminders</div>
+            <!-- Application Details -->
+            <p style="font-size:10px; font-weight:bold; letter-spacing:1.2px; text-transform:uppercase; color:#94A3B8; margin:24px 0 10px; font-family:Arial,Helvetica,sans-serif;">Application Details</p>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+              <tr style="border-bottom:1px solid #F1F5F9;">
+                <td style="font-size:13px; color:#94A3B8; padding:11px 0; font-family:Arial,Helvetica,sans-serif; width:45%;">Reference No.</td>
+                <td style="font-size:13px; color:#0F172A; font-weight:bold; text-align:right; padding:11px 0; font-family:Arial,Helvetica,sans-serif;">{{ $interview->reference_number ?? $application->reference_number ?? 'N/A' }}</td>
+              </tr>
+              <tr style="border-bottom:1px solid #F1F5F9;">
+                <td style="font-size:13px; color:#94A3B8; padding:11px 0; font-family:Arial,Helvetica,sans-serif;">Course Choice</td>
+                <td style="font-size:13px; color:#0F172A; font-weight:bold; text-align:right; padding:11px 0; font-family:Arial,Helvetica,sans-serif;">{{ $application->first_choice ?? $interview->program->name ?? 'N/A' }}</td>
+              </tr>
+              <tr>
+                <td style="font-size:13px; color:#94A3B8; padding:11px 0; font-family:Arial,Helvetica,sans-serif;">Location</td>
+                <td style="font-size:13px; color:#0F172A; font-weight:bold; text-align:right; padding:11px 0; font-family:Arial,Helvetica,sans-serif;">BTECH Main Campus</td>
+              </tr>
+            </table>
 
-    <div class="callout callout-warn">
-      <div class="callout-icon">!</div>
-      <p><strong>Dress appropriately.</strong> Business casual or formal attire is required. Avoid shorts, sleeveless tops, or slippers. Present yourself professionally.</p>
-    </div>
+            <!-- Reminders label -->
+            <p style="font-size:10px; font-weight:bold; letter-spacing:1.2px; text-transform:uppercase; color:#94A3B8; margin:24px 0 8px; font-family:Arial,Helvetica,sans-serif;">Reminders</p>
 
-    <div class="callout callout-info">
-      <div class="callout-icon">i</div>
-      <p>Need to reschedule? Contact the admissions office or visit BTECH Main Campus as soon as possible.</p>
-    </div>
+            <!-- Dress code callout -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#FFFBEB; border:1px solid #FDE68A; border-radius:10px; margin-bottom:8px;">
+              <tr>
+                <td style="padding:13px 15px;">
+                  <table role="presentation" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="20" height="20" style="width:20px; height:20px; background-color:#FDE68A; border-radius:50%; text-align:center; vertical-align:top; font-size:11px; font-weight:bold; color:#92400E; line-height:20px; font-family:Arial,Helvetica,sans-serif;">!</td>
+                      <td style="font-size:12px; color:#64748B; line-height:1.65; padding-left:10px; vertical-align:top; font-family:Arial,Helvetica,sans-serif;">
+                        <strong style="color:#D97706;">Dress appropriately.</strong> Business casual or formal attire is required. Avoid shorts, sleeveless tops, or slippers. Present yourself professionally.
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
 
-    <div class="divider"></div>
+            <!-- Reschedule callout -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#EFF6FF; border:1px solid #BFDBFE; border-radius:10px;">
+              <tr>
+                <td style="padding:13px 15px;">
+                  <table role="presentation" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="20" height="20" style="width:20px; height:20px; background-color:#BFDBFE; border-radius:50%; text-align:center; vertical-align:top; font-size:11px; font-weight:bold; color:#1E40AF; line-height:20px; font-family:Arial,Helvetica,sans-serif;">i</td>
+                      <td style="font-size:12px; color:#2563EB; line-height:1.65; padding-left:10px; vertical-align:top; font-family:Arial,Helvetica,sans-serif;">
+                        Need to reschedule? Contact the admissions office or visit BTECH Main Campus as soon as possible.
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
 
-    <div class="closing">
-      <p>We look forward to meeting you. Best of luck on your interview!</p>
-      <div class="sig">
-        <div class="sig-bar"></div>
-        <div>
-          <div class="sig-name">BTECH Admissions Office</div>
-          <div class="sig-role">Baliwag Polytechnic College</div>
-        </div>
-      </div>
-    </div>
-  </div>
+            <!-- Divider -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:24px 0 0;">
+              <tr><td height="1" style="background-color:#F1F5F9; font-size:0; line-height:0;">&nbsp;</td></tr>
+            </table>
 
-  <!-- FOOTER -->
-  <div class="em-footer">
-    <div class="footer-left">
-      &copy; {{ date('Y') }} Baliwag Polytechnic College<br>
-      Baliwag, Bulacan &middot; Philippines
-    </div>
-    <div class="footer-right">Admissions Office</div>
-  </div>
+            <!-- Closing -->
+            <p style="font-size:13px; color:#64748B; line-height:1.7; margin:20px 0 18px; font-family:Arial,Helvetica,sans-serif;">We look forward to meeting you. Best of luck on your interview!</p>
 
-</div>
+            <!-- Signature -->
+            <table role="presentation" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="3" style="background-color:#3B82F6; border-radius:2px; vertical-align:middle;">&nbsp;</td>
+                <td style="padding-left:12px; vertical-align:middle;">
+                  <div style="font-size:13px; font-weight:bold; color:#0F172A; font-family:Arial,Helvetica,sans-serif;">BTECH Admissions Office</div>
+                  <div style="font-size:11px; color:#94A3B8; padding-top:3px; font-family:Arial,Helvetica,sans-serif;">Baliwag Polytechnic College</div>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+
+        <!-- FOOTER -->
+        <tr>
+          <td style="background-color:#F8FAFC; border-top:1px solid #E2E8F0; padding:18px 36px; border-radius:0 0 14px 14px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="font-size:11px; color:#94A3B8; line-height:1.7; font-family:Arial,Helvetica,sans-serif;">
+                  &copy; {{ date('Y') }} Baliwag Polytechnic College<br>
+                  Baliwag, Bulacan &middot; Philippines
+                </td>
+                <td style="font-size:11px; color:#CBD5E1; text-align:right; font-family:Arial,Helvetica,sans-serif;">Admissions Office</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
 </body>
 </html>
