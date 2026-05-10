@@ -3534,20 +3534,6 @@ body.menu-open #menu-toggle svg {
 .right-0 { right: 0; }
 .z-50 { z-index: 50; }
 .hidden { display: none !important; }
-.flex { display: flex !important; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-between { justify-content: space-between; }
-.justify-center { justify-content: center; }
-.gap-3 { gap: 0.75rem; }
-.gap-4 { gap: 1rem; }
-.gap-8 { gap: 2rem; }
-.px-8 { padding-left: 2rem; padding-right: 2rem; }
-.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
-.w-full { width: 100%; }
-.max-w-7xl { max-width: 80rem; }
-.mx-auto { margin-left: auto; margin-right: auto; }
-
 @media (min-width: 768px) {
   .md\:flex { display: flex !important; }
   .md\:hidden { display: none !important; }
