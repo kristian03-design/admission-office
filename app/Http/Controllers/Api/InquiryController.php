@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ContactInquiry;
 use App\Models\SystemSetting;
+use App\Mail\InquiryReply;
 use App\Mail\NewInquiry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -111,6 +112,53 @@ class InquiryController extends Controller
             'message' => 'Inquiry status updated.',
             'data' => $inquiry,
         ]);
+    }
+
+    /**
+     * POST /api/admin/inquiries/{id}/reply
+     */
+    public function reply(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'message' => ['required', 'string', 'max:5000'],
+        ]);
+
+        $inquiry = ContactInquiry::findOrFail($id);
+
+        if (! filter_var($inquiry->email, FILTER_VALIDATE_EMAIL)) {
+            return response()->json([
+                'message' => 'This inquiry does not have a valid sender email address.',
+            ], 422);
+        }
+
+        try {
+            Mail::to($inquiry->email)->send(new InquiryReply($inquiry, $validated['message']));
+
+            $updates = [];
+            if (Schema::hasColumn('contact_inquiries', 'status')) {
+                $updates['status'] = 'replied';
+            }
+            if (Schema::hasColumn('contact_inquiries', 'reply_message')) {
+                $updates['reply_message'] = $validated['message'];
+            }
+            if (Schema::hasColumn('contact_inquiries', 'replied_at')) {
+                $updates['replied_at'] = now();
+            }
+            if ($updates !== []) {
+                $inquiry->update($updates);
+            }
+
+            return response()->json([
+                'message' => 'Reply sent successfully.',
+                'data' => $inquiry->fresh(),
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Inquiry Reply Mail Error: ' . $e->getMessage());
+
+            return response()->json([
+                'message' => 'Reply could not be sent. Please check the mail settings.',
+            ], 500);
+        }
     }
 
     /**

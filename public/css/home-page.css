@@ -3526,3 +3526,15 @@ body.menu-open #menu-toggle svg {
   stroke: var(--white) !important;
   color: var(--white) !important;
 }
+
+/* ─── TAILWIND FALLBACKS FOR MOBILE IF CDN FAILS ─── */
+.fixed { position: fixed; }
+.top-0 { top: 0; }
+.left-0 { left: 0; }
+.right-0 { right: 0; }
+.z-50 { z-index: 50; }
+.hidden { display: none !important; }
+@media (min-width: 768px) {
+  .md\:flex { display: flex !important; }
+  .md\:hidden { display: none !important; }
+}

@@ -4024,8 +4024,9 @@ function closeSidebar() {
 
 /* ─── NOTIFICATIONS ─── */
 let notifications = [];
-/** Refs user has marked as read or cleared (so we don't show them in the list) */
+/** Refs user has marked as read. Cleared refs are hidden separately. */
 const readNotifRefs = new Set();
+const hiddenNotifRefs = new Set();
 const knownNotifRefs = new Set();
 
 function settingIsEnabled(value, defaultValue = true) {
@@ -4061,10 +4062,10 @@ function getUnreadNotifications() {
   });
 
   const inquiryNotifications = (Array.isArray(API_INQUIRIES) ? API_INQUIRIES : [])
-    .filter(i => String(i.status || 'pending').toLowerCase() !== 'read')
     .map(i => {
       const name = [i.first_name, i.last_name].filter(Boolean).join(' ').trim() || 'Website visitor';
       const ref = `inq-${i.id || `${i.email || ''}-${i.created_at || ''}`}`;
+      const status = String(i.status || 'pending').toLowerCase();
       return {
         id: ref,
         inquiryId: i.id != null ? Number(i.id) : null,
@@ -4075,7 +4076,7 @@ function getUnreadNotifications() {
         message: i.message || 'New website inquiry received.',
         time: formatDateTime(i.created_at),
         sortKey: new Date(i.created_at || 0).getTime() || 0,
-        read: false,
+        read: status === 'read' || status === 'replied',
         ref
       };
     });
@@ -4087,7 +4088,7 @@ function getUnreadNotifications() {
 function syncNotificationToasts(options = {}) {
   const silent = options.silent === true;
   const current = getUnreadNotifications().filter(n => n.ref);
-  const fresh = current.filter(n => !knownNotifRefs.has(n.ref) && !readNotifRefs.has(n.ref));
+  const fresh = current.filter(n => !knownNotifRefs.has(n.ref) && !readNotifRefs.has(n.ref) && !hiddenNotifRefs.has(n.ref) && !n.read);
 
   current.forEach(n => knownNotifRefs.add(n.ref));
 
@@ -4120,16 +4121,127 @@ async function markInquiryRead(id, status = 'read') {
   }
 }
 
+function openInquiryModal(inquiry) {
+  const modal = document.getElementById('inquiryModal');
+  if (!modal || !inquiry) return;
+
+  const name = [inquiry.first_name, inquiry.last_name].filter(Boolean).join(' ').trim() || 'Website visitor';
+  const subject = inquiry.subject || 'Admissions Inquiry';
+  const email = inquiry.email || '';
+
+  modal.dataset.inquiryId = inquiry.id || '';
+  document.getElementById('inquiryModalName').textContent = name;
+  document.getElementById('inquiryModalSubject').textContent = subject;
+  document.getElementById('inquiryModalEmail').textContent = email || 'No email provided';
+  document.getElementById('inquiryModalTime').textContent = formatDateTime(inquiry.created_at);
+  document.getElementById('inquiryModalMessage').textContent = inquiry.message || 'No message content.';
+  const replyInput = document.getElementById('inquiryReplyMessage');
+  const replyStatus = document.getElementById('inquiryReplyStatus');
+  if (replyInput) {
+    replyInput.value = inquiry.reply_message || `Hello ${inquiry.first_name || name},\n\n`;
+    replyInput.disabled = false;
+  }
+  if (replyStatus) {
+    replyStatus.textContent = inquiry.status === 'replied' ? 'A reply has already been sent for this inquiry.' : '';
+    replyStatus.className = 'inquiry-reply-status';
+    if (inquiry.status === 'replied') replyStatus.classList.add('is-success');
+  }
+
+  const replyBtn = document.getElementById('inquiryReplyBtn');
+  if (replyBtn) {
+    replyBtn.disabled = !email;
+    replyBtn.innerHTML = '<i data-iconsax="send"></i> Reply';
+    replyBtn.onclick = () => sendInquiryReply(inquiry.id);
+  }
+
+  modal.style.display = 'flex';
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
+}
+
+async function sendInquiryReply(inquiryId) {
+  const replyInput = document.getElementById('inquiryReplyMessage');
+  const replyStatus = document.getElementById('inquiryReplyStatus');
+  const replyBtn = document.getElementById('inquiryReplyBtn');
+  const message = (replyInput?.value || '').trim();
+
+  if (!message) {
+    if (replyStatus) {
+      replyStatus.textContent = 'Please type a reply message first.';
+      replyStatus.className = 'inquiry-reply-status is-error';
+    }
+    return;
+  }
+
+  if (!inquiryId) return;
+
+  const originalHtml = replyBtn ? replyBtn.innerHTML : '';
+  if (replyBtn) {
+    replyBtn.disabled = true;
+    replyBtn.innerHTML = savingButtonMarkup('Sending...');
+  }
+  if (replyInput) replyInput.disabled = true;
+  if (replyStatus) {
+    replyStatus.textContent = '';
+    replyStatus.className = 'inquiry-reply-status';
+  }
+
+  try {
+    const response = await apiFetch(`/api/admin/inquiries/${inquiryId}/reply`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.message || 'Reply could not be sent.');
+
+    const updated = result.data || {};
+    const idx = API_INQUIRIES.findIndex(i => String(i.id) === String(inquiryId));
+    if (idx >= 0) API_INQUIRIES[idx] = { ...API_INQUIRIES[idx], ...updated, status: 'replied', reply_message: message };
+
+    if (replyStatus) {
+      replyStatus.textContent = result.message || 'Reply sent successfully.';
+      replyStatus.className = 'inquiry-reply-status is-success';
+    }
+    showToast('Inquiry reply sent successfully.');
+    renderNotifications();
+    updatePendingBadge();
+  } catch (error) {
+    if (replyStatus) {
+      replyStatus.textContent = error.message || 'Reply could not be sent.';
+      replyStatus.className = 'inquiry-reply-status is-error';
+    }
+    if (replyInput) replyInput.disabled = false;
+    if (replyBtn) {
+      replyBtn.disabled = false;
+      replyBtn.innerHTML = originalHtml;
+      if (typeof iconsax !== 'undefined') iconsax.createIcons();
+    }
+    return;
+  }
+
+  if (replyBtn) {
+    replyBtn.disabled = false;
+    replyBtn.innerHTML = originalHtml;
+  }
+  if (replyInput) replyInput.disabled = false;
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
+}
+
+function closeInquiryModal() {
+  const modal = document.getElementById('inquiryModal');
+  if (modal) modal.style.display = 'none';
+}
+
 function renderNotifications() {
   const all = getUnreadNotifications();
-  notifications = all.filter(n => !readNotifRefs.has(n.ref));
+  notifications = all.filter(n => !hiddenNotifRefs.has(n.ref));
   const body = document.getElementById('notifBody');
   const hasNotif = notifications.length > 0;
   const buttons = document.getElementById('markReadBtn').parentElement;
 
   if (hasNotif) {
     body.innerHTML = notifications.map(n => `
-      <div class="notif-item notif-item--unread notif-item--${escapeHtml(n.type || 'application')}"
+      <div class="notif-item ${n.read || readNotifRefs.has(n.ref) ? 'notif-item--read' : 'notif-item--unread'} notif-item--${escapeHtml(n.type || 'application')}"
         data-notif-type="${escapeHtml(n.type || 'application')}"
         data-app-id="${n.appId != null ? n.appId : ''}"
         data-app-ref="${escapeHtml(n.ref || '')}"
@@ -4212,7 +4324,7 @@ function closeNotifications() {
 }
 
 function updatePendingBadge() {
-  const count = getUnreadNotifications().filter(n => !readNotifRefs.has(n.ref)).length;
+  const count = getUnreadNotifications().filter(n => !hiddenNotifRefs.has(n.ref) && !readNotifRefs.has(n.ref) && !n.read).length;
   const badge = document.getElementById('pendingBadge');
   const dot = document.getElementById('notifDot');
   if (badge) {
@@ -4350,6 +4462,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const inquiryModal = document.getElementById('inquiryModal');
+  const inquiryCloseBtn = document.getElementById('inquiryModalClose');
+  const inquiryDoneBtn = document.getElementById('inquiryDoneBtn');
+  if (inquiryCloseBtn) inquiryCloseBtn.addEventListener('click', closeInquiryModal);
+  if (inquiryDoneBtn) inquiryDoneBtn.addEventListener('click', closeInquiryModal);
+  if (inquiryModal) {
+    inquiryModal.addEventListener('click', function (e) {
+      if (e.target === inquiryModal) closeInquiryModal();
+    });
+  }
+
   // Delegated click: view application details (eye icon or "View") in Applications table
   document.addEventListener('click', function (e) {
     const btn = e.target.closest('.btn-view-app');
@@ -4385,21 +4508,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const item = e.target.closest('.notif-item');
     if (!item) return;
     e.preventDefault();
-    closeNotifications();
     const type = item.getAttribute('data-notif-type');
     if (type === 'inquiry') {
       const inquiryId = item.getAttribute('data-inquiry-id');
       const inquiry = API_INQUIRIES.find(i => String(i.id) === String(inquiryId));
       const ref = item.getAttribute('data-app-ref');
       if (ref) readNotifRefs.add(ref);
+      if (inquiry && String(inquiry.status || '').toLowerCase() !== 'replied') inquiry.status = 'read';
       markInquiryRead(inquiryId);
+      renderNotifications();
       updatePendingBadge();
-      if (inquiry && inquiry.email) {
-        const subject = encodeURIComponent(`Re: ${inquiry.subject || 'Admissions Inquiry'}`);
-        window.location.href = `mailto:${inquiry.email}?subject=${subject}`;
-      }
+      openInquiryModal(inquiry);
       return;
     }
+    closeNotifications();
     const id = item.getAttribute('data-app-id');
     const ref = item.getAttribute('data-app-ref');
     if (id != null && id !== '' && id !== 'null' && !isNaN(Number(id))) {
@@ -4413,7 +4535,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('notifClose').addEventListener('click', closeNotifications);
   document.getElementById('notifOverlay').addEventListener('click', closeNotifications);
   document.getElementById('markReadBtn').addEventListener('click', () => {
-    const list = getUnreadNotifications().filter(n => !readNotifRefs.has(n.ref));
+    const list = getUnreadNotifications().filter(n => !hiddenNotifRefs.has(n.ref));
     list.forEach(n => readNotifRefs.add(n.ref));
     list.filter(n => n.type === 'inquiry' && n.inquiryId != null).forEach(n => markInquiryRead(n.inquiryId));
     renderNotifications();
@@ -4421,8 +4543,11 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast('All notifications marked as read');
   });
   document.getElementById('clearNotifBtn').addEventListener('click', () => {
-    const list = getUnreadNotifications().filter(n => !readNotifRefs.has(n.ref));
-    list.forEach(n => readNotifRefs.add(n.ref));
+    const list = getUnreadNotifications().filter(n => !hiddenNotifRefs.has(n.ref));
+    list.forEach(n => {
+      readNotifRefs.add(n.ref);
+      hiddenNotifRefs.add(n.ref);
+    });
     list.filter(n => n.type === 'inquiry' && n.inquiryId != null).forEach(n => markInquiryRead(n.inquiryId));
     renderNotifications();
     updatePendingBadge();

@@ -1812,6 +1812,17 @@ body {
   background: #f4f8ff;
 }
 
+.notif-item--read {
+  background: #fff;
+  border-color: #edf2f7;
+  opacity: .82;
+}
+
+.notif-item--read .notif-kind,
+.notif-item--read .notif-icon {
+  filter: grayscale(.35);
+}
+
 .notif-content {
   min-width: 0;
   flex: 1;
@@ -1994,6 +2005,221 @@ body {
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   pointer-events: auto;
+}
+
+.inquiry-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10020;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, .54);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+.inquiry-modal-card {
+  width: min(560px, 100%);
+  max-height: min(720px, calc(100vh - 40px));
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 28px 80px rgba(15, 23, 42, .28);
+  display: flex;
+  flex-direction: column;
+}
+
+.inquiry-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 22px 10px;
+}
+
+.inquiry-modal-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: #fff7ed;
+  color: #d97706;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inquiry-modal-icon .iconsax-icon,
+.inquiry-modal-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.inquiry-modal-close {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text-2);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inquiry-modal-body {
+  padding: 0 22px 22px;
+  overflow-y: auto;
+}
+
+.inquiry-modal-kicker {
+  display: inline-flex;
+  margin-top: 8px;
+  color: #d97706;
+  background: #fff7ed;
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.inquiry-modal-body h3 {
+  margin-top: 12px;
+  color: var(--text-1);
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.inquiry-sender-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.inquiry-sender-row > div {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.inquiry-label {
+  display: block;
+  color: var(--text-3);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.inquiry-sender-row strong {
+  display: block;
+  color: var(--text-1);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.inquiry-email-line {
+  margin-top: 12px;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.inquiry-message-box {
+  margin-top: 18px;
+  padding: 16px;
+  min-height: 110px;
+  border: 1px solid var(--border);
+  border-left: 4px solid #d97706;
+  border-radius: 12px;
+  background: #fbfdff;
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.inquiry-reply-box {
+  margin-top: 18px;
+}
+
+.inquiry-reply-box label {
+  display: block;
+  color: var(--text-1);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.inquiry-reply-box textarea {
+  width: 100%;
+  min-height: 130px;
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 13px 14px;
+  color: var(--text-1);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.55;
+  background: #fff;
+  outline: none;
+}
+
+.inquiry-reply-box textarea:focus {
+  border-color: var(--navy-light);
+  box-shadow: 0 0 0 3px rgba(37, 77, 130, .12);
+}
+
+.inquiry-reply-status {
+  min-height: 18px;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.inquiry-reply-status.is-error {
+  color: var(--red);
+}
+
+.inquiry-reply-status.is-success {
+  color: var(--green);
+}
+
+.inquiry-modal-actions {
+  display: flex;
+  gap: 10px;
+  padding: 16px 22px 22px;
+  border-top: 1px solid var(--border);
+}
+
+.inquiry-modal-secondary,
+.inquiry-modal-reply {
+  flex: 1;
+  min-height: 44px;
+  justify-content: center;
+  text-align: center;
+}
+
+.inquiry-modal-reply {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inquiry-modal-reply:disabled {
+  opacity: .55;
+  cursor: not-allowed;
 }
 
 .slideover-overlay.open {

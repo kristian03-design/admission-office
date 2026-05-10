@@ -12,7 +12,7 @@
   @include('partials.iconsax')
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=11" />
+  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=13" />
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
     (function () {
@@ -24,7 +24,7 @@
   </script>
   <script src="{{ asset('js/api-config.js') }}?v=8"></script>
   <script src="{{ asset('js/admission-api.js') }}?v=17"></script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=43" defer></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=45" defer></script>
 </head>
 <body>
   @include('partials.site-loader')
@@ -150,6 +150,47 @@
   </div>
 
   <!-- ─── DASHBOARD ─── -->
+  <div class="inquiry-modal-overlay" id="inquiryModal" style="display:none;">
+    <div class="inquiry-modal-card" role="dialog" aria-modal="true" aria-labelledby="inquiryModalSubject">
+      <div class="inquiry-modal-header">
+        <div class="inquiry-modal-icon">
+          <i data-iconsax="mail"></i>
+        </div>
+        <button type="button" class="inquiry-modal-close" id="inquiryModalClose" aria-label="Close inquiry">
+          <i data-iconsax="x"></i>
+        </button>
+      </div>
+      <div class="inquiry-modal-body">
+        <span class="inquiry-modal-kicker">Website Inquiry</span>
+        <h3 id="inquiryModalSubject">Admissions Inquiry</h3>
+        <div class="inquiry-sender-row">
+          <div>
+            <span class="inquiry-label">Sender</span>
+            <strong id="inquiryModalName">Website visitor</strong>
+          </div>
+          <div>
+            <span class="inquiry-label">Received</span>
+            <strong id="inquiryModalTime">Just now</strong>
+          </div>
+        </div>
+        <div class="inquiry-email-line" id="inquiryModalEmail">sender@email.com</div>
+        <div class="inquiry-message-box" id="inquiryModalMessage"></div>
+        <div class="inquiry-reply-box">
+          <label for="inquiryReplyMessage">Reply Message</label>
+          <textarea id="inquiryReplyMessage" rows="5" placeholder="Type your response to this inquiry..."></textarea>
+          <p class="inquiry-reply-status" id="inquiryReplyStatus"></p>
+        </div>
+      </div>
+      <div class="inquiry-modal-actions">
+        <button type="button" class="btn-ghost inquiry-modal-secondary" id="inquiryDoneBtn">Close</button>
+        <button type="button" class="btn-primary inquiry-modal-reply" id="inquiryReplyBtn">
+          <i data-iconsax="send"></i>
+          Reply
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div class="page-content active" id="page-dashboard">
     <div class="page-header">
       <div>

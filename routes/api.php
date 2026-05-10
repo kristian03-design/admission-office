@@ -80,6 +80,7 @@ Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(functi
 
     // Inquiries (Admin view)
     Route::get('/admin/inquiries', [\App\Http\Controllers\Api\InquiryController::class, 'index']);
+    Route::post('/admin/inquiries/{id}/reply', [\App\Http\Controllers\Api\InquiryController::class, 'reply']);
     Route::patch('/admin/inquiries/{id}/status', [\App\Http\Controllers\Api\InquiryController::class, 'updateStatus']);
     Route::delete('/admin/inquiries/{id}', [\App\Http\Controllers\Api\InquiryController::class, 'destroy']);
 

@@ -137,6 +137,7 @@ Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(functi
     Route::delete('/faculty-staff/{id}', [FacultyStaffController::class, 'destroy']);
 
     Route::get('/admin/inquiries', [InquiryController::class, 'index']);
+    Route::post('/admin/inquiries/{id}/reply', [InquiryController::class, 'reply']);
     Route::patch('/admin/inquiries/{id}/status', [InquiryController::class, 'updateStatus']);
     Route::delete('/admin/inquiries/{id}', [InquiryController::class, 'destroy']);
 
