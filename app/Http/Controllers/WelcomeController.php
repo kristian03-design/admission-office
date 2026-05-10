@@ -27,7 +27,10 @@ class WelcomeController extends Controller
             return [
                 'settings' => SystemSetting::all_as_array(),
                 'announcements' => $announcements,
-                'tickerAnnouncements' => $announcements->where('is_popup', false)->values(),
+                'tickerAnnouncements' => $announcements
+                    ->where('is_popup', false)
+                    ->unique(fn ($announcement) => trim(mb_strtolower($announcement->message ?? '')))
+                    ->values(),
                 'popupAnn' => $announcements->firstWhere('is_popup', true),
                 'programs' => Program::orderBy('name')->get(),
                 'testimonials' => \App\Models\Testimonial::whereRaw('is_active = true')

@@ -12,7 +12,7 @@
   @include('partials.iconsax')
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=9" />
+  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=10" />
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
     (function () {
@@ -24,7 +24,7 @@
   </script>
   <script src="{{ asset('js/api-config.js') }}?v=8"></script>
   <script src="{{ asset('js/admission-api.js') }}?v=17"></script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=41" defer></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=42" defer></script>
 </head>
 <body>
   @include('partials.site-loader')

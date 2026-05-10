@@ -12,6 +12,10 @@ window.addEventListener('load', () => {
 });
 setTimeout(hideSiteLoader, 4500); // fallback
 
+function savingButtonMarkup(label = 'Saving...') {
+  return `<span class="btn-inline-spinner" aria-hidden="true"></span><span>${label}</span>`;
+}
+
 function showConfirmModal(options) {
   const { title, message, onConfirm, confirmText = "Confirm", cancelText = "Cancel", icon = "trash", danger = true } = options;
   const modal = document.getElementById('confirmModal');
@@ -1615,8 +1619,7 @@ async function saveAllProgramSlotsLeft() {
   const btn = document.getElementById('saveAllProgramSlotsBtn');
   if (btn) {
     btn.disabled = true;
-    btn.innerHTML = '<i data-iconsax="loader"></i> Saving...';
-    if (typeof iconsax !== 'undefined') iconsax.createIcons();
+    btn.innerHTML = savingButtonMarkup();
   }
 
   const results = await Promise.allSettled(
@@ -1942,7 +1945,7 @@ async function saveWebsiteSettings() {
   const btn = document.getElementById("saveWebsiteSettingsBtn");
   const originalText = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = "Saving...";
+  btn.innerHTML = savingButtonMarkup();
 
   try {
     if (typeof AdmissionAPI === 'undefined' || !AdmissionAPI.getToken()) {
@@ -2092,7 +2095,7 @@ async function saveAnnouncement() {
   const btn = document.getElementById("saveAnnouncementBtn");
   const originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i data-iconsax="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
+  btn.innerHTML = savingButtonMarkup();
 
   try {
     const url = id ? `/api/announcements/${id}` : "/api/announcements";
@@ -2550,7 +2553,7 @@ async function saveNewsEvent() {
   const btn = document.getElementById("saveNewsEventBtn");
   const originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i data-iconsax="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
+  btn.innerHTML = savingButtonMarkup();
 
   try {
     const url = id ? `/api/admin/news-events/${id}` : "/api/admin/news-events";
@@ -2873,7 +2876,7 @@ async function saveTestimonial() {
   const btn = document.getElementById("saveTestimonialBtn");
   const originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i data-iconsax="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
+  btn.innerHTML = savingButtonMarkup();
 
   try {
     const payload = new FormData();
@@ -3186,7 +3189,7 @@ async function saveFacultyStaff() {
   const btn = document.getElementById("saveFacultyStaffBtn");
   const originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.innerHTML = '<i data-iconsax="loader" class="animate-spin" style="width:14px;height:14px;margin-right:8px;"></i> Saving...';
+  btn.innerHTML = savingButtonMarkup();
 
   try {
     const payload = new FormData();
@@ -4164,7 +4167,7 @@ async function changeAdminPassword() {
   const originalHtml = btn ? btn.innerHTML : '';
   if (btn) {
     btn.disabled = true;
-    btn.textContent = 'Saving...';
+    btn.innerHTML = savingButtonMarkup();
   }
 
   try {
@@ -4354,7 +4357,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const btn = document.getElementById('saveSettingsBtn');
-    if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+    if (btn) { btn.disabled = true; btn.innerHTML = savingButtonMarkup(); }
 
     try {
       if (typeof AdmissionAPI !== 'undefined' && AdmissionAPI.getToken()) {
