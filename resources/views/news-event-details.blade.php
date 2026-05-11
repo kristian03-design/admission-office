@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -15,18 +15,18 @@
 
   <style>
   /* ── News/Events detail page: force solid navbar since there's no dark hero ── */
-  #navbar {
+  #navbar, #navbar.scrolled {
     background: rgba(27, 53, 87, 0.97) !important;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
   }
 
-  /* Keep the same scrolled-state styles active from the start */
-  #navbar .nav-sub  { color: rgba(255, 255, 255, .7)  !important; }
-  #navbar .nav-main { color: var(--white)              !important; }
-  #navbar .nav-link { color: rgba(255, 255, 255, .75)  !important; }
-  #navbar .nav-link:hover { color: var(--white)        !important; }
+  /* Force light text regardless of scroll state */
+  #navbar .nav-sub, #navbar.scrolled .nav-sub   { color: rgba(255, 255, 255, .7)  !important; }
+  #navbar .nav-main, #navbar.scrolled .nav-main  { color: #ffffff                  !important; }
+  #navbar .nav-link, #navbar.scrolled .nav-link  { color: rgba(255, 255, 255, .75) !important; }
+  #navbar .nav-link:hover, #navbar.scrolled .nav-link:hover { color: #ffffff       !important; }
 
   /* ── Fix mobile menu toggle icon color ── */
   #menu-toggle { color: var(--white); }

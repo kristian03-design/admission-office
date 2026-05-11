@@ -121,8 +121,8 @@
         <span class="notif-dot" id="notifDot"></span>
       </button>
       <div class="topbar-admin">
-        <div class="topbar-avatar" id="topbarUserInitials">�</div>
-        <span class="topbar-admin-name" id="topbarUserName">�</span>
+        <div class="topbar-avatar" id="topbarUserInitials"></div>
+        <span class="topbar-admin-name" id="topbarUserName"></span>
       </div>
     </div>
   </header>
@@ -209,7 +209,7 @@
         <div class="chart-card-header">
           <div>
             <div class="chart-title">Application Trend</div>
-            <div class="chart-sub">Monthly submissions � <span id="chartSY">{{ date('Y') }}�{{ date('Y') + 1 }}</span></div>
+            <div class="chart-sub">Monthly submissions  <span id="chartSY">{{ date('Y') }}-{{ date('Y') + 1 }}</span></div>
           </div>
         </div>
         <div class="chart-body"><canvas id="trendChart"></canvas></div>

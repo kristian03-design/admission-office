@@ -12,6 +12,23 @@
   <script src="https://cdn.tailwindcss.com"></script>
   @include('partials.iconsax')
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=16" />
+  <style>
+    /* ── Force solid navbar for visibility ── */
+    #navbar, #navbar.scrolled {
+      background: rgba(27, 53, 87, 0.97) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
+    }
+    #navbar .nav-sub, #navbar.scrolled .nav-sub   { color: rgba(255, 255, 255, .7)  !important; }
+    #navbar .nav-main, #navbar.scrolled .nav-main  { color: #ffffff                  !important; }
+    #navbar .nav-link, #navbar.scrolled .nav-link  { color: rgba(255, 255, 255, .75) !important; }
+    #navbar .nav-link:hover, #navbar.scrolled .nav-link:hover { color: #ffffff       !important; }
+    #menu-toggle { color: #ffffff; }
+
+    /* Pagination Styling */
+    .pagination-container nav svg { width: 20px; height: 20px; display: inline; }
+  </style>
 </head>
 <body>
   @include('partials.site-loader')
@@ -137,7 +154,7 @@
         </div>
 
         @if($newsEvents->hasPages())
-          <div class="mt-12">
+          <div class="mt-16 flex justify-center pagination-container">
             {{ $newsEvents->links() }}
           </div>
         @endif
