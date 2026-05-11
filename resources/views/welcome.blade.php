@@ -34,7 +34,7 @@ content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpk
           <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
         </div>
       </a>
-      <nav class="nav-desktop hidden md:flex items-center gap-8">
+      <nav class="nav-desktop hidden md:flex items-center gap-6">
         <a href="{{ route('home') }}" class="nav-link text-sm font-medium tracking-wide">Home</a>
         <a href="{{ route('about') }}" class="nav-link text-sm font-medium tracking-wide">About</a>
         <a href="{{ route('home') }}#programs" class="nav-link text-sm font-medium tracking-wide">Programs</a>
