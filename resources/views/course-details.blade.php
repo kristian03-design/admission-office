@@ -54,13 +54,15 @@
       margin-top: 72px;
       background: var(--navy-dark);
       padding: .85rem 0;
-      border-bottom: 1px solid rgba(255,255,255,.05);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      position: relative;
+      z-index: 10;
     }
     .breadcrumb-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; gap: .5rem; }
-    .breadcrumb-inner a { font-size: .85rem; color: rgba(255,255,255,.65); text-decoration: none; transition: color .2s; }
+    .breadcrumb-inner a { font-size: .82rem; color: rgba(255,255,255,.6); text-decoration: none; transition: color .2s; }
     .breadcrumb-inner a:hover { color: var(--gold-light); }
-    .breadcrumb-inner .sep { color: rgba(255,255,255,.25); font-size: .75rem; }
-    .breadcrumb-inner .current { font-size: .85rem; color: var(--gold-light); font-weight: 500; }
+    .breadcrumb-inner .sep { color: rgba(255,255,255,.2); font-size: .7rem; }
+    .breadcrumb-inner .current { font-size: .82rem; color: var(--gold-light); font-weight: 500; }
  
     /* ─── Hero ─── */
     .program-hero {
@@ -89,7 +91,7 @@
     .hero-deco-line.l2 { height: 1px; left: 0; right: 0; bottom: 35%; }
  
     .hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
-    .hero-grid { display: grid; grid-template-columns: 1fr 310px; gap: 4rem; align-items: center; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 310px; gap: 3.5rem; align-items: start; }
  
     .hero-dept-badge {
       display: inline-flex; align-items: center; gap: .5rem;
@@ -104,11 +106,11 @@
  
     .hero-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-size: clamp(2.0rem, 4.5vw, 2.85rem);
       font-weight: 800;
       color: #fff;
       line-height: 1.15;
-      letter-spacing: -0.015em;
+      letter-spacing: -0.01em;
     }
     .hero-title em { font-style: italic; color: var(--gold-light); font-weight: 600; }
  
@@ -120,18 +122,19 @@
       max-width: 540px;
     }
  
-    .hero-meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2.5rem; }
-    .hero-meta-item { display: flex; align-items: center; gap: .75rem; }
+    .hero-meta-row { display: flex; align-items: center; gap: 1.25rem; margin-top: 2.25rem; flex-wrap: nowrap; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; }
+    .hero-meta-row::-webkit-scrollbar { display: none; }
+    .hero-meta-item { display: flex; align-items: center; gap: .6rem; flex-shrink: 0; }
     .hero-meta-icon {
-      width: 40px; height: 40px; border-radius: var(--radius-sm);
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.1);
+      width: 36px; height: 36px; border-radius: var(--radius-sm);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
       display: flex; align-items: center; justify-content: center;
       color: var(--gold-light); flex-shrink: 0;
     }
-    .hero-meta-icon svg { width: 18px; height: 18px; }
-    .hero-meta-label { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.45); }
-    .hero-meta-value { font-size: 1.05rem; font-weight: 700; color: #fff; margin-top: .2rem; }
+    .hero-meta-icon svg { width: 16px; height: 16px; }
+    .hero-meta-label { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); }
+    .hero-meta-value { font-size: .95rem; font-weight: 700; color: #fff; margin-top: .1rem; white-space: nowrap; }
  
     .status-open   { color: #4ade80; }
     .status-closed { color: #f87171; }
@@ -360,8 +363,8 @@
  
     /* ─── Responsive ─── */
     @media (max-width: 1024px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .apply-card { max-width: 480px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .apply-card { max-width: 320px; margin: 0 auto; }
       .overview-grid { grid-template-columns: 1fr; }
       .sidebar-card { position: static; }
       .highlights-grid { grid-template-columns: repeat(2, 1fr); }
