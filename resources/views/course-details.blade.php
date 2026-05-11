@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -15,6 +15,8 @@
    <style>
     /* ─── Page-level token overrides to match home-page.css ─── */
     :root {
+      --navy:        #1b3557;
+      --navy-dark:   #0f2340;
       --gold:        #c9933a;
       --gold-light:  #dfb36a;
       --gold-pale:   #fdf6e3;
@@ -27,18 +29,25 @@
       --radius-xl:   24px;
     }
  
-    /* ─── Navbar always solid/dark on this interior page ─── */
-    #navbar, #navbar.scrolled {
+    /* ─── Navbar: Dark at top, White on scroll ─── */
+    #navbar:not(.scrolled) {
       background: rgba(27, 53, 87, 0.98) !important;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
     }
-    #navbar .nav-sub, #navbar.scrolled .nav-sub   { color: rgba(255, 255, 255, .7)  !important; }
-    #navbar .nav-main, #navbar.scrolled .nav-main  { color: #ffffff                  !important; }
-    #navbar .nav-link, #navbar.scrolled .nav-link  { color: rgba(255, 255, 255, .75) !important; }
-    #navbar .nav-link:hover, #navbar.scrolled .nav-link:hover { color: #ffffff       !important; }
-    #menu-toggle { color: #ffffff; }
+    #navbar:not(.scrolled) .nav-sub   { color: rgba(255, 255, 255, .7)  !important; }
+    #navbar:not(.scrolled) .nav-main  { color: #ffffff                  !important; }
+    #navbar:not(.scrolled) .nav-link  { color: rgba(255, 255, 255, .75) !important; }
+    #navbar:not(.scrolled) .nav-link:hover { color: #ffffff             !important; }
+    #navbar:not(.scrolled) #menu-toggle { color: #ffffff !important; }
+
+    /* When scrolled, let home-page.css handle the white background. 
+       We only override text colors here to ensure they are dark navy. */
+    #navbar.scrolled .nav-link { color: var(--navy) !important; }
+    #navbar.scrolled .nav-main { color: var(--navy) !important; }
+    #navbar.scrolled .nav-sub  { color: var(--navy-mid) !important; }
+    #navbar.scrolled #menu-toggle { color: var(--navy) !important; }
  
     /* ─── Breadcrumb Strip ─── */
     .breadcrumb-strip {
@@ -57,15 +66,15 @@
       background: var(--navy);
       position: relative;
       overflow: hidden;
-      padding: 10rem 0 6rem;
+      padding: 7rem 0 5rem;
     }
     .program-hero::before {
       content: '';
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201,147,58,.12), transparent),
-        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(27,53,87,.6), transparent);
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201,147,58,.08), transparent),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(27,53,87,.4), transparent);
     }
     .hero-deco-ring {
       position: absolute;
@@ -79,7 +88,7 @@
     .hero-deco-line.l2 { height: 1px; left: 0; right: 0; bottom: 35%; }
  
     .hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
-    .hero-grid { display: grid; grid-template-columns: 1fr 380px; gap: 4rem; align-items: center; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 340px; gap: 4rem; align-items: center; }
  
     .hero-dept-badge {
       display: inline-flex; align-items: center; gap: .5rem;
@@ -94,11 +103,11 @@
  
     .hero-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2.6rem, 5vw, 3.8rem);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
       font-weight: 800;
       color: #fff;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
     }
     .hero-title em { font-style: italic; color: var(--gold-light); font-weight: 600; }
  
@@ -293,6 +302,83 @@
     .highlight-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
     .highlight-desc { font-size: .84rem; line-height: 1.65; color: rgba(255,255,255,.5); }
  
+    /* ─── Footer CTA ─── */
+    .footer-cta-section { padding: 5rem 0; background: var(--cream); border-top: 1px solid var(--border); }
+    .footer-cta-inner {
+      background: var(--navy); border-radius: var(--radius-xl);
+      position: relative; overflow: hidden;
+      padding: 4rem 3.5rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 3rem;
+    }
+    .footer-cta-inner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 100% at 100% 50%, rgba(201,147,58,.12), transparent);
+    }
+    .footer-cta-inner::after {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px; border-radius: 50%;
+      border: 1px solid rgba(201,147,58,.08);
+      top: -150px; right: -100px;
+    }
+    .footer-cta-text { position: relative; z-index: 1; }
+    .footer-cta-title { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 700; color: #fff; line-height: 1.1; }
+    .footer-cta-title em { font-style: italic; color: var(--gold-light); }
+    .footer-cta-sub { margin-top: 1rem; font-size: .97rem; color: rgba(255,255,255,.55); max-width: 440px; line-height: 1.7; }
+    .footer-cta-actions { display: flex; flex-direction: column; gap: .85rem; min-width: 220px; position: relative; z-index: 1; }
+    .btn-cta-main {
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      padding: 1.05rem 2rem; background: var(--gold); color: #fff;
+      font-size: .95rem; font-weight: 700; border-radius: 999px;
+      text-decoration: none;
+      transition: background .25s, transform .2s, box-shadow .25s;
+      box-shadow: 0 8px 24px rgba(201,147,58,.35);
+    }
+    .btn-cta-main:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-cta-main svg { width: 17px; height: 17px; }
+    .btn-cta-ghost {
+      display: inline-flex; align-items: center; justify-content: center; gap: .75rem;
+      padding: .85rem 2.2rem;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.7); font-size: .88rem; font-weight: 500;
+      border-radius: 999px; text-decoration: none; text-align: center;
+      transition: background .25s, color .25s, transform .2s;
+    }
+    .btn-cta-ghost:hover { background: rgba(255,255,255,.1); color: #fff; transform: translateX(3px); }
+    .btn-cta-ghost svg { width: 18px; height: 18px; opacity: .7; transition: transform .2s; }
+    .btn-cta-ghost:hover svg { transform: translateX(4px); opacity: 1; }
+ 
+    /* ─── Reveal Animations ─── */
+    [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+    [data-reveal].visible { opacity: 1; transform: none; }
+    [data-reveal][data-delay="100"] { transition-delay: .1s; }
+    [data-reveal][data-delay="200"] { transition-delay: .2s; }
+    [data-reveal][data-delay="300"] { transition-delay: .3s; }
+    [data-reveal][data-delay="400"] { transition-delay: .4s; }
+ 
+    /* ─── Responsive ─── */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .apply-card { max-width: 480px; }
+      .overview-grid { grid-template-columns: 1fr; }
+      .sidebar-card { position: static; }
+      .highlights-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-cta-inner { flex-direction: column; text-align: center; }
+      .footer-cta-sub { margin: 1rem auto 0; }
+      .footer-cta-actions { width: 100%; max-width: 320px; align-self: center; }
+    }
+    @media (max-width: 640px) {
+      .hero-title { font-size: 2.4rem; }
+      .hero-cta-row { flex-direction: column; }
+      .btn-hero-primary, .btn-hero-secondary { justify-content: center; }
+      .study-areas { grid-template-columns: 1fr; }
+      .highlights-grid { grid-template-columns: 1fr; }
+      .footer-cta-inner { padding: 2.5rem 1.5rem; }
+      .footer-cta-title { font-size: 2rem; }
+      .nav-links { display: none; }
+      .footer-bottom-row { flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
@@ -401,7 +487,7 @@
               <div class="hero-meta-icon"><i data-iconsax="sun-moon"></i></div>
               <div>
                 <p class="hero-meta-label">Schedule</p>
-                <p class="hero-meta-value">Day / Evening</p>
+                <p class="hero-meta-value">Day</p>
               </div>
             </div>
             <div class="hero-meta-item">
