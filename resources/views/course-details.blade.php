@@ -52,21 +52,22 @@
     /* ─── Breadcrumb Strip ─── */
     .breadcrumb-strip {
       margin-top: 72px;
-      background: var(--navy);
-      padding: .75rem 0;
+      background: var(--navy-dark);
+      padding: .85rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.05);
     }
     .breadcrumb-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; gap: .5rem; }
-    .breadcrumb-inner a { font-size: .9rem; color: rgba(255,255,255,.55); text-decoration: none; transition: color .2s; }
+    .breadcrumb-inner a { font-size: .85rem; color: rgba(255,255,255,.65); text-decoration: none; transition: color .2s; }
     .breadcrumb-inner a:hover { color: var(--gold-light); }
-    .breadcrumb-inner .sep { color: rgba(255,255,255,.25); font-size: .8rem; }
-    .breadcrumb-inner .current { font-size: .9rem; color: var(--gold-light); font-weight: 500; }
+    .breadcrumb-inner .sep { color: rgba(255,255,255,.25); font-size: .75rem; }
+    .breadcrumb-inner .current { font-size: .85rem; color: var(--gold-light); font-weight: 500; }
  
     /* ─── Hero ─── */
     .program-hero {
       background: var(--navy);
       position: relative;
       overflow: hidden;
-      padding: 7rem 0 5rem;
+      padding: 5rem 0 4rem;
     }
     .program-hero::before {
       content: '';
@@ -88,7 +89,7 @@
     .hero-deco-line.l2 { height: 1px; left: 0; right: 0; bottom: 35%; }
  
     .hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
-    .hero-grid { display: grid; grid-template-columns: 1fr 340px; gap: 4rem; align-items: center; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 310px; gap: 4rem; align-items: center; }
  
     .hero-dept-badge {
       display: inline-flex; align-items: center; gap: .5rem;
@@ -165,7 +166,7 @@
       background: rgba(255,255,255,.05);
       border: 1px solid rgba(255,255,255,.12);
       border-radius: var(--radius-xl);
-      padding: 2rem;
+      padding: 1.5rem;
       backdrop-filter: blur(10px);
       position: relative; overflow: hidden;
     }
@@ -174,9 +175,9 @@
       position: absolute; top: 0; left: 0; right: 0; height: 3px;
       background: linear-gradient(90deg, var(--gold), var(--gold-light));
     }
-    .apply-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
-    .apply-card-sub { font-size: .85rem; color: rgba(255,255,255,.55); line-height: 1.6; margin-bottom: 1.75rem; }
-    .apply-checklist { list-style: none; display: flex; flex-direction: column; gap: .9rem; margin-bottom: 1.75rem; }
+    .apply-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 700; color: #fff; margin-bottom: .4rem; }
+    .apply-card-sub { font-size: .82rem; color: rgba(255,255,255,.55); line-height: 1.55; margin-bottom: 1.5rem; }
+    .apply-checklist { list-style: none; display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.5rem; }
     .apply-checklist li { display: flex; align-items: flex-start; gap: .75rem; font-size: .88rem; color: rgba(255,255,255,.8); }
     .check-circle {
       width: 20px; height: 20px; border-radius: 50%;
@@ -502,10 +503,6 @@
                   {{ $isOpen ? 'Admissions Open' : ($slotsLeft <= 0 ? 'Full Slot' : 'Closed') }}
                 </p>
               </div>
-            </div>
-          </div>
-
-          <div class="hero-meta-row" style="margin-top: 1.5rem;">
             <div class="hero-meta-item">
               <div class="hero-meta-icon"><i data-iconsax="users"></i></div>
               <div>
