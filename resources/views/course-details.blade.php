@@ -53,15 +53,19 @@
     #navbar.scrolled .nav-sub     { color: rgba(27,53,87,.55) !important; }
     #navbar.scrolled #menu-toggle { color: var(--navy) !important; }
 
+    /* ─── Navbar height spacer (pushes content below fixed navbar) ─── */
+    .navbar-spacer {
+      height: 72px;
+      background: var(--navy-dark);
+    }
+
     /* ─── Breadcrumb Strip ─── */
     .breadcrumb-strip {
-      /* sit flush under the fixed navbar (navbar is ~72px tall) */
-      padding-top: calc(72px + .85rem);
-      padding-bottom: .85rem;
       background: var(--navy-dark);
+      padding: .85rem 0;
       border-bottom: 1px solid rgba(255,255,255,.08);
       position: relative;
-      z-index: 40; /* below navbar (z-50) but above everything else */
+      z-index: 40;
     }
     .breadcrumb-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; gap: .5rem; }
     .breadcrumb-inner a { font-size: .82rem; color: rgba(255,255,255,.6); text-decoration: none; transition: color .2s; }
@@ -137,7 +141,7 @@
       display: flex; align-items: center; justify-content: center;
       color: var(--gold-light); flex-shrink: 0;
     }
-    .hero-meta-icon svg { width: 16px; height: 16px; }
+    .hero-meta-icon svg { width: 16px; height: 16px; display: block; }
     .hero-meta-label { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); }
     .hero-meta-value { font-size: .95rem; font-weight: 700; color: #fff; margin-top: .1rem; white-space: nowrap; }
 
@@ -193,7 +197,7 @@
       color: var(--gold-light); display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; margin-top: .05rem;
     }
-    .check-circle svg { width: 11px; height: 11px; }
+    .check-circle svg { width: 11px; height: 11px; display: block; }
     .btn-apply-card {
       display: block; width: 100%; padding: 1rem;
       background: var(--gold); color: #fff;
@@ -450,6 +454,9 @@
     </div>
   </header>
 
+  <!-- Pushes page content below the fixed navbar -->
+  <div class="navbar-spacer" aria-hidden="true"></div>
+
   <!-- Breadcrumb Strip -->
   <div class="breadcrumb-strip">
     <div class="breadcrumb-inner">
@@ -487,7 +494,9 @@
           <!-- FIX: each hero-meta-item is now properly opened and closed -->
           <div class="hero-meta-row">
             <div class="hero-meta-item">
-              <div class="hero-meta-icon"><i data-iconsax="clock"></i></div>
+              <div class="hero-meta-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
               <div>
                 <p class="hero-meta-label">Duration</p>
                 <p class="hero-meta-value">4 Years</p>
@@ -495,7 +504,9 @@
             </div><!-- /.hero-meta-item -->
 
             <div class="hero-meta-item">
-              <div class="hero-meta-icon"><i data-iconsax="sun-moon"></i></div>
+              <div class="hero-meta-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              </div>
               <div>
                 <p class="hero-meta-label">Schedule</p>
                 <p class="hero-meta-value">Day</p>
@@ -503,7 +514,9 @@
             </div><!-- /.hero-meta-item -->
 
             <div class="hero-meta-item">
-              <div class="hero-meta-icon"><i data-iconsax="shield-check"></i></div>
+              <div class="hero-meta-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+              </div>
               <div>
                 <p class="hero-meta-label">Status</p>
                 @php
@@ -517,7 +530,9 @@
             </div><!-- /.hero-meta-item -->
 
             <div class="hero-meta-item">
-              <div class="hero-meta-icon"><i data-iconsax="users"></i></div>
+              <div class="hero-meta-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
               <div>
                 <p class="hero-meta-label">Slots</p>
                 <p class="hero-meta-value">{{ $program->slots_left ?? 'Limited' }} Left</p>
@@ -533,19 +548,19 @@
             <p class="apply-card-sub">Join the next generation of professionals at Baliwag Polytechnic College. Your career starts here.</p>
             <ul class="apply-checklist">
               <li>
-                <span class="check-circle"><i data-iconsax="check"></i></span>
+                <span class="check-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                 Fully CHED Accredited
               </li>
               <li>
-                <span class="check-circle"><i data-iconsax="check"></i></span>
+                <span class="check-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                 Expert Industry Faculty
               </li>
               <li>
-                <span class="check-circle"><i data-iconsax="check"></i></span>
+                <span class="check-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                 Scholarships Available
               </li>
               <li>
-                <span class="check-circle"><i data-iconsax="check"></i></span>
+                <span class="check-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                 OJT & Industry Partners
               </li>
             </ul>
@@ -794,7 +809,10 @@
 
   <!-- Scripts -->
   <script>
-    iconsax.createIcons();
+    // Run after DOM is ready so all data-iconsax elements are present
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof iconsax !== 'undefined') iconsax.createIcons();
+    });
 
     // Hide site loader
     function hideSiteLoader() {

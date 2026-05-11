@@ -95,7 +95,7 @@
   </header>
 
   <main>
-    <section class="hero-section subpage-hero relative min-h-[45vh] flex items-center overflow-hidden">
+    <section class="hero-section subpage-hero relative min-h-[50vh] flex items-center overflow-hidden">
       <div class="hero-bg-overlay absolute top-0 left-0 right-0 bottom-0"></div>
       <div class="hero-pattern absolute top-0 left-0 right-0 bottom-0"></div>
       <div class="relative z-10 max-w-7xl mx-auto px-8 w-full pt-24 pb-12">
@@ -156,11 +156,9 @@
           @endforelse
         </div>
 
-        @if($newsEvents->hasPages())
-          <div class="mt-16 flex justify-center pagination-container">
-            {{ $newsEvents->links() }}
-          </div>
-        @endif
+        <div class="mt-16 flex justify-center pagination-container">
+          {{ $newsEvents->links() }}
+        </div>
       </div>
     </section>
   </main>
