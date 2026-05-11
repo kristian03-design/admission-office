@@ -209,18 +209,19 @@
       }
     }
 
-    /* ── Subpage Hero & Navbar ── */
-    .subpage-hero.hero-section {
-      background: linear-gradient(135deg, #0f2340 0%, #1b3557 45%, #254d82 100%) !important;
+    /* ─── Page-level overrides ─── */
+    /* Navbar is always solid/dark on this interior page for consistency */
+    #navbar, #navbar.scrolled {
+      background: rgba(27, 53, 87, 0.98) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
     }
-    
-    #navbar:not(.scrolled) .nav-link {
-      color: rgba(255, 255, 255, 0.8) !important;
-    }
-
-    #navbar:not(.scrolled) #menu-toggle {
-      color: #ffffff !important;
-    }
+    #navbar .nav-sub, #navbar.scrolled .nav-sub   { color: rgba(255, 255, 255, .7)  !important; }
+    #navbar .nav-main, #navbar.scrolled .nav-main  { color: #ffffff                  !important; }
+    #navbar .nav-link, #navbar.scrolled .nav-link  { color: rgba(255, 255, 255, .75) !important; }
+    #navbar .nav-link:hover, #navbar.scrolled .nav-link:hover { color: #ffffff       !important; }
+    #menu-toggle { color: #ffffff; }
   </style>
 </head>
 <body>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -463,7 +463,7 @@
     <div class="page-header">
       <div>
         <h1 class="page-title">Reports</h1>
-        <p class="page-sub">Analytics and summary exports for S.Y. 2025�2026</p>
+        <p class="page-sub">Analytics and summary exports for S.Y. {{ date('n') < 8 ? (date('Y') - 1) . '-' . date('Y') : date('Y') . '-' . (date('Y') + 1) }}</p>
       </div>
       <div class="page-actions">
         <button class="btn-outline" id="rptCsvBtn">

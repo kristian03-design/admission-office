@@ -28,11 +28,30 @@
     }
 
     /* ─── Page-level overrides ─── */
-    #navbar { transition: all 0.3s ease; }
-    #navbar:not(.scrolled) .nav-link { color: rgba(255, 255, 255, 0.8) !important; }
-    #navbar:not(.scrolled) #menu-toggle { color: #ffffff !important; }
-    #navbar:not(.scrolled) .nav-main { color: #ffffff !important; }
-    #navbar:not(.scrolled) .nav-sub { color: rgba(255, 255, 255, 0.7) !important; }
+    /* Navbar is always solid/dark on this interior page for consistency */
+    #navbar, #navbar.scrolled {
+      background: rgba(27, 53, 87, 0.98) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
+    }
+    #navbar .nav-sub, #navbar.scrolled .nav-sub   { color: rgba(255, 255, 255, .7)  !important; }
+    #navbar .nav-main, #navbar.scrolled .nav-main  { color: #ffffff                  !important; }
+    #navbar .nav-link, #navbar.scrolled .nav-link  { color: rgba(255, 255, 255, .75) !important; }
+    #navbar .nav-link:hover, #navbar.scrolled .nav-link:hover { color: #ffffff       !important; }
+    #menu-toggle { color: #ffffff; }
+
+    /* ─── Breadcrumb Strip ─── */
+    .breadcrumb-strip {
+      margin-top: 72px; /* matches nav-inner py-4 height */
+      background: var(--navy);
+      padding: .75rem 0;
+    }
+    .breadcrumb-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; gap: .5rem; }
+    .breadcrumb-inner a { font-size: .9rem; color: rgba(255,255,255,.55); text-decoration: none; transition: color .2s; }
+    .breadcrumb-inner a:hover { color: var(--gold-light); }
+    .breadcrumb-inner .sep { color: rgba(255,255,255,.25); font-size: .8rem; }
+    .breadcrumb-inner .current { font-size: .9rem; color: var(--gold-light); font-weight: 500; }
 
 
 
@@ -80,14 +99,14 @@
     .hero-dept-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
 
     .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 5vw, 4.2rem);
-      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 5vw, 3.8rem);
+      font-weight: 800;
       color: #fff;
-      line-height: 1.05;
-      letter-spacing: -.01em;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
     }
-    .hero-title em { font-style: italic; color: var(--gold-light); }
+    .hero-title em { font-style: italic; color: var(--gold-light); font-weight: 600; }
 
     .hero-desc {
       margin-top: 1.5rem;
@@ -526,8 +545,16 @@
         </div>
       </div>
     </div>
-  </header>
-
+  <!-- Breadcrumb Strip -->
+  <div class="breadcrumb-strip">
+    <div class="breadcrumb-inner">
+      <a href="{{ url('/') }}">Programs</a>
+      <span class="sep">/</span>
+      <span class="current">{{ $program->department }}</span>
+      <span class="sep">/</span>
+      <span class="current">{{ $program->name }}</span>
+    </div>
+  </div>
 
 
   <section class="program-hero">
@@ -821,48 +848,56 @@
           </ul>
         </div>
 
+  <footer class="site-footer" style="background: #0f172a; padding: 5rem 0 2rem; color: #fff;">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="grid md:grid-cols-4 gap-12 pb-12 border-b border-[rgba(255,255,255,0.1)]">
+
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-3 mb-6">
+            <img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" class="w-16 h-16 rounded-full object-cover">
+            <p class="text-sm font-bold">Baliwag Polytechnic College</p>
+          </div>
+          <p class="text-sm text-[rgba(255,255,255,0.6)] leading-relaxed">Empowering Bulacan's future leaders through accessible, quality higher education since 2008.</p>
+        </div>
+
         <div>
-          <h4 class="footer-col-title mb-4">Admissions</h4>
-          <ul class="footer-links">
-            <li><a href="#">How to Apply</a></li>
-            <li><a href="#">Requirements</a></li>
-            <li><a href="#">Scholarship Programs</a></li>
-            <li><a href="#">Tuition &amp; Fees</a></li>
-            <li><a href="#">FAQs</a></li>
+          <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Programs</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">BS Information Technology</a></li>
+            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">BS Business Administration</a></li>
+            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">BS Secondary Education</a></li>
+            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">BS Elementary Education</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="footer-col-title mb-4">Quick Links</h4>
-          <ul class="footer-links">
-            <li><a href="{{ route('about') }}#about-office">About BTECH Admission</a></li>
-            <li><a href="{{ route('about') }}#faculty-staff">Faculty &amp; Staff</a></li>
-            <li><a href="{{ route('news-events') }}">News &amp; Events</a></li>
-            <li><a href="#">Contact Us</a></li>
+          <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Admissions</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">How to Apply</a></li>
+            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">Requirements</a></li>
+            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">Scholarship Programs</a></li>
+            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Quick Links</h4>
+          <ul class="space-y-3">
+            <li><a href="{{ route('about') }}" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">About Admission</a></li>
+            <li><a href="{{ route('news-events') }}" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">News & Events</a></li>
+            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">Contact Us</a></li>
           </ul>
         </div>
 
       </div>
 
-      <div class="footer-bottom flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
-        <p class="text-sm footer-text">© 2026 Baliwag Polytechnic College. All rights reserved.</p>
-            <div class="flex gap-4 mt-8">
-              @if(isset($settings['facebook_link']))
-                <a href="{{ $settings['facebook_link'] }}" class="footer-social-link social-btn" aria-label="Facebook">
-                  <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8.5V7c0-.7.5-1 1.1-1H17V3h-2.6C11.7 3 10 4.7 10 7.1v1.4H8v3h2V21h3.5v-9.5h2.8l.5-3H13.5Z" fill="currentColor"/></svg>
-                </a>
-              @endif
-              @if(isset($settings['twitter_link']))
-                <a href="{{ $settings['twitter_link'] }}" class="footer-social-link social-btn" aria-label="X">
-                  <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m13.8 10.5 6.4-7.5h-1.5l-5.6 6.5L8.7 3H3.6l6.7 9.8L3.6 21h1.5l5.9-6.9 4.7 6.9h5.1Zm-2.1 2.4-.7-1L5.6 4.1H8l4.4 6.3.7 1 5.7 8.2h-2.4Z" fill="currentColor"/></svg>
-                </a>
-              @endif
-              @if(isset($settings['instagram_link']))
-                <a href="{{ $settings['instagram_link'] }}" class="footer-social-link social-btn" aria-label="Instagram">
-                  <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4Zm9.8 1.7a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4ZM12 7.2a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6Zm0 2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6Z" fill="currentColor"/></svg>
-                </a>
-              @endif
-            </div>
+      <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-xs text-[rgba(255,255,255,0.3)]">© 2026 Baliwag Polytechnic College. All rights reserved.</p>
+        <div class="flex gap-4">
+            @if(isset($settings['facebook_link']))
+                <a href="{{ $settings['facebook_link'] }}" class="text-[rgba(255,255,255,0.4)] hover:text-white"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V7c0-.7.5-1 1.1-1H17V3h-2.6C11.7 3 10 4.7 10 7.1v1.4H8v3h2V21h3.5v-9.5h2.8l.5-3H13.5Z"/></svg></a>
+            @endif
+        </div>
       </div>
     </div>
   </footer>
