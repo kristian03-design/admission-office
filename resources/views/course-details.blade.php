@@ -150,7 +150,7 @@
     }
     .hero-meta-icon svg { width: 16px; height: 16px; display: block; }
     .hero-meta-label { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); }
-    .hero-meta-value { font-size: .6rem; font-weight: 700; color: #fff; margin-top: .1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hero-meta-value { font-size: .7rem; font-weight: 700; color: #fff; margin-top: .1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     .status-open   { color: #4ade80; }
     .status-closed { color: #f87171; }
