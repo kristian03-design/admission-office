@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}?v=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
   @include('partials.iconsax')
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=16" />
   <style>
@@ -208,6 +208,19 @@
         font-size: 0.9rem;
       }
     }
+
+    /* ── Force solid navbar for visibility ── */
+    #navbar, #navbar.scrolled {
+      background: rgba(27, 53, 87, 0.97) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
+    }
+    #navbar .nav-sub, #navbar.scrolled .nav-sub   { color: rgba(255, 255, 255, .7)  !important; }
+    #navbar .nav-main, #navbar.scrolled .nav-main  { color: #ffffff                  !important; }
+    #navbar .nav-link, #navbar.scrolled .nav-link  { color: rgba(255, 255, 255, .75) !important; }
+    #navbar .nav-link:hover, #navbar.scrolled .nav-link:hover { color: #ffffff       !important; }
+    #menu-toggle { color: #ffffff; }
   </style>
 </head>
 <body>

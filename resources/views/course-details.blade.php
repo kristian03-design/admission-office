@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=12" />
 
   <style>
-    /* â”€â”€â”€ Page-level token overrides to match home-page.css â”€â”€â”€ */
+    /* ─── Page-level token overrides to match home-page.css ─── */
     :root {
       --gold:        #c9933a; /* home-page uses --gold-mid for this */
       --gold-light:  #dfb36a;
@@ -27,24 +27,22 @@
       --radius-xl:   24px;    /* matches home-page --radius-xl */
     }
 
-    /* â”€â”€â”€ Page-level overrides â”€â”€â”€ */
-    /* Navbar is always scrolled/dark on this interior page */
-    #navbar {
-  background: transparent;
-}
-    #navbar {
+    /* ─── Page-level overrides ─── */
+    /* Navbar is always solid/dark on this interior page */
+    #navbar, #navbar.scrolled {
       background: rgba(27,53,87,.97) !important;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       box-shadow: 0 2px 24px rgba(0,0,0,.18);
     }
     /* Keep nav text readable on dark bg at all times */
-    #navbar .nav-sub { color: rgba(255,255,255,.7); }
-    #navbar .nav-main { color: #fff; }
-    #navbar .nav-link { color: rgba(255,255,255,.75); }
-    #navbar .nav-link:hover { color: #fff; }
+    #navbar .nav-sub, #navbar.scrolled .nav-sub   { color: rgba(255,255,255,.7)  !important; }
+    #navbar .nav-main, #navbar.scrolled .nav-main  { color: #ffffff                  !important; }
+    #navbar .nav-link, #navbar.scrolled .nav-link  { color: rgba(255,255,255,.75) !important; }
+    #navbar .nav-link:hover, #navbar.scrolled .nav-link:hover { color: #ffffff       !important; }
+    #menu-toggle { color: #ffffff; }
 
-    /* â”€â”€â”€ Breadcrumb Strip â”€â”€â”€ */
+    /* ─── Breadcrumb Strip ─── */
     .breadcrumb-strip {
       margin-top: 72px; /* matches nav-inner py-4 height */
       background: var(--navy);
@@ -56,7 +54,7 @@
     .breadcrumb-inner .sep { color: rgba(255,255,255,.25); font-size: .8rem; }
     .breadcrumb-inner .current { font-size: .9rem; color: var(--gold-light); font-weight: 500; }
 
-    /* â”€â”€â”€ Hero â”€â”€â”€ */
+    /* ─── Hero ─── */
     .program-hero {
       background: var(--navy);
       position: relative;
@@ -490,26 +488,28 @@
 <body>
   @include('partials.site-loader')
 
-  <!-- â”€â”€â”€ NAV (exact from welcome.blade.php) â”€â”€â”€ -->
+   <!-- ───────────────────────────────────── NAV ───────────────────────────────────── -->
   <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-        <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo"></div>
+        <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
         <div class="leading-tight">
           <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSION OFFICE' }}</p>
           <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
         </div>
       </a>
-      <nav class="hidden md:flex items-center gap-8">
+      <nav class="nav-desktop hidden md:flex items-center gap-8">
         <a href="{{ route('home') }}" class="nav-link text-sm font-medium tracking-wide">Home</a>
         <a href="{{ route('about') }}" class="nav-link text-sm font-medium tracking-wide">About</a>
         <a href="{{ route('home') }}#programs" class="nav-link text-sm font-medium tracking-wide">Programs</a>
         <a href="{{ route('news-events') }}" class="nav-link text-sm font-medium tracking-wide">News &amp; Events</a>
         <a href="{{ route('home') }}#contact" class="nav-link text-sm font-medium tracking-wide">Contact Us</a>
       </nav>
-      <div class="flex items-center gap-3">
+      <div class="nav-actions flex items-center gap-3">
         <a href="{{ route('apply') }}" class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full transition-all">Inquire Now</a>
-        <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu"><i data-iconsax="menu"></i></button>
+        <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu" aria-expanded="false">
+          <span class="hamburger-icon" aria-hidden="true"></span>
+        </button>
       </div>
     </div>
     <div id="mobile-menu" class="mobile-menu md:hidden">
@@ -799,7 +799,7 @@
             Your Future Begins<br><em>This Enrollment Season.</em>
           </h2>
           <p class="footer-cta-sub">
-            Don't wait. Seats are limited and scholarship slots fill quickly. Take the first step toward the career â€” and the life â€” you've been working toward.
+            Don't wait. Seats are limited and scholarship slots fill quickly. Take the first step toward the career and the life you've been working toward.
           </p>
         </div>
         <div class="footer-cta-actions">
@@ -867,7 +867,7 @@
       </div>
 
       <div class="footer-bottom flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
-        <p class="text-sm footer-text">Â© 2026 Baliwag Polytechnic College. All rights reserved.</p>
+        <p class="text-sm footer-text">© 2026 Baliwag Polytechnic College. All rights reserved.</p>
             <div class="flex gap-4 mt-8">
               @if(isset($settings['facebook_link']))
                 <a href="{{ $settings['facebook_link'] }}" class="footer-social-link social-btn" aria-label="Facebook">
