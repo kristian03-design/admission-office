@@ -25,8 +25,8 @@
       --text-muted:  #4b5563;
       --border:      rgba(27,53,87,.08);
       --radius-md:   12px;
-      --radius-lg:   18px;
-      --radius-xl:   24px;
+      --radius-lg:   14px;
+      --radius-xl:   16px;
     }
 
     /* ─── Navbar: Dark at top, White on scroll ─── */
@@ -55,7 +55,7 @@
 
     /* ─── Navbar height spacer (pushes content below fixed navbar) ─── */
     .navbar-spacer {
-      height: 72px;
+      height: var(--navbar-height, 104px);
       background: var(--navy-dark);
     }
 
@@ -78,7 +78,7 @@
       background: var(--navy);
       position: relative;
       overflow: hidden;
-      padding: 5rem 0 4rem;
+      padding: 4.5rem 0 4rem;
     }
     .program-hero::before {
       content: '';
@@ -100,7 +100,8 @@
     .hero-deco-line.l2 { height: 1px; left: 0; right: 0; bottom: 35%; }
 
     .hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
-    .hero-grid { display: grid; grid-template-columns: 1fr 310px; gap: 3.5rem; align-items: start; }
+    .program-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+    .hero-copy { max-width: 720px; }
 
     .hero-dept-badge {
       display: inline-flex; align-items: center; gap: .5rem;
@@ -114,12 +115,13 @@
     .hero-dept-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
 
     .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.0rem, 4.5vw, 2.85rem);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.3rem, 5.4vw, 4rem);
       font-weight: 800;
       color: #fff;
-      line-height: 1.15;
-      letter-spacing: -0.01em;
+      line-height: .98;
+      letter-spacing: 0;
+      text-wrap: balance;
     }
     .hero-title em { font-style: italic; color: var(--gold-light); font-weight: 600; }
 
@@ -131,9 +133,15 @@
       max-width: 540px;
     }
 
-    .hero-meta-row { display: flex; align-items: center; gap: 1.25rem; margin-top: 2.25rem; flex-wrap: nowrap; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; }
-    .hero-meta-row::-webkit-scrollbar { display: none; }
-    .hero-meta-item { display: flex; align-items: center; gap: .6rem; flex-shrink: 0; }
+    .hero-meta-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .85rem; margin-top: 2rem; }
+    .hero-meta-item {
+      display: flex; align-items: center; gap: .7rem;
+      min-width: 0;
+      padding: .8rem;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 12px;
+      background: rgba(255,255,255,.045);
+    }
     .hero-meta-icon {
       width: 36px; height: 36px; border-radius: var(--radius-sm);
       background: rgba(255,255,255,.06);
@@ -143,7 +151,7 @@
     }
     .hero-meta-icon svg { width: 16px; height: 16px; display: block; }
     .hero-meta-label { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); }
-    .hero-meta-value { font-size: .95rem; font-weight: 700; color: #fff; margin-top: .1rem; white-space: nowrap; }
+    .hero-meta-value { font-size: .9rem; font-weight: 700; color: #fff; margin-top: .1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     .status-open   { color: #4ade80; }
     .status-closed { color: #f87171; }
@@ -173,6 +181,25 @@
     .btn-hero-secondary:hover { background: rgba(255,255,255,.12); color: #fff; }
     .btn-hero-secondary svg { width: 16px; height: 16px; opacity: .6; }
 
+    .hero-note {
+      display: flex;
+      align-items: flex-start;
+      gap: .65rem;
+      max-width: 560px;
+      margin-top: 1.25rem;
+      color: rgba(255,255,255,.58);
+      font-size: .9rem;
+      line-height: 1.6;
+    }
+
+    .hero-note i {
+      width: 18px;
+      height: 18px;
+      color: var(--gold-light);
+      flex-shrink: 0;
+      margin-top: .1rem;
+    }
+
     /* ─── Apply Card ─── */
     .apply-card {
       background: rgba(255,255,255,.05);
@@ -199,7 +226,7 @@
     }
     .check-circle svg { width: 11px; height: 11px; display: block; }
     .btn-apply-card {
-      display: block; width: 100%; padding: 1rem;
+      display: flex; align-items: center; justify-content: center; gap: .5rem; width: 100%; padding: 1rem;
       background: var(--gold); color: #fff;
       font-size: .9rem; font-weight: 700; text-align: center;
       border-radius: var(--radius-md); text-decoration: none;
@@ -207,6 +234,7 @@
       box-shadow: 0 6px 20px rgba(201,147,58,.35);
     }
     .btn-apply-card:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-apply-card i { width: 17px; height: 17px; }
     .apply-divider { height: 1px; background: rgba(255,255,255,.08); margin: 1.5rem 0; }
     .apply-card-slots {
       display: flex; align-items: center; justify-content: space-between;
@@ -235,12 +263,26 @@
     .section-body p + p { margin-top: 1rem; }
     .section-body strong { color: var(--navy); font-weight: 600; }
 
+    .overview-lead {
+      max-width: 680px;
+    }
+
+    .program-section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+
     .study-areas { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; margin-top: 2rem; }
     .study-area-card {
       display: flex; align-items: center; gap: .9rem;
       background: var(--slate-soft);
       border: 1px solid rgba(15,30,61,.06);
-      border-radius: var(--radius-md); padding: .9rem 1.1rem;
+      border-radius: 12px; padding: .9rem 1.1rem;
       transition: border-color .2s, box-shadow .2s;
     }
     .study-area-card:hover { border-color: rgba(201,147,58,.25); box-shadow: 0 4px 16px rgba(201,147,58,.08); }
@@ -372,8 +414,9 @@
 
     /* ─── Responsive ─── */
     @media (max-width: 1024px) {
-      .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .apply-card { max-width: 320px; margin: 0 auto; }
+      .program-hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .apply-card { max-width: none; }
+      .hero-meta-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .overview-grid { grid-template-columns: 1fr; }
       .sidebar-card { position: static; }
       .highlights-grid { grid-template-columns: repeat(2, 1fr); }
@@ -382,7 +425,12 @@
       .footer-cta-actions { width: 100%; max-width: 320px; align-self: center; }
     }
     @media (max-width: 640px) {
-      .hero-title { font-size: 2.4rem; }
+      .breadcrumb-inner { padding: 0 1.25rem; overflow-x: auto; white-space: nowrap; }
+      .hero-inner, .section-wrap { padding: 0 1.25rem; }
+      .program-hero { padding: 3.25rem 0 3rem; }
+      .hero-title { font-size: clamp(2.15rem, 13vw, 3.1rem); }
+      .hero-desc { font-size: 1rem; }
+      .hero-meta-row { grid-template-columns: 1fr; }
       .hero-cta-row { flex-direction: column; }
       .btn-hero-primary, .btn-hero-secondary { justify-content: center; }
       .study-areas { grid-template-columns: 1fr; }
@@ -462,7 +510,7 @@
     <div class="breadcrumb-inner">
       <a href="{{ url('/') }}">Programs</a>
       <span class="sep">/</span>
-      <span class="current">{{ $program->department }}</span>
+      <span class="current">{{ $program->department ?? 'Programs' }}</span>
       <span class="sep">/</span>
       <span class="current">{{ $program->name }}</span>
     </div>
@@ -476,13 +524,13 @@
     <div class="hero-deco-line l2"></div>
 
     <div class="hero-inner">
-      <div class="hero-grid">
+      <div class="program-hero-grid">
 
         <!-- Left: Program info -->
-        <div>
+        <div class="hero-copy">
           <div class="hero-dept-badge">
             <span class="dot"></span>
-            {{ $program->department }}
+            {{ $program->department ?? 'Degree Program' }}
           </div>
 
           <h1 class="hero-title">{{ $program->name }}</h1>
@@ -491,31 +539,30 @@
             {{ $program->description ?? 'Empowering students with industry-relevant skills and knowledge through our comprehensive ' . $program->name . ' curriculum. Shaped for today\'s demands, designed for tomorrow\'s leaders.' }}
           </p>
 
-          <!-- FIX: each hero-meta-item is now properly opened and closed -->
           <div class="hero-meta-row">
             <div class="hero-meta-item">
               <div class="hero-meta-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <i data-iconsax="clock"></i>
               </div>
               <div>
                 <p class="hero-meta-label">Duration</p>
-                <p class="hero-meta-value">4 Years</p>
+                <p class="hero-meta-value">{{ $program->duration_years ?? 4 }} Years</p>
               </div>
             </div><!-- /.hero-meta-item -->
 
             <div class="hero-meta-item">
               <div class="hero-meta-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <i data-iconsax="calendar-days"></i>
               </div>
               <div>
                 <p class="hero-meta-label">Schedule</p>
-                <p class="hero-meta-value">Day</p>
+                <p class="hero-meta-value">{{ $program->schedule ?? 'Day' }}</p>
               </div>
             </div><!-- /.hero-meta-item -->
 
             <div class="hero-meta-item">
               <div class="hero-meta-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                <i data-iconsax="shield-check"></i>
               </div>
               <div>
                 <p class="hero-meta-label">Status</p>
@@ -531,14 +578,30 @@
 
             <div class="hero-meta-item">
               <div class="hero-meta-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <i data-iconsax="users-round"></i>
               </div>
               <div>
                 <p class="hero-meta-label">Slots</p>
-                <p class="hero-meta-value">{{ $program->slots_left ?? 'Limited' }} Left</p>
+                <p class="hero-meta-value">{{ is_numeric($program->slots_left ?? null) ? number_format($program->slots_left) : 'Limited' }} Left</p>
               </div>
             </div><!-- /.hero-meta-item -->
           </div><!-- /.hero-meta-row -->
+
+          <div class="hero-cta-row">
+            <a href="{{ route('apply') }}" class="btn-hero-primary">
+              {{ $isOpen ? 'Apply Now' : 'Ask Admissions' }}
+              <i data-iconsax="arrow-right"></i>
+            </a>
+            <a href="#overview" class="btn-hero-secondary">
+              View Program Details
+              <i data-iconsax="chevron-down"></i>
+            </a>
+          </div>
+
+          <p class="hero-note">
+            <i data-iconsax="info-circle"></i>
+            Admission availability is based on active program status and remaining slots. Submit an inquiry early so the Admissions Office can guide your next steps.
+          </p>
         </div><!-- /.hero-left -->
 
         <!-- Right: Apply card -->
@@ -564,7 +627,10 @@
                 OJT & Industry Partners
               </li>
             </ul>
-            <a href="{{ route('apply') }}" class="btn-apply-card">Apply for this Course</a>
+            <a href="{{ route('apply') }}" class="btn-apply-card">
+              {{ $isOpen ? 'Apply for this Course' : 'Ask About Availability' }}
+              <i data-iconsax="arrow-right"></i>
+            </a>
             <div class="apply-divider"></div>
             <div class="apply-card-slots">
               <span>Available Slots</span>
@@ -573,7 +639,7 @@
           </div>
         </div><!-- /.hero-right -->
 
-      </div><!-- /.hero-grid -->
+      </div><!-- /.program-hero-grid -->
     </div><!-- /.hero-inner -->
   </section>
 
@@ -615,7 +681,7 @@
           <div data-reveal>
             <span class="section-tag">Program Overview</span>
             <h2 class="section-title">What You'll<br><em>Learn & Become</em></h2>
-            <div class="section-body">
+            <div class="section-body overview-lead">
               <p>
                 The <strong>{{ $program->name }}</strong> is designed to produce globally competitive professionals equipped with technical expertise and professional integrity. Our curriculum is constantly reviewed and updated to meet the evolving demands of the industry.
               </p>
@@ -626,7 +692,7 @@
           </div>
 
           <div data-reveal data-delay="100">
-            <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--navy);margin-top:2.5rem;margin-bottom:1rem;">
+            <h3 class="program-section-heading">
               Core Areas of Study
             </h3>
             <div class="study-areas">
@@ -719,6 +785,7 @@
           </p>
         </div>
         <div class="footer-cta-actions">
+          <a href="{{ route('apply') }}" class="btn-cta-main">Start Application <i data-iconsax="arrow-right"></i></a>
           <a href="{{ url('/') }}#programs" class="btn-cta-ghost">Explore Other Programs <i data-iconsax="arrow-right"></i></a>
         </div>
       </div>
@@ -841,9 +908,20 @@
     const mobileMenu = document.getElementById('mobile-menu');
     if (menuToggle && mobileMenu) {
       menuToggle.addEventListener('click', () => {
-        const isOpen = !mobileMenu.classList.contains('hidden');
-        mobileMenu.classList.toggle('hidden');
-        menuToggle.setAttribute('aria-expanded', String(!isOpen));
+        const isOpen = !mobileMenu.classList.contains('active');
+        mobileMenu.classList.toggle('active', isOpen);
+        menuToggle.classList.toggle('active', isOpen);
+        document.body.classList.toggle('menu-open', isOpen);
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      mobileMenu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('active');
+          menuToggle.classList.remove('active');
+          document.body.classList.remove('menu-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        });
       });
     }
 

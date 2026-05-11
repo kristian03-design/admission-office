@@ -29,8 +29,141 @@
 
     /* Scrolled: let home-page.css handle the white styles — no override here */
 
-    /* Pagination */
-    .pagination-container nav svg { width: 20px; height: 20px; display: inline; }
+    .news-card-media {
+      position: relative;
+      margin-bottom: 1.1rem;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(27, 53, 87, .08), rgba(201, 147, 58, .14));
+    }
+
+    .news-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .25s ease;
+    }
+
+    .program-card:hover .news-card-media img {
+      transform: scale(1.035);
+    }
+
+    .news-card-fallback {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--navy, #1b3557);
+    }
+
+    .news-card-fallback i {
+      width: 44px;
+      height: 44px;
+      opacity: .45;
+    }
+
+    .news-results-summary {
+      color: var(--gray-600, #4b5563);
+      font-size: .92rem;
+      line-height: 1.6;
+    }
+
+    .news-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid rgba(27, 53, 87, .08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .82);
+      box-shadow: 0 12px 36px rgba(27, 53, 87, .08);
+    }
+
+    .news-pagination__pages {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      flex-wrap: wrap;
+    }
+
+    .news-page-link,
+    .news-page-current,
+    .news-page-disabled,
+    .news-page-gap {
+      min-width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      font-size: .9rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .news-page-link {
+      border: 1px solid rgba(27, 53, 87, .1);
+      color: var(--navy, #1b3557);
+      background: #fff;
+      transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+    }
+
+    .news-page-link:hover {
+      border-color: rgba(201, 147, 58, .5);
+      color: var(--gold, #b8860b);
+      transform: translateY(-1px);
+    }
+
+    .news-page-current {
+      background: var(--navy, #1b3557);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(27, 53, 87, .2);
+    }
+
+    .news-page-disabled,
+    .news-page-gap {
+      color: rgba(75, 85, 99, .55);
+      background: rgba(240, 242, 245, .85);
+    }
+
+    .news-page-link--nav,
+    .news-page-disabled--nav {
+      min-width: auto;
+      padding: 0 1rem;
+      gap: .4rem;
+      white-space: nowrap;
+    }
+
+    .news-page-link i,
+    .news-page-disabled i {
+      width: 16px;
+      height: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .news-pagination {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .news-pagination__summary {
+        text-align: center;
+      }
+
+      .news-pagination__pages {
+        order: 2;
+      }
+
+      .news-page-link--nav,
+      .news-page-disabled--nav {
+        flex: 1;
+      }
+    }
   </style>
 </head>
 <body>
@@ -114,6 +247,14 @@
 
     <section class="programs-section py-24">
       <div class="max-w-7xl mx-auto px-8">
+        <div class="news-results-summary mb-8">
+          @if($newsEvents->total() > 0)
+            Showing {{ $newsEvents->firstItem() }}-{{ $newsEvents->lastItem() }} of {{ $newsEvents->total() }} updates
+          @else
+            No published updates yet
+          @endif
+        </div>
+
         <div class="programs-grid">
           @forelse($newsEvents as $item)
             @php
@@ -125,9 +266,15 @@
             @endphp
             <article class="program-card">
               <div class="program-card-inner">
-                @if(count($gallery))
-                  <img src="{{ $gallery[0] }}" alt="{{ $item->title }}" class="w-full h-56 object-cover rounded-lg mb-4" loading="lazy" decoding="async">
-                @endif
+                <div class="news-card-media">
+                  @if(count($gallery))
+                    <img src="{{ $gallery[0] }}" alt="{{ $item->title }}" loading="lazy" decoding="async">
+                  @else
+                    <div class="news-card-fallback" aria-hidden="true">
+                      <i data-iconsax="{{ $item->type === 'event' ? 'calendar-days' : 'notification' }}"></i>
+                    </div>
+                  @endif
+                </div>
                 <div class="program-badge {{ $item->type === 'event' ? 'badge--hosp' : 'badge--biz' }}">
                   {{ strtoupper($item->type) }}
                 </div>
@@ -156,9 +303,67 @@
           @endforelse
         </div>
 
-        <div class="mt-16 flex justify-center pagination-container">
-          {{ $newsEvents->links() }}
-        </div>
+        @if($newsEvents->hasPages())
+          @php
+            $currentPage = $newsEvents->currentPage();
+            $lastPage = $newsEvents->lastPage();
+            $startPage = max(1, $currentPage - 2);
+            $endPage = min($lastPage, $currentPage + 2);
+          @endphp
+          <nav class="mt-16 news-pagination" aria-label="News and events pagination">
+            <div class="news-pagination__summary news-results-summary">
+              Page {{ $newsEvents->currentPage() }} of {{ $newsEvents->lastPage() }}
+            </div>
+
+            <div class="news-pagination__pages">
+              @if($newsEvents->onFirstPage())
+                <span class="news-page-disabled news-page-disabled--nav" aria-disabled="true">
+                  <i data-iconsax="chevron-left"></i>
+                  Previous
+                </span>
+              @else
+                <a href="{{ $newsEvents->previousPageUrl() }}" class="news-page-link news-page-link--nav" rel="prev">
+                  <i data-iconsax="chevron-left"></i>
+                  Previous
+                </a>
+              @endif
+
+              @if($startPage > 1)
+                <a href="{{ $newsEvents->url(1) }}" class="news-page-link" aria-label="Go to page 1">1</a>
+                @if($startPage > 2)
+                  <span class="news-page-gap" aria-hidden="true">...</span>
+                @endif
+              @endif
+
+              @for($page = $startPage; $page <= $endPage; $page++)
+                @if($page == $currentPage)
+                  <span class="news-page-current" aria-current="page">{{ $page }}</span>
+                @else
+                  <a href="{{ $newsEvents->url($page) }}" class="news-page-link" aria-label="Go to page {{ $page }}">{{ $page }}</a>
+                @endif
+              @endfor
+
+              @if($endPage < $lastPage)
+                @if($endPage < $lastPage - 1)
+                  <span class="news-page-gap" aria-hidden="true">...</span>
+                @endif
+                <a href="{{ $newsEvents->url($lastPage) }}" class="news-page-link" aria-label="Go to page {{ $lastPage }}">{{ $lastPage }}</a>
+              @endif
+
+              @if($newsEvents->hasMorePages())
+                <a href="{{ $newsEvents->nextPageUrl() }}" class="news-page-link news-page-link--nav" rel="next">
+                  Next
+                  <i data-iconsax="chevron-right"></i>
+                </a>
+              @else
+                <span class="news-page-disabled news-page-disabled--nav" aria-disabled="true">
+                  Next
+                  <i data-iconsax="chevron-right"></i>
+                </span>
+              @endif
+            </div>
+          </nav>
+        @endif
       </div>
     </section>
   </main>
