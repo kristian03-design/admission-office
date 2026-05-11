@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="csrf-token" content="{{ csrf_token() }}" />
+  <meta http-equiv="Content-Security-Policy"
+content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://cdn.tailwindcss.com;">
   <title>BTECH — Admissions Office</title>
   <script>window.ICONSAX_SPRITE_PATH = "{{ asset('assets/iconsax-sprite.svg') }}";</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -16,7 +18,7 @@
   <!-- ✦ Iconsax Icons ✦ -->
   @include('partials.iconsax')
 
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=16" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=19" />
 
 </head>
 <body>

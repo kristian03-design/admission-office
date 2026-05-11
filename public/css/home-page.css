@@ -246,6 +246,7 @@ body.site-loader-lock {
   flex-shrink: 0 !important;
   display: flex !important;
   align-items: center !important;
+  min-width: 0;
 }
 
 .nav-inner>a .leading-tight {
@@ -263,7 +264,7 @@ body.site-loader-lock {
   display: block !important;
 }
 
-/* Desktop nav — hidden by default, shown on wide screens */
+/* Desktop nav */
 .nav-desktop {
   display: none !important;
   flex: 1 1 auto;
@@ -271,7 +272,7 @@ body.site-loader-lock {
   min-width: 0;
 }
 
-/* Action group (Inquire Now + hamburger) — never wraps */
+/* Action group */
 .nav-actions {
   display: flex !important;
   flex-direction: row !important;
@@ -286,13 +287,59 @@ body.site-loader-lock {
   margin-left: 0.75rem;
 }
 
-@media (min-width: 768px) {
-  .nav-desktop {
-    display: flex !important;
+/* ─── INQUIRE NOW BUTTON ─── */
+/* Hidden by default (mobile-first) */
+.btn-primary-nav {
+  display: none !important;
+}
+
+/* Show on desktop only */
+@media (min-width: 1024px) {
+  .btn-primary-nav {
+    display: inline-flex !important;
+    align-items: center;
+    background: linear-gradient(135deg, var(--gold-mid), var(--gold));
+    color: var(--white);
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: 0 2px 10px rgba(184, 134, 11, .3);
+  }
+
+  .btn-primary-nav:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 18px rgba(184, 134, 11, .4);
   }
 }
 
-@media (min-width: 768px) {
+/* ─── BRAND TEXT: hide on mobile, show on desktop ─── */
+.nav-main,
+.nav-sub {
+  display: none !important;
+}
+
+@media (min-width: 1024px) {
+  .nav-main {
+    display: block !important;
+    color: var(--white);
+  }
+
+  .nav-sub {
+    display: block !important;
+    color: rgba(255, 255, 255, .7);
+  }
+
+  #navbar.scrolled .nav-main {
+    color: var(--navy);
+  }
+
+  #navbar.scrolled .nav-sub {
+    color: var(--navy-mid);
+    opacity: .7;
+  }
+}
+
+/* Desktop nav shown at 1024px+ */
+@media (min-width: 1024px) {
   .nav-desktop {
     display: flex !important;
     flex-direction: row !important;
@@ -366,17 +413,6 @@ body.menu-open .logo-badge {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-.nav-sub {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: rgba(255, 255, 255, .7);
-}
-
-.nav-main {
-  color: var(--white);
-}
-
 #navbar.scrolled {
   background: var(--white);
   -webkit-backdrop-filter: none;
@@ -384,15 +420,6 @@ body.menu-open .logo-badge {
   box-shadow: 0 10px 30px rgba(0, 0, 0, .05);
   padding-block: .6rem;
   border-bottom: 1px solid var(--gray-200);
-}
-
-#navbar.scrolled .nav-sub {
-  color: var(--navy-mid);
-  opacity: .7;
-}
-
-#navbar.scrolled .nav-main {
-  color: var(--navy);
 }
 
 #navbar.scrolled .nav-link {
@@ -429,7 +456,8 @@ body.menu-open #menu-toggle svg {
   color: var(--white) !important;
 }
 
-@media (min-width: 768px) {
+/* Hide hamburger on desktop */
+@media (min-width: 1024px) {
   #menu-toggle {
     display: none !important;
   }
@@ -458,15 +486,24 @@ body.menu-open #menu-toggle svg {
   width: 100%;
 }
 
-.logo-badge img {
-  width: 52px;
-  height: 52px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--gold-mid), var(--gold));
-  display: flex;
+.logo-badge {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  flex: 0 0 44px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.logo-badge img {
+  width: 44px !important;
+  height: 44px !important;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
 }
 
 .btn-outline-nav {
@@ -480,19 +517,6 @@ body.menu-open #menu-toggle svg {
 .btn-outline-nav:hover {
   border-color: rgba(255, 255, 255, .8);
   background: rgba(255, 255, 255, .1);
-}
-
-.btn-primary-nav {
-  background: linear-gradient(135deg, var(--gold-mid), var(--gold));
-  color: var(--white);
-  text-decoration: none;
-  transition: var(--transition);
-  box-shadow: 0 2px 10px rgba(184, 134, 11, .3);
-}
-
-.btn-primary-nav:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 18px rgba(184, 134, 11, .4);
 }
 
 /* ─── MOBILE MENU ─── */
@@ -632,7 +656,6 @@ body.menu-open {
   background-size: 60px 60px;
 }
 
-/* Hero padding — clears navbar on all pages */
 #hero .pt-20,
 .hero-section .pt-20 {
   padding-top: calc(var(--navbar-height) + 1.5rem) !important;
@@ -642,13 +665,11 @@ body.menu-open {
   padding-top: calc(var(--navbar-height) + 2rem) !important;
 }
 
-/* ─── HERO SECTION ─── */
 .hero-section {
   background: linear-gradient(135deg, #0f2340 0%, #1b3557 45%, #254d82 100%);
   min-height: 85vh;
   min-height: 85dvh;
   overflow-x: hidden !important;
-  /* Prevent horizontal scroll on mobile */
   position: relative;
 }
 
@@ -686,7 +707,6 @@ body.menu-open {
   }
 }
 
-/* Decorative circles */
 .deco-circle {
   position: absolute;
   border-radius: 50%;
@@ -744,7 +764,6 @@ body.menu-open {
   }
 }
 
-/* Hero typography */
 .hero-headline {
   font-family: 'Cormorant Garamond', serif;
   color: var(--white);
@@ -776,7 +795,6 @@ body.menu-open {
   color: rgba(255, 255, 255, .7);
 }
 
-/* Pill badge */
 .pill-badge {
   background: rgba(212, 168, 67, .15);
   border: 1px solid rgba(212, 168, 67, .4);
@@ -808,7 +826,6 @@ body.menu-open {
   }
 }
 
-/* Hero buttons */
 .btn-hero-primary {
   display: inline-flex;
   align-items: center;
@@ -848,7 +865,6 @@ body.menu-open {
   background: rgba(255, 255, 255, .07);
 }
 
-/* Stats */
 .hero-stats {
   border-top: 1px solid rgba(255, 255, 255, .12);
   padding-top: 1.5rem;
@@ -891,7 +907,6 @@ body.menu-open {
   margin-top: .3rem;
 }
 
-/* Hero card */
 .hero-inquiry-card {
   background: var(--white);
   border-radius: var(--radius-xl);
@@ -1555,7 +1570,6 @@ body.menu-open {
   flex-shrink: 0;
 }
 
-/* Process CTA buttons */
 .btn-primary-lg {
   display: inline-flex;
   align-items: center;
@@ -2191,7 +2205,6 @@ body.menu-open {
   justify-content: center;
 }
 
-/* Decorative rings */
 .hero-visual-ring {
   position: absolute;
   border-radius: 50%;
@@ -2351,7 +2364,7 @@ body.menu-open {
   transition: width .1s linear;
 }
 
-/* ─── ICONSAX ICON SIZING ─── */
+/* ─── ICONSAX ─── */
 .iconsax-icon {
   display: inline-flex;
   align-items: center;
@@ -2502,7 +2515,7 @@ body.menu-open {
   max-height: calc(90vh - 70px);
 }
 
-/* Announcement popup */
+/* ─── ANNOUNCEMENT POPUP ─── */
 .announcement-popup {
   position: fixed;
   top: 0;
@@ -2756,7 +2769,7 @@ body.announcement-popup-open {
   border-color: rgba(15, 30, 61, .22);
 }
 
-/* Guide modal */
+/* ─── GUIDE MODAL ─── */
 .guide-section {
   margin-bottom: 2.5rem;
 }
@@ -2853,7 +2866,7 @@ body.announcement-popup-open {
    RESPONSIVE — ALL BREAKPOINTS
    ========================================================= */
 
-/* ─── DESKTOP (≥1025px): enforce two-column hero ─── */
+/* ─── DESKTOP (≥1025px) ─── */
 @media (min-width: 1025px) {
   .hero-grid {
     grid-template-columns: 1fr 1fr;
@@ -2931,7 +2944,6 @@ body.announcement-popup-open {
     height: 460px;
   }
 
-  /* Badge float: keep inside visible area */
   .hero-badge-float {
     left: 0;
     bottom: 1rem;
@@ -2968,10 +2980,9 @@ body.announcement-popup-open {
   }
 }
 
-/* ─── 768px and below (Tablet portrait / large phone) ─── */
+/* ─── 768px and below ─── */
 @media (max-width: 768px) {
 
-  /* Global padding tighten */
   .max-w-7xl.px-8,
   .nav-inner.px-8,
   .px-8 {
@@ -2979,44 +2990,12 @@ body.announcement-popup-open {
     padding-right: 1.25rem !important;
   }
 
-  /* Navbar */
   .nav-inner {
     padding-top: 0.875rem;
     padding-bottom: 0.875rem;
   }
 
-  .nav-main {
-    font-size: 0.72rem;
-    max-width: 180px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .nav-sub {
-    font-size: 0.6rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .logo-badge img {
-    width: 32px;
-    height: 32px;
-  }
-
-  .nav-inner>a {
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-  }
-
-  .nav-inner>a .leading-tight {
-    min-width: 0;
-    overflow: hidden;
-  }
-
-  /* Hero: fix badge float on mobile — keep it on-screen */
+  /* Hero: fix badge float on mobile */
   .hero-badge-float {
     position: relative !important;
     left: auto !important;
@@ -3027,7 +3006,6 @@ body.announcement-popup-open {
     white-space: nowrap;
   }
 
-  /* Hero image */
   .hero-img-stage {
     max-width: 260px;
     height: 300px;
@@ -3052,7 +3030,6 @@ body.announcement-popup-open {
     margin-top: 1.5rem;
   }
 
-  /* Hero stats */
   .hero-stats {
     gap: 1rem;
   }
@@ -3075,7 +3052,6 @@ body.announcement-popup-open {
     font-size: 0.67rem;
   }
 
-  /* Process steps */
   .process-step {
     flex-direction: column;
     gap: 0.75rem;
@@ -3113,7 +3089,6 @@ body.announcement-popup-open {
     font-size: 1.15rem;
   }
 
-  /* Program filters: horizontal scroll */
   .program-filters {
     overflow-x: auto;
     flex-wrap: nowrap;
@@ -3128,7 +3103,6 @@ body.announcement-popup-open {
     flex-shrink: 0;
   }
 
-  /* Apply CTA */
   .apply-cta-section {
     padding: 1.5rem 1rem;
   }
@@ -3146,7 +3120,6 @@ body.announcement-popup-open {
     font-size: clamp(1.6rem, 5vw, 2.5rem);
   }
 
-  /* Footer: 2 columns */
   .footer-section .grid.md\:grid-cols-4 {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
@@ -3156,13 +3129,11 @@ body.announcement-popup-open {
     grid-column: 1 / -1;
   }
 
-  /* Scroll animations: vertical only on mobile */
   [data-animate="fade-right"],
   [data-animate="fade-left"] {
     transform: translateY(20px);
   }
 
-  /* Back to top */
   .back-to-top {
     bottom: 1.25rem;
     right: 1rem;
@@ -3170,7 +3141,6 @@ body.announcement-popup-open {
     height: 40px;
   }
 
-  /* Modal */
   .modal-container {
     max-height: 95vh;
     border-radius: 16px;
@@ -3197,7 +3167,6 @@ body.announcement-popup-open {
     font-size: 0.875rem;
   }
 
-  /* Section vertical padding */
   .py-28 {
     padding-top: 4rem !important;
     padding-bottom: 4rem !important;
@@ -3214,7 +3183,6 @@ body.announcement-popup-open {
     padding-right: 1rem !important;
   }
 
-  /* Hero typography */
   .text-line-1 {
     font-size: clamp(2.4rem, 8vw, 3rem);
   }
@@ -3401,16 +3369,10 @@ body.announcement-popup-open {
     padding-right: 0.875rem !important;
   }
 
-  .nav-main {
-    max-width: 130px;
-    font-size: 0.65rem;
+  .nav-actions>*+* {
+    margin-left: .45rem;
   }
 
-  .nav-sub {
-    font-size: 0.58rem;
-  }
-
-  /* Hero buttons: stack */
   .hero-content .flex.flex-wrap {
     flex-direction: column;
     align-items: center;
@@ -3509,19 +3471,8 @@ body.announcement-popup-open {
   }
 }
 
-/* ─── 380px and below (Very small phones) ─── */
+/* ─── 380px and below ─── */
 @media (max-width: 380px) {
-
-  .nav-main,
-  .nav-sub {
-    display: none;
-  }
-
-  .btn-primary-nav {
-    font-size: 0.72rem;
-    padding: 0.4rem 0.8rem;
-  }
-
   .hero-img-stage {
     max-width: 210px;
     height: 260px;
@@ -3542,7 +3493,7 @@ body.announcement-popup-open {
   }
 }
 
-/* ─── PRINT STYLES ─── */
+/* ─── PRINT ─── */
 @media print {
   body * {
     visibility: hidden;
@@ -3638,11 +3589,6 @@ body.announcement-popup-open {
   }
 }
 
-/* ---------------------------------------------------------
-   LOCAL UTILITY FALLBACKS
-   Keeps the landing page usable when Tailwind CDN is delayed
-   or blocked by a browser/network policy.
-   --------------------------------------------------------- */
 .absolute {
   position: absolute;
 }
@@ -4048,7 +3994,6 @@ body.announcement-popup-open {
   }
 }
 
-/* Hardened responsive layout */
 img,
 svg,
 video,
@@ -4111,172 +4056,7 @@ html {
   max-width: 34rem;
 }
 
-.nav-desktop {
-  display: none !important;
-}
-
-#menu-toggle {
-  display: flex !important;
-}
-
-@media (min-width: 1024px) {
-  .nav-desktop {
-    display: flex !important;
-  }
-
-  #menu-toggle,
-  #mobile-menu {
-    display: none !important;
-  }
-
-  .hero-section {
-    min-height: max(720px, 85vh);
-    min-height: max(720px, 85dvh);
-  }
-
-  .hero-img-stage {
-    min-height: 460px;
-    height: min(560px, calc(100vh - 190px));
-    height: min(560px, calc(100dvh - 190px));
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1023.98px) {
-  .nav-desktop.md\:flex {
-    display: none !important;
-  }
-
-  #menu-toggle.md\:hidden {
-    display: flex !important;
-  }
-
-  #mobile-menu.md\:hidden {
-    display: flex !important;
-  }
-}
-
-@media (max-width: 1024px) {
-  .hero-section {
-    min-height: auto;
-  }
-
-  .hero-grid {
-    align-items: center;
-  }
-
-  .hero-content,
-  .hero-visual {
-    width: 100%;
-    max-width: 44rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .hero-content {
-    order: 0;
-  }
-
-  .hero-visual {
-    order: 1;
-    margin-top: 2rem;
-  }
-
-  .hero-stats {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .scroll-indicator {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-section>.relative.z-10 {
-    padding-top: calc(var(--navbar-height) + 1.25rem) !important;
-    padding-bottom: 3rem !important;
-  }
-
-  .hero-img-stage {
-    width: min(100%, 330px);
-    height: auto !important;
-    aspect-ratio: 13 / 15;
-  }
-
-  .hero-stats {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 640px) {
-  .hero-headline {
-    max-width: 100%;
-  }
-
-  .hero-program-label,
-  .pill-badge {
-    max-width: 100%;
-    white-space: normal;
-  }
-
-  .hero-stats {
-    grid-template-columns: 1fr;
-    text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, .12);
-  }
-
-  .stat-item+.stat-item::before {
-    display: none;
-  }
-
-  .ticker-inner {
-    align-items: stretch;
-  }
-
-  .ticker-track .ticker-item {
-    padding: 0 1.25rem;
-    max-width: 88vw;
-  }
-
-  .ticker-track .ticker-item span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-section>.relative.z-10 {
-    padding-top: calc(var(--navbar-height) + 1rem) !important;
-  }
-
-  .hero-img-stage {
-    width: min(100%, 285px);
-  }
-}
-
-@supports not (height: 100dvh) {
-  .mobile-menu {
-    height: 100vh;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
-  }
-}
-
-/* ---------------------------------------------------------
-   PROFESSIONAL UI/UX POLISH LAYER
-   Consistent hierarchy, touch targets, focus visibility, and
-   calmer motion across desktop and mobile.
-   --------------------------------------------------------- */
+/* ─── PROFESSIONAL POLISH LAYER ─── */
 :root {
   --focus-ring: 0 0 0 3px rgba(201, 147, 58, .32), 0 0 0 5px rgba(27, 53, 87, .18);
   --content-measure: 66ch;
@@ -4719,11 +4499,6 @@ textarea:focus-visible,
     margin-left: .45rem;
   }
 
-  .btn-primary-nav {
-    min-height: 40px;
-    padding-inline: .85rem;
-  }
-
   .hero-program-label {
     justify-content: center;
     min-width: 0;
@@ -4734,22 +4509,7 @@ textarea:focus-visible,
   }
 }
 
-/* Hero visibility guard: prevents the landing hero from collapsing or being
-   skipped visually in browsers that restore scroll before assets settle. */
-#hero.hero-section {
-  display: flex !important;
-  min-height: 720px !important;
-  background: linear-gradient(135deg, #0f2340 0%, #1b3557 45%, #254d82 100%);
-}
-
-@media (max-width: 1024px) {
-  #hero.hero-section {
-    min-height: auto !important;
-  }
-}
-
-/* Consistent navigation arrows. These use inline SVG instead of the icon
-   sprite so left/right controls cannot render as different glyph families. */
+/* ─── NAV ARROW ICONS ─── */
 .nav-arrow-icon {
   width: 20px;
   height: 20px;
@@ -4769,8 +4529,6 @@ textarea:focus-visible,
   pointer-events: none;
 }
 
-/* Popup announcements show one image, so previous/next overlay controls are
-   visual noise and can show mismatched icons in some browsers/extensions. */
 .announcement-popup [aria-label="Previous"],
 .announcement-popup [aria-label="Next"],
 .announcement-popup [aria-label="Previous image"],
@@ -4778,27 +4536,7 @@ textarea:focus-visible,
   display: none !important;
 }
 
-/* Mobile navbar logo + hamburger polish only */
-.logo-badge {
-  width: 44px;
-  height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 44px;
-  overflow: hidden;
-  border-radius: 12px;
-}
-
-.logo-badge img {
-  width: 44px !important;
-  height: 44px !important;
-  display: block;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 12px;
-}
-
+/* ─── HAMBURGER ICON ─── */
 #menu-toggle {
   width: 44px !important;
   height: 44px !important;
@@ -4862,8 +4600,7 @@ textarea:focus-visible,
   }
 }
 
-/* Compact hero used by About and News pages. Keeps subpages from inheriting
-   the oversized landing-page hero height. */
+/* ─── SUBPAGE HERO ─── */
 .subpage-hero.hero-section {
   min-height: 45vh !important;
   min-height: 45dvh !important;
@@ -4885,10 +4622,8 @@ textarea:focus-visible,
   }
 }
 
-
 /* =========================================================
-   FINAL FIX — CROSS-BROWSER HOMEPAGE HERO + NAVBAR
-   Added to stabilize Chrome/Edge/other browser rendering.
+   FINAL FIX — CROSS-BROWSER / MOBILE NAVBAR
    ========================================================= */
 
 :root {
@@ -4904,14 +4639,6 @@ body {
   overflow-x: hidden;
 }
 
-img,
-svg,
-video,
-canvas {
-  max-width: 100%;
-}
-
-/* Fixed navbar consistency */
 #navbar {
   position: fixed !important;
   top: 0 !important;
@@ -4936,17 +4663,10 @@ canvas {
   min-width: 0;
 }
 
-.nav-main,
-.nav-sub {
-  max-width: 240px;
-}
-
-/* Keep main from creating browser-specific offset differences */
 main {
   padding-top: 0 !important;
 }
 
-/* Hero must always start behind the fixed transparent navbar */
 #hero.hero-section {
   display: flex !important;
   align-items: center !important;
@@ -4958,14 +4678,12 @@ main {
   background: linear-gradient(135deg, #0f2340 0%, #1b3557 45%, #254d82 100%) !important;
 }
 
-/* This is the actual safe spacing below fixed navbar */
 #hero>.relative.z-10,
 .hero-section>.relative.z-10 {
   padding-top: calc(var(--navbar-height) + 2rem) !important;
   padding-bottom: 4rem !important;
 }
 
-/* Force a stable desktop layout */
 .hero-grid {
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) minmax(360px, 520px) !important;
@@ -4991,7 +4709,6 @@ main {
   justify-content: center !important;
 }
 
-/* Stable image card */
 .hero-img-stage {
   position: relative !important;
   width: min(100%, 520px) !important;
@@ -5018,7 +4735,6 @@ main {
   display: block !important;
 }
 
-/* Keep floating elements inside viewport */
 .hero-badge-float {
   left: 0 !important;
 }
@@ -5027,13 +4743,12 @@ main {
   width: min(100%, 420px) !important;
 }
 
-/* Ticker should not overlap hero unexpectedly */
 .ticker-bar {
   position: relative;
   z-index: 2;
 }
 
-/* Tablet */
+/* ─── TABLET ─── */
 @media (max-width: 1024px) {
   :root {
     --navbar-height: 96px;
@@ -5090,7 +4805,7 @@ main {
   }
 }
 
-/* Mobile */
+/* ─── MOBILE ─── */
 @media (max-width: 768px) {
   :root {
     --navbar-height: 86px;
@@ -5104,16 +4819,6 @@ main {
   .logo-badge img {
     width: 38px !important;
     height: 38px !important;
-  }
-
-  .nav-main {
-    max-width: 180px !important;
-    font-size: .78rem !important;
-  }
-
-  .nav-sub {
-    max-width: 180px !important;
-    font-size: .62rem !important;
   }
 
   #hero>.relative.z-10,
@@ -5152,7 +4857,7 @@ main {
   }
 }
 
-/* Small mobile */
+/* ─── SMALL MOBILE ─── */
 @media (max-width: 480px) {
   :root {
     --navbar-height: 82px;
@@ -5167,5 +4872,122 @@ main {
   .hero-program-label {
     max-width: 100%;
     white-space: normal;
+  }
+}
+
+@supports not (height: 100dvh) {
+  .mobile-menu {
+    height: 100vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* =========================================================
+   MOBILE NAVBAR FIX — FINAL OVERRIDE
+   Hides brand text + Inquire Now on mobile/tablet.
+   Only logo icon + hamburger visible on small screens.
+   ========================================================= */
+
+/* Hide brand text on all screens by default */
+.nav-main,
+.nav-sub {
+  display: none !important;
+}
+
+/* Show brand text on desktop only */
+@media (min-width: 1024px) {
+  .nav-main {
+    display: block !important;
+    color: var(--white);
+    font-size: 0.9rem;
+    max-width: 240px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-sub {
+    display: block !important;
+    color: rgba(255, 255, 255, .7);
+    font-size: 0.7rem;
+    max-width: 240px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #navbar.scrolled .nav-main {
+    color: var(--navy);
+  }
+
+  #navbar.scrolled .nav-sub {
+    color: var(--navy-mid);
+    opacity: .7;
+  }
+}
+
+/* Hide Inquire Now button on mobile/tablet */
+.btn-primary-nav {
+  display: none !important;
+}
+
+/* Show Inquire Now on desktop only */
+@media (min-width: 1024px) {
+  .btn-primary-nav {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background: linear-gradient(135deg, var(--gold-mid), var(--gold));
+    color: var(--white) !important;
+    font-weight: 700;
+    font-size: 0.875rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: 0 2px 10px rgba(184, 134, 11, .3);
+    white-space: nowrap;
+    min-height: 44px;
+  }
+
+  .btn-primary-nav:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 18px rgba(184, 134, 11, .4);
+  }
+}
+
+/* Ensure hamburger is always visible on mobile */
+#menu-toggle {
+  display: flex !important;
+}
+
+@media (min-width: 1024px) {
+  #menu-toggle {
+    display: none !important;
+  }
+}
+
+/* Ensure logo is compact and clean on mobile */
+.nav-inner>a {
+  flex-shrink: 0 !important;
+  min-width: 0 !important;
+  gap: 0 !important;
+}
+
+@media (min-width: 1024px) {
+  .nav-inner>a {
+    gap: 0.75rem !important;
   }
 }
