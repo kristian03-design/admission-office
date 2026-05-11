@@ -60,6 +60,7 @@
 
     /* ─── Breadcrumb Strip ─── */
     .breadcrumb-strip {
+      background: var(--navy);
       padding: .85rem 0;
       border-bottom: 1px solid rgba(255,255,255,.08);
       position: relative;

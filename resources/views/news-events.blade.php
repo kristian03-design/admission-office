@@ -164,6 +164,44 @@
         flex: 1;
       }
     }
+
+    .news-events-grid {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 380px));
+      justify-content: start;
+    }
+
+    .news-events-grid .program-card {
+      width: 100%;
+      max-width: 380px;
+    }
+
+    @media (max-width: 640px) {
+      .news-events-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .news-events-grid .program-card {
+        max-width: none;
+      }
+    }
+
+    .news-events-hero {
+      min-height: auto !important;
+    }
+
+    .news-events-hero .news-events-hero-inner {
+      padding-top: calc(var(--navbar-height, 104px) + 1.5rem) !important;
+      padding-bottom: 2.75rem !important;
+    }
+
+    @media (max-width: 768px) {
+      .news-events-hero .news-events-hero-inner {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+        padding-top: calc(var(--navbar-height, 86px) + 1.25rem) !important;
+        padding-bottom: 2.25rem !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -228,10 +266,10 @@
   </header>
 
   <main>
-    <section class="hero-section subpage-hero relative min-h-[50vh] flex items-center overflow-hidden">
+    <section class="hero-section subpage-hero news-events-hero relative flex items-center overflow-hidden">
       <div class="hero-bg-overlay absolute top-0 left-0 right-0 bottom-0"></div>
       <div class="hero-pattern absolute top-0 left-0 right-0 bottom-0"></div>
-      <div class="relative z-10 max-w-7xl mx-auto px-8 w-full pt-24 pb-12">
+      <div class="news-events-hero-inner relative z-10 max-w-7xl mx-auto px-8 w-full">
         <div class="max-w-3xl">
           <span class="section-tag">Stay Updated</span>
           <h1 class="hero-headline mt-4">
@@ -255,7 +293,7 @@
           @endif
         </div>
 
-        <div class="programs-grid">
+        <div class="programs-grid news-events-grid">
           @forelse($newsEvents as $item)
             @php
               $galleryUrls = is_array($item->image_urls) && count($item->image_urls)
