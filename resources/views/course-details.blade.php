@@ -56,12 +56,10 @@
     /* ─── Navbar height spacer (pushes content below fixed navbar) ─── */
     .navbar-spacer {
       height: var(--navbar-height, 104px);
-      background: var(--navy-dark);
     }
 
     /* ─── Breadcrumb Strip ─── */
     .breadcrumb-strip {
-      background: var(--navy-dark);
       padding: .85rem 0;
       border-bottom: 1px solid rgba(255,255,255,.08);
       position: relative;
@@ -151,7 +149,7 @@
     }
     .hero-meta-icon svg { width: 16px; height: 16px; display: block; }
     .hero-meta-label { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); }
-    .hero-meta-value { font-size: .9rem; font-weight: 700; color: #fff; margin-top: .1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hero-meta-value { font-size: .6rem; font-weight: 700; color: #fff; margin-top: .1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     .status-open   { color: #4ade80; }
     .status-closed { color: #f87171; }
@@ -587,16 +585,6 @@
             </div><!-- /.hero-meta-item -->
           </div><!-- /.hero-meta-row -->
 
-          <div class="hero-cta-row">
-            <a href="{{ route('apply') }}" class="btn-hero-primary">
-              {{ $isOpen ? 'Apply Now' : 'Ask Admissions' }}
-              <i data-iconsax="arrow-right"></i>
-            </a>
-            <a href="#overview" class="btn-hero-secondary">
-              View Program Details
-              <i data-iconsax="chevron-down"></i>
-            </a>
-          </div>
 
           <p class="hero-note">
             <i data-iconsax="info-circle"></i>
@@ -637,10 +625,10 @@
               <span class="slots-count">{{ $program->slots_left ?? '–' }}</span>
             </div>
           </div>
-        </div><!-- /.hero-right -->
+        </div>
 
-      </div><!-- /.program-hero-grid -->
-    </div><!-- /.hero-inner -->
+      </div>
+    </div>
   </section>
 
   <!-- ─── Highlights Strip ─── -->
@@ -785,7 +773,6 @@
           </p>
         </div>
         <div class="footer-cta-actions">
-          <a href="{{ route('apply') }}" class="btn-cta-main">Start Application <i data-iconsax="arrow-right"></i></a>
           <a href="{{ url('/') }}#programs" class="btn-cta-ghost">Explore Other Programs <i data-iconsax="arrow-right"></i></a>
         </div>
       </div>
