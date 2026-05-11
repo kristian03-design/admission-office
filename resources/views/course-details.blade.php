@@ -12,365 +12,6 @@
   @include('partials.iconsax')
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=12" />
 
-  <style>
-    /* ─── Page-level token overrides to match home-page.css ─── */
-    :root {
-      --gold:        #c9933a;
-      --gold-light:  #dfb36a;
-      --gold-pale:   #fdf6e3;
-      --cream:       #f8f6f1;
-      --slate-soft:  #f0f2f5;
-      --text-muted:  #4b5563;
-      --border:      rgba(27,53,87,.08);
-      --radius-md:   12px;
-      --radius-lg:   18px;
-      --radius-xl:   24px;
-    }
-
-    /* ─── Navbar always solid/dark on this interior page ─── */
-    #navbar, #navbar.scrolled {
-      background: rgba(27, 53, 87, 0.98) !important;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
-    }
-    #navbar .nav-sub, #navbar.scrolled .nav-sub   { color: rgba(255, 255, 255, .7)  !important; }
-    #navbar .nav-main, #navbar.scrolled .nav-main  { color: #ffffff                  !important; }
-    #navbar .nav-link, #navbar.scrolled .nav-link  { color: rgba(255, 255, 255, .75) !important; }
-    #navbar .nav-link:hover, #navbar.scrolled .nav-link:hover { color: #ffffff       !important; }
-    #menu-toggle { color: #ffffff; }
-
-    /* ─── Breadcrumb Strip ─── */
-    .breadcrumb-strip {
-      margin-top: 72px;
-      background: var(--navy);
-      padding: .75rem 0;
-    }
-    .breadcrumb-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; gap: .5rem; }
-    .breadcrumb-inner a { font-size: .9rem; color: rgba(255,255,255,.55); text-decoration: none; transition: color .2s; }
-    .breadcrumb-inner a:hover { color: var(--gold-light); }
-    .breadcrumb-inner .sep { color: rgba(255,255,255,.25); font-size: .8rem; }
-    .breadcrumb-inner .current { font-size: .9rem; color: var(--gold-light); font-weight: 500; }
-
-    /* ─── Hero ─── */
-    .program-hero {
-      background: var(--navy);
-      position: relative;
-      overflow: hidden;
-      padding: 10rem 0 6rem;
-    }
-    .program-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201,147,58,.12), transparent),
-        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(27,53,87,.6), transparent);
-    }
-    .hero-deco-ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid rgba(201,147,58,.12);
-    }
-    .hero-deco-ring.r1 { width: 600px; height: 600px; top: -200px; right: -150px; }
-    .hero-deco-ring.r2 { width: 350px; height: 350px; bottom: -100px; right: 80px; border-color: rgba(201,147,58,.08); }
-    .hero-deco-line { position: absolute; background: rgba(201,147,58,.08); }
-    .hero-deco-line.l1 { width: 1px; top: 0; bottom: 0; left: 38%; }
-    .hero-deco-line.l2 { height: 1px; left: 0; right: 0; bottom: 35%; }
-
-    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
-    .hero-grid { display: grid; grid-template-columns: 1fr 380px; gap: 4rem; align-items: center; }
-
-    .hero-dept-badge {
-      display: inline-flex; align-items: center; gap: .5rem;
-      background: rgba(201,147,58,.15);
-      border: 1px solid rgba(201,147,58,.3);
-      color: var(--gold-light);
-      font-size: .85rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-      padding: .45rem 1.1rem; border-radius: 999px;
-      margin-bottom: 1.5rem;
-    }
-    .hero-dept-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
-
-    .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.6rem, 5vw, 3.8rem);
-      font-weight: 800;
-      color: #fff;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-    }
-    .hero-title em { font-style: italic; color: var(--gold-light); font-weight: 600; }
-
-    .hero-desc {
-      margin-top: 1.5rem;
-      font-size: 1.05rem;
-      line-height: 1.75;
-      color: rgba(255,255,255,.65);
-      max-width: 540px;
-    }
-
-    .hero-meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2.5rem; }
-    .hero-meta-item { display: flex; align-items: center; gap: .75rem; }
-    .hero-meta-icon {
-      width: 40px; height: 40px; border-radius: var(--radius-sm);
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.1);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--gold-light); flex-shrink: 0;
-    }
-    .hero-meta-icon svg { width: 18px; height: 18px; }
-    .hero-meta-label { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.45); }
-    .hero-meta-value { font-size: 1.05rem; font-weight: 700; color: #fff; margin-top: .2rem; }
-
-    .status-open   { color: #4ade80; }
-    .status-closed { color: #f87171; }
-
-    .hero-cta-row { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; }
-    .btn-hero-primary {
-      display: inline-flex; align-items: center; gap: .5rem;
-      padding: .85rem 2rem;
-      background: var(--gold); color: #fff;
-      font-size: .9rem; font-weight: 600; border-radius: 999px;
-      text-decoration: none;
-      transition: background .25s, transform .2s, box-shadow .25s;
-      box-shadow: 0 8px 24px rgba(201,147,58,.3);
-    }
-    .btn-hero-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(201,147,58,.4); }
-    .btn-hero-primary svg { width: 17px; height: 17px; }
-    .btn-hero-secondary {
-      display: inline-flex; align-items: center; gap: .5rem;
-      padding: .85rem 1.8rem;
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.15);
-      color: rgba(255,255,255,.8);
-      font-size: .9rem; font-weight: 500; border-radius: 999px;
-      text-decoration: none;
-      transition: background .25s, color .25s;
-    }
-    .btn-hero-secondary:hover { background: rgba(255,255,255,.12); color: #fff; }
-    .btn-hero-secondary svg { width: 16px; height: 16px; opacity: .6; }
-
-    /* ─── Apply Card ─── */
-    .apply-card {
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: var(--radius-xl);
-      padding: 2rem;
-      backdrop-filter: blur(10px);
-      position: relative; overflow: hidden;
-    }
-    .apply-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--gold), var(--gold-light));
-    }
-    .apply-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
-    .apply-card-sub { font-size: .85rem; color: rgba(255,255,255,.55); line-height: 1.6; margin-bottom: 1.75rem; }
-    .apply-checklist { list-style: none; display: flex; flex-direction: column; gap: .9rem; margin-bottom: 1.75rem; }
-    .apply-checklist li { display: flex; align-items: flex-start; gap: .75rem; font-size: .88rem; color: rgba(255,255,255,.8); }
-    .check-circle {
-      width: 20px; height: 20px; border-radius: 50%;
-      background: rgba(201,147,58,.25); border: 1px solid rgba(201,147,58,.4);
-      color: var(--gold-light); display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; margin-top: .05rem;
-    }
-    .check-circle svg { width: 11px; height: 11px; }
-    .btn-apply-card {
-      display: block; width: 100%; padding: 1rem;
-      background: var(--gold); color: #fff;
-      font-size: .9rem; font-weight: 700; text-align: center;
-      border-radius: var(--radius-md); text-decoration: none;
-      transition: background .25s, transform .2s, box-shadow .25s;
-      box-shadow: 0 6px 20px rgba(201,147,58,.35);
-    }
-    .btn-apply-card:hover { background: var(--gold-light); transform: translateY(-2px); }
-    .apply-divider { height: 1px; background: rgba(255,255,255,.08); margin: 1.5rem 0; }
-    .apply-card-slots {
-      display: flex; align-items: center; justify-content: space-between;
-      font-size: .82rem; color: rgba(255,255,255,.5);
-    }
-    .slots-count { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: var(--gold-light); }
-
-    /* ─── Body Sections ─── */
-    .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-    .overview-section { padding: 5rem 0; }
-    .overview-grid { display: grid; grid-template-columns: 1fr 340px; gap: 3rem; align-items: start; }
-
-    .section-tag {
-      display: inline-block;
-      font-size: .85rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
-      color: var(--gold); padding: .45rem 1.1rem;
-      background: var(--gold-pale); border-radius: 999px; margin-bottom: 1rem;
-    }
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.9rem, 3vw, 2.6rem);
-      font-weight: 700; color: var(--navy); line-height: 1.1;
-    }
-    .section-title em { font-style: italic; color: var(--gold); }
-    .section-body { margin-top: 1.25rem; font-size: .97rem; line-height: 1.8; color: var(--text-muted); }
-    .section-body p + p { margin-top: 1rem; }
-    .section-body strong { color: var(--navy); font-weight: 600; }
-
-    .study-areas { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; margin-top: 2rem; }
-    .study-area-card {
-      display: flex; align-items: center; gap: .9rem;
-      background: var(--slate-soft);
-      border: 1px solid rgba(15,30,61,.06);
-      border-radius: var(--radius-md); padding: .9rem 1.1rem;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    .study-area-card:hover { border-color: rgba(201,147,58,.25); box-shadow: 0 4px 16px rgba(201,147,58,.08); }
-    .study-area-icon {
-      width: 38px; height: 38px; border-radius: var(--radius-sm);
-      background: #fff; box-shadow: 0 2px 8px rgba(15,30,61,.08);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--navy); flex-shrink: 0;
-    }
-    .study-area-icon svg { width: 17px; height: 17px; }
-    .study-area-label { font-size: .88rem; font-weight: 600; color: var(--navy); }
-
-    .sidebar-card {
-      background: #fff; border: 1px solid rgba(15,30,61,.08);
-      border-radius: var(--radius-lg); overflow: hidden;
-      box-shadow: 0 4px 32px rgba(15,30,61,.06);
-      position: sticky; top: 96px;
-    }
-    .sidebar-card-header { background: var(--navy); padding: 1.5rem; }
-    .sidebar-card-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: #fff; }
-    .sidebar-card-header p { font-size: .82rem; color: rgba(255,255,255,.55); margin-top: .25rem; line-height: 1.5; }
-    .sidebar-card-body { padding: 1.5rem; }
-    .career-list { list-style: none; display: flex; flex-direction: column; gap: .75rem; }
-    .career-list li { display: flex; align-items: flex-start; gap: .7rem; font-size: .88rem; color: var(--text-muted); line-height: 1.4; }
-    .career-dot {
-      width: 22px; height: 22px; border-radius: 50%;
-      background: rgba(201,147,58,.1); border: 1px solid rgba(201,147,58,.25);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; margin-top: .1rem;
-    }
-    .career-dot svg { width: 12px; height: 12px; color: var(--gold); }
-    .sidebar-divider { height: 1px; background: rgba(15,30,61,.06); margin: 1.25rem 0; }
-    .sidebar-contact-title {
-      font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-      color: var(--navy); opacity: .5; margin-bottom: 1rem;
-    }
-    .contact-btn {
-      display: flex; align-items: center; gap: .75rem;
-      padding: .8rem 1rem; border-radius: var(--radius-sm);
-      background: var(--slate-soft); text-decoration: none;
-      transition: background .2s; margin-bottom: .6rem;
-    }
-    .contact-btn:last-child { margin-bottom: 0; }
-    .contact-btn:hover { background: var(--gold-pale); }
-    .contact-btn svg { width: 17px; height: 17px; color: var(--navy); flex-shrink: 0; }
-    .contact-btn span { font-size: .85rem; font-weight: 600; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-    /* ─── Highlights Strip ─── */
-    .highlights-section {
-      padding: 4rem 0; background: var(--navy);
-      position: relative; overflow: hidden;
-    }
-    .highlights-section::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 50% 100% at 80% 50%, rgba(201,147,58,.08), transparent);
-    }
-    .highlights-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; position: relative; z-index: 1; }
-    .highlight-card {
-      padding: 1.75rem 1.5rem;
-      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
-      border-radius: var(--radius-lg); transition: background .25s, border-color .25s;
-    }
-    .highlight-card:hover { background: rgba(255,255,255,.07); border-color: rgba(201,147,58,.2); }
-    .highlight-icon {
-      width: 44px; height: 44px; border-radius: var(--radius-sm);
-      background: rgba(201,147,58,.15); border: 1px solid rgba(201,147,58,.25);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--gold-light); margin-bottom: 1.25rem;
-    }
-    .highlight-icon svg { width: 20px; height: 20px; }
-    .highlight-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
-    .highlight-desc { font-size: .84rem; line-height: 1.65; color: rgba(255,255,255,.5); }
-
-    /* ─── Footer CTA ─── */
-    .footer-cta-section { padding: 5rem 0; background: var(--cream); border-top: 1px solid var(--border); }
-    .footer-cta-inner {
-      background: var(--navy); border-radius: var(--radius-xl);
-      position: relative; overflow: hidden;
-      padding: 4rem 3.5rem;
-      display: flex; align-items: center; justify-content: space-between; gap: 3rem;
-    }
-    .footer-cta-inner::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 100% at 100% 50%, rgba(201,147,58,.12), transparent);
-    }
-    .footer-cta-inner::after {
-      content: '';
-      position: absolute;
-      width: 400px; height: 400px; border-radius: 50%;
-      border: 1px solid rgba(201,147,58,.08);
-      top: -150px; right: -100px;
-    }
-    .footer-cta-text { position: relative; z-index: 1; }
-    .footer-cta-title { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 700; color: #fff; line-height: 1.1; }
-    .footer-cta-title em { font-style: italic; color: var(--gold-light); }
-    .footer-cta-sub { margin-top: 1rem; font-size: .97rem; color: rgba(255,255,255,.55); max-width: 440px; line-height: 1.7; }
-    .footer-cta-actions { display: flex; flex-direction: column; gap: .85rem; min-width: 220px; position: relative; z-index: 1; }
-    .btn-cta-main {
-      display: flex; align-items: center; justify-content: center; gap: .5rem;
-      padding: 1.05rem 2rem; background: var(--gold); color: #fff;
-      font-size: .95rem; font-weight: 700; border-radius: 999px;
-      text-decoration: none;
-      transition: background .25s, transform .2s, box-shadow .25s;
-      box-shadow: 0 8px 24px rgba(201,147,58,.35);
-    }
-    .btn-cta-main:hover { background: var(--gold-light); transform: translateY(-2px); }
-    .btn-cta-main svg { width: 17px; height: 17px; }
-    .btn-cta-ghost {
-      display: inline-flex; align-items: center; justify-content: center; gap: .75rem;
-      padding: .85rem 2.2rem;
-      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
-      color: rgba(255,255,255,.7); font-size: .88rem; font-weight: 500;
-      border-radius: 999px; text-decoration: none; text-align: center;
-      transition: background .25s, color .25s, transform .2s;
-    }
-    .btn-cta-ghost:hover { background: rgba(255,255,255,.1); color: #fff; transform: translateX(3px); }
-    .btn-cta-ghost svg { width: 18px; height: 18px; opacity: .7; transition: transform .2s; }
-    .btn-cta-ghost:hover svg { transform: translateX(4px); opacity: 1; }
-
-    /* ─── Reveal Animations ─── */
-    [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
-    [data-reveal].visible { opacity: 1; transform: none; }
-    [data-reveal][data-delay="100"] { transition-delay: .1s; }
-    [data-reveal][data-delay="200"] { transition-delay: .2s; }
-    [data-reveal][data-delay="300"] { transition-delay: .3s; }
-    [data-reveal][data-delay="400"] { transition-delay: .4s; }
-
-    /* ─── Responsive ─── */
-    @media (max-width: 1024px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .apply-card { max-width: 480px; }
-      .overview-grid { grid-template-columns: 1fr; }
-      .sidebar-card { position: static; }
-      .highlights-grid { grid-template-columns: repeat(2, 1fr); }
-      .footer-cta-inner { flex-direction: column; text-align: center; }
-      .footer-cta-sub { margin: 1rem auto 0; }
-      .footer-cta-actions { width: 100%; max-width: 320px; align-self: center; }
-    }
-    @media (max-width: 640px) {
-      .hero-title { font-size: 2.4rem; }
-      .hero-cta-row { flex-direction: column; }
-      .btn-hero-primary, .btn-hero-secondary { justify-content: center; }
-      .study-areas { grid-template-columns: 1fr; }
-      .highlights-grid { grid-template-columns: 1fr; }
-      .footer-cta-inner { padding: 2.5rem 1.5rem; }
-      .footer-cta-title { font-size: 2rem; }
-      .nav-links { display: none; }
-      .footer-bottom-row { flex-direction: column; align-items: flex-start; }
-    }
-  </style>
 </head>
 <body>
   @include('partials.site-loader')
@@ -693,63 +334,88 @@
     </div>
   </section>
 
-  <!-- ─── Footer ─── -->
-  <!-- FIX: Removed the duplicate/broken first footer; kept only this complete one -->
-  <footer class="site-footer" style="background: #0f172a; padding: 5rem 0 2rem; color: #fff;">
+   <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
+  <footer class="footer-section pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-8">
-      <div class="grid md:grid-cols-4 gap-12 pb-12 border-b border-[rgba(255,255,255,0.1)]">
+      <div class="grid md:grid-cols-4 gap-10 pb-12 border-b footer-border">
 
         <div class="md:col-span-1">
-          <div class="flex items-center gap-3 mb-6">
-            <img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" class="w-16 h-16 rounded-full object-cover">
-            <p class="text-sm font-bold">Baliwag Polytechnic College</p>
+          <div class="flex items-center gap-3 mb-4">
+            <img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" class="w-16 h-16 rounded-full object-cover" loading="lazy" decoding="async" width="64" height="64">
+            <p class="text-sm font-semibold footer-heading">Baliwag Polytechnic College</p>
           </div>
-          <p class="text-sm text-[rgba(255,255,255,0.6)] leading-relaxed">Empowering Bulacan's future leaders through accessible, quality higher education since 2008.</p>
+          <p class="text-sm footer-text leading-relaxed">Empowering Bulacan's future leaders through accessible, quality higher education since 2008.</p>
+          <div class="social-links mt-5 flex gap-3">
+            <a href="https://www.facebook.com/BTECHAdmissionsOfficial" class="social-btn" aria-label="Facebook">
+              <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8.5V7c0-.7.5-1 1.1-1H17V3h-2.6C11.7 3 10 4.7 10 7.1v1.4H8v3h2V21h3.5v-9.5h2.8l.5-3H13.5Z" fill="currentColor"/></svg>
+            </a>
+            <a href="https://www.youtube.com/c/BaliwagPolytechnicCollege" class="social-btn" aria-label="Youtube">
+              <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5a3 3 0 0 0-2.1 2.1A31.1 31.1 0 0 0 2 12a31.1 31.1 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.1 31.1 0 0 0 22 12a31.1 31.1 0 0 0-.4-4.8ZM10 15.2V8.8l5.5 3.2Z" fill="currentColor"/></svg>
+            </a>
+          </div>
         </div>
 
         <div>
-          <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Programs</h4>
-          <ul class="space-y-3">
-            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">BS Information Technology</a></li>
-            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">BS Business Administration</a></li>
-            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">BS Secondary Education</a></li>
-            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">BS Elementary Education</a></li>
+          <h4 class="footer-col-title mb-4">Programs</h4>
+          <ul class="footer-links">
+            <li><a href="#">BS Information Technology</a></li>
+            <li><a href="#">BS Business Administration</a></li>
+            <li><a href="#">BS Secondary Education</a></li>
+            <li><a href="#">BS Hospitality Management</a></li>
+            <li><a href="#">BS Tourism Management</a></li>
+            <li><a href="#">BS Management Accounting</a></li>
+            <li><a href="#">Bachelor of Arts in History</a></li>
+            <li><a href="#">Bachelor of Science in Mathematics</a></li>
+            <li><a href="#">BS Elementary Education</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Admissions</h4>
-          <ul class="space-y-3">
-            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">How to Apply</a></li>
-            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">Requirements</a></li>
-            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">Scholarship Programs</a></li>
-            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">FAQs</a></li>
+          <h4 class="footer-col-title mb-4">Admissions</h4>
+          <ul class="footer-links">
+            <li><a href="#">How to Apply</a></li>
+            <li><a href="#">Requirements</a></li>
+            <li><a href="#">Scholarship Programs</a></li>
+            <li><a href="#">Tuition &amp; Fees</a></li>
+            <li><a href="#">FAQs</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Quick Links</h4>
-          <ul class="space-y-3">
-            <li><a href="{{ route('about') }}" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">About Admission</a></li>
-            <li><a href="{{ route('news-events') }}" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">News & Events</a></li>
-            <li><a href="#" class="text-[rgba(255,255,255,0.4)] hover:text-[#dfb36a] text-sm transition-colors">Contact Us</a></li>
+          <h4 class="footer-col-title mb-4">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="{{ route('about') }}#about-office">About BTECH Admission</a></li>
+            <li><a href="{{ route('about') }}#faculty-staff">Faculty &amp; Staff</a></li>
+            <li><a href="{{ route('news-events') }}">News &amp; Events</a></li>
+            <li><a href="#">Contact Us</a></li>
           </ul>
         </div>
 
       </div>
 
-      <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p class="text-xs text-[rgba(255,255,255,0.3)]">© 2026 Baliwag Polytechnic College. All rights reserved.</p>
-        <div class="flex gap-4">
-          @if(isset($settings['facebook_link']))
-            <a href="{{ $settings['facebook_link'] }}" class="text-[rgba(255,255,255,0.4)] hover:text-white">
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V7c0-.7.5-1 1.1-1H17V3h-2.6C11.7 3 10 4.7 10 7.1v1.4H8v3h2V21h3.5v-9.5h2.8l.5-3H13.5Z"/></svg>
-            </a>
-          @endif
-        </div>
+      <div class="footer-bottom flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
+        <p class="text-sm footer-text">© 2026 Baliwag Polytechnic College. All rights reserved.</p>
+            <div class="flex gap-4 mt-8">
+              @if(isset($settings['facebook_link']))
+                <a href="{{ $settings['facebook_link'] }}" class="footer-social-link social-btn" aria-label="Facebook">
+                  <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8.5V7c0-.7.5-1 1.1-1H17V3h-2.6C11.7 3 10 4.7 10 7.1v1.4H8v3h2V21h3.5v-9.5h2.8l.5-3H13.5Z" fill="currentColor"/></svg>
+                </a>
+              @endif
+              @if(isset($settings['twitter_link']))
+                <a href="{{ $settings['twitter_link'] }}" class="footer-social-link social-btn" aria-label="X">
+                  <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m13.8 10.5 6.4-7.5h-1.5l-5.6 6.5L8.7 3H3.6l6.7 9.8L3.6 21h1.5l5.9-6.9 4.7 6.9h5.1Zm-2.1 2.4-.7-1L5.6 4.1H8l4.4 6.3.7 1 5.7 8.2h-2.4Z" fill="currentColor"/></svg>
+                </a>
+              @endif
+              @if(isset($settings['instagram_link']))
+                <a href="{{ $settings['instagram_link'] }}" class="footer-social-link social-btn" aria-label="Instagram">
+                  <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4Zm9.8 1.7a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4ZM12 7.2a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6Zm0 2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6Z" fill="currentColor"/></svg>
+                </a>
+              @endif
+            </div>
       </div>
     </div>
   </footer>
+
 
   <!-- Scripts -->
   <script>
