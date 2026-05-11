@@ -13,29 +13,31 @@
   @include('partials.iconsax')
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=16" />
   <style>
-    /* ─── Page-level overrides ─── */
-    /* Navbar is always solid/dark on this interior page for consistency */
-    #navbar, #navbar.scrolled {
+    /* ── Navbar: dark on load, white on scroll ── */
+    /* Un-scrolled: solid navy so text is readable over the light page background */
+    #navbar:not(.scrolled) {
       background: rgba(27, 53, 87, 0.98) !important;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
     }
-    #navbar .nav-sub, #navbar.scrolled .nav-sub   { color: rgba(255, 255, 255, .7)  !important; }
-    #navbar .nav-main, #navbar.scrolled .nav-main  { color: #ffffff                  !important; }
-    #navbar .nav-link, #navbar.scrolled .nav-link  { color: rgba(255, 255, 255, .75) !important; }
-    #navbar .nav-link:hover, #navbar.scrolled .nav-link:hover { color: #ffffff       !important; }
-    #menu-toggle { color: #ffffff; }
+    #navbar:not(.scrolled) .nav-sub   { color: rgba(255, 255, 255, .7)  !important; }
+    #navbar:not(.scrolled) .nav-main  { color: #ffffff                  !important; }
+    #navbar:not(.scrolled) .nav-link  { color: rgba(255, 255, 255, .75) !important; }
+    #navbar:not(.scrolled) .nav-link:hover { color: #ffffff             !important; }
+    #navbar:not(.scrolled) #menu-toggle { color: #ffffff; }
 
-    /* Pagination Styling */
+    /* Scrolled: let home-page.css handle the white styles — no override here */
+
+    /* Pagination */
     .pagination-container nav svg { width: 20px; height: 20px; display: inline; }
   </style>
 </head>
 <body>
   @include('partials.site-loader')
-  
+
   <!-- ───────────────────────────────────── NAV ───────────────────────────────────── -->
-<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
         <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
@@ -224,23 +226,23 @@
 
       <div class="footer-bottom flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
         <p class="text-sm footer-text">© 2026 Baliwag Polytechnic College. All rights reserved.</p>
-            <div class="flex gap-4 mt-8">
-              @if(isset($settings['facebook_link']))
-                <a href="{{ $settings['facebook_link'] }}" class="footer-social-link social-btn" aria-label="Facebook">
-                  <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8.5V7c0-.7.5-1 1.1-1H17V3h-2.6C11.7 3 10 4.7 10 7.1v1.4H8v3h2V21h3.5v-9.5h2.8l.5-3H13.5Z" fill="currentColor"/></svg>
-                </a>
-              @endif
-              @if(isset($settings['twitter_link']))
-                <a href="{{ $settings['twitter_link'] }}" class="footer-social-link social-btn" aria-label="X">
-                  <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m13.8 10.5 6.4-7.5h-1.5l-5.6 6.5L8.7 3H3.6l6.7 9.8L3.6 21h1.5l5.9-6.9 4.7 6.9h5.1Zm-2.1 2.4-.7-1L5.6 4.1H8l4.4 6.3.7 1 5.7 8.2h-2.4Z" fill="currentColor"/></svg>
-                </a>
-              @endif
-              @if(isset($settings['instagram_link']))
-                <a href="{{ $settings['instagram_link'] }}" class="footer-social-link social-btn" aria-label="Instagram">
-                  <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4Zm9.8 1.7a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4ZM12 7.2a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6Zm0 2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6Z" fill="currentColor"/></svg>
-                </a>
-              @endif
-            </div>
+        <div class="flex gap-4 mt-8">
+          @if(isset($settings['facebook_link']))
+            <a href="{{ $settings['facebook_link'] }}" class="footer-social-link social-btn" aria-label="Facebook">
+              <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8.5V7c0-.7.5-1 1.1-1H17V3h-2.6C11.7 3 10 4.7 10 7.1v1.4H8v3h2V21h3.5v-9.5h2.8l.5-3H13.5Z" fill="currentColor"/></svg>
+            </a>
+          @endif
+          @if(isset($settings['twitter_link']))
+            <a href="{{ $settings['twitter_link'] }}" class="footer-social-link social-btn" aria-label="X">
+              <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m13.8 10.5 6.4-7.5h-1.5l-5.6 6.5L8.7 3H3.6l6.7 9.8L3.6 21h1.5l5.9-6.9 4.7 6.9h5.1Zm-2.1 2.4-.7-1L5.6 4.1H8l4.4 6.3.7 1 5.7 8.2h-2.4Z" fill="currentColor"/></svg>
+            </a>
+          @endif
+          @if(isset($settings['instagram_link']))
+            <a href="{{ $settings['instagram_link'] }}" class="footer-social-link social-btn" aria-label="Instagram">
+              <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4Zm9.8 1.7a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4ZM12 7.2a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6Zm0 2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6Z" fill="currentColor"/></svg>
+            </a>
+          @endif
+        </div>
       </div>
     </div>
   </footer>
@@ -251,4 +253,3 @@
   </script>
 </body>
 </html>
-

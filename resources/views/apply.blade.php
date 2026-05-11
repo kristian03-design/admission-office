@@ -8,6 +8,7 @@
   @include('partials.iconsax')
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
   <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v=6">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .mo { will-change: opacity; transform: translateZ(0); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
     .mb { will-change: transform, opacity; transform: translateZ(0) scale(.92) translateY(24px); }

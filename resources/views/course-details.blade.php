@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -15,20 +15,19 @@
   <style>
     /* ─── Page-level token overrides to match home-page.css ─── */
     :root {
-      --gold:        #c9933a; /* home-page uses --gold-mid for this */
+      --gold:        #c9933a;
       --gold-light:  #dfb36a;
-      --gold-pale:   #fdf6e3; /* matches home-page --gold-pale */
-      --cream:       #f8f6f1; /* matches home-page --cream */
-      --slate-soft:  #f0f2f5; /* matches home-page --gray-100 */
-      --text-muted:  #4b5563; /* matches home-page --gray-600 */
+      --gold-pale:   #fdf6e3;
+      --cream:       #f8f6f1;
+      --slate-soft:  #f0f2f5;
+      --text-muted:  #4b5563;
       --border:      rgba(27,53,87,.08);
-      --radius-md:   12px;    /* matches home-page --radius-md */
-      --radius-lg:   18px;    /* matches home-page --radius-lg */
-      --radius-xl:   24px;    /* matches home-page --radius-xl */
+      --radius-md:   12px;
+      --radius-lg:   18px;
+      --radius-xl:   24px;
     }
 
-    /* ─── Page-level overrides ─── */
-    /* Navbar is always solid/dark on this interior page for consistency */
+    /* ─── Navbar always solid/dark on this interior page ─── */
     #navbar, #navbar.scrolled {
       background: rgba(27, 53, 87, 0.98) !important;
       backdrop-filter: blur(16px);
@@ -43,7 +42,7 @@
 
     /* ─── Breadcrumb Strip ─── */
     .breadcrumb-strip {
-      margin-top: 72px; /* matches nav-inner py-4 height */
+      margin-top: 72px;
       background: var(--navy);
       padding: .75rem 0;
     }
@@ -52,8 +51,6 @@
     .breadcrumb-inner a:hover { color: var(--gold-light); }
     .breadcrumb-inner .sep { color: rgba(255,255,255,.25); font-size: .8rem; }
     .breadcrumb-inner .current { font-size: .9rem; color: var(--gold-light); font-weight: 500; }
-
-
 
     /* ─── Hero ─── */
     .program-hero {
@@ -77,10 +74,7 @@
     }
     .hero-deco-ring.r1 { width: 600px; height: 600px; top: -200px; right: -150px; }
     .hero-deco-ring.r2 { width: 350px; height: 350px; bottom: -100px; right: 80px; border-color: rgba(201,147,58,.08); }
-    .hero-deco-line {
-      position: absolute;
-      background: rgba(201,147,58,.08);
-    }
+    .hero-deco-line { position: absolute; background: rgba(201,147,58,.08); }
     .hero-deco-line.l1 { width: 1px; top: 0; bottom: 0; left: 38%; }
     .hero-deco-line.l2 { height: 1px; left: 0; right: 0; bottom: 35%; }
 
@@ -116,37 +110,28 @@
       max-width: 540px;
     }
 
-    .hero-meta-row {
-      display: flex; flex-wrap: wrap; gap: 1.5rem;
-      margin-top: 2.5rem;
-    }
-    .hero-meta-item {
-      display: flex; align-items: center; gap: .75rem;
-    }
+    .hero-meta-row { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2.5rem; }
+    .hero-meta-item { display: flex; align-items: center; gap: .75rem; }
     .hero-meta-icon {
       width: 40px; height: 40px; border-radius: var(--radius-sm);
       background: rgba(255,255,255,.07);
       border: 1px solid rgba(255,255,255,.1);
       display: flex; align-items: center; justify-content: center;
-      color: var(--gold-light);
-      flex-shrink: 0;
+      color: var(--gold-light); flex-shrink: 0;
     }
     .hero-meta-icon svg { width: 18px; height: 18px; }
     .hero-meta-label { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.45); }
     .hero-meta-value { font-size: 1.05rem; font-weight: 700; color: #fff; margin-top: .2rem; }
 
-    /* Status badge */
-    .status-open  { color: #4ade80; }
+    .status-open   { color: #4ade80; }
     .status-closed { color: #f87171; }
 
     .hero-cta-row { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; }
     .btn-hero-primary {
       display: inline-flex; align-items: center; gap: .5rem;
       padding: .85rem 2rem;
-      background: var(--gold);
-      color: #fff;
-      font-size: .9rem; font-weight: 600;
-      border-radius: 999px;
+      background: var(--gold); color: #fff;
+      font-size: .9rem; font-weight: 600; border-radius: 999px;
       text-decoration: none;
       transition: background .25s, transform .2s, box-shadow .25s;
       box-shadow: 0 8px 24px rgba(201,147,58,.3);
@@ -159,66 +144,43 @@
       background: rgba(255,255,255,.07);
       border: 1px solid rgba(255,255,255,.15);
       color: rgba(255,255,255,.8);
-      font-size: .9rem; font-weight: 500;
-      border-radius: 999px;
+      font-size: .9rem; font-weight: 500; border-radius: 999px;
       text-decoration: none;
       transition: background .25s, color .25s;
     }
     .btn-hero-secondary:hover { background: rgba(255,255,255,.12); color: #fff; }
     .btn-hero-secondary svg { width: 16px; height: 16px; opacity: .6; }
 
-    /* â”€â”€â”€ Apply Card (right col of hero) â”€â”€â”€ */
+    /* ─── Apply Card ─── */
     .apply-card {
       background: rgba(255,255,255,.05);
       border: 1px solid rgba(255,255,255,.12);
       border-radius: var(--radius-xl);
       padding: 2rem;
       backdrop-filter: blur(10px);
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
     .apply-card::before {
       content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 3px;
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
       background: linear-gradient(90deg, var(--gold), var(--gold-light));
     }
-    .apply-card-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: .5rem;
-    }
-    .apply-card-sub {
-      font-size: .85rem;
-      color: rgba(255,255,255,.55);
-      line-height: 1.6;
-      margin-bottom: 1.75rem;
-    }
+    .apply-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
+    .apply-card-sub { font-size: .85rem; color: rgba(255,255,255,.55); line-height: 1.6; margin-bottom: 1.75rem; }
     .apply-checklist { list-style: none; display: flex; flex-direction: column; gap: .9rem; margin-bottom: 1.75rem; }
-    .apply-checklist li {
-      display: flex; align-items: flex-start; gap: .75rem;
-      font-size: .88rem; color: rgba(255,255,255,.8);
-    }
+    .apply-checklist li { display: flex; align-items: flex-start; gap: .75rem; font-size: .88rem; color: rgba(255,255,255,.8); }
     .check-circle {
       width: 20px; height: 20px; border-radius: 50%;
-      background: rgba(201,147,58,.25);
-      border: 1px solid rgba(201,147,58,.4);
-      color: var(--gold-light);
-      display: flex; align-items: center; justify-content: center;
+      background: rgba(201,147,58,.25); border: 1px solid rgba(201,147,58,.4);
+      color: var(--gold-light); display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; margin-top: .05rem;
     }
     .check-circle svg { width: 11px; height: 11px; }
     .btn-apply-card {
-      display: block; width: 100%;
-      padding: 1rem;
-      background: var(--gold);
-      color: #fff;
-      font-size: .9rem; font-weight: 700;
-      text-align: center;
-      border-radius: var(--radius-md);
-      text-decoration: none;
+      display: block; width: 100%; padding: 1rem;
+      background: var(--gold); color: #fff;
+      font-size: .9rem; font-weight: 700; text-align: center;
+      border-radius: var(--radius-md); text-decoration: none;
       transition: background .25s, transform .2s, box-shadow .25s;
       box-shadow: 0 6px 20px rgba(201,147,58,.35);
     }
@@ -230,95 +192,64 @@
     }
     .slots-count { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: var(--gold-light); }
 
-    /* â”€â”€â”€ Body Sections â”€â”€â”€ */
+    /* ─── Body Sections ─── */
     .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-
     .overview-section { padding: 5rem 0; }
     .overview-grid { display: grid; grid-template-columns: 1fr 340px; gap: 3rem; align-items: start; }
 
-    /* Section tags */
     .section-tag {
       display: inline-block;
       font-size: .85rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
-      color: var(--gold);
-      padding: .45rem 1.1rem;
-      background: var(--gold-pale);
-      border-radius: 999px;
-      margin-bottom: 1rem;
+      color: var(--gold); padding: .45rem 1.1rem;
+      background: var(--gold-pale); border-radius: 999px; margin-bottom: 1rem;
     }
     .section-title {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(1.9rem, 3vw, 2.6rem);
-      font-weight: 700;
-      color: var(--navy);
-      line-height: 1.1;
+      font-weight: 700; color: var(--navy); line-height: 1.1;
     }
     .section-title em { font-style: italic; color: var(--gold); }
-    .section-body {
-      margin-top: 1.25rem;
-      font-size: .97rem;
-      line-height: 1.8;
-      color: var(--text-muted);
-    }
+    .section-body { margin-top: 1.25rem; font-size: .97rem; line-height: 1.8; color: var(--text-muted); }
     .section-body p + p { margin-top: 1rem; }
     .section-body strong { color: var(--navy); font-weight: 600; }
 
-    /* Core study areas grid */
     .study-areas { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; margin-top: 2rem; }
     .study-area-card {
       display: flex; align-items: center; gap: .9rem;
       background: var(--slate-soft);
       border: 1px solid rgba(15,30,61,.06);
-      border-radius: var(--radius-md);
-      padding: .9rem 1.1rem;
+      border-radius: var(--radius-md); padding: .9rem 1.1rem;
       transition: border-color .2s, box-shadow .2s;
     }
     .study-area-card:hover { border-color: rgba(201,147,58,.25); box-shadow: 0 4px 16px rgba(201,147,58,.08); }
     .study-area-icon {
       width: 38px; height: 38px; border-radius: var(--radius-sm);
-      background: #fff;
-      box-shadow: 0 2px 8px rgba(15,30,61,.08);
+      background: #fff; box-shadow: 0 2px 8px rgba(15,30,61,.08);
       display: flex; align-items: center; justify-content: center;
       color: var(--navy); flex-shrink: 0;
     }
     .study-area-icon svg { width: 17px; height: 17px; }
     .study-area-label { font-size: .88rem; font-weight: 600; color: var(--navy); }
 
-    /* Sticky sidebar card */
     .sidebar-card {
-      background: #fff;
-      border: 1px solid rgba(15,30,61,.08);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
+      background: #fff; border: 1px solid rgba(15,30,61,.08);
+      border-radius: var(--radius-lg); overflow: hidden;
       box-shadow: 0 4px 32px rgba(15,30,61,.06);
-      position: sticky;
-      top: 96px;
+      position: sticky; top: 96px;
     }
-    .sidebar-card-header {
-      background: var(--navy);
-      padding: 1.5rem;
-    }
-    .sidebar-card-header h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.25rem; font-weight: 700;
-      color: #fff;
-    }
+    .sidebar-card-header { background: var(--navy); padding: 1.5rem; }
+    .sidebar-card-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: #fff; }
     .sidebar-card-header p { font-size: .82rem; color: rgba(255,255,255,.55); margin-top: .25rem; line-height: 1.5; }
     .sidebar-card-body { padding: 1.5rem; }
     .career-list { list-style: none; display: flex; flex-direction: column; gap: .75rem; }
-    .career-list li {
-      display: flex; align-items: flex-start; gap: .7rem;
-      font-size: .88rem; color: var(--text-muted); line-height: 1.4;
-    }
+    .career-list li { display: flex; align-items: flex-start; gap: .7rem; font-size: .88rem; color: var(--text-muted); line-height: 1.4; }
     .career-dot {
       width: 22px; height: 22px; border-radius: 50%;
-      background: rgba(201,147,58,.1);
-      border: 1px solid rgba(201,147,58,.25);
+      background: rgba(201,147,58,.1); border: 1px solid rgba(201,147,58,.25);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; margin-top: .1rem;
     }
     .career-dot svg { width: 12px; height: 12px; color: var(--gold); }
-
     .sidebar-divider { height: 1px; background: rgba(15,30,61,.06); margin: 1.25rem 0; }
     .sidebar-contact-title {
       font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
@@ -327,22 +258,18 @@
     .contact-btn {
       display: flex; align-items: center; gap: .75rem;
       padding: .8rem 1rem; border-radius: var(--radius-sm);
-      background: var(--slate-soft);
-      text-decoration: none;
-      transition: background .2s;
-      margin-bottom: .6rem;
+      background: var(--slate-soft); text-decoration: none;
+      transition: background .2s; margin-bottom: .6rem;
     }
     .contact-btn:last-child { margin-bottom: 0; }
     .contact-btn:hover { background: var(--gold-pale); }
     .contact-btn svg { width: 17px; height: 17px; color: var(--navy); flex-shrink: 0; }
     .contact-btn span { font-size: .85rem; font-weight: 600; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* â”€â”€â”€ Highlights Strip â”€â”€â”€ */
+    /* ─── Highlights Strip ─── */
     .highlights-section {
-      padding: 4rem 0;
-      background: var(--navy);
-      position: relative;
-      overflow: hidden;
+      padding: 4rem 0; background: var(--navy);
+      position: relative; overflow: hidden;
     }
     .highlights-section::before {
       content: '';
@@ -352,36 +279,25 @@
     .highlights-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; position: relative; z-index: 1; }
     .highlight-card {
       padding: 1.75rem 1.5rem;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: var(--radius-lg);
-      transition: background .25s, border-color .25s;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius-lg); transition: background .25s, border-color .25s;
     }
     .highlight-card:hover { background: rgba(255,255,255,.07); border-color: rgba(201,147,58,.2); }
     .highlight-icon {
-      width: 44px; height: 44px;
-      border-radius: var(--radius-sm);
-      background: rgba(201,147,58,.15);
-      border: 1px solid rgba(201,147,58,.25);
+      width: 44px; height: 44px; border-radius: var(--radius-sm);
+      background: rgba(201,147,58,.15); border: 1px solid rgba(201,147,58,.25);
       display: flex; align-items: center; justify-content: center;
-      color: var(--gold-light);
-      margin-bottom: 1.25rem;
+      color: var(--gold-light); margin-bottom: 1.25rem;
     }
     .highlight-icon svg { width: 20px; height: 20px; }
     .highlight-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
     .highlight-desc { font-size: .84rem; line-height: 1.65; color: rgba(255,255,255,.5); }
 
-    /* â”€â”€â”€ Footer CTA â”€â”€â”€ */
-    .footer-cta-section {
-      padding: 5rem 0;
-      background: var(--cream);
-      border-top: 1px solid var(--border);
-    }
+    /* ─── Footer CTA ─── */
+    .footer-cta-section { padding: 5rem 0; background: var(--cream); border-top: 1px solid var(--border); }
     .footer-cta-inner {
-      background: var(--navy);
-      border-radius: var(--radius-xl);
-      position: relative;
-      overflow: hidden;
+      background: var(--navy); border-radius: var(--radius-xl);
+      position: relative; overflow: hidden;
       padding: 4rem 3.5rem;
       display: flex; align-items: center; justify-content: space-between; gap: 3rem;
     }
@@ -393,8 +309,7 @@
     .footer-cta-inner::after {
       content: '';
       position: absolute;
-      width: 400px; height: 400px;
-      border-radius: 50%;
+      width: 400px; height: 400px; border-radius: 50%;
       border: 1px solid rgba(201,147,58,.08);
       top: -150px; right: -100px;
     }
@@ -405,11 +320,8 @@
     .footer-cta-actions { display: flex; flex-direction: column; gap: .85rem; min-width: 220px; position: relative; z-index: 1; }
     .btn-cta-main {
       display: flex; align-items: center; justify-content: center; gap: .5rem;
-      padding: 1.05rem 2rem;
-      background: var(--gold);
-      color: #fff;
-      font-size: .95rem; font-weight: 700;
-      border-radius: 999px;
+      padding: 1.05rem 2rem; background: var(--gold); color: #fff;
+      font-size: .95rem; font-weight: 700; border-radius: 999px;
       text-decoration: none;
       transition: background .25s, transform .2s, box-shadow .25s;
       box-shadow: 0 8px 24px rgba(201,147,58,.35);
@@ -417,44 +329,18 @@
     .btn-cta-main:hover { background: var(--gold-light); transform: translateY(-2px); }
     .btn-cta-main svg { width: 17px; height: 17px; }
     .btn-cta-ghost {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: .75rem;
+      display: inline-flex; align-items: center; justify-content: center; gap: .75rem;
       padding: .85rem 2.2rem;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.14);
-      color: rgba(255,255,255,.7);
-      font-size: .88rem; font-weight: 500;
-      border-radius: 999px;
-      text-decoration: none;
-      text-align: center;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.7); font-size: .88rem; font-weight: 500;
+      border-radius: 999px; text-decoration: none; text-align: center;
       transition: background .25s, color .25s, transform .2s;
     }
     .btn-cta-ghost:hover { background: rgba(255,255,255,.1); color: #fff; transform: translateX(3px); }
     .btn-cta-ghost svg { width: 18px; height: 18px; opacity: .7; transition: transform .2s; }
     .btn-cta-ghost:hover svg { transform: translateX(4px); opacity: 1; }
 
-    /* â”€â”€â”€ Footer â”€â”€â”€ */
-    .site-footer {
-      background: var(--navy);
-      padding: 3.5rem 0 2rem;
-      border-top: 1px solid rgba(255,255,255,.06);
-    }
-    .footer-bottom-row {
-      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
-      display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .footer-logo-wrap { display: flex; align-items: center; gap: .9rem; }
-    .footer-logo-wrap img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(201,147,58,.3); }
-    .footer-org-name { font-family: 'Cormorant Garamond', serif; font-size: .95rem; font-weight: 600; color: rgba(255,255,255,.7); }
-    .footer-links-row { display: flex; gap: 2rem; flex-wrap: wrap; }
-    .footer-links-row a { font-size: .82rem; color: rgba(255,255,255,.4); text-decoration: none; transition: color .2s; }
-    .footer-links-row a:hover { color: var(--gold-light); }
-    .footer-copy { font-size: .78rem; color: rgba(255,255,255,.25); margin-top: 2rem; max-width: 1200px; margin-left: auto; margin-right: auto; padding: 0 2rem; border-top: 1px solid rgba(255,255,255,.06); padding-top: 1.5rem; }
-
-    /* â”€â”€â”€ Reveal Animations â”€â”€â”€ */
+    /* ─── Reveal Animations ─── */
     [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
     [data-reveal].visible { opacity: 1; transform: none; }
     [data-reveal][data-delay="100"] { transition-delay: .1s; }
@@ -462,7 +348,7 @@
     [data-reveal][data-delay="300"] { transition-delay: .3s; }
     [data-reveal][data-delay="400"] { transition-delay: .4s; }
 
-    /* â”€â”€â”€ Responsive â”€â”€â”€ */
+    /* ─── Responsive ─── */
     @media (max-width: 1024px) {
       .hero-grid { grid-template-columns: 1fr; }
       .apply-card { max-width: 480px; }
@@ -489,7 +375,7 @@
 <body>
   @include('partials.site-loader')
 
-   <!-- ───────────────────────────────────── NAV ───────────────────────────────────── -->
+  <!-- ───────────────────────────────────── NAV ───────────────────────────────────── -->
   <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
@@ -545,6 +431,9 @@
         </div>
       </div>
     </div>
+  </header>
+  <!-- FIX: </header> was missing in the original -->
+
   <!-- Breadcrumb Strip -->
   <div class="breadcrumb-strip">
     <div class="breadcrumb-inner">
@@ -556,7 +445,7 @@
     </div>
   </div>
 
-
+  <!-- ─── Hero ─── -->
   <section class="program-hero">
     <div class="hero-deco-ring r1"></div>
     <div class="hero-deco-ring r2"></div>
@@ -573,9 +462,7 @@
             {{ $program->department }}
           </div>
 
-          <h1 class="hero-title">
-            {{ $program->name }}
-          </h1>
+          <h1 class="hero-title">{{ $program->name }}</h1>
 
           <p class="hero-desc">
             {{ $program->description ?? 'Empowering students with industry-relevant skills and knowledge through our comprehensive ' . $program->name . ' curriculum. Shaped for today\'s demands, designed for tomorrow\'s leaders.' }}
@@ -583,27 +470,21 @@
 
           <div class="hero-meta-row">
             <div class="hero-meta-item">
-              <div class="hero-meta-icon">
-                <i data-iconsax="clock"></i>
-              </div>
+              <div class="hero-meta-icon"><i data-iconsax="clock"></i></div>
               <div>
                 <p class="hero-meta-label">Duration</p>
                 <p class="hero-meta-value">4 Years</p>
               </div>
             </div>
             <div class="hero-meta-item">
-              <div class="hero-meta-icon">
-                <i data-iconsax="sun-moon"></i>
-              </div>
+              <div class="hero-meta-icon"><i data-iconsax="sun-moon"></i></div>
               <div>
                 <p class="hero-meta-label">Schedule</p>
                 <p class="hero-meta-value">Day / Evening</p>
               </div>
             </div>
             <div class="hero-meta-item">
-              <div class="hero-meta-icon">
-                <i data-iconsax="shield-check"></i>
-              </div>
+              <div class="hero-meta-icon"><i data-iconsax="shield-check"></i></div>
               <div>
                 <p class="hero-meta-label">Status</p>
                 @php
@@ -619,9 +500,7 @@
 
           <div class="hero-meta-row" style="margin-top: 1.5rem;">
             <div class="hero-meta-item">
-              <div class="hero-meta-icon">
-                <i data-iconsax="users"></i>
-              </div>
+              <div class="hero-meta-icon"><i data-iconsax="users"></i></div>
               <div>
                 <p class="hero-meta-label">Slots</p>
                 <p class="hero-meta-value">{{ $program->slots_left ?? 'Limited' }} Left</p>
@@ -657,7 +536,7 @@
             <div class="apply-divider"></div>
             <div class="apply-card-slots">
               <span>Available Slots</span>
-              <span class="slots-count">{{ $program->slots_left ?? 'â€”' }}</span>
+              <span class="slots-count">{{ $program->slots_left ?? '–' }}</span>
             </div>
           </div>
         </div>
@@ -666,7 +545,7 @@
     </div>
   </section>
 
-  <!-- â”€â”€â”€ Highlights Strip â”€â”€â”€ -->
+  <!-- ─── Highlights Strip ─── -->
   <section class="highlights-section">
     <div class="section-wrap">
       <div class="highlights-grid">
@@ -694,7 +573,7 @@
     </div>
   </section>
 
-  <!--  Overview + Sidebar  -->
+  <!-- ─── Overview + Sidebar ─── -->
   <section id="overview" class="overview-section">
     <div class="section-wrap">
       <div class="overview-grid">
@@ -709,7 +588,7 @@
                 The <strong>{{ $program->name }}</strong> is designed to produce globally competitive professionals equipped with technical expertise and professional integrity. Our curriculum is constantly reviewed and updated to meet the evolving demands of the industry.
               </p>
               <p>
-                Students will undergo intensive training through a combination of theoretical learning, laboratory sessions, and industry immersion. Our state-of-the-art facilities provide a conducive environment for learning and innovation â€” nurturing graduates who don't just find jobs, they lead industries.
+                Students will undergo intensive training through a combination of theoretical learning, laboratory sessions, and industry immersion. Our state-of-the-art facilities provide a conducive environment for learning and innovation — nurturing graduates who don't just find jobs, they lead industries.
               </p>
             </div>
           </div>
@@ -727,7 +606,6 @@
                   </div>
                 @endforeach
               @else
-                <!-- Fallback to defaults if no dynamic data -->
                 <div class="study-area-card">
                   <div class="study-area-icon"><i data-iconsax="book-open"></i></div>
                   <span class="study-area-label">Professional Ethics</span>
@@ -796,6 +674,7 @@
     </div>
   </section>
 
+  <!-- ─── Footer CTA ─── -->
   <section class="footer-cta-section">
     <div class="section-wrap">
       <div class="footer-cta-inner" data-reveal>
@@ -813,41 +692,9 @@
       </div>
     </div>
   </section>
-  <footer class="footer-section pt-16 pb-8">
-    <div class="max-w-7xl mx-auto px-8">
-      <div class="grid md:grid-cols-4 gap-10 pb-12 border-b footer-border">
 
-        <div class="md:col-span-1">
-          <div class="flex items-center gap-3 mb-4">
-            <img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" class="w-16 h-16 rounded-full object-cover">
-            <p class="text-sm font-semibold footer-heading">Baliwag Polytechnic College</p>
-          </div>
-          <p class="text-sm footer-text leading-relaxed">Empowering Bulacan's future leaders through accessible, quality higher education since 2008.</p>
-          <div class="social-links mt-5 flex gap-3">
-            <a href="https://www.facebook.com/BTECHAdmissionsOfficial" class="social-btn" aria-label="Facebook">
-              <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8.5V7c0-.7.5-1 1.1-1H17V3h-2.6C11.7 3 10 4.7 10 7.1v1.4H8v3h2V21h3.5v-9.5h2.8l.5-3H13.5Z" fill="currentColor"/></svg>
-            </a>
-            <a href="https://www.youtube.com/c/BaliwagPolytechnicCollege" class="social-btn" aria-label="Youtube">
-              <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5a3 3 0 0 0-2.1 2.1A31.1 31.1 0 0 0 2 12a31.1 31.1 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.1 31.1 0 0 0 22 12a31.1 31.1 0 0 0-.4-4.8ZM10 15.2V8.8l5.5 3.2Z" fill="currentColor"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="footer-col-title mb-4">Programs</h4>
-          <ul class="footer-links">
-            <li><a href="#">BS Information Technology</a></li>
-            <li><a href="#">BS Business Administration</a></li>
-            <li><a href="#">BS Secondary Education</a></li>
-            <li><a href="#">BS Hospitality Management</a></li>
-            <li><a href="#">BS Tourism Management</a></li>
-            <li><a href="#">BS Management Accounting</a></li>
-            <li><a href="#">Bachelor of Arts in History</a></li>
-            <li><a href="#">Bachelor of Science in Mathematics</a></li>
-            <li><a href="#">BS Elementary Education</a></li>
-          </ul>
-        </div>
-
+  <!-- ─── Footer ─── -->
+  <!-- FIX: Removed the duplicate/broken first footer; kept only this complete one -->
   <footer class="site-footer" style="background: #0f172a; padding: 5rem 0 2rem; color: #fff;">
     <div class="max-w-7xl mx-auto px-8">
       <div class="grid md:grid-cols-4 gap-12 pb-12 border-b border-[rgba(255,255,255,0.1)]">
@@ -894,9 +741,11 @@
       <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
         <p class="text-xs text-[rgba(255,255,255,0.3)]">© 2026 Baliwag Polytechnic College. All rights reserved.</p>
         <div class="flex gap-4">
-            @if(isset($settings['facebook_link']))
-                <a href="{{ $settings['facebook_link'] }}" class="text-[rgba(255,255,255,0.4)] hover:text-white"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V7c0-.7.5-1 1.1-1H17V3h-2.6C11.7 3 10 4.7 10 7.1v1.4H8v3h2V21h3.5v-9.5h2.8l.5-3H13.5Z"/></svg></a>
-            @endif
+          @if(isset($settings['facebook_link']))
+            <a href="{{ $settings['facebook_link'] }}" class="text-[rgba(255,255,255,0.4)] hover:text-white">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V7c0-.7.5-1 1.1-1H17V3h-2.6C11.7 3 10 4.7 10 7.1v1.4H8v3h2V21h3.5v-9.5h2.8l.5-3H13.5Z"/></svg>
+            </a>
+          @endif
         </div>
       </div>
     </div>
@@ -920,7 +769,7 @@
     });
     setTimeout(hideSiteLoader, 4500); // fallback
 
-    // Mobile menu toggle (matches home-page.js behaviour)
+    // Mobile menu toggle
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     if (menuToggle && mobileMenu) {
@@ -928,9 +777,6 @@
         mobileMenu.classList.toggle('hidden');
       });
     }
-
-    // Navbar is always dark on this page â€” no scroll toggle needed
-    // (home-page.css .scrolled styles already applied via !important override)
 
     // Reveal on scroll
     const revealEls = document.querySelectorAll('[data-reveal]');
@@ -955,5 +801,3 @@
 
 </body>
 </html>
-
-
