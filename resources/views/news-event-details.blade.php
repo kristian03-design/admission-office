@@ -252,21 +252,24 @@
     </div>
   </section>
 </main>
-
-@if(count($gallery))
+@if(count($gallery))
   <div id="imageViewer" class="image-viewer" role="dialog" aria-modal="true" aria-label="Image viewer" onclick="handleViewerBackdrop(event)">
     <button type="button" class="image-viewer-btn image-viewer-close" onclick="closeImageViewer()" aria-label="Close image viewer">
       <i data-iconsax="x" style="width:22px;height:22px;"></i>
     </button>
     @if(count($gallery) > 1)
       <button type="button" class="image-viewer-btn image-viewer-nav image-viewer-prev" onclick="showViewerImage(currentGalleryIndex - 1)" aria-label="Previous image">
-        <i data-iconsax="chevron-left" style="width:24px;height:24px;"></i>
+        <svg class="nav-arrow-icon" style="width:24px;height:24px;" viewBox="0 0 24 24">
+          <path d="M15 6 9 12l6 6" />
+        </svg>
       </button>
     @endif
     <img id="imageViewerImage" src="{{ $gallery[0] }}" alt="{{ $item->title }}" decoding="async">
     @if(count($gallery) > 1)
       <button type="button" class="image-viewer-btn image-viewer-nav image-viewer-next" onclick="showViewerImage(currentGalleryIndex + 1)" aria-label="Next image">
-        <i data-iconsax="chevron-right" style="width:24px;height:24px;"></i>
+        <svg class="nav-arrow-icon" style="width:24px;height:24px;" viewBox="0 0 24 24">
+          <path d="m9 6 6 6-6 6" />
+        </svg>
       </button>
     @endif
   </div>
