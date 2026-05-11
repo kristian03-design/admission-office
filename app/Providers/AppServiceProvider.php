@@ -29,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        \Illuminate\Pagination\Paginator::useTailwind();
+
         if ($this->app->environment('production') || env('VERCEL')) {
             URL::forceScheme('https');
         }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -12,7 +12,7 @@
   @include('partials.iconsax')
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=12" />
 
-   <style>
+  <style>
     /* ─── Page-level token overrides to match home-page.css ─── */
     :root {
       --navy:        #1b3557;
@@ -28,7 +28,7 @@
       --radius-lg:   18px;
       --radius-xl:   24px;
     }
- 
+
     /* ─── Navbar: Dark at top, White on scroll ─── */
     #navbar:not(.scrolled) {
       background: rgba(27, 53, 87, 0.98) !important;
@@ -42,28 +42,33 @@
     #navbar:not(.scrolled) .nav-link:hover { color: #ffffff             !important; }
     #navbar:not(.scrolled) #menu-toggle { color: #ffffff !important; }
 
-    /* When scrolled, let home-page.css handle the white background. 
-       We only override text colors here to ensure they are dark navy. */
-    #navbar.scrolled .nav-link { color: var(--navy) !important; }
-    #navbar.scrolled .nav-main { color: var(--navy) !important; }
-    #navbar.scrolled .nav-sub  { color: var(--navy-mid) !important; }
+    #navbar.scrolled {
+      background: rgba(255, 255, 255, 0.98) !important;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 2px 24px rgba(15, 35, 64, .10);
+    }
+    #navbar.scrolled .nav-link    { color: var(--navy) !important; }
+    #navbar.scrolled .nav-main    { color: var(--navy) !important; }
+    #navbar.scrolled .nav-sub     { color: rgba(27,53,87,.55) !important; }
     #navbar.scrolled #menu-toggle { color: var(--navy) !important; }
- 
+
     /* ─── Breadcrumb Strip ─── */
     .breadcrumb-strip {
-      margin-top: 72px;
+      /* sit flush under the fixed navbar (navbar is ~72px tall) */
+      padding-top: calc(72px + .85rem);
+      padding-bottom: .85rem;
       background: var(--navy-dark);
-      padding: .85rem 0;
       border-bottom: 1px solid rgba(255,255,255,.08);
       position: relative;
-      z-index: 10;
+      z-index: 40; /* below navbar (z-50) but above everything else */
     }
     .breadcrumb-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; gap: .5rem; }
     .breadcrumb-inner a { font-size: .82rem; color: rgba(255,255,255,.6); text-decoration: none; transition: color .2s; }
     .breadcrumb-inner a:hover { color: var(--gold-light); }
     .breadcrumb-inner .sep { color: rgba(255,255,255,.2); font-size: .7rem; }
     .breadcrumb-inner .current { font-size: .82rem; color: var(--gold-light); font-weight: 500; }
- 
+
     /* ─── Hero ─── */
     .program-hero {
       background: var(--navy);
@@ -89,10 +94,10 @@
     .hero-deco-line { position: absolute; background: rgba(201,147,58,.08); }
     .hero-deco-line.l1 { width: 1px; top: 0; bottom: 0; left: 38%; }
     .hero-deco-line.l2 { height: 1px; left: 0; right: 0; bottom: 35%; }
- 
+
     .hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
     .hero-grid { display: grid; grid-template-columns: 1fr 310px; gap: 3.5rem; align-items: start; }
- 
+
     .hero-dept-badge {
       display: inline-flex; align-items: center; gap: .5rem;
       background: rgba(201,147,58,.15);
@@ -103,7 +108,7 @@
       margin-bottom: 1.5rem;
     }
     .hero-dept-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
- 
+
     .hero-title {
       font-family: 'Playfair Display', serif;
       font-size: clamp(2.0rem, 4.5vw, 2.85rem);
@@ -113,7 +118,7 @@
       letter-spacing: -0.01em;
     }
     .hero-title em { font-style: italic; color: var(--gold-light); font-weight: 600; }
- 
+
     .hero-desc {
       margin-top: 1.5rem;
       font-size: 1.05rem;
@@ -121,7 +126,7 @@
       color: rgba(255,255,255,.65);
       max-width: 540px;
     }
- 
+
     .hero-meta-row { display: flex; align-items: center; gap: 1.25rem; margin-top: 2.25rem; flex-wrap: nowrap; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; }
     .hero-meta-row::-webkit-scrollbar { display: none; }
     .hero-meta-item { display: flex; align-items: center; gap: .6rem; flex-shrink: 0; }
@@ -135,10 +140,10 @@
     .hero-meta-icon svg { width: 16px; height: 16px; }
     .hero-meta-label { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); }
     .hero-meta-value { font-size: .95rem; font-weight: 700; color: #fff; margin-top: .1rem; white-space: nowrap; }
- 
+
     .status-open   { color: #4ade80; }
     .status-closed { color: #f87171; }
- 
+
     .hero-cta-row { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; }
     .btn-hero-primary {
       display: inline-flex; align-items: center; gap: .5rem;
@@ -163,7 +168,7 @@
     }
     .btn-hero-secondary:hover { background: rgba(255,255,255,.12); color: #fff; }
     .btn-hero-secondary svg { width: 16px; height: 16px; opacity: .6; }
- 
+
     /* ─── Apply Card ─── */
     .apply-card {
       background: rgba(255,255,255,.05);
@@ -204,12 +209,12 @@
       font-size: .82rem; color: rgba(255,255,255,.5);
     }
     .slots-count { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: var(--gold-light); }
- 
+
     /* ─── Body Sections ─── */
     .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
     .overview-section { padding: 5rem 0; }
     .overview-grid { display: grid; grid-template-columns: 1fr 340px; gap: 3rem; align-items: start; }
- 
+
     .section-tag {
       display: inline-block;
       font-size: .85rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
@@ -225,7 +230,7 @@
     .section-body { margin-top: 1.25rem; font-size: .97rem; line-height: 1.8; color: var(--text-muted); }
     .section-body p + p { margin-top: 1rem; }
     .section-body strong { color: var(--navy); font-weight: 600; }
- 
+
     .study-areas { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; margin-top: 2rem; }
     .study-area-card {
       display: flex; align-items: center; gap: .9rem;
@@ -243,7 +248,7 @@
     }
     .study-area-icon svg { width: 17px; height: 17px; }
     .study-area-label { font-size: .88rem; font-weight: 600; color: var(--navy); }
- 
+
     .sidebar-card {
       background: #fff; border: 1px solid rgba(15,30,61,.08);
       border-radius: var(--radius-lg); overflow: hidden;
@@ -278,7 +283,7 @@
     .contact-btn:hover { background: var(--gold-pale); }
     .contact-btn svg { width: 17px; height: 17px; color: var(--navy); flex-shrink: 0; }
     .contact-btn span { font-size: .85rem; font-weight: 600; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
- 
+
     /* ─── Highlights Strip ─── */
     .highlights-section {
       padding: 4rem 0; background: var(--navy);
@@ -305,7 +310,7 @@
     .highlight-icon svg { width: 20px; height: 20px; }
     .highlight-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
     .highlight-desc { font-size: .84rem; line-height: 1.65; color: rgba(255,255,255,.5); }
- 
+
     /* ─── Footer CTA ─── */
     .footer-cta-section { padding: 5rem 0; background: var(--cream); border-top: 1px solid var(--border); }
     .footer-cta-inner {
@@ -352,7 +357,7 @@
     .btn-cta-ghost:hover { background: rgba(255,255,255,.1); color: #fff; transform: translateX(3px); }
     .btn-cta-ghost svg { width: 18px; height: 18px; opacity: .7; transition: transform .2s; }
     .btn-cta-ghost:hover svg { transform: translateX(4px); opacity: 1; }
- 
+
     /* ─── Reveal Animations ─── */
     [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
     [data-reveal].visible { opacity: 1; transform: none; }
@@ -360,7 +365,7 @@
     [data-reveal][data-delay="200"] { transition-delay: .2s; }
     [data-reveal][data-delay="300"] { transition-delay: .3s; }
     [data-reveal][data-delay="400"] { transition-delay: .4s; }
- 
+
     /* ─── Responsive ─── */
     @media (max-width: 1024px) {
       .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
@@ -388,7 +393,7 @@
 <body>
   @include('partials.site-loader')
 
-   <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
         <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
@@ -479,6 +484,7 @@
             {{ $program->description ?? 'Empowering students with industry-relevant skills and knowledge through our comprehensive ' . $program->name . ' curriculum. Shaped for today\'s demands, designed for tomorrow\'s leaders.' }}
           </p>
 
+          <!-- FIX: each hero-meta-item is now properly opened and closed -->
           <div class="hero-meta-row">
             <div class="hero-meta-item">
               <div class="hero-meta-icon"><i data-iconsax="clock"></i></div>
@@ -486,14 +492,16 @@
                 <p class="hero-meta-label">Duration</p>
                 <p class="hero-meta-value">4 Years</p>
               </div>
-            </div>
+            </div><!-- /.hero-meta-item -->
+
             <div class="hero-meta-item">
               <div class="hero-meta-icon"><i data-iconsax="sun-moon"></i></div>
               <div>
                 <p class="hero-meta-label">Schedule</p>
                 <p class="hero-meta-value">Day</p>
               </div>
-            </div>
+            </div><!-- /.hero-meta-item -->
+
             <div class="hero-meta-item">
               <div class="hero-meta-icon"><i data-iconsax="shield-check"></i></div>
               <div>
@@ -506,15 +514,17 @@
                   {{ $isOpen ? 'Admissions Open' : ($slotsLeft <= 0 ? 'Full Slot' : 'Closed') }}
                 </p>
               </div>
+            </div><!-- /.hero-meta-item -->
+
             <div class="hero-meta-item">
               <div class="hero-meta-icon"><i data-iconsax="users"></i></div>
               <div>
                 <p class="hero-meta-label">Slots</p>
                 <p class="hero-meta-value">{{ $program->slots_left ?? 'Limited' }} Left</p>
               </div>
-            </div>
-          </div>
-        </div>
+            </div><!-- /.hero-meta-item -->
+          </div><!-- /.hero-meta-row -->
+        </div><!-- /.hero-left -->
 
         <!-- Right: Apply card -->
         <div>
@@ -546,10 +556,10 @@
               <span class="slots-count">{{ $program->slots_left ?? '–' }}</span>
             </div>
           </div>
-        </div>
+        </div><!-- /.hero-right -->
 
-      </div>
-    </div>
+      </div><!-- /.hero-grid -->
+    </div><!-- /.hero-inner -->
   </section>
 
   <!-- ─── Highlights Strip ─── -->
@@ -640,7 +650,7 @@
               @endif
             </div>
           </div>
-        </div>
+        </div><!-- /.main-content -->
 
         <!-- Sidebar -->
         <div data-reveal data-delay="200">
@@ -675,10 +685,10 @@
               </a>
             </div>
           </div>
-        </div>
+        </div><!-- /.sidebar -->
 
-      </div>
-    </div>
+      </div><!-- /.overview-grid -->
+    </div><!-- /.section-wrap -->
   </section>
 
   <!-- ─── Footer CTA ─── -->
@@ -700,7 +710,7 @@
     </div>
   </section>
 
-   <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
+  <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
   <footer class="footer-section pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-8">
       <div class="grid md:grid-cols-4 gap-10 pb-12 border-b footer-border">
@@ -761,27 +771,26 @@
 
       <div class="footer-bottom flex flex-col sm:flex-row items-center justify-between gap-4 pt-8">
         <p class="text-sm footer-text">© 2026 Baliwag Polytechnic College. All rights reserved.</p>
-            <div class="flex gap-4 mt-8">
-              @if(isset($settings['facebook_link']))
-                <a href="{{ $settings['facebook_link'] }}" class="footer-social-link social-btn" aria-label="Facebook">
-                  <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8.5V7c0-.7.5-1 1.1-1H17V3h-2.6C11.7 3 10 4.7 10 7.1v1.4H8v3h2V21h3.5v-9.5h2.8l.5-3H13.5Z" fill="currentColor"/></svg>
-                </a>
-              @endif
-              @if(isset($settings['twitter_link']))
-                <a href="{{ $settings['twitter_link'] }}" class="footer-social-link social-btn" aria-label="X">
-                  <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m13.8 10.5 6.4-7.5h-1.5l-5.6 6.5L8.7 3H3.6l6.7 9.8L3.6 21h1.5l5.9-6.9 4.7 6.9h5.1Zm-2.1 2.4-.7-1L5.6 4.1H8l4.4 6.3.7 1 5.7 8.2h-2.4Z" fill="currentColor"/></svg>
-                </a>
-              @endif
-              @if(isset($settings['instagram_link']))
-                <a href="{{ $settings['instagram_link'] }}" class="footer-social-link social-btn" aria-label="Instagram">
-                  <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4Zm9.8 1.7a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4ZM12 7.2a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6Zm0 2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6Z" fill="currentColor"/></svg>
-                </a>
-              @endif
-            </div>
+        <div class="flex gap-4 mt-8">
+          @if(isset($settings['facebook_link']))
+            <a href="{{ $settings['facebook_link'] }}" class="footer-social-link social-btn" aria-label="Facebook">
+              <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8.5V7c0-.7.5-1 1.1-1H17V3h-2.6C11.7 3 10 4.7 10 7.1v1.4H8v3h2V21h3.5v-9.5h2.8l.5-3H13.5Z" fill="currentColor"/></svg>
+            </a>
+          @endif
+          @if(isset($settings['twitter_link']))
+            <a href="{{ $settings['twitter_link'] }}" class="footer-social-link social-btn" aria-label="X">
+              <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m13.8 10.5 6.4-7.5h-1.5l-5.6 6.5L8.7 3H3.6l6.7 9.8L3.6 21h1.5l5.9-6.9 4.7 6.9h5.1Zm-2.1 2.4-.7-1L5.6 4.1H8l4.4 6.3.7 1 5.7 8.2h-2.4Z" fill="currentColor"/></svg>
+            </a>
+          @endif
+          @if(isset($settings['instagram_link']))
+            <a href="{{ $settings['instagram_link'] }}" class="footer-social-link social-btn" aria-label="Instagram">
+              <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4Zm9.8 1.7a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4ZM12 7.2a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6Zm0 2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6Z" fill="currentColor"/></svg>
+            </a>
+          @endif
+        </div>
       </div>
     </div>
   </footer>
-
 
   <!-- Scripts -->
   <script>
@@ -801,12 +810,22 @@
     });
     setTimeout(hideSiteLoader, 4500); // fallback
 
+    // Navbar scroll behaviour
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+      const onScroll = () => navbar.classList.toggle('scrolled', window.scrollY > 20);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll(); // run immediately on load
+    }
+
     // Mobile menu toggle
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     if (menuToggle && mobileMenu) {
       menuToggle.addEventListener('click', () => {
+        const isOpen = !mobileMenu.classList.contains('hidden');
         mobileMenu.classList.toggle('hidden');
+        menuToggle.setAttribute('aria-expanded', String(!isOpen));
       });
     }
 
