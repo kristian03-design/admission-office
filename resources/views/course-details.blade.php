@@ -28,38 +28,20 @@
     }
 
     /* ─── Page-level overrides ─── */
-    /* Navbar is always solid/dark on this interior page */
-    #navbar, #navbar.scrolled {
-      background: rgba(27,53,87,.97) !important;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 2px 24px rgba(0,0,0,.18);
-    }
-    /* Keep nav text readable on dark bg at all times */
-    #navbar .nav-sub, #navbar.scrolled .nav-sub   { color: rgba(255,255,255,.7)  !important; }
-    #navbar .nav-main, #navbar.scrolled .nav-main  { color: #ffffff                  !important; }
-    #navbar .nav-link, #navbar.scrolled .nav-link  { color: rgba(255,255,255,.75) !important; }
-    #navbar .nav-link:hover, #navbar.scrolled .nav-link:hover { color: #ffffff       !important; }
-    #menu-toggle { color: #ffffff; }
+    #navbar { transition: all 0.3s ease; }
+    #navbar:not(.scrolled) .nav-link { color: rgba(255, 255, 255, 0.8) !important; }
+    #navbar:not(.scrolled) #menu-toggle { color: #ffffff !important; }
+    #navbar:not(.scrolled) .nav-main { color: #ffffff !important; }
+    #navbar:not(.scrolled) .nav-sub { color: rgba(255, 255, 255, 0.7) !important; }
 
-    /* ─── Breadcrumb Strip ─── */
-    .breadcrumb-strip {
-      margin-top: 72px; /* matches nav-inner py-4 height */
-      background: var(--navy);
-      padding: .75rem 0;
-    }
-    .breadcrumb-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; gap: .5rem; }
-    .breadcrumb-inner a { font-size: .9rem; color: rgba(255,255,255,.55); text-decoration: none; transition: color .2s; }
-    .breadcrumb-inner a:hover { color: var(--gold-light); }
-    .breadcrumb-inner .sep { color: rgba(255,255,255,.25); font-size: .8rem; }
-    .breadcrumb-inner .current { font-size: .9rem; color: var(--gold-light); font-weight: 500; }
+
 
     /* ─── Hero ─── */
     .program-hero {
       background: var(--navy);
       position: relative;
       overflow: hidden;
-      padding: 5rem 0 4.5rem;
+      padding: 10rem 0 6rem;
     }
     .program-hero::before {
       content: '';
@@ -546,14 +528,7 @@
     </div>
   </header>
 
-  <!-- Breadcrumb Strip -->
-  <div class="breadcrumb-strip">
-    <div class="breadcrumb-inner">
-      <a href="{{ url('/') }}">Programs</a>
-      <span class="current">{{ $program->department }}</span>
-      <span class="current">{{ $program->name }}</span>
-    </div>
-  </div>
+
 
   <section class="program-hero">
     <div class="hero-deco-ring r1"></div>
@@ -613,6 +588,9 @@
                 </p>
               </div>
             </div>
+          </div>
+
+          <div class="hero-meta-row" style="margin-top: 1.5rem;">
             <div class="hero-meta-item">
               <div class="hero-meta-icon">
                 <i data-iconsax="users"></i>

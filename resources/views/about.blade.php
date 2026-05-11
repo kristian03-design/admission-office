@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -209,18 +209,18 @@
       }
     }
 
-    /* ── Force solid navbar for visibility ── */
-    #navbar, #navbar.scrolled {
-      background: rgba(27, 53, 87, 0.97) !important;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
+    /* ── Subpage Hero & Navbar ── */
+    .subpage-hero.hero-section {
+      background: linear-gradient(135deg, #0f2340 0%, #1b3557 45%, #254d82 100%) !important;
     }
-    #navbar .nav-sub, #navbar.scrolled .nav-sub   { color: rgba(255, 255, 255, .7)  !important; }
-    #navbar .nav-main, #navbar.scrolled .nav-main  { color: #ffffff                  !important; }
-    #navbar .nav-link, #navbar.scrolled .nav-link  { color: rgba(255, 255, 255, .75) !important; }
-    #navbar .nav-link:hover, #navbar.scrolled .nav-link:hover { color: #ffffff       !important; }
-    #menu-toggle { color: #ffffff; }
+    
+    #navbar:not(.scrolled) .nav-link {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    #navbar:not(.scrolled) #menu-toggle {
+      color: #ffffff !important;
+    }
   </style>
 </head>
 <body>
