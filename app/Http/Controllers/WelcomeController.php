@@ -24,6 +24,8 @@ class WelcomeController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
 
+            $programs = Program::orderBy('name')->get();
+
             return [
                 'settings' => SystemSetting::all_as_array(),
                 'announcements' => $announcements,
@@ -32,7 +34,7 @@ class WelcomeController extends Controller
                     ->unique(fn ($announcement) => trim(mb_strtolower($announcement->message ?? '')))
                     ->values(),
                 'popupAnn' => $announcements->firstWhere('is_popup', true),
-                'programs' => Program::orderBy('name')->get(),
+                'programs' => $programs->isNotEmpty() ? $programs : $this->fallbackPrograms(),
                 'testimonials' => \App\Models\Testimonial::whereRaw('is_active = true')
                     ->orderBy('order')
                     ->get()
@@ -125,6 +127,20 @@ class WelcomeController extends Controller
         usort($items, fn ($a, $b) => ($a['order'] ?? 0) <=> ($b['order'] ?? 0));
 
         return $items;
+    }
+
+    private function fallbackPrograms()
+    {
+        return collect(config('academic_programs.fallback', []))
+            ->map(fn ($program) => (object) array_merge([
+                'id' => null,
+                'duration_years' => 4,
+                'schedule' => 'Day / Evening',
+                'slots_left' => 1500,
+                'is_active' => true,
+            ], $program))
+            ->sortBy('name')
+            ->values();
     }
 
     private function publicStorageUrl(?string $url): ?string

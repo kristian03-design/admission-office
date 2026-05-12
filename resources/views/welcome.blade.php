@@ -350,7 +350,10 @@ content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpk
                     {{ $isOpen ? 'Open' : ($slotsLeft <= 0 ? 'Full Slot' : 'Closed') }}
                   </span>
                 </div>
-                <a href="{{ route('programs.show', ['id' => $program->id ?? 0]) }}" class="program-cta group">
+                @php
+                  $programHref = filled($program->id ?? null) ? route('programs.show', ['id' => $program->id]) : route('home') . '#contact';
+                @endphp
+                <a href="{{ $programHref }}" class="program-cta group">
                   Learn more <i data-iconsax="chevron-right"></i>
                 </a>
               </div>
