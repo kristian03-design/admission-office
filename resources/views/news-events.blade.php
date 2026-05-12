@@ -109,7 +109,7 @@
     .news-page-link {
       border: 1px solid rgba(27, 53, 87, .1);
       color: var(--navy, #1b3557);
-      background: #fff;
+      background: #f9fafb;
       transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
     }
 
