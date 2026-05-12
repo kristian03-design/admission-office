@@ -262,9 +262,9 @@
   @endif
 
   <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
-  <footer class="footer-section pt-16 pb-8">
+  <footer id="site-footer" class="footer-section pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-8">
-      <div class="grid md:grid-cols-4 gap-10 pb-12 border-b footer-border">
+      <div class="grid md:grid-cols-4 gap-10 pb-12 border-b footer-border footer-main-grid">
 
         <div class="md:col-span-1">
           <div class="flex items-center gap-3 mb-4">
@@ -282,18 +282,15 @@
           </div>
         </div>
 
-        <div>
+        <div class="footer-programs-col">
           <h4 class="footer-col-title mb-4">Programs</h4>
-          <ul class="footer-links">
-            <li><a href="#">BS Information Technology</a></li>
-            <li><a href="#">BS Business Administration</a></li>
-            <li><a href="#">BS Secondary Education</a></li>
-            <li><a href="#">BS Hospitality Management</a></li>
-            <li><a href="#">BS Tourism Management</a></li>
-            <li><a href="#">BS Management Accounting</a></li>
-            <li><a href="#">Bachelor of Arts in History</a></li>
-            <li><a href="#">Bachelor of Science in Mathematics</a></li>
-            <li><a href="#">BS Elementary Education</a></li>
+          <ul class="footer-links footer-program-links">
+            @foreach(($footerPrograms ?? collect()) as $footerProgram)
+              @php
+                $footerProgramHref = filled($footerProgram->id ?? null) ? route('programs.show', ['id' => $footerProgram->id]) : route('home') . '#programs';
+              @endphp
+              <li><a href="{{ $footerProgramHref }}">{{ $footerProgram->name }}</a></li>
+            @endforeach
           </ul>
         </div>
 

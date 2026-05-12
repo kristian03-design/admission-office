@@ -270,12 +270,12 @@ content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpk
               
               if (!$title) {
                 $fallbacks = [
-                  1 => ['title' => 'CHED-Recognized', 'desc' => 'All programs are fully accredited and recognized by CHED, ensuring your degree opens doors.', 'icon' => 'graduation-cap'],
-                  2 => ['title' => 'Expert Faculty', 'desc' => 'Learn from industry practitioners and seasoned academics who bring real-world perspective.', 'icon' => 'users-round'],
-                  3 => ['title' => 'Scholarship Support', 'desc' => 'We believe talent shouldn\'t be limited by finances. Our scholarship programs make education accessible.', 'icon' => 'badge-percent'],
-                  4 => ['title' => 'Modern Facilities', 'desc' => 'State-of-the-art computer laboratories, science facilities, and collaborative spaces for learning.', 'icon' => 'building-2'],
-                  5 => ['title' => 'Industry Partnerships', 'desc' => 'OJT placements and employment connections with over 200 local and national partner companies.', 'icon' => 'handshake'],
-                  6 => ['title' => 'Strategic Location', 'desc' => 'Located in the heart of Baliwag, Bulacan — accessible from the entire region.', 'icon' => 'map-pin'],
+                  1 => ['title' => 'CHED-Recognized', 'desc' => 'All degree programs are fully accredited by CHED, ensuring academic excellence, industry relevance, and nationwide recognition of your qualifications.', 'icon' => 'graduation-cap'],
+                  2 => ['title' => 'Expert Faculty', 'desc' => 'Learn from highly qualified educators and industry professionals who provide practical insights, mentorship, and real-world expertise.', 'icon' => 'users-round'],
+                  3 => ['title' => 'Scholarship Support', 'desc' => 'We offer accessible scholarship and financial assistance programs designed to help deserving students achieve their academic goals.', 'icon' => 'badge-percent'],
+                  4 => ['title' => 'Modern Facilities', 'desc' => 'Experience a dynamic learning environment with advanced laboratories, smart classrooms, and collaborative spaces equipped for modern education.', 'icon' => 'building-2'],
+                  5 => ['title' => 'Industry Partnerships', 'desc' => 'Build valuable career opportunities through strong partnerships with leading local and national companies for internships, training, and employment.', 'icon' => 'handshake'],
+                  6 => ['title' => 'Strategic Location', 'desc' => 'Strategically located in Baliwag, Bulacan, providing convenient access to quality education and opportunities across the region.', 'icon' => 'map-pin'],
                 ];
                 $title = $fallbacks[$i]['title'];
                 $desc = $fallbacks[$i]['desc'];
@@ -717,9 +717,9 @@ content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpk
   </main>
 
   <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
-  <footer class="footer-section pt-16 pb-8">
+  <footer id="site-footer" class="footer-section pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-8">
-      <div class="grid md:grid-cols-4 gap-10 pb-12 border-b footer-border">
+      <div class="grid md:grid-cols-4 gap-10 pb-12 border-b footer-border footer-main-grid">
 
         <div class="md:col-span-1">
           <div class="flex items-center gap-3 mb-4">
@@ -737,18 +737,15 @@ content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpk
           </div>
         </div>
 
-        <div>
+        <div class="footer-programs-col">
           <h4 class="footer-col-title mb-4">Programs</h4>
-          <ul class="footer-links">
-            <li><a href="#">BS Information Technology</a></li>
-            <li><a href="#">BS Business Administration</a></li>
-            <li><a href="#">BS Secondary Education</a></li>
-            <li><a href="#">BS Hospitality Management</a></li>
-            <li><a href="#">BS Tourism Management</a></li>
-            <li><a href="#">BS Management Accounting</a></li>
-            <li><a href="#">Bachelor of Arts in History</a></li>
-            <li><a href="#">Bachelor of Science in Mathematics</a></li>
-            <li><a href="#">BS Elementary Education</a></li>
+          <ul class="footer-links footer-program-links">
+            @foreach(($footerPrograms ?? $programs ?? collect()) as $footerProgram)
+              @php
+                $footerProgramHref = filled($footerProgram->id ?? null) ? route('programs.show', ['id' => $footerProgram->id]) : route('home') . '#programs';
+              @endphp
+              <li><a href="{{ $footerProgramHref }}">{{ $footerProgram->name }}</a></li>
+            @endforeach
           </ul>
         </div>
 
