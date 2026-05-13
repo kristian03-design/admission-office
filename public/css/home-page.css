@@ -1902,6 +1902,19 @@ body.menu-open {
   color: rgba(255, 255, 255, .85);
 }
 
+.btn-cta-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: .75rem;
+  padding: .85rem 2.2rem;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.7); font-size: .88rem; font-weight: 500;
+  border-radius: 999px; text-decoration: none; text-align: center;
+  transition: background .25s, color .25s, transform .2s;
+  cursor: pointer;
+}
+.btn-cta-ghost:hover { background: rgba(255,255,255,.1); color: #fff; transform: translateX(3px); }
+.btn-cta-ghost svg, .btn-cta-ghost i { width: 18px; height: 18px; opacity: .7; transition: transform .2s; }
+.btn-cta-ghost:hover svg, .btn-cta-ghost:hover i { transform: translateX(4px); opacity: 1; }
+
 /* ─── CONTACT ─── */
 .contact-section {
   background: var(--cream);

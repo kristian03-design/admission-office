@@ -228,11 +228,7 @@
             <p class="apply-cta-sub mt-4 max-w-xl">Submit your application online or visit us at the Admissions Office. We're here to help.</p>
           </div>
           <div class="flex flex-col gap-4 min-w-64">
-            <a href="{{ route('apply') }}" class="btn-cta-primary text-center">
-              Start Your Application
-              <i data-iconsax="arrow-right" style="display:inline-flex;margin-left:.5rem;vertical-align:middle;width:18px;height:18px;"></i>
-            </a>
-            <a href="{{ route('how-to-apply') }}" class="btn-cta-link text-center text-sm w-full">How to Apply <i data-iconsax="arrow-right"></i></a>
+            <a href="{{ route('how-to-apply') }}" class="btn-cta-ghost">How to Apply <i data-iconsax="arrow-right"></i></a>
           </div>
         </div>
       </div>

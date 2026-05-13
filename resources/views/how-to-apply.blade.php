@@ -189,7 +189,7 @@
             <p class="apply-cta-sub mt-4 max-w-xl">Begin your application online or visit our admissions office for personalized guidance.</p>
           </div>
           <div class="flex flex-col gap-4 min-w-64">
-            <a href="{{ route('requirements') }}" class="btn-cta-link text-center text-sm w-full">View Requirements <i data-iconsax="arrow-right"></i></a>
+            <a href="{{ route('requirements') }}" class="btn-cta-ghost">View Requirements <i data-iconsax="arrow-right"></i></a>
           </div>
         </div>
       </div>

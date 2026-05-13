@@ -391,17 +391,7 @@
     }
     .btn-cta-main:hover { background: var(--gold-light); transform: translateY(-2px); }
     .btn-cta-main svg { width: 17px; height: 17px; }
-    .btn-cta-ghost {
-      display: inline-flex; align-items: center; justify-content: center; gap: .75rem;
-      padding: .85rem 2.2rem;
-      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
-      color: rgba(255,255,255,.7); font-size: .88rem; font-weight: 500;
-      border-radius: 999px; text-decoration: none; text-align: center;
-      transition: background .25s, color .25s, transform .2s;
-    }
-    .btn-cta-ghost:hover { background: rgba(255,255,255,.1); color: #fff; transform: translateX(3px); }
-    .btn-cta-ghost svg { width: 18px; height: 18px; opacity: .7; transition: transform .2s; }
-    .btn-cta-ghost:hover svg { transform: translateX(4px); opacity: 1; }
+
 
     /* ─── Reveal Animations ─── */
     [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }

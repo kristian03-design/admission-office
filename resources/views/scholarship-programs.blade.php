@@ -223,7 +223,7 @@
             <p class="apply-cta-sub mt-4 max-w-xl">Our admissions team can guide you through the scholarship application and eligibility requirements.</p>
           </div>
           <div class="flex flex-col gap-4 min-w-64">
-            <a href="{{ route('home') }}#contact" class="btn-cta-link text-center text-sm w-full">Contact Admissions <i data-iconsax="arrow-right"></i></a>
+            <a href="{{ route('home') }}#contact" class="btn-cta-ghost">Contact Admissions <i data-iconsax="arrow-right"></i></a>
           </div>
         </div>
       </div>

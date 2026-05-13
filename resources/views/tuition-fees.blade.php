@@ -191,11 +191,7 @@
             <p class="apply-cta-sub mt-4 max-w-xl">Our admissions team is ready to assist you with any questions about tuition, fees, and financial assistance.</p>
           </div>
           <div class="flex flex-col gap-4 min-w-64">
-            <a href="{{ route('apply') }}" class="btn-cta-primary text-center">
-              Apply for Free
-              <i data-iconsax="arrow-right" style="display:inline-flex;margin-left:.5rem;vertical-align:middle;width:18px;height:18px;"></i>
-            </a>
-            <a href="{{ route('scholarship-programs') }}" class="btn-cta-link text-center text-sm w-full">View Scholarships <i data-iconsax="arrow-right"></i></a>
+            <a href="{{ route('scholarship-programs') }}" class="btn-cta-ghost">View Scholarships <i data-iconsax="arrow-right"></i></a>
           </div>
         </div>
       </div>

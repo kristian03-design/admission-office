@@ -381,7 +381,7 @@
               Start Your Application
               <i data-iconsax="arrow-right" style="display:inline-flex;margin-left:.5rem;vertical-align:middle;width:18px;height:18px;"></i>
             </a>
-            <a href="{{ route('home') }}#contact" class="btn-cta-link text-center text-sm w-full">Contact Admissions Team →</a>
+            <a href="{{ route('home') }}#contact" class="btn-cta-ghost">Contact Admissions Team <i data-iconsax="arrow-right"></i></a>
           </div>
         </div>
       </div>

@@ -240,10 +240,7 @@
             <p class="apply-cta-sub mt-4 max-w-xl">Our team is ready to help you with any specific concerns or inquiries you may have.</p>
           </div>
           <div class="flex flex-col gap-4 min-w-64">
-            <a href="{{ route('home') }}#contact" class="btn-cta-primary text-center">
-              Message Admissions
-              <i data-iconsax="arrow-right" style="display:inline-flex;margin-left:.5rem;vertical-align:middle;width:18px;height:18px;"></i>
-            </a>
+            <a href="{{ route('home') }}#contact" class="btn-cta-ghost">Message Admissions <i data-iconsax="arrow-right"></i></a>
           </div>
         </div>
       </div>
