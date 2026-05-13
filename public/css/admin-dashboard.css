@@ -1227,6 +1227,22 @@ body {
   transition: var(--transition);
 }
 
+.scheduling-row .fi {
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  transition: all 0.2s;
+}
+.scheduling-row .fi:hover {
+  border-color: var(--border);
+  background: var(--surface);
+}
+.scheduling-row .fi:focus {
+  border-color: var(--navy-mid);
+  background: #fff;
+  outline: none;
+}
+
 .app-table tbody tr:hover {
   background: #f8fafc;
 }

@@ -3587,6 +3587,13 @@ async function saveAllStudentSchedules() {
     return;
   }
 
+  const btn = document.getElementById('saveSchedulesBtn');
+  const originalText = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = savingButtonMarkup();
+  }
+
   try {
     await AdmissionAPI.request(`/interviews/sync/${prog.id}`, {
       method: 'POST',
@@ -3598,6 +3605,11 @@ async function saveAllStudentSchedules() {
   } catch (err) {
     console.error(err);
     showToast('Failed to save schedules', 'error');
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    }
   }
 }
 

@@ -82,10 +82,10 @@
 
   <div class="sidebar-footer">
     <div class="admin-profile">
-      <div class="admin-avatar" id="sidebarUserInitials">�</div>
+      <div class="admin-avatar" id="sidebarUserInitials"></div>
       <div style="flex:1;min-width:0">
-        <span class="admin-name" id="sidebarUserName">�</span>
-        <span class="admin-role" id="sidebarUserRole">�</span>
+        <span class="admin-name" id="sidebarUserName"></span>
+        <span class="admin-role" id="sidebarUserRole"></span>
       </div>
       <button class="admin-logout" id="logoutBtn" title="Sign out">
         <i data-iconsax="log-out"></i>
@@ -114,7 +114,7 @@
     <div class="topbar-right">
       <div class="topbar-school-year">
         <i data-iconsax="calendar-range" style="width:14px;height:14px"></i>
-        <span id="topbarSY">S.Y. {{ date('Y') }}�{{ date('Y') + 1 }}</span>
+        <span id="topbarSY">S.Y. {{ date('Y') }}-{{ date('Y') + 1 }}</span>
       </div>
       <button class="topbar-btn" id="notifBtn">
         <i data-iconsax="bell"></i>
@@ -170,7 +170,12 @@
             <strong id="inquiryModalTime">Just now</strong>
           </div>
         </div>
-        <div class="inquiry-email-line" id="inquiryModalEmail">sender@email.com</div>
+        <div class="inquiry-sender-row" style="margin-top: 12px; grid-template-columns: 1fr;">
+          <div>
+            <span class="inquiry-label">Email</span>
+            <strong id="inquiryModalEmail" style="word-break: break-all;">sender@email.com</strong>
+          </div>
+        </div>
         <div class="inquiry-message-box" id="inquiryModalMessage"></div>
         <div class="inquiry-reply-box">
           <label for="inquiryReplyMessage">Reply Message</label>
@@ -271,7 +276,7 @@
         <span class="search-icon">
           <i data-iconsax="search"></i>
         </span>
-        <input type="text" id="searchInput" placeholder="Search name or reference��" class="search-input" />
+        <input type="text" id="searchInput" placeholder="Search name or reference" class="search-input" />
       </div>
       <select class="filter-select" id="filterType">
         <option value="">All Types</option>
@@ -376,9 +381,9 @@
             <i data-iconsax="plus"></i>
             Custom
           </button>
-          <button class="btn-primary" onclick="saveAllStudentSchedules()">
+          <button class="btn-primary" id="saveSchedulesBtn" onclick="saveAllStudentSchedules()">
             <i data-iconsax="save"></i>
-            Save All Schedules
+            <span id="saveSchedulesBtnText">Save All Schedules</span>
           </button>
         </div>
       </div>
@@ -576,7 +581,7 @@
         </div>
         <div class="settings-field">
           <label class="settings-label">School Year Label</label>
-          <input type="text" class="settings-input" id="settingSYLabel" placeholder="e.g. Admissions Open � S.Y. 2025�2026" />
+          <input type="text" class="settings-input" id="settingSYLabel" placeholder="e.g. Admissions Open - S.Y. 2025-2026" />
         </div>
         <div class="settings-field">
           <label class="settings-label">CTA Button Text</label>
@@ -759,16 +764,16 @@
         <div class="settings-field">
           <label class="settings-label">School Year</label>
           <select class="filter-select" id="settingSY" style="width:100%">
-            <option>S.Y. 2026�2027</option>
-            <option>S.Y. 2027�2028</option>
-            <option>S.Y. 2028�2029</option>
-            <option>S.Y. 2029�2030</option>
-            <option>S.Y. 2030�2031</option>
-            <option>S.Y. 2031�2032</option>
-            <option>S.Y. 2032�2033</option>
-            <option>S.Y. 2033�2034</option>
-            <option>S.Y. 2034�2035</option>
-            <option>S.Y. 2035�2036</option>
+            <option>S.Y. 2026-2027</option>
+            <option>S.Y. 2027-2028</option>
+            <option>S.Y. 2028-2029</option>
+            <option>S.Y. 2029-2030</option>
+            <option>S.Y. 2030-2031</option>
+            <option>S.Y. 2031-2032</option>
+            <option>S.Y. 2032-2033</option>
+            <option>S.Y. 2033-2034</option>
+            <option>S.Y. 2034-2035</option>
+            <option>S.Y. 2035-2036</option>
           </select>
         </div>
         <div class="settings-field">
@@ -777,7 +782,7 @@
         </div>
         <div class="settings-field">
           <label class="settings-label">Interview Schedule</label>
-          <input type="text" class="settings-input" id="settingInterviewSchedule" value="Monday � Friday, 9:00 AM � 3:00 PM" />
+          <input type="text" class="settings-input" id="settingInterviewSchedule" value="Monday - Friday, 9:00 AM - 3:00 PM" />
         </div>
         <div class="settings-field">
           <label class="settings-label">Total Applications (read-only)</label>
@@ -909,9 +914,9 @@
       </div>
       <div style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;background:rgba(255,255,255,0.07);border-radius:20px;padding:3px 10px 3px 6px;">
         <span style="width:6px;height:6px;border-radius:50%;background:#5DCAA5;display:inline-block;flex-shrink:0;"></span>
-        <span id="editCourseDept" style="font-size:12px;color:#9ec5e8;">�</span>
-        <span style="font-size:12px;color:rgba(156,197,232,0.4);">�</span>
-        <span id="editCourseCode" style="font-size:12px;color:#9ec5e8;">�</span>
+        <span id="editCourseDept" style="font-size:12px;color:#9ec5e8;">-</span>
+        <span style="font-size:12px;color:rgba(156,197,232,0.4);">-</span>
+        <span id="editCourseCode" style="font-size:12px;color:#9ec5e8;">-</span>
       </div>
     </div>
 
@@ -922,7 +927,7 @@
         <span style="font-size:15px;flex-shrink:0;">🕐</span>
         <div>
           <p style="font-size:11px;color:#64748b;margin:0 0 1px;">Schedule preview</p>
-          <p style="font-size:13px;font-weight:600;color:#0f172a;margin:0;" id="editSchedulePreview">�</p>
+          <p style="font-size:13px;font-weight:600;color:#0f172a;margin:0;" id="editSchedulePreview">-</p>
         </div>
       </div>
 
@@ -1312,7 +1317,7 @@
   <div class="slideover-header">
     <div>
       <div class="slideover-title" id="slideoverTitle">Applicant Details</div>
-      <div class="slideover-ref" id="slideoverRef">�</div>
+      <div class="slideover-ref" id="slideoverRef">-</div>
     </div>
     <button class="slideover-close" id="slideoverClose">
       <i data-iconsax="x"></i>
@@ -1365,8 +1370,8 @@
   function openEditCourseModal(courseId, courseName, dept, code, schedule, status) {
     document.getElementById('editCourseId').value          = courseId;
     document.getElementById('editCourseLabel').textContent = courseName;
-    document.getElementById('editCourseDept').textContent  = dept || '�';
-    document.getElementById('editCourseCode').textContent  = code || '�';
+    document.getElementById('editCourseDept').textContent  = dept || '-';
+    document.getElementById('editCourseCode').textContent  = code || '-';
 
     // Reset days
     editSelectedDays.clear();
@@ -1460,7 +1465,7 @@
 
   function updateEditPreview() {
     const days = DAY_ORDER.filter(d => editSelectedDays.has(d));
-    let dayStr = '�';
+    let dayStr = '-';
     if (days.length === 1) {
       dayStr = days[0];
     } else if (days.length > 1) {
@@ -1470,16 +1475,16 @@
         if (DAY_ORDER.indexOf(days[i]) === DAY_ORDER.indexOf(prev) + 1) {
           prev = days[i];
         } else {
-          ranges.push(start === prev ? start : start + '�' + prev);
+          ranges.push(start === prev ? start : start + '-' + prev);
           start = prev = days[i];
         }
       }
-      ranges.push(start === prev ? start : start + '�' + prev);
+      ranges.push(start === prev ? start : start + '-' + prev);
       dayStr = ranges.join(', ');
     }
     const s = document.getElementById('editStartTime').value;
     const e = document.getElementById('editEndTime').value;
-    document.getElementById('editSchedulePreview').textContent = `${dayStr}, ${s} � ${e}`;
+    document.getElementById('editSchedulePreview').textContent = `${dayStr}, ${s} - ${e}`;
   }
 
   function saveCourseSchedule() {
