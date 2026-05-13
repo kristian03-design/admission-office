@@ -50,7 +50,7 @@
       align-items: center;
       gap: 6px;
       background: rgba(16,185,129,.12);
-      color: #065f46;
+      color: #fff;
       font-size: .78rem;
       font-weight: 700;
       padding: 3px 10px;
@@ -127,7 +127,7 @@
           <div>
             <h3 class="feature-title mt-0">Free Tuition Under RA 10931</h3>
             <p class="feature-desc mt-2">Baliwag Polytechnic College (BTECH) is a government-funded state university. Under the <strong>Universal Access to Quality Tertiary Education Act (RA 10931)</strong>, tuition and other school fees are <strong>FREE</strong> for all qualified Filipino students enrolled in government-offered programs.</p>
-            <span class="free-badge mt-4 inline-flex"><i data-iconsax="check-circle" style="width:13px;height:13px;"></i> No Tuition Fee for Qualified Students</span>
+            <span class="free-badge mt-4 inline-flex"><i data-iconsax="check-circle" style="color: #ffff; width:13px;height:13px;"></i> No Tuition Fee for Qualified Students</span>
           </div>
         </div>
 

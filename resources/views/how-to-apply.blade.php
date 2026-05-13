@@ -131,15 +131,6 @@
           <p class="hero-sub mt-4 text-lg leading-relaxed max-w-2xl" data-animate="fade-up" data-delay="200">
             Follow these simple steps to begin your academic journey at Baliwag Polytechnic College.
           </p>
-          <div class="flex flex-wrap gap-4 mt-10" data-animate="fade-up" data-delay="300">
-            <a href="{{ route('apply') }}" class="btn-hero-primary">
-              <span>Apply Online Now</span>
-              <i data-iconsax="arrow-right"></i>
-            </a>
-            <a href="{{ route('requirements') }}" class="btn-hero-secondary">
-              <span>View Requirements</span>
-              <i data-iconsax="document"></i>
-            </a>
           </div>
         </div>
       </div>
