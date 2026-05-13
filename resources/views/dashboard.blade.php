@@ -170,12 +170,7 @@
             <strong id="inquiryModalTime">Just now</strong>
           </div>
         </div>
-        <div class="inquiry-sender-row" style="margin-top: 12px; grid-template-columns: 1fr;">
-          <div>
-            <span class="inquiry-label">Email</span>
-            <strong id="inquiryModalEmail" style="word-break: break-all;">sender@email.com</strong>
-          </div>
-        </div>
+        <div class="inquiry-email-line" id="inquiryModalEmail">sender@email.com</div>
         <div class="inquiry-message-box" id="inquiryModalMessage"></div>
         <div class="inquiry-reply-box">
           <label for="inquiryReplyMessage">Reply Message</label>
@@ -518,7 +513,6 @@
               <th>Approved</th>
               <th>Pending</th>
               <th>Rejected</th>
-              <th>Avg GWA</th>
             </tr>
           </thead>
           <tbody id="rptTableBody"></tbody>
@@ -914,9 +908,9 @@
       </div>
       <div style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;background:rgba(255,255,255,0.07);border-radius:20px;padding:3px 10px 3px 6px;">
         <span style="width:6px;height:6px;border-radius:50%;background:#5DCAA5;display:inline-block;flex-shrink:0;"></span>
-        <span id="editCourseDept" style="font-size:12px;color:#9ec5e8;">-</span>
-        <span style="font-size:12px;color:rgba(156,197,232,0.4);">-</span>
-        <span id="editCourseCode" style="font-size:12px;color:#9ec5e8;">-</span>
+        <span id="editCourseDept" style="font-size:12px;color:#9ec5e8;"></span>
+        <span style="font-size:12px;color:rgba(156,197,232,0.4);"></span>
+        <span id="editCourseCode" style="font-size:12px;color:#9ec5e8;"></span>
       </div>
     </div>
 
@@ -927,7 +921,7 @@
         <span style="font-size:15px;flex-shrink:0;">🕐</span>
         <div>
           <p style="font-size:11px;color:#64748b;margin:0 0 1px;">Schedule preview</p>
-          <p style="font-size:13px;font-weight:600;color:#0f172a;margin:0;" id="editSchedulePreview">-</p>
+          <p style="font-size:13px;font-weight:600;color:#0f172a;margin:0;" id="editSchedulePreview"></p>
         </div>
       </div>
 

@@ -946,7 +946,7 @@ function exportCSV(data, filename) {
 }
 
 function exportReportsCSV() {
-  const headers = ['Program', 'Department', 'Total Applications', 'Approved', 'Pending', 'Rejected', 'Avg GWA'];
+  const headers = ['Program', 'Department', 'Total Applications', 'Approved', 'Pending', 'Rejected'];
   let rows = [];
 
   if (DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.by_program) && DASHBOARD_STATS.by_program.length > 0) {
@@ -954,8 +954,7 @@ function exportReportsCSV() {
     rows = DASHBOARD_STATS.by_program.map(row => {
       const prog = programs.find(p => p.name === row.first_choice);
       const dept = prog ? (prog.department || '—') : '—';
-      const gwa = row.avg_gwa != null ? parseFloat(row.avg_gwa).toFixed(1) : '—';
-      return [row.first_choice || '—', dept, row.total || 0, row.approved || 0, row.pending || 0, row.rejected || 0, gwa];
+      return [row.first_choice || '—', dept, row.total || 0, row.approved || 0, row.pending || 0, row.rejected || 0];
     });
   } else {
     const progCounts = {}, progStatuses = {}, progGWAs = {};
@@ -973,10 +972,8 @@ function exportReportsCSV() {
     });
     rows = Object.entries(progCounts).sort((a, b) => b[1] - a[1]).map(([name, count]) => {
       const st = progStatuses[name] || {};
-      const gwaArr = progGWAs[name] || [];
-      const gwa = gwaArr.length ? (gwaArr.reduce((s, x) => s + x, 0) / gwaArr.length).toFixed(1) : '—';
       const prog = getPrograms().find(p => p.name === name);
-      return [name, prog ? (prog.department || '—') : '—', count, st.Approved || 0, (st.Pending || 0) + (st['Interview Scheduled'] || 0), st.Rejected || 0, gwa];
+      return [name, prog ? (prog.department || '—') : '—', count, st.Approved || 0, (st.Pending || 0) + (st['Interview Scheduled'] || 0), st.Rejected || 0];
     });
   }
 
@@ -1485,19 +1482,14 @@ function closeSlideover() {
 
 /* ─── PROGRAMS TABLE ─── */
 function renderProgramsTable() {
-  // Calculate accurate counts directly from the applications list
+  // Count applications per program using firstChoice name (the actual stored value)
   const countMap = {};
   const apps = getApplications();
-  
   if (Array.isArray(apps)) {
     apps.forEach(a => {
-      // Count by ID
-      if (a.programId) {
-        countMap[String(a.programId)] = (countMap[String(a.programId)] || 0) + 1;
-      }
-      // Also count by name/code as fallback
       if (a.firstChoice) {
-        countMap[String(a.firstChoice).toLowerCase()] = (countMap[String(a.firstChoice).toLowerCase()] || 0) + 1;
+        const key = String(a.firstChoice).toLowerCase();
+        countMap[key] = (countMap[key] || 0) + 1;
       }
     });
   }
@@ -1518,15 +1510,9 @@ function renderProgramsTable() {
     return;
   }
   tbody.innerHTML = programs.map(p => {
-    // Determine the most accurate count: check ID first, then Name, then Code, then fallback to API count
-    const idCount = countMap[String(p.id)] || 0;
-    const nameCount = countMap[String(p.name).toLowerCase()] || 0;
-    const code = (p.code && String(p.code).trim()) ? String(p.code).trim() : shortProg(p.name || '');
-    const codeCount = countMap[String(code).toLowerCase()] || 0;
-    
-    // Pick the highest found count (manually calculated) or fall back to the API-provided count
-    const calculatedCount = Math.max(idCount, nameCount, codeCount);
-    const count = calculatedCount > 0 ? calculatedCount : (p.applications_count || 0);
+    // Match by program name (firstChoice is the full program name)
+    const nameKey = String(p.name || '').toLowerCase();
+    const count = countMap[nameKey] || p.applications_count || 0;
 
     const enabled = (programEnabled[p.name] !== undefined) ? !!programEnabled[p.name] : !!p.is_active;
     const dept = p.department || '—';
@@ -2139,9 +2125,18 @@ async function saveAnnouncement() {
     });
 
     if (res.ok) {
+      const result = await res.json();
+      const saved = result.data || result;
+      if (id) {
+        const idx = API_ANNOUNCEMENTS.findIndex(a => String(a.id) === String(id));
+        if (idx !== -1) API_ANNOUNCEMENTS[idx] = { ...API_ANNOUNCEMENTS[idx], ...saved };
+        else API_ANNOUNCEMENTS.push(saved);
+      } else {
+        API_ANNOUNCEMENTS.push(saved);
+      }
+      renderAnnouncementsTable();
       showToast(id ? "Announcement updated" : "Announcement created");
       closeAnnouncementModal();
-      reloadContentSoon(loadAnnouncements);
     } else {
       const err = await res.json();
       throw new Error(err.message || "Failed to save announcement");
@@ -2170,8 +2165,9 @@ async function deleteAnnouncement(id) {
         });
 
         if (res.ok) {
+          API_ANNOUNCEMENTS = API_ANNOUNCEMENTS.filter(a => String(a.id) !== String(id));
+          renderAnnouncementsTable();
           showToast("Announcement deleted");
-          reloadContentSoon(loadAnnouncements);
         } else {
           throw new Error("Failed to delete");
         }
@@ -2604,9 +2600,18 @@ async function saveNewsEvent() {
     });
 
     if (res.ok) {
+      const result = await res.json();
+      const saved = result.data || result;
+      if (id) {
+        const idx = API_NEWS_EVENTS.findIndex(n => String(n.id) === String(id));
+        if (idx !== -1) API_NEWS_EVENTS[idx] = { ...API_NEWS_EVENTS[idx], ...saved };
+        else API_NEWS_EVENTS.push(saved);
+      } else {
+        API_NEWS_EVENTS.push(saved);
+      }
+      renderNewsEventsTable();
       showToast(id ? "News/Event updated" : "News/Event created");
       closeNewsEventModal();
-      reloadContentSoon(loadNewsEvents);
     } else {
       const err = await res.json();
       throw new Error(err.message || "Failed to save News/Event");
@@ -2635,8 +2640,9 @@ async function deleteNewsEvent(id) {
         });
 
         if (res.ok) {
+          API_NEWS_EVENTS = API_NEWS_EVENTS.filter(n => String(n.id) !== String(id));
+          renderNewsEventsTable();
           showToast("News/Event deleted");
-          reloadContentSoon(loadNewsEvents);
         } else {
           throw new Error("Failed to delete");
         }
@@ -2919,9 +2925,18 @@ async function saveTestimonial() {
     });
 
     if (res.ok) {
+      const result = await res.json();
+      const saved = result.data || result;
+      if (id) {
+        const idx = API_TESTIMONIALS.findIndex(t => String(t.id) === String(id));
+        if (idx !== -1) API_TESTIMONIALS[idx] = { ...API_TESTIMONIALS[idx], ...saved };
+        else API_TESTIMONIALS.push(saved);
+      } else {
+        API_TESTIMONIALS.push(saved);
+      }
+      renderTestimonialsTable();
       showToast(id ? "Testimonial updated" : "Testimonial created");
       closeTestimonialModal();
-      reloadContentSoon(loadTestimonials);
     } else {
       const err = await res.json();
       throw new Error(err.message || "Failed to save testimonial");
@@ -2950,8 +2965,9 @@ async function deleteTestimonial(id) {
         });
 
         if (res.ok) {
+          API_TESTIMONIALS = API_TESTIMONIALS.filter(t => String(t.id) !== String(id));
+          renderTestimonialsTable();
           showToast("Testimonial deleted");
-          reloadContentSoon(loadTestimonials);
         } else {
           throw new Error("Failed to delete testimonial");
         }
@@ -3234,9 +3250,25 @@ async function saveFacultyStaff() {
     });
 
     if (res.ok) {
+      const result = await res.json();
+      const saved = result.data || result;
+
+      if (id) {
+        // Update the existing entry in the local array
+        const idx = API_FACULTY_STAFF.findIndex(m => String(m.id) === String(id));
+        if (idx !== -1) {
+          API_FACULTY_STAFF[idx] = { ...API_FACULTY_STAFF[idx], ...saved };
+        } else {
+          API_FACULTY_STAFF.push(saved);
+        }
+      } else {
+        // Add the new entry to the local array
+        API_FACULTY_STAFF.push(saved);
+      }
+
+      renderFacultyStaffTable();
       showToast(id ? "Faculty/staff member updated" : "Faculty/staff member added");
       closeFacultyStaffModal();
-      reloadContentSoon(loadFacultyStaff);
     } else {
       const err = await res.json();
       throw new Error(err.message || "Failed to save faculty/staff member");
@@ -3495,6 +3527,23 @@ function addSchedulingRow(data = {}) {
   `;
   tbody.appendChild(tr);
   if (typeof iconsax !== 'undefined') iconsax.createIcons();
+
+  // Auto-update status when date & time are both filled
+  const autoUpdateStatus = () => {
+    const dateVal = tr.querySelector('[name="int_date"]').value;
+    const timeVal = tr.querySelector('[name="int_time"]').value;
+    const statusSel = tr.querySelector('[name="int_status"]');
+    if (dateVal && timeVal) {
+      const currentStatus = normalizeInterviewStatus(statusSel.value || 'Pending');
+      // Only auto-switch if the status is still Pending (don't override manual selections)
+      if (currentStatus === 'Pending') {
+        statusSel.value = 'Scheduled';
+        onSchedulingStatusChange(statusSel);
+      }
+    }
+  };
+  tr.querySelector('[name="int_date"]').addEventListener('change', autoUpdateStatus);
+  tr.querySelector('[name="int_time"]').addEventListener('change', autoUpdateStatus);
 }
 
 function onSchedulingStatusChange(sel) {
@@ -3800,7 +3849,6 @@ async function initReports() {
   grid.innerHTML = [
     { label: 'Total Applications', value: total, sub: 'S.Y. 2025–2026' },
     { label: 'Overall Approval Rate', value: total ? Math.round(approved / total * 100) + '%' : '0%', sub: `${approved} approved` },
-    { label: 'Overall Average GWA', value: avgGWAAll, sub: 'Across all applicants' },
     { label: 'PWD Applicants', value: pwdCount, sub: 'With disability' },
     { label: 'Indigenous Applicants', value: indigenousCount, sub: 'IP / tribe members' },
     { label: '4Ps Beneficiaries', value: foursCount, sub: 'Pantawid recipients' },
@@ -3825,7 +3873,6 @@ function renderReportTable() {
     document.getElementById('rptTableBody').innerHTML = DASHBOARD_STATS.by_program.map(row => {
       const prog = programs.find(p => p.name === row.first_choice);
       const dept = prog ? (prog.department || '—') : '—';
-      const gwa = row.avg_gwa != null ? parseFloat(row.avg_gwa).toFixed(1) : '—';
       return `<tr>
         <td style="font-weight:600">${escapeHtml(row.first_choice || '—')}</td>
         <td>${escapeHtml(dept)}</td>
@@ -3833,7 +3880,6 @@ function renderReportTable() {
         <td style="color:var(--green);font-weight:600">${row.approved || 0}</td>
         <td style="color:var(--yellow);font-weight:600">${row.pending || 0}</td>
         <td style="color:var(--red);font-weight:600">${row.rejected || 0}</td>
-        <td style="font-weight:700;color:var(--navy-mid)">${gwa}</td>
       </tr>`;
     }).join('');
     return;
@@ -3855,8 +3901,6 @@ function renderReportTable() {
   });
   document.getElementById('rptTableBody').innerHTML = Object.entries(progCounts).sort((a, b) => b[1] - a[1]).map(([name, count]) => {
     const st = progStatuses[name] || {};
-    const gwaArr = progGWAs[name] || [];
-    const gwa = gwaArr.length ? (gwaArr.reduce((s, v) => s + v, 0) / gwaArr.length).toFixed(1) : '—';
     const prog = getPrograms().find(p => p.name === name);
     return `<tr>
       <td style="font-weight:600">${escapeHtml(name)}</td>
@@ -3865,7 +3909,6 @@ function renderReportTable() {
       <td style="color:var(--green);font-weight:600">${st.Approved || 0}</td>
       <td style="color:var(--yellow);font-weight:600">${(st.Pending || 0) + (st['Interview Scheduled'] || 0)}</td>
       <td style="color:var(--red);font-weight:600">${st.Rejected || 0}</td>
-      <td style="font-weight:700;color:var(--navy-mid)">${gwa}</td>
     </tr>`;
   }).join('');
 }

@@ -18,10 +18,11 @@ use App\Http\Controllers\Api\SettingsController;
 use App\Http\Controllers\WelcomeController;
 
 Route::get('/uploaded-storage/{path}', function (string $path) {
-    abort_unless(Storage::disk('public')->exists($path), 404);
-
-    return response(Storage::disk('public')->get($path), 200)
-        ->header('Content-Type', Storage::disk('public')->mimeType($path) ?: 'application/octet-stream');
+    $fullPath = Storage::disk('public')->path($path);
+    if (!file_exists($fullPath)) {
+        abort(404);
+    }
+    return response()->file($fullPath);
 })->where('path', '.*');
 
 //Landing Page//
@@ -31,6 +32,11 @@ Route::get('/programs/{id}', [WelcomeController::class, 'showProgram'])->name('p
 Route::get('/about', [WelcomeController::class, 'about'])->name('about');
 Route::get('/news-events', [WelcomeController::class, 'newsEvents'])->name('news-events');
 Route::get('/news-events/{id}', [WelcomeController::class, 'showNewsEvent'])->name('news-events.show');
+Route::get('/how-to-apply', [WelcomeController::class, 'howToApply'])->name('how-to-apply');
+Route::get('/requirements', [WelcomeController::class, 'requirements'])->name('requirements');
+Route::get('/scholarship-programs', [WelcomeController::class, 'scholarshipPrograms'])->name('scholarship-programs');
+Route::get('/tuition-fees', [WelcomeController::class, 'tuitionFees'])->name('tuition-fees');
+Route::get('/faqs', [WelcomeController::class, 'faqs'])->name('faqs');
 
 
 //Application Form//

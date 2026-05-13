@@ -660,7 +660,7 @@ body {
   background: var(--surface);
   color: var(--text-2);
   font-size: 13.5px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   transition: var(--transition);
   box-shadow: var(--shadow-sm);
@@ -678,6 +678,12 @@ body {
   border-color: var(--navy);
   color: #fff !important;
   box-shadow: 0 4px 12px rgba(27, 53, 87, 0.25);
+}
+
+.program-slot-input {
+  border: none !important;
+  outline: none;
+  box-shadow: none;
 }
 
 .deadline-chip {

@@ -64,10 +64,10 @@ class WelcomeController extends Controller
      */
     public function about()
     {
-        return view('about', [
+        return view('about', array_merge([
             'settings' => SystemSetting::all_as_array(),
             'team' => $this->facultyStaff(),
-        ]);
+        ], $this->getFooterData()));
     }
 
     /**
@@ -75,7 +75,7 @@ class WelcomeController extends Controller
      */
     public function newsEvents()
     {
-        return view('news-events', [
+        return view('news-events', array_merge([
             'settings' => SystemSetting::all_as_array(),
             'newsEvents' => NewsEvent::whereRaw('is_active = true')
                 ->orderBy('sort_order')
@@ -83,7 +83,7 @@ class WelcomeController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(6)
                 ->withQueryString(),
-        ]);
+        ], $this->getFooterData()));
     }
 
     /**
@@ -98,11 +98,53 @@ class WelcomeController extends Controller
             ? $item->image_urls
             : ($item->image_url ? [$item->image_url] : []);
 
-        return view('news-event-details', [
+        return view('news-event-details', array_merge([
             'settings' => $settings,
             'item' => $item,
             'gallery' => $gallery,
-        ]);
+        ], $this->getFooterData()));
+    }
+
+    public function howToApply()
+    {
+        return view('how-to-apply', array_merge([
+            'settings' => SystemSetting::all_as_array(),
+        ], $this->getFooterData()));
+    }
+
+    public function requirements()
+    {
+        return view('requirements', array_merge([
+            'settings' => SystemSetting::all_as_array(),
+        ], $this->getFooterData()));
+    }
+
+    public function scholarshipPrograms()
+    {
+        return view('scholarship-programs', array_merge([
+            'settings' => SystemSetting::all_as_array(),
+        ], $this->getFooterData()));
+    }
+
+    public function tuitionFees()
+    {
+        return view('tuition-fees', array_merge([
+            'settings' => SystemSetting::all_as_array(),
+        ], $this->getFooterData()));
+    }
+
+    public function faqs()
+    {
+        return view('faqs', array_merge([
+            'settings' => SystemSetting::all_as_array(),
+        ], $this->getFooterData()));
+    }
+
+    private function getFooterData()
+    {
+        return [
+            'footerPrograms' => Program::orderBy('name')->take(6)->get()
+        ];
     }
 
     private function facultyStaff(): array
