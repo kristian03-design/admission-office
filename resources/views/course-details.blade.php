@@ -769,10 +769,10 @@
           <h2 class="footer-cta-title">
             Your Future Begins<br><em>This Enrollment Season.</em>
           </h2>
-            <div class="footer-cta-actions">
+        </div>
+        <div class="footer-cta-actions">
           <a href="{{ url('/') }}#programs" class="btn-cta-ghost">Explore Other Programs <i data-iconsax="arrow-right"></i></a>
         </div>
-      </div>
     </div>
   </section>
 

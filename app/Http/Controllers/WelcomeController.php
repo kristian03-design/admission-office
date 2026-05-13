@@ -143,7 +143,7 @@ class WelcomeController extends Controller
     private function getFooterData()
     {
         return [
-            'footerPrograms' => Program::where('is_active', true)->orderBy('name')->get()
+            'footerPrograms' => Program::whereRaw('is_active = true')->orderBy('name')->get()
         ];
     }
 
