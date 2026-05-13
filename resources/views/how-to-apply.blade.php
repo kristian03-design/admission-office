@@ -189,18 +189,15 @@
             <p class="apply-cta-sub mt-4 max-w-xl">Begin your application online or visit our admissions office for personalized guidance.</p>
           </div>
           <div class="flex flex-col gap-4 min-w-64">
-            <a href="{{ route('apply') }}" class="btn-cta-primary text-center">
-              Start Your Application
-              <i data-iconsax="arrow-right" style="display:inline-flex;margin-left:.5rem;vertical-align:middle;width:18px;height:18px;"></i>
-            </a>
-            <a href="{{ route('requirements') }}" class="btn-cta-link text-center text-sm w-full">View Requirements →</a>
+            <a href="{{ route('requirements') }}" class="btn-cta-link text-center text-sm w-full">View Requirements <i data-iconsax="arrow-right"></i></a>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  @include('partials.footer', ['settings' => $settings, 'footerPrograms' => $footerPrograms ?? collect()])
+ <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
+  @include('partials.footer')
 
   <button id="back-to-top" class="back-to-top" aria-label="Back to top"><i data-iconsax="arrow-up"></i></button>
   <script src="{{ asset('js/home-page.js') }}?v=8"></script>

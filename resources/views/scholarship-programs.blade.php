@@ -223,19 +223,15 @@
             <p class="apply-cta-sub mt-4 max-w-xl">Our admissions team can guide you through the scholarship application and eligibility requirements.</p>
           </div>
           <div class="flex flex-col gap-4 min-w-64">
-            <a href="{{ route('apply') }}" class="btn-cta-primary text-center">
-              Apply Now
-              <i data-iconsax="arrow-right" style="display:inline-flex;margin-left:.5rem;vertical-align:middle;width:18px;height:18px;"></i>
-            </a>
-            <a href="{{ route('home') }}#contact" class="btn-cta-link text-center text-sm w-full">Contact Admissions →</a>
+            <a href="{{ route('home') }}#contact" class="btn-cta-link text-center text-sm w-full">Contact Admissions <i data-iconsax="arrow-right"></i></a>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  @include('partials.footer', ['settings' => $settings, 'footerPrograms' => $footerPrograms ?? collect()])
-
+ <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
+  @include('partials.footer')
   <button id="back-to-top" class="back-to-top" aria-label="Back to top"><i data-iconsax="arrow-up"></i></button>
   <script src="{{ asset('js/home-page.js') }}?v=8"></script>
   <script>if (window.iconsax) iconsax.createIcons();</script>
