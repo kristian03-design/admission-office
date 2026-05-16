@@ -40,6 +40,7 @@ class ApplicationController extends Controller
             'permanent_address' => ['nullable', 'string', 'max:2000'],
             'present_address' => ['nullable', 'string', 'max:2000'],
             'father_name' => ['nullable', 'string', 'max:255'],
+            'father_suffix' => ['nullable', 'string', 'max:50'],
             'father_occupation' => ['nullable', 'string', 'max:255'],
             'father_contact' => ['nullable', 'string', 'max:30'],
             'mother_name' => ['nullable', 'string', 'max:255'],

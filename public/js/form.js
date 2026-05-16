@@ -288,8 +288,10 @@ function collectProgressData() {
   };
 }
 
+let isSubmissionSuccessful = false;
+
 function saveProgress() {
-  if (isRestoringProgress) return;
+  if (isRestoringProgress || isSubmissionSuccessful) return;
 
   try {
     const data = collectProgressData();
@@ -922,7 +924,8 @@ function buildReview() {
   se('rv-middleName', gv('middleName').toUpperCase() || '-');
   se('rv-suffix',     gv('suffix') || '-');
 
-  const fFull = [gv('fatherFirstName'), gv('fatherMiddleName'), gv('fatherSurname')].filter(Boolean).join(' ').toUpperCase();
+  const fSuf = gv('fatherSuffix');
+  const fFull = [gv('fatherFirstName'), gv('fatherMiddleName'), gv('fatherSurname'), (fSuf && fSuf !== 'N/A' ? fSuf : '')].filter(Boolean).join(' ').toUpperCase();
   se('rv-fatherName', fFull || '-');
 
   const rawDob = gv('dateOfBirth');
@@ -1056,6 +1059,7 @@ async function doSubmit() {
       previous_college: gr('respondentType') === 'Transferee' ? gv('tertiarySchool').trim() : null,
       previous_college_year_last_attended: gr('respondentType') === 'Transferee' ? parseInt(gv('tertiaryYear'), 10) : null,
       father_name: [gv('fatherFirstName'), gv('fatherMiddleName'), gv('fatherSurname')].filter(Boolean).join(' ').trim() || null,
+      father_suffix: (gv('fatherSuffix') && gv('fatherSuffix') !== 'N/A') ? gv('fatherSuffix') : null,
       father_contact: (function () {
         const raw = String(gv('contactNumber') || '').replace(/\D/g, '');
         return raw.length >= 10 ? raw.slice(0, 20) : null;
@@ -1083,6 +1087,7 @@ async function doSubmit() {
     const data = await AdmissionAPI.submitPublic(payload);
     generatedRef = data.reference_number || generatedRef;
     se('refNum', generatedRef);
+    isSubmissionSuccessful = true;
     clearSavedProgress();
     openModal('moSuccess');
     uploadSubmittedFiles(data);

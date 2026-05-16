@@ -207,9 +207,25 @@ function formatDateTime(d) {
   });
 }
 
-function showToast(msg) {
+function showToast(msg, type = 'success') {
   const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
+  if (!t) return;
+  
+  const iconMap = {
+    'success': 'tick-circle',
+    'error': 'info-circle',
+    'warning': 'alert-triangle'
+  };
+  
+  const icon = iconMap[type] || 'tick-circle';
+  t.className = `toast show toast--${type}`;
+  t.innerHTML = `
+    <i data-iconsax="${icon}"></i>
+    <span>${msg}</span>
+  `;
+  
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
+  
   setTimeout(() => t.classList.remove('show'), 2800);
 }
 
