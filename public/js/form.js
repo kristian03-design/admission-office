@@ -242,6 +242,7 @@ let uploadedDocs = [];
 let generatedRef = '';
 const FORM_PROGRESS_KEY = 'btech_admission_form_progress_v1';
 let isRestoringProgress = false;
+let isSubmittingGlobal = false;
 
 function debounceProgress(fn, ms = 250) {
   let timer;
@@ -1016,13 +1017,17 @@ function applicationTypeFromRespondent(type) {
 }
 
 async function doSubmit() {
-  closeModal('moConfirm');
+  if (isSubmittingGlobal) return;
+  
   if (typeof AdmissionAPI === 'undefined') {
-    alert('Cannot submit: API is not loaded. Make sure the backend is running and you opened this page from the correct URL (e.g. http://localhost/admission-office/...).');
+    alert('Cannot submit: API helper is not loaded. Please ensure admission-api.js is included.');
     return;
   }
-  setSubmitState(true);
+
   try {
+    isSubmittingGlobal = true;
+    setSubmitState(true);
+
     const year = new Date().getFullYear();
     const payload = {
       email: gv('studentEmail').trim(),
@@ -1034,8 +1039,6 @@ async function doSubmit() {
       date_of_birth: gv('dateOfBirth'),
       place_of_birth: gv('placeOfBirth').trim() || null,
       civil_status: gv('civilStatus') || null,
-      religion: gv('religion') || null,
-      citizenship: gv('citizenship') || null,
       contact_number: (function () {
         const raw = String(gv('studentContactNumber') || gv('contactNumber') || '').replace(/\D/g, '');
         const withZero = raw.length > 0 ? ('0' + raw).slice(-11) : '';
@@ -1075,28 +1078,35 @@ async function doSubmit() {
       admin_notes: null,
       reference_number: generatedRef
     };
+
     const data = await AdmissionAPI.submitPublic(payload);
     generatedRef = data.reference_number || generatedRef;
     se('refNum', generatedRef);
-    AdmissionAPI.setToken(data.access_token, data.refresh_token);
+    
+    // Success flow
+    clearSavedProgress();
+    closeModal('moConfirm');
     openModal('moSuccess');
-    uploadSubmittedFiles(data);
+    
+    // Upload files
+    await uploadSubmittedFiles(data);
+
   } catch (err) {
     let msg = err.message || 'Submission failed. Please try again.';
-    const errors = (err.data && err.data.data && err.data.data.errors) || (err.data && err.data.errors) || null;
+    const errors = (err.data && err.data.errors) || null;
     if (errors && typeof errors === 'object') {
       const list = [];
-      Object.keys(errors).forEach(function (field) {
-        const arr = errors[field];
+      Object.keys(errors).forEach(f => {
+        const arr = errors[f];
         if (Array.isArray(arr) && arr[0]) list.push(arr[0]);
       });
       if (list.length) msg = 'Validation failed:\n\n' + list.join('\n');
     }
     alert(msg);
+  } finally {
+    isSubmittingGlobal = false;
     setSubmitState(false);
-    return;
   }
-  setSubmitState(false);
 }
 
 async function uploadSubmittedFiles(data) {
@@ -1169,7 +1179,7 @@ function showToast() {
   setTimeout(() => toast.classList.remove('show'), 2200);
 }
 
-function showReqModal(type) {
+function showReq(type) {
   const reqs  = DOCS_MAP[type] || [];
   const modal = document.getElementById('moReq');
   const list  = document.getElementById('moReqList');
@@ -1342,6 +1352,7 @@ async function initPublicSettings() {
 }
 
 function init() {
+  restoreProgress();
   initPublicSettings();
   initSameAsPermanent();
   initPSGCLocation();
@@ -1349,7 +1360,7 @@ function init() {
   initCourseConflict();
   initDigitOnly();
   initModalClose();
-  initReqModal();
+  initProgressAutosave();
   loadPrograms();
   $$('input[name="respondentType"]').forEach(r => r.addEventListener('change', updateAcadBlocks));
   show();

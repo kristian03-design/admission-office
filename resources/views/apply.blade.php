@@ -54,10 +54,9 @@
       </div>
     </div>
 
-    <!-- RIGHT SIDE: Back button + progress ring -->
     <div class="hdr-actions">
-      <a href="{{ route('home') }}" class="home-link">
-        <i data-iconsax="chevron-left" style="width:14px;height:14px;stroke-width:2.5"></i>
+      <a href="{{ route('home') }}" class="bs" style="font-size:12px;padding:8px 16px;border-radius:89px;background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2);color:white;display:flex;align-items:center;gap:6px">
+        <i data-iconsax="arrow-left" style="width:14px;height:14px;stroke-width:2.5"></i>
         Back to Home
       </a>
       <div class="c-ring" id="ring"><span id="pctTxt">0%</span></div>
@@ -68,17 +67,7 @@
 
 <main class="main-wrap">
 
-  <section class="apply-hero no-print">
-    <div>
-      <span class="apply-kicker">Online Admissions</span>
-      <h2>College Admission Application</h2>
-      <p>Complete each section carefully. Your progress is saved as you move through the form.</p>
-    </div>
-    <div class="apply-hero-meta">
-      <span>12 steps</span>
-      <span>Secure review</span>
-    </div>
-  </section>
+
 
   <div class="stepper-card no-print">
     <div class="stepper-meta">
@@ -99,10 +88,10 @@
         <div class="fhdr"><h2>Step 1: Type of Respondent</h2><p>Select the category that best describes you</p></div>
         <div class="fbdy">
           <p style="color:#6b7280;font-size:13px;margin-bottom:18px">Your selection helps customize the academic information requested later in this form.</p>
-          <label class="oc"><input type="radio" name="respondentType" value="Freshmen" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--navy)"><div style="margin-left:14px"><div style="font-weight:700;color:#1f2937">Freshmen</div><p style="font-size:12px;color:#6b7280;margin-top:2px">High school graduate applying for the first time</p></div></label>
-          <label class="oc"><input type="radio" name="respondentType" value="Transferee" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--navy)"><div style="margin-left:14px"><div style="font-weight:700;color:#1f2937">Transferee</div><p style="font-size:12px;color:#6b7280;margin-top:2px">Transferring from another higher education institution</p></div></label>
-          <label class="oc"><input type="radio" name="respondentType" value="ALS Graduate" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--navy)"><div style="margin-left:14px"><div style="font-weight:700;color:#1f2937">ALS Graduate</div><p style="font-size:12px;color:#6b7280;margin-top:2px">Alternative Learning System graduate with A&amp;E Certificate</p></div></label>
-          <label class="oc"><input type="radio" name="respondentType" value="Returnee" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--navy)"><div style="margin-left:14px"><div style="font-weight:700;color:#1f2937">Returnee</div><p style="font-size:12px;color:#6b7280;margin-top:2px">Previously enrolled at BTECH, returning after a study break</p></div></label>
+          <label class="oc" style="align-items:center"><input type="radio" name="respondentType" value="Freshmen" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--navy)"><div style="margin-left:14px;flex:1"><div style="font-weight:700;color:#1f2937">Freshmen</div><p style="font-size:12px;color:#6b7280;margin-top:2px">High school graduate applying for the first time</p></div><button type="button" class="bs" style="font-size:11px;padding:6px 12px;border-radius:99px;margin-left:auto" onclick="showReq('Freshmen')">View Requirements</button></label>
+          <label class="oc" style="align-items:center"><input type="radio" name="respondentType" value="Transferee" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--navy)"><div style="margin-left:14px;flex:1"><div style="font-weight:700;color:#1f2937">Transferee</div><p style="font-size:12px;color:#6b7280;margin-top:2px">Transferring from another higher education institution</p></div><button type="button" class="bs" style="font-size:11px;padding:6px 12px;border-radius:99px;margin-left:auto" onclick="showReq('Transferee')">View Requirements</button></label>
+          <label class="oc" style="align-items:center"><input type="radio" name="respondentType" value="ALS Graduate" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--navy)"><div style="margin-left:14px;flex:1"><div style="font-weight:700;color:#1f2937">ALS Graduate</div><p style="font-size:12px;color:#6b7280;margin-top:2px">Alternative Learning System graduate with A&amp;E Certificate</p></div><button type="button" class="bs" style="font-size:11px;padding:6px 12px;border-radius:99px;margin-left:auto" onclick="showReq('ALS Graduate')">View Requirements</button></label>
+          <label class="oc" style="align-items:center"><input type="radio" name="respondentType" value="Returnee" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--navy)"><div style="margin-left:14px;flex:1"><div style="font-weight:700;color:#1f2937">Returnee</div><p style="font-size:12px;color:#6b7280;margin-top:2px">Previously enrolled at BTECH, returning after a study break</p></div><button type="button" class="bs" style="font-size:11px;padding:6px 12px;border-radius:99px;margin-left:auto" onclick="showReq('Returnee')">View Requirements</button></label>
           <div class="eb" id="e1"><i data-iconsax="alert-circle" style="width:16px;height:16px"></i>Please select a respondent type to continue.</div>
         </div>
       </div>
