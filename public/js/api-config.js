@@ -30,9 +30,6 @@
     }
   });
 
-  // Remove /public if present at the end of rootPath (common in XAMPP)
-  rootPath = rootPath.replace(/\/public$/, '');
-  
   // Final clean up of trailing slashes before appending api segment
   rootPath = rootPath.replace(/\/+$/, '');
 

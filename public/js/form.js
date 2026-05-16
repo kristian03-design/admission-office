@@ -345,6 +345,12 @@ function restoreUploadedPicPreview(savedPic) {
 
 function restoreProgress() {
   try {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('fresh')) {
+      localStorage.removeItem(FORM_PROGRESS_KEY);
+      return;
+    }
+
     const raw = localStorage.getItem(FORM_PROGRESS_KEY);
     if (!raw) return;
 

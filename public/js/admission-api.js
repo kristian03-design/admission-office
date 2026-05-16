@@ -19,7 +19,7 @@ const PSGC_API_BASE = 'https://psgc.gitlab.io/api';
       rootPath = rootPath.slice(0, -p.length);
     }
   });
-  rootPath = rootPath.replace(/\/public$/, '').replace(/\/+$/, '');
+  rootPath = rootPath.replace(/\/+$/, '');
 
   function normalizeApiBase(base) {
     if (base) return base.replace(/\/+$/, '');

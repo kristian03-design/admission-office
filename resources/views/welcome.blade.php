@@ -42,7 +42,7 @@ content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpk
         <a href="{{ route('home') }}#contact" class="nav-link text-sm font-medium tracking-wide">Contact Us</a>
       </nav>
       <div class="nav-actions flex items-center gap-3">
-        <a href="{{ route('apply') }}" class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full transition-all">Inquire Now</a>
+        <a href="{{ route('apply') }}?fresh=true" class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full transition-all">Inquire Now</a>
         <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu" aria-expanded="false">
           <span class="hamburger-icon" aria-hidden="true"></span>
         </button>
@@ -73,7 +73,7 @@ content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpk
           </a>
         </nav>
         <div class="mobile-menu-footer" style="--i:6">
-          <a href="{{ route('apply') }}" class="mobile-btn-primary">
+          <a href="{{ route('apply') }}?fresh=true" class="mobile-btn-primary">
             <span>Inquire Now</span>
             <i data-iconsax="arrow-right"></i>
           </a>
@@ -123,7 +123,7 @@ content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpk
             </p>
 
             <div class="flex flex-wrap gap-4 mt-10" data-animate="fade-up" data-delay="300">
-              <a href="{{ route('apply') }}" class="btn-hero-primary group">
+              <a href="{{ route('apply') }}?fresh=true" class="btn-hero-primary group">
                 <span>{{ $settings['cta_text'] ?? 'Start Your Application' }}</span>
                 <i data-iconsax="arrow-right"></i>
               </a>
@@ -594,7 +594,7 @@ content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpk
             </div>
           </div>
           <div class="flex flex-col gap-4 min-w-64">
-            <a href="{{ route('apply') }}" class="btn-cta-primary text-center">
+            <a href="{{ route('apply') }}?fresh=true" class="btn-cta-primary text-center">
               {{ $settings['cta_section_button_text'] ?? 'Apply Online Now' }}
               <i data-iconsax="arrow-right" style="display:inline-flex;margin-left:.5rem;vertical-align:middle;width:18px;height:18px;"></i>
             </a>
