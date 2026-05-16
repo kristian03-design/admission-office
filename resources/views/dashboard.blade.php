@@ -264,6 +264,10 @@
           <i data-iconsax="download"></i>
           Export CSV
         </button>
+        <button class="btn-danger" id="bulkDeleteBtn" style="display:none;">
+          <i data-iconsax="trash"></i>
+          Delete Selected (<span id="selectedCount">0</span>)
+        </button>
       </div>
     </div>
 
@@ -299,6 +303,7 @@
         <table class="app-table applications-table">
           <thead>
             <tr>
+              <th style="width: 40px; text-align: center;"><input type="checkbox" id="selectAllApps" style="width: 18px; height: 18px; cursor: pointer;" /></th>
               <th>Reference No.</th>
               <th>Full Name</th>
               <th>Type</th>
@@ -476,6 +481,14 @@
           Print
         </button>
       </div>
+    </div>
+
+    <div class="filter-bar" style="margin-bottom: 24px; display: flex; gap: 12px; align-items: center;">
+      <div style="font-size: 13px; font-weight: 600; color: var(--text-2);">Filter by Academic Year:</div>
+      <select class="filter-select" id="reportFilterYear" style="min-width: 200px;">
+        <option value="">All Academic Years</option>
+      </select>
+      <button class="btn-ghost" id="clearReportFilters" style="padding: 8px 16px;">Clear</button>
     </div>
 
     <div class="reports-grid" id="reportsGrid"></div>

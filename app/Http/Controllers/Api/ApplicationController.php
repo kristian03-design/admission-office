@@ -248,6 +248,40 @@ class ApplicationController extends Controller
 
         return response()->json(['data' => $application]);
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $validated = $request->validate([
+            'ids' => ['required', 'array'],
+            'ids.*' => ['required', 'string', 'exists:applications,id'],
+        ]);
+
+        $ids = $validated['ids'];
+        
+        DB::transaction(function () use ($ids) {
+            foreach ($ids as $id) {
+                $application = Application::find($id);
+                if (!$application) continue;
+
+                // Restore slot if application was tied to a program
+                if ($application->program_id) {
+                    $program = Program::find($application->program_id);
+                    if ($program) {
+                        $program->increment('slots_left');
+                        // Re-activate if it was full
+                        if (!$program->is_active && $program->slots_left > 0) {
+                            $program->update(['is_active' => $this->databaseBoolean(true)]);
+                        }
+                    }
+                }
+                $application->delete();
+            }
+        });
+
+        Cache::forget('welcome_page_data');
+
+        return response()->json(['message' => 'Applications deleted successfully']);
+    }
     public function destroy(string $id)
     {
         $application = Application::findOrFail($id);

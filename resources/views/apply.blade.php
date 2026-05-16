@@ -581,7 +581,7 @@
                 Print / Save PDF
               </button>
               <button type="button" class="bsub" onclick="trySubmit()">
-                <i data-iconsax="check" style="width:14px;height:14px"></i>
+                <i data-iconsax="check-circle" style="width:14px;height:14px"></i>
                 Submit Application
               </button>
             </div>
@@ -803,7 +803,7 @@
   <!-- SUCCESS MODAL -->
   <div class="mo" id="moSuccess">
     <div class="mb" style="text-align:center">
-      <div style="width:64px;height:64px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><i data-iconsax="check" style="width:30px;height:30px;color:var(--sage)"></i></div>
+      <div style="width:64px;height:64px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><i data-iconsax="check-circle" style="width:30px;height:30px;color:var(--sage)"></i></div>
       <h3 style="font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;color:#1f2937;margin-bottom:6px">Application Submitted!</h3>
       <p style="font-size:13px;color:#6b7280;margin-bottom:14px">Your admission application has been successfully submitted.</p>
       <div style="background:#f0f7ff;border-radius:12px;padding:14px 18px;margin-bottom:14px;border:1.5px solid #c3dafe">

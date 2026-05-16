@@ -338,6 +338,14 @@ const PSGC_API_BASE = 'https://psgc.gitlab.io/api';
         method: 'DELETE',
       });
     },
+    
+    /** POST /api/applications/bulk-delete */
+    async bulkDeleteApplications(ids) {
+      return request('/applications/bulk-delete', {
+        method: 'POST',
+        body: JSON.stringify({ ids }),
+      });
+    },
 
     /** GET /api/admin/settings â€“ returns key-value settings object */
     async getSettings() {

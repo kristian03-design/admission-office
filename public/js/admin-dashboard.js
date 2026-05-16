@@ -79,6 +79,7 @@ const pendingProgramSlots = {};
 let isRefreshingData = false;
 let programFilter = 'All';
 let interviewFilter = 'All';
+let reportYearFilter = '';
 
 
 let currentPage = 'dashboard';
@@ -90,6 +91,7 @@ let filteredApps = [];
 let SYSTEM_SETTINGS = null;
 const ADMIN_LOGIN_URL = window.ADMIN_LOGIN_URL || '/admin/login';
 const ADMIN_REFRESH_MS = 0;
+let selectedAppIds = new Set();
 
 function getApplications() {
   return Array.isArray(API_APPLICATIONS) ? API_APPLICATIONS : [];
@@ -638,6 +640,7 @@ function applyFilters() {
       && (!program || a.firstChoice === program);
   });
   appPage = 1;
+  selectedAppIds.clear();
   renderTable();
   renderPagination();
 }
@@ -648,6 +651,16 @@ function renderTable() {
   const start = (appPage - 1) * APP_PER_PAGE;
   const slice = filteredApps.slice(start, start + APP_PER_PAGE);
   const tbody = document.getElementById('appTableBody');
+  const selectAllCheckbox = document.getElementById('selectAllApps');
+  if (selectAllCheckbox) {
+    const visibleCheckboxes = tbody.querySelectorAll('.app-checkbox');
+    if (visibleCheckboxes.length > 0) {
+      selectAllCheckbox.checked = Array.from(visibleCheckboxes).every(cb => cb.checked);
+    } else {
+      selectAllCheckbox.checked = false;
+    }
+  }
+  updateBulkDeleteBtn();
 
   if (!slice.length) {
     const appLoadFailed = API_APPLICATIONS === 'error';
@@ -662,6 +675,7 @@ function renderTable() {
 
   tbody.innerHTML = slice.map(app => `
     <tr data-app-id="${app.id}">
+      <td style="text-align: center;"><input type="checkbox" class="app-checkbox" data-app-id="${app.id}" ${selectedAppIds.has(String(app.id)) ? 'checked' : ''} style="width: 16px; height: 16px; cursor: pointer;" /></td>
       <td class="ref-col">${escapeHtml(app.ref)}</td>
       <td class="name-col">${escapeHtml(fullNameDisplay(app))}</td>
       <td style="text-align: center">${escapeHtml(app.type)}</td>
@@ -678,6 +692,22 @@ function renderTable() {
     </tr>
   `).join('');
 
+  // Re-bind checkbox events
+  tbody.querySelectorAll('.app-checkbox').forEach(cb => {
+    cb.addEventListener('change', function() {
+      const id = this.getAttribute('data-app-id');
+      if (this.checked) selectedAppIds.add(id);
+      else selectedAppIds.delete(id);
+      updateBulkDeleteBtn();
+      
+      // Update Select All checkbox state
+      if (selectAllCheckbox) {
+        const allChecked = Array.from(tbody.querySelectorAll('.app-checkbox')).every(c => c.checked);
+        selectAllCheckbox.checked = allChecked && slice.length > 0;
+      }
+    });
+  });
+
   if (typeof iconsax !== 'undefined') iconsax.createIcons();
 
   document.getElementById('tableInfo').textContent =
@@ -688,12 +718,111 @@ function renderPagination() {
   const total = Math.ceil(filteredApps.length / APP_PER_PAGE);
   const pg = document.getElementById('pagination');
   if (total <= 1) { pg.innerHTML = ''; return; }
-  let html = `<button class="page-btn" onclick="goToPage(${appPage - 1})" ${appPage === 1 ? 'disabled' : ''}>Previous</button>`;
+
+  let html = `<button class="page-btn" onclick="goToPage(${appPage - 1})" ${appPage === 1 ? 'disabled' : ''}><i data-iconsax="arrow-left" style="width:14px;height:14px"></i></button>`;
+
+  // Smart pagination with ellipsis
+  const range = 2; // Number of pages to show around current page
+  let showEllipsisStart = false;
+  let showEllipsisEnd = false;
+
   for (let i = 1; i <= total; i++) {
-    html += `<button class="page-btn ${i === appPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+    if (i === 1 || i === total || (i >= appPage - range && i <= appPage + range)) {
+      html += `<button class="page-btn ${i === appPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+    } else if (i < appPage - range && !showEllipsisStart) {
+      html += `<span class="pagination-ellipsis">...</span>`;
+      showEllipsisStart = true;
+    } else if (i > appPage + range && !showEllipsisEnd) {
+      html += `<span class="pagination-ellipsis">...</span>`;
+      showEllipsisEnd = true;
+    }
   }
-  html += `<button class="page-btn" onclick="goToPage(${appPage + 1})" ${appPage === total ? 'disabled' : ''}>Next</button>`;
+
+  html += `<button class="page-btn" onclick="goToPage(${appPage + 1})" ${appPage === total ? 'disabled' : ''}><i data-iconsax="arrow-right" style="width:14px;height:14px"></i></button>`;
   pg.innerHTML = html;
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
+}
+
+function updateBulkDeleteBtn() {
+  const btn = document.getElementById('bulkDeleteBtn');
+  const countSpan = document.getElementById('selectedCount');
+  if (!btn || !countSpan) return;
+
+  const count = selectedAppIds.size;
+  countSpan.textContent = count;
+  btn.style.display = count > 0 ? 'flex' : 'none';
+}
+
+function initBulkSelection() {
+  const selectAll = document.getElementById('selectAllApps');
+  if (!selectAll) return;
+
+  selectAll.addEventListener('change', function() {
+    const checkboxes = document.querySelectorAll('.app-checkbox');
+    checkboxes.forEach(cb => {
+      cb.checked = this.checked;
+      const id = cb.getAttribute('data-app-id');
+      if (this.checked) selectedAppIds.add(id);
+      else selectedAppIds.delete(id);
+    });
+    updateBulkDeleteBtn();
+  });
+
+  const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+  if (bulkDeleteBtn) {
+    bulkDeleteBtn.addEventListener('click', () => {
+      const count = selectedAppIds.size;
+      if (count === 0) return;
+
+      showConfirmModal({
+        title: "Delete Multiple Applications?",
+        message: `Are you sure you want to delete <strong>${count}</strong> selected applications? This action is permanent.`,
+        confirmText: "Delete All Selected",
+        onConfirm: performBulkDelete
+      });
+    });
+  }
+}
+
+async function performBulkDelete() {
+  const ids = Array.from(selectedAppIds);
+  if (!ids.length) return;
+
+  const btn = document.getElementById('bulkDeleteBtn');
+  const originalHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = savingButtonMarkup('Deleting...');
+
+  try {
+    if (typeof AdmissionAPI === 'undefined' || !AdmissionAPI.getToken()) {
+      throw new Error('Not authenticated');
+    }
+
+    await AdmissionAPI.bulkDeleteApplications(ids);
+    showToast(`Successfully deleted ${ids.length} applications.`);
+    
+    // Update local data
+    if (Array.isArray(API_APPLICATIONS)) {
+      API_APPLICATIONS = API_APPLICATIONS.filter(a => !selectedAppIds.has(String(a.id)));
+    }
+    filteredApps = filteredApps.filter(a => !selectedAppIds.has(String(a.id)));
+    
+    selectedAppIds.clear();
+    updateBulkDeleteBtn();
+    
+    renderKPIs();
+    renderRecentList();
+    applyFilters();
+    updatePendingBadge();
+    refreshDataSoon();
+  } catch (err) {
+    showToast('Bulk deletion failed: ' + (err.message || 'Unknown error'));
+    console.error('Bulk delete error:', err);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalHtml;
+    if (typeof iconsax !== 'undefined') iconsax.createIcons();
+  }
 }
 
 function goToPage(n) {
@@ -3824,7 +3953,8 @@ function buildReportsRenderKey() {
     apps.length,
     programs.length,
     firstApp ? `${firstApp.id || ''}:${firstApp.status || ''}:${firstApp.filed || ''}` : '',
-    lastApp ? `${lastApp.id || ''}:${lastApp.status || ''}:${lastApp.filed || ''}` : ''
+    lastApp ? `${lastApp.id || ''}:${lastApp.status || ''}:${lastApp.filed || ''}` : '',
+    `year:${reportYearFilter}`
   ].join('|');
 }
 
@@ -3855,7 +3985,32 @@ async function initReports() {
     reportsStatsPromise = null;
   }
 
-  const list = getApplications();
+  // Populate Year Filter Dropdown if empty
+  const yearSelect = document.getElementById('reportFilterYear');
+  if (yearSelect && yearSelect.options.length <= 1) {
+    const years = [...new Set(getApplications().map(a => a.academic_year || (a.raw && a.raw.academic_year)).filter(Boolean))].sort().reverse();
+    years.forEach(y => {
+      const opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y;
+      yearSelect.appendChild(opt);
+    });
+    yearSelect.value = reportYearFilter;
+    yearSelect.addEventListener('change', (e) => {
+      reportYearFilter = e.target.value;
+      initReports();
+    });
+    const clearBtn = document.getElementById('clearReportFilters');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        reportYearFilter = '';
+        yearSelect.value = '';
+        initReports();
+      });
+    }
+  }
+
+  const list = getApplications().filter(a => !reportYearFilter || (a.academic_year || (a.raw && a.raw.academic_year)) === reportYearFilter);
   const total = Number(DASHBOARD_STATS?.total_applications ?? list.length ?? 0);
   const approved = Number(DASHBOARD_STATS?.approved_applications ?? list.filter(a => a.status === 'Approved').length ?? 0);
   const yes = v => String(v || '').trim().toLowerCase() === 'yes';
@@ -3868,7 +4023,7 @@ async function initReports() {
   const progCount = Number(Array.isArray(DASHBOARD_STATS?.by_program) ? DASHBOARD_STATS.by_program.length : getPrograms().length);
 
   grid.innerHTML = [
-    { label: 'Total Applications', value: total, sub: 'S.Y. 2025–2026' },
+    { label: 'Total Applications', value: total, sub: reportYearFilter ? `S.Y. ${reportYearFilter}` : 'All Academic Years' },
     { label: 'Overall Approval Rate', value: total ? Math.round(approved / total * 100) + '%' : '0%', sub: `${approved} approved` },
     { label: 'PWD Applicants', value: pwdCount, sub: 'With disability' },
     { label: 'Indigenous Applicants', value: indigenousCount, sub: 'IP / tribe members' },
@@ -3888,8 +4043,9 @@ async function initReports() {
 }
 
 function renderReportTable() {
-  // Use server-side per-program breakdown if available
-  if (DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.by_program) && DASHBOARD_STATS.by_program.length > 0) {
+  const apps = getApplications().filter(a => !reportYearFilter || (a.academic_year || (a.raw && a.raw.academic_year)) === reportYearFilter);
+  // Use server-side per-program breakdown ONLY if no year filter is active (server doesn't support year filter yet)
+  if (!reportYearFilter && DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.by_program) && DASHBOARD_STATS.by_program.length > 0) {
     const programs = getPrograms();
     document.getElementById('rptTableBody').innerHTML = DASHBOARD_STATS.by_program.map(row => {
       const prog = programs.find(p => p.name === row.first_choice);
@@ -3908,7 +4064,7 @@ function renderReportTable() {
 
   // Fallback: build from client-side application data
   const progCounts = {}, progStatuses = {}, progGWAs = {};
-  getApplications().forEach(a => {
+  apps.forEach(a => {
     const p = a.firstChoice;
     if (!p) return;
     progCounts[p] = (progCounts[p] || 0) + 1;
@@ -3935,9 +4091,9 @@ function renderReportTable() {
 }
 
 function initReportCharts() {
-  // GWA distribution — prefer server-side by_program data
+  // GWA distribution — prefer server-side by_program data ONLY if no year filter
   let gwaLabels = [], gwaData = [];
-  if (DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.by_program)) {
+  if (!reportYearFilter && DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.by_program)) {
     const sorted = [...DASHBOARD_STATS.by_program]
       .filter(r => r.avg_gwa != null)
       .sort((a, b) => b.avg_gwa - a.avg_gwa)
@@ -3945,8 +4101,9 @@ function initReportCharts() {
     gwaLabels = sorted.map(r => shortProg(r.first_choice));
     gwaData = sorted.map(r => parseFloat(r.avg_gwa).toFixed(1));
   } else {
+    const list = getApplications().filter(a => !reportYearFilter || (a.academic_year || (a.raw && a.raw.academic_year)) === reportYearFilter);
     const progGWAs = {};
-    getApplications().forEach(a => {
+    list.forEach(a => {
       if (!a.firstChoice) return;
       progGWAs[a.firstChoice] = progGWAs[a.firstChoice] || [];
       const g11 = parseFloat(a.g11); const g12 = parseFloat(a.g12);
@@ -3976,16 +4133,17 @@ function initReportCharts() {
     });
   }
 
-  // Eligibility doughnut — prefer server-side counts
+  // Eligibility doughnut — prefer server-side counts ONLY if no year filter
   let pwd = 0, solo = 0, indigenous = 0, fours = 0, none = 0;
-  if (DASHBOARD_STATS) {
+  const list = getApplications().filter(a => !reportYearFilter || (a.academic_year || (a.raw && a.raw.academic_year)) === reportYearFilter);
+  
+  if (!reportYearFilter && DASHBOARD_STATS) {
     pwd = DASHBOARD_STATS.pwd_count || 0;
     solo = DASHBOARD_STATS.solo_parent_count || 0;
     indigenous = DASHBOARD_STATS.indigenous_count || 0;
     fours = DASHBOARD_STATS.four_ps_count || 0;
     none = DASHBOARD_STATS.none_count || 0;
   } else {
-    const list = getApplications();
     const yes = v => String(v || '').trim().toLowerCase() === 'yes';
     pwd = list.filter(a => yes(a.pwd)).length;
     solo = list.filter(a => yes(a.solo)).length;
@@ -4508,6 +4666,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (logoutAfterPasswordBtn) logoutAfterPasswordBtn.addEventListener('click', logoutAfterPasswordChange);
 
   initDeadlineField();
+  initBulkSelection();
 
   const passwordUpdatedModal = document.getElementById('passwordUpdatedModal');
   if (passwordUpdatedModal) {
@@ -4761,7 +4920,7 @@ async function refreshData(isInitial = false) {
     if (topbarInitials) topbarInitials.textContent = initials;
 
     const [appsResult, programsResult, statsResult, settingsResult, inquiriesResult] = await Promise.allSettled([
-      AdmissionAPI.getApplications({ per_page: 100 }),
+      AdmissionAPI.getApplications({ per_page: 1000 }),
       AdmissionAPI.getPrograms({ allowFallback: false }),
       AdmissionAPI.getDashboardStats(),
       AdmissionAPI.getSettings(),

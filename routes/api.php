@@ -31,6 +31,7 @@ Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(functi
     
     // Application management
     Route::get('/applications', [ApplicationController::class, 'index']);
+    Route::post('/applications/bulk-delete', [ApplicationController::class, 'bulkDelete']);
     Route::get('/applications/{id}', [ApplicationController::class, 'show']);
     Route::patch('/applications/{id}/status', [ApplicationController::class, 'updateStatus']);
     Route::delete('/applications/{id}', [ApplicationController::class, 'destroy']);

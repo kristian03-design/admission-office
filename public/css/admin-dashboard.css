@@ -728,6 +728,40 @@ body {
   background: var(--navy-mid);
 }
 
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.35);
+}
+
+.btn-danger:active {
+  transform: translateY(0);
+}
+
+.btn-danger:disabled {
+  background: var(--border-dark);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
 .btn-primary svg {
   width: 15px;
   height: 15px;
@@ -1390,6 +1424,17 @@ body {
   background: var(--navy);
   color: #fff;
   border-color: var(--navy);
+}
+
+.pagination-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  color: var(--text-3);
+  font-weight: 600;
 }
 
 /* ── PROGRAMS TOGGLE ── */
