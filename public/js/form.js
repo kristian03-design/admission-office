@@ -8,10 +8,10 @@ let currentStep = 1;
 const TOTAL_STEPS = 12;
 
 const STEP_LABELS = [
-  'Respondent', 'Personal',   'Academic',
-  'Contact',    'Perm. Addr', 'Pres. Addr',
-  'Courses',    'GWA',        'Eligibility',
-  'Declaration','Photo',      'Review'
+  'Respondent', 'Personal', 'Academic',
+  'Contact', 'Perm. Addr', 'Pres. Addr',
+  'Courses', 'GWA', 'Eligibility',
+  'Declaration', 'Photo', 'Review'
 ];
 
 const STEP_HINTS = [
@@ -32,214 +32,81 @@ const STEP_HINTS = [
 let isSubmittingGlobal = false;
 
 const STEP_PANELS = {
-  1:  [0],   // Respondent
-  2:  [1],   // Personal
-  3:  [2],   // Academic
-  4:  [3],   // Contact Info
-  5:  [4],   // Permanent Address
-  6:  [5],   // Present Address
-  7:  [6],   // Courses
-  8:  [7],   // GWA
-  9:  [8],   // Eligibility
-  10: [9],   // Declaration
-  11: [10],  // Upload
-  12: [11],  // Review
+  1: [0],
+  2: [1],
+  3: [2],
+  4: [3],
+  5: [4],
+  6: [5],
+  7: [6],
+  8: [7],
+  9: [8],
+  10: [9],
+  11: [10],
+  12: [11],
 };
 
-// PSGC_API_BASE is already declared in admission-api.js
 const ZIP_BY_CITY = {
-  // Bulacan
-  'Angat': '3012',
-  'Balagtas': '3016',
-  'Baliwag': '3006',
-  'Bocaue': '3018',
-  'Bulakan': '3017',
-  'Bustos': '3007',
-  'Calumpit': '3003',
-  'Doña Remedios Trinidad': '3009',
-  'Guiguinto': '3015',
-  'Hagonoy': '3002',
-  'Malolos': '3000',
-  'Marilao': '3019',
-  'Meycauayan': '3020',
-  'Norzagaray': '3013',
-  'Obando': '3021',
-  'Pandi': '3014',
-  'Paombong': '3001',
-  'Plaridel': '3004',
-  'Pulilan': '3005',
-  'San Ildefonso': '3010',
-  'San Jose del Monte': '3023',
-  'San Miguel': '3011',
-  'San Rafael': '3008',
-  'Santa Maria': '3022',
-
-  // Metro Manila (NCR)
-  'Caloocan': '1400',
-  'Las Piñas': '1740',
-  'Makati': '1200',
-  'Malabon': '1470',
-  'Mandaluyong': '1550',
-  'Manila': '1000',
-  'Marikina': '1800',
-  'Muntinlupa': '1770',
-  'Navotas': '1485',
-  'Parañaque': '1700',
-  'Pasay': '1300',
-  'Pasig': '1600',
-  'Pateros': '1620',
-  'Quezon City': '1100',
-  'San Juan': '1500',
-  'Taguig': '1630',
-  'Valenzuela': '1440',
-
-  // Rizal
-  'Angono': '1930',
-  'Antipolo': '1870',
-  'Baras': '1970',
-  'Binangonan': '1940',
-  'Cainta': '1900',
-  'Cardona': '1950',
-  'Jala-jala': '1990',
-  'Morong': '1960',
-  'Pililla': '1910',
-  'Rodriguez': '1860',
-  'San Mateo': '1850',
-  'Tanay': '1980',
-  'Taytay': '1920',
-  'Teresa': '1880',
-
-  // Cavite
-  'Alfonso': '4123',
-  'Amadeo': '4119',
-  'Bacoor': '4102',
-  'Carmona': '4116',
-  'Cavite City': '4100',
-  'Dasmariñas': '4114',
-  'General Emilio Aguinaldo': '4124',
-  'General Mariano Alvarez': '4117',
-  'General Trias': '4107',
-  'Imus': '4103',
-  'Indang': '4122',
-  'Kawit': '4104',
-  'Magallanes': '4113',
-  'Maragondon': '4112',
-  'Mendez': '4121',
-  'Naic': '4110',
-  'Noveleta': '4105',
-  'Rosario': '4106',
-  'Silang': '4118',
-  'Tagaytay': '4120',
-  'Tanza': '4108',
-  'Ternate': '4111',
-  'Trece Martires': '4109',
-
-  // Laguna
-  'Alaminos': '4001',
-  'Bay': '4033',
-  'Biñan': '4024',
-  'Cabuyao': '4025',
-  'Calamba': '4027',
-  'Calauan': '4012',
-  'Cavinti': '4013',
-  'Famy': '4021',
-  'Kalayaan': '4015',
-  'Liliw': '4004',
-  'Los Baños': '4030',
-  'Luisiana': '4032',
-  'Lumban': '4014',
-  'Mabitac': '4020',
-  'Magdalena': '4007',
-  'Majayjay': '4005',
-  'Nagcarlan': '4002',
-  'Paete': '4016',
-  'Pagsanjan': '4008',
-  'Pakil': '4017',
-  'Pangil': '4018',
-  'Pila': '4010',
-  'Rizal': '4003',
-  'San Pablo': '4000',
-  'San Pedro': '4023',
-  'Santa Cruz': '4009',
-  'Santa Maria': '4022',
-  'Santa Rosa': '4026',
-  'Siniloan': '4019',
+  'Angat': '3012', 'Balagtas': '3016', 'Baliwag': '3006', 'Bocaue': '3018',
+  'Bulakan': '3017', 'Bustos': '3007', 'Calumpit': '3003',
+  'Doña Remedios Trinidad': '3009', 'Guiguinto': '3015', 'Hagonoy': '3002',
+  'Malolos': '3000', 'Marilao': '3019', 'Meycauayan': '3020',
+  'Norzagaray': '3013', 'Obando': '3021', 'Pandi': '3014',
+  'Paombong': '3001', 'Plaridel': '3004', 'Pulilan': '3005',
+  'San Ildefonso': '3010', 'San Jose del Monte': '3023', 'San Miguel': '3011',
+  'San Rafael': '3008', 'Santa Maria': '3022',
+  'Caloocan': '1400', 'Las Piñas': '1740', 'Makati': '1200',
+  'Malabon': '1470', 'Mandaluyong': '1550', 'Manila': '1000',
+  'Marikina': '1800', 'Muntinlupa': '1770', 'Navotas': '1485',
+  'Parañaque': '1700', 'Pasay': '1300', 'Pasig': '1600',
+  'Pateros': '1620', 'Quezon City': '1100', 'San Juan': '1500',
+  'Taguig': '1630', 'Valenzuela': '1440',
+  'Angono': '1930', 'Antipolo': '1870', 'Baras': '1970',
+  'Binangonan': '1940', 'Cainta': '1900', 'Cardona': '1950',
+  'Jala-jala': '1990', 'Morong': '1960', 'Pililla': '1910',
+  'Rodriguez': '1860', 'San Mateo': '1850', 'Tanay': '1980',
+  'Taytay': '1920', 'Teresa': '1880',
+  'Alfonso': '4123', 'Amadeo': '4119', 'Bacoor': '4102',
+  'Carmona': '4116', 'Cavite City': '4100', 'Dasmariñas': '4114',
+  'General Emilio Aguinaldo': '4124', 'General Mariano Alvarez': '4117',
+  'General Trias': '4107', 'Imus': '4103', 'Indang': '4122',
+  'Kawit': '4104', 'Magallanes': '4113', 'Maragondon': '4112',
+  'Mendez': '4121', 'Naic': '4110', 'Noveleta': '4105',
+  'Rosario': '4106', 'Silang': '4118', 'Tagaytay': '4120',
+  'Tanza': '4108', 'Ternate': '4111', 'Trece Martires': '4109',
+  'Alaminos': '4001', 'Bay': '4033', 'Biñan': '4024', 'Cabuyao': '4025',
+  'Calamba': '4027', 'Calauan': '4012', 'Cavinti': '4013', 'Famy': '4021',
+  'Kalayaan': '4015', 'Liliw': '4004', 'Los Baños': '4030',
+  'Luisiana': '4032', 'Lumban': '4014', 'Mabitac': '4020',
+  'Magdalena': '4007', 'Majayjay': '4005', 'Nagcarlan': '4002',
+  'Paete': '4016', 'Pagsanjan': '4008', 'Pakil': '4017', 'Pangil': '4018',
+  'Pila': '4010', 'Rizal': '4003', 'San Pablo': '4000', 'San Pedro': '4023',
+  'Santa Cruz': '4009', 'Santa Rosa': '4026', 'Siniloan': '4019',
   'Victoria': '4011',
-
-  // Pampanga
-  'Angeles': '2009',
-  'Apalit': '2016',
-  'Arayat': '2012',
-  'Bacolor': '2001',
-  'Candaba': '2013',
-  'Floridablanca': '2006',
-  'Guagua': '2003',
-  'Lubao': '2005',
-  'Mabalacat': '2010',
-  'Macabebe': '2018',
-  'Magalang': '2011',
-  'Masantol': '2017',
-  'Mexico': '2021',
-  'Minalin': '2019',
-  'Porac': '2008',
-  'San Fernando': '2000',
-  'San Luis': '2014',
-  'San Simon': '2015',
-  'Santa Ana': '2022',
-  'Santa Rita': '2002',
-  'Santo Tomas': '2020',
-  'Sasmuan': '2004',
-
-  // Bataan
-  'Abucay': '2114',
-  'Bagac': '2107',
-  'Balanga': '2100',
-  'Dinalupihan': '2110',
-  'Hermosa': '2111',
-  'Limay': '2103',
-  'Mariveles': '2105',
-  'Morong': '2108',
-  'Orani': '2112',
-  'Orion': '2102',
-  'Pilar': '2101',
-  'Samal': '2113',
-
-  // Nueva Ecija
-  'Aliaga': '3111',
-  'Bongabon': '3128',
-  'Cabanatuan': '3100',
-  'Cabiao': '3107',
-  'Carranglan': '3123',
-  'Cuyapo': '3117',
-  'Gabaldon': '3131',
-  'Gapan': '3105',
-  'General Mamerto Natividad': '3125',
-  'General Tinio': '3124',
-  'Guimba': '3115',
-  'Jaen': '3109',
-  'Laur': '3129',
-  'Licab': '3112',
-  'Llanera': '3126',
-  'Lupao': '3122',
-  'Muñoz': '3119',
-  'Nampicuan': '3116',
-  'Palayan': '3132',
-  'Pantabangan': '3127',
-  'Peñaranda': '3104',
-  'Quezon': '3113',
-  'Rizal': '3121',
-  'San Antonio': '3108',
-  'San Isidro': '3106',
-  'San Jose': '3121',
-  'San Leonardo': '3102',
-  'Santa Rosa': '3101',
-  'Santo Domingo': '3133',
-  'Talavera': '3114',
-  'Talugtug': '3118',
-  'Zaragoza': '3110'
+  'Angeles': '2009', 'Apalit': '2016', 'Arayat': '2012', 'Bacolor': '2001',
+  'Candaba': '2013', 'Floridablanca': '2006', 'Guagua': '2003',
+  'Lubao': '2005', 'Mabalacat': '2010', 'Macabebe': '2018',
+  'Magalang': '2011', 'Masantol': '2017', 'Mexico': '2021',
+  'Minalin': '2019', 'Porac': '2008', 'San Fernando': '2000',
+  'San Luis': '2014', 'San Simon': '2015', 'Santa Ana': '2022',
+  'Santa Rita': '2002', 'Santo Tomas': '2020', 'Sasmuan': '2004',
+  'Abucay': '2114', 'Bagac': '2107', 'Balanga': '2100',
+  'Dinalupihan': '2110', 'Hermosa': '2111', 'Limay': '2103',
+  'Mariveles': '2105', 'Orani': '2112', 'Orion': '2102',
+  'Pilar': '2101', 'Samal': '2113',
+  'Aliaga': '3111', 'Bongabon': '3128', 'Cabanatuan': '3100',
+  'Cabiao': '3107', 'Carranglan': '3123', 'Cuyapo': '3117',
+  'Gabaldon': '3131', 'Gapan': '3105', 'General Mamerto Natividad': '3125',
+  'General Tinio': '3124', 'Guimba': '3115', 'Jaen': '3109',
+  'Laur': '3129', 'Licab': '3112', 'Llanera': '3126', 'Lupao': '3122',
+  'Muñoz': '3119', 'Nampicuan': '3116', 'Palayan': '3132',
+  'Pantabangan': '3127', 'Peñaranda': '3104', 'Quezon': '3113',
+  'San Antonio': '3108', 'San Isidro': '3106', 'San Jose': '3121',
+  'San Leonardo': '3102', 'Santa Rosa': '3101', 'Santo Domingo': '3133',
+  'Talavera': '3114', 'Talugtug': '3118', 'Zaragoza': '3110'
 };
 
-let uploadedPic  = null;
+let uploadedPic = null;
 let uploadedDocs = [];
 let generatedRef = '';
 const FORM_PROGRESS_KEY = 'btech_admission_form_progress_v1';
@@ -256,24 +123,13 @@ function debounceProgress(fn, ms = 250) {
 function collectProgressData() {
   const form = document.getElementById('aForm');
   if (!form) return null;
-
   const fields = {};
   form.querySelectorAll('input[name], select[name], textarea[name]').forEach(el => {
     if (!el.name || el.type === 'file') return;
-
-    if (el.type === 'radio') {
-      if (el.checked) fields[el.name] = el.value;
-      return;
-    }
-
-    if (el.type === 'checkbox') {
-      fields[el.name] = !!el.checked;
-      return;
-    }
-
+    if (el.type === 'radio') { if (el.checked) fields[el.name] = el.value; return; }
+    if (el.type === 'checkbox') { fields[el.name] = !!el.checked; return; }
     fields[el.name] = el.value;
   });
-
   return {
     version: 1,
     savedAt: new Date().toISOString(),
@@ -292,7 +148,6 @@ let isSubmissionSuccessful = false;
 
 function saveProgress() {
   if (isRestoringProgress || isSubmissionSuccessful) return;
-
   try {
     const data = collectProgressData();
     if (data) localStorage.setItem(FORM_PROGRESS_KEY, JSON.stringify(data));
@@ -305,22 +160,12 @@ const saveProgressSoon = debounceProgress(saveProgress);
 
 function applySavedFieldValues(fields) {
   if (!fields || typeof fields !== 'object') return;
-
   Object.entries(fields).forEach(([name, value]) => {
     const controls = Array.from(document.querySelectorAll(`[name="${CSS.escape(name)}"]`));
     controls.forEach(el => {
       if (el.type === 'file') return;
-
-      if (el.type === 'radio') {
-        el.checked = el.value === value;
-        return;
-      }
-
-      if (el.type === 'checkbox') {
-        el.checked = !!value;
-        return;
-      }
-
+      if (el.type === 'radio') { el.checked = el.value === value; return; }
+      if (el.type === 'checkbox') { el.checked = !!value; return; }
       el.value = value ?? '';
     });
   });
@@ -328,14 +173,12 @@ function applySavedFieldValues(fields) {
 
 function restoreUploadedPicPreview(savedPic) {
   if (!savedPic || !savedPic.dataURL) return;
-
   uploadedPic = {
     name: savedPic.name || 'Saved 2x2 photo',
     dataURL: savedPic.dataURL,
     file: null,
     restoredPreviewOnly: true,
   };
-
   const zone = document.getElementById('picZone');
   if (zone) {
     zone.classList.add('uploaded');
@@ -346,17 +189,11 @@ function restoreUploadedPicPreview(savedPic) {
 function restoreProgress() {
   try {
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('fresh')) {
-      localStorage.removeItem(FORM_PROGRESS_KEY);
-      return;
-    }
-
+    if (urlParams.has('fresh')) { localStorage.removeItem(FORM_PROGRESS_KEY); return; }
     const raw = localStorage.getItem(FORM_PROGRESS_KEY);
     if (!raw) return;
-
     const data = JSON.parse(raw);
     if (!data || data.version !== 1) return;
-
     isRestoringProgress = true;
     applySavedFieldValues(data.fields);
     generatedRef = data.generatedRef || '';
@@ -370,37 +207,33 @@ function restoreProgress() {
 }
 
 function clearSavedProgress() {
-  try {
-    localStorage.removeItem(FORM_PROGRESS_KEY);
-  } catch (err) {
-    console.warn('Could not clear saved application progress:', err);
-  }
+  try { localStorage.removeItem(FORM_PROGRESS_KEY); }
+  catch (err) { console.warn('Could not clear saved application progress:', err); }
 }
 
 function initProgressAutosave() {
   const form = document.getElementById('aForm');
   if (!form) return;
-
   form.addEventListener('input', saveProgressSoon);
   form.addEventListener('change', saveProgressSoon);
   window.addEventListener('beforeunload', saveProgress);
 }
 
 const DOCS_MAP = {
-  'Freshmen':     ['Original Report Card (Grade 11 & 12)', 'Original Diploma', 'PSA Birth Certificate', '2×2 ID Picture', 'Certificate of Good Moral Character'],
-  'Transferee':   ['Official Transcript of Records', 'Certificate of Honorable Dismissal', 'Diploma / Cert. of Completed Courses', 'PSA Birth Certificate', '2×2 ID Picture', 'Certificate of Good Moral Character'],
+  'Freshmen': ['Original Report Card (Grade 11 & 12)', 'Original Diploma', 'PSA Birth Certificate', '2×2 ID Picture', 'Certificate of Good Moral Character'],
+  'Transferee': ['Official Transcript of Records', 'Certificate of Honorable Dismissal', 'Diploma / Cert. of Completed Courses', 'PSA Birth Certificate', '2×2 ID Picture', 'Certificate of Good Moral Character'],
   'ALS Graduate': ['ALS A&E Certificate', 'ALS Test Results / Transcript', 'PSA Birth Certificate', '2×2 ID Picture', 'Certificate of Good Moral Character'],
-  'Returnee':     ['BTECH Official Transcript of Records', 'Certificate of Candidacy (if applicable)', 'Written Statement of Purpose', 'PSA Birth Certificate', '2×2 ID Picture', 'Certificate of Good Moral Character', 'Academic Clearance (prev. semester)']
+  'Returnee': ['BTECH Official Transcript of Records', 'Certificate of Candidacy (if applicable)', 'Written Statement of Purpose', 'PSA Birth Certificate', '2×2 ID Picture', 'Certificate of Good Moral Character', 'Academic Clearance (prev. semester)']
 };
 
-const $  = sel => document.querySelector(sel);
+const $ = sel => document.querySelector(sel);
 const $$ = sel => document.querySelectorAll(sel);
 const gv = name => { const el = $(`[name="${name}"]`); return el ? el.value : ''; };
 const gr = name => { const el = $(`input[name="${name}"]:checked`); return el ? el.value : ''; };
-const se = (id, msg)  => { const el = document.getElementById(id); if (el) el.textContent = msg; };
+const se = (id, msg) => { const el = document.getElementById(id); if (el) el.textContent = msg; };
 const si = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
-const markErr    = (name, on) => { const el = $(`[name="${name}"]`); if (el) el.classList.toggle('err', on); };
-const showBanner = (id, on)   => { const el = document.getElementById(id); if (el) el.classList.toggle('show', on); };
+const markErr = (name, on) => { const el = $(`[name="${name}"]`); if (el) el.classList.toggle('err', on); };
+const showBanner = (id, on) => { const el = document.getElementById(id); if (el) el.classList.toggle('show', on); };
 
 function buildStepper() {
   const row = document.getElementById('stepperRow');
@@ -411,7 +244,7 @@ function buildStepper() {
     btn.type = 'button';
     btn.className = 'step-btn' +
       (i === currentStep ? ' active' : '') +
-      (i < currentStep  ? ' done'   : '');
+      (i < currentStep ? ' done' : '');
     btn.innerHTML = `<span class="snum">${i < currentStep ? '✓' : i}</span><span class="slbl">${STEP_LABELS[i - 1]}</span>`;
     btn.onclick = () => { if (i <= currentStep) { currentStep = i; show(); saveProgressSoon(); } };
     row.appendChild(btn);
@@ -423,6 +256,13 @@ function buildStepper() {
   }
 }
 
+/* ─────────────────────────────────────────────────────────
+   show() — renders the current step.
+   The ONE line added vs the original:
+     document.body.classList.toggle('step-12', currentStep === 12);
+   This drives the CSS rule:
+     body.step-12 .stepper-card { display: none !important; }
+───────────────────────────────────────────────────────── */
 function show() {
   const panels = $$('.sc');
   panels.forEach(el => el.classList.remove('active'));
@@ -437,7 +277,7 @@ function show() {
   const bar = document.getElementById('pbar');
   if (bar) bar.style.width = pct + '%';
 
-  const deg  = (pct / 100) * 360;
+  const deg = (pct / 100) * 360;
   const ring = document.getElementById('ring');
   if (ring) ring.style.background = `conic-gradient(#40916c ${deg}deg, rgba(255,255,255,.18) ${deg}deg)`;
   se('pctTxt', pct + '%');
@@ -445,7 +285,7 @@ function show() {
   const prevBtn = document.getElementById('prevBtn');
   if (prevBtn) prevBtn.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
 
-  const navBar  = document.getElementById('navBar');
+  const navBar = document.getElementById('navBar');
   const nextBtn = document.getElementById('nextBtn');
   if (currentStep === TOTAL_STEPS) {
     if (navBar) navBar.style.display = 'none';
@@ -458,6 +298,9 @@ function show() {
       nextBtn.onclick = () => nav(1);
     }
   }
+
+  /* ── Hide / show stepper based on current step ── */
+  document.body.classList.toggle('step-12', currentStep === 12);
 
   buildStepper();
   updateAcadBlocks();
@@ -485,10 +328,10 @@ function validate(step) {
 
   if (step === 2) {
     const required = [
-      ['surname','e-sur'],['firstName','e-fn'],['placeOfBirth','e-pob'],
-      ['motherFirstName','e-mfn'],['motherMaidenName','e-mln'],
-      ['fatherSurname','e-fls'],['fatherFirstName','e-ffn'],
-      ['civilStatus','e-cs']
+      ['surname', 'e-sur'], ['firstName', 'e-fn'], ['placeOfBirth', 'e-pob'],
+      ['motherFirstName', 'e-mfn'], ['motherMaidenName', 'e-mln'],
+      ['fatherSurname', 'e-fls'], ['fatherFirstName', 'e-ffn'],
+      ['civilStatus', 'e-cs']
     ];
     required.forEach(([field, errId]) => {
       const valid = gv(field).trim().length > 0;
@@ -520,7 +363,7 @@ function validate(step) {
   }
 
   if (step === 3) {
-    ['acadElem','acadHS','acadSHS','acadTertiary'].forEach(id => {
+    ['acadElem', 'acadHS', 'acadSHS', 'acadTertiary'].forEach(id => {
       const block = document.getElementById(id);
       if (!block || block.style.display === 'none') return;
       block.querySelectorAll('input.fi').forEach(input => {
@@ -546,7 +389,7 @@ function validate(step) {
   }
 
   if (step === 5) {
-    [['permanentProvince','e-pp'],['permanentCity','e-pc'],['permanentBarangay','e-pb'],['permanentZipCode','e-pz']].forEach(([field, errId]) => {
+    [['permanentProvince', 'e-pp'], ['permanentCity', 'e-pc'], ['permanentBarangay', 'e-pb'], ['permanentZipCode', 'e-pz']].forEach(([field, errId]) => {
       const valid = gv(field).trim().length > 0;
       markErr(field, !valid);
       se(errId, valid ? '' : 'Required');
@@ -559,7 +402,7 @@ function validate(step) {
   }
 
   if (step === 6) {
-    [['presentProvince','e-rp'],['presentCity','e-rc'],['presentBarangay','e-rb'],['presentZipCode','e-rz']].forEach(([field, errId]) => {
+    [['presentProvince', 'e-rp'], ['presentCity', 'e-rc'], ['presentBarangay', 'e-rb'], ['presentZipCode', 'e-rz']].forEach(([field, errId]) => {
       const valid = gv(field).trim().length > 0;
       markErr(field, !valid);
       se(errId, valid ? '' : 'Required');
@@ -598,7 +441,7 @@ function validate(step) {
   }
 
   if (step === 9) {
-    [['differentlyAbled','e-pwd'],['soloParent','e-solo'],['indigenous','e-indigenous'],['fourPs','e-4ps']].forEach(([name, errId]) => {
+    [['differentlyAbled', 'e-pwd'], ['soloParent', 'e-solo'], ['indigenous', 'e-indigenous'], ['fourPs', 'e-4ps']].forEach(([name, errId]) => {
       const valid = !!gr(name);
       se(errId, valid ? '' : 'Please select Yes or No');
       if (!valid) ok = false;
@@ -608,14 +451,14 @@ function validate(step) {
   }
 
   if (step === 10) {
-    const all = ['declarationTruth','dataPrivacy','authorizedProcessing']
+    const all = ['declarationTruth', 'dataPrivacy', 'authorizedProcessing']
       .every(n => { const el = $(`input[name="${n}"]`); return el && el.checked; });
     showBanner('e9', !all);
     return all;
   }
 
   if (step === 11) {
-    const hasPic  = !!uploadedPic;
+    const hasPic = !!uploadedPic;
     se('e-pic', hasPic ? '' : 'Please upload your 2x2 ID picture');
     se('e10t', 'Please upload your 2x2 ID picture.');
     ok = hasPic;
@@ -636,36 +479,34 @@ function updateGWADisplay(g1, g2) {
 }
 
 function updateAcadBlocks() {
-  const type      = gr('respondentType');
-  const shs       = document.getElementById('acadSHS');
-  const tertiary  = document.getElementById('acadTertiary');
-  const als       = document.getElementById('acadALS');
-  const returnee  = document.getElementById('acadReturnee');
-  // Hide all by default
-  if (shs)      shs.style.display      = 'block';
+  const type = gr('respondentType');
+  const shs = document.getElementById('acadSHS');
+  const tertiary = document.getElementById('acadTertiary');
+  const als = document.getElementById('acadALS');
+  const returnee = document.getElementById('acadReturnee');
+  if (shs) shs.style.display = 'block';
   if (tertiary) tertiary.style.display = 'none';
-  if (als)      als.style.display      = 'none';
+  if (als) als.style.display = 'none';
   if (returnee) returnee.style.display = 'none';
-
   if (type === 'Freshmen') {
-    if (shs)      shs.style.display      = 'block';
+    if (shs) shs.style.display = 'block';
     if (tertiary) tertiary.style.display = 'none';
-    if (als)      als.style.display      = 'none';
+    if (als) als.style.display = 'none';
     if (returnee) returnee.style.display = 'none';
   } else if (type === 'Transferee') {
-    if (shs)      shs.style.display      = 'block';
+    if (shs) shs.style.display = 'block';
     if (tertiary) tertiary.style.display = 'block';
-    if (als)      als.style.display      = 'none';
+    if (als) als.style.display = 'none';
     if (returnee) returnee.style.display = 'none';
   } else if (type === 'ALS Graduate') {
-    if (shs)      shs.style.display      = 'none';
+    if (shs) shs.style.display = 'none';
     if (tertiary) tertiary.style.display = 'none';
-    if (als)      als.style.display      = 'block';
+    if (als) als.style.display = 'block';
     if (returnee) returnee.style.display = 'none';
   } else if (type === 'Returnee') {
-    if (shs)      shs.style.display      = 'block';
+    if (shs) shs.style.display = 'block';
     if (tertiary) tertiary.style.display = 'none';
-    if (als)      als.style.display      = 'none';
+    if (als) als.style.display = 'none';
     if (returnee) returnee.style.display = 'block';
   }
 }
@@ -673,50 +514,35 @@ function updateAcadBlocks() {
 function initSameAsPermanent() {
   const chk = document.getElementById('sameChk');
   if (!chk) return;
-
   const syncAddress = () => {
     copyAddressSelect('Province');
     copyAddressSelect('City');
     copyAddressSelect('Barangay');
-    ['ZipCode','ProvincePsgcCode','CityPsgcCode','BarangayPsgcCode'].forEach(f => {
+    ['ZipCode', 'ProvincePsgcCode', 'CityPsgcCode', 'BarangayPsgcCode'].forEach(f => {
       const el = $(`[name="present${f}"]`);
       if (el) el.value = gv('permanent' + f);
     });
-    ['Province','City','Barangay','ZipCode'].forEach(f => {
+    ['Province', 'City', 'Barangay', 'ZipCode'].forEach(f => {
       const el = $(`[name="present${f}"]`);
       if (el) el.disabled = true;
     });
   };
-
   const clearAddress = () => {
-    ['Province','City','Barangay','ZipCode','ProvincePsgcCode','CityPsgcCode','BarangayPsgcCode'].forEach(f => {
+    ['Province', 'City', 'Barangay', 'ZipCode', 'ProvincePsgcCode', 'CityPsgcCode', 'BarangayPsgcCode'].forEach(f => {
       const el = $(`[name="present${f}"]`);
       if (el) el.value = '';
     });
-
     const city = document.getElementById('presentCitySelect');
     const barangay = document.getElementById('presentBarangaySelect');
-    if (city) {
-      city.innerHTML = '<option value="">Select town / city</option>';
-      city.disabled = true;
-    }
-    if (barangay) {
-      barangay.innerHTML = '<option value="">Select barangay</option>';
-      barangay.disabled = true;
-    }
-
+    if (city) { city.innerHTML = '<option value="">Select town / city</option>'; city.disabled = true; }
+    if (barangay) { barangay.innerHTML = '<option value="">Select barangay</option>'; barangay.disabled = true; }
     const province = document.getElementById('presentProvinceSelect');
     if (province) province.disabled = false;
     const zip = $('[name="presentZipCode"]');
     if (zip) zip.disabled = false;
   };
-
-  chk.addEventListener('change', function () {
-    if (this.checked) syncAddress();
-    else clearAddress();
-  });
-
-  ['Province','City','Barangay','ZipCode'].forEach(f => {
+  chk.addEventListener('change', function () { if (this.checked) syncAddress(); else clearAddress(); });
+  ['Province', 'City', 'Barangay', 'ZipCode'].forEach(f => {
     const el = $(`[name="permanent${f}"]`);
     if (!el) return;
     el.addEventListener('change', () => { if (chk.checked) syncAddress(); });
@@ -728,25 +554,17 @@ function copyAddressSelect(field) {
   const source = $(`[name="permanent${field}"]`);
   const target = $(`[name="present${field}"]`);
   if (!source || !target) return;
-
   if (source.tagName.toLowerCase() === 'select' && target.tagName.toLowerCase() === 'select') {
     target.innerHTML = source.innerHTML;
     target.value = source.value;
     return;
   }
-
   target.value = source.value;
 }
 
 async function fetchPSGC(endpoint) {
   const url = (window.PSGC_API_BASE || 'https://psgc.gitlab.io/api') + endpoint;
-  const res = await fetch(url, {
-    method: 'GET',
-    mode: 'cors',
-    credentials: 'omit',
-    headers: { 'Accept': 'application/json' },
-    referrerPolicy: 'no-referrer'
-  });
+  const res = await fetch(url, { method: 'GET', mode: 'cors', credentials: 'omit', headers: { 'Accept': 'application/json' }, referrerPolicy: 'no-referrer' });
   if (!res.ok) throw new Error('PSGC request failed');
   return res.json();
 }
@@ -786,9 +604,7 @@ function bindAddressPSGC(prefix) {
   const provinceCode = $(`[name="${prefix}ProvincePsgcCode"]`);
   const cityCode = $(`[name="${prefix}CityPsgcCode"]`);
   const barangayCode = $(`[name="${prefix}BarangayPsgcCode"]`);
-
   if (!provinceSelect || !citySelect || !barangaySelect) return;
-
   provinceSelect.addEventListener('change', async function () {
     const selected = this.options[this.selectedIndex];
     const psgcCode = selected && selected.dataset ? selected.dataset.code || '' : '';
@@ -799,12 +615,8 @@ function bindAddressPSGC(prefix) {
       const cities = await fetchPSGC('/provinces/' + psgcCode + '/cities-municipalities/');
       fillSelect(citySelect, cities, 'Select town / city');
       citySelect.disabled = false;
-    } catch (_) {
-      fillSelect(citySelect, [], 'Unable to load cities');
-      citySelect.disabled = true;
-    }
+    } catch (_) { fillSelect(citySelect, [], 'Unable to load cities'); citySelect.disabled = true; }
   });
-
   citySelect.addEventListener('change', async function () {
     const selected = this.options[this.selectedIndex];
     const psgcCode = selected && selected.dataset ? selected.dataset.code || '' : '';
@@ -817,12 +629,8 @@ function bindAddressPSGC(prefix) {
       const barangays = await fetchPSGC('/cities-municipalities/' + psgcCode + '/barangays/');
       fillSelect(barangaySelect, barangays, 'Select barangay');
       barangaySelect.disabled = false;
-    } catch (_) {
-      fillSelect(barangaySelect, [], 'Unable to load barangays');
-      barangaySelect.disabled = true;
-    }
+    } catch (_) { fillSelect(barangaySelect, [], 'Unable to load barangays'); barangaySelect.disabled = true; }
   });
-
   barangaySelect.addEventListener('change', function () {
     const selected = this.options[this.selectedIndex];
     const psgcCode = selected && selected.dataset ? selected.dataset.code || '' : '';
@@ -856,7 +664,7 @@ async function initPSGCLocation() {
 }
 
 function initGWALive() {
-  ['grade11GWA','grade12GWA'].forEach(name => {
+  ['grade11GWA', 'grade12GWA'].forEach(name => {
     const el = $(`[name="${name}"]`);
     if (!el) return;
     el.addEventListener('input', () => {
@@ -914,7 +722,7 @@ function buildReview() {
     generatedRef = 'BTECH-' + new Date().getFullYear() + '-' + Math.floor(100000 + Math.random() * 900000);
   }
   const today = new Date().toLocaleDateString('en-PH', { year: 'numeric', month: 'long', day: 'numeric' });
-  se('rv-ref',  generatedRef);
+  se('rv-ref', generatedRef);
   se('rv-ref2', generatedRef);
   se('rv-date', today);
 
@@ -925,10 +733,10 @@ function buildReview() {
       : `<span class="rs-pic-placeholder">2x2<br>ID Photo</span><div class="rs-pic-label">APPLICANT PHOTO</div>`;
   }
 
-  se('rv-surname',    gv('surname').toUpperCase() || '-');
-  se('rv-firstName',  gv('firstName').toUpperCase() || '-');
+  se('rv-surname', gv('surname').toUpperCase() || '-');
+  se('rv-firstName', gv('firstName').toUpperCase() || '-');
   se('rv-middleName', gv('middleName').toUpperCase() || '-');
-  se('rv-suffix',     gv('suffix') || '-');
+  se('rv-suffix', gv('suffix') || '-');
 
   const fSuf = gv('fatherSuffix');
   const fFull = [gv('fatherFirstName'), gv('fatherMiddleName'), gv('fatherSurname'), (fSuf && fSuf !== 'N/A' ? fSuf : '')].filter(Boolean).join(' ').toUpperCase();
@@ -942,7 +750,7 @@ function buildReview() {
   se('rv-pob', gv('placeOfBirth') || '-');
 
   const sex = gr('sex');
-  se('rv-male',   sex === 'Male'   ? '☑ Male'   : '☐ Male');
+  se('rv-male', sex === 'Male' ? '☑ Male' : '☐ Male');
   se('rv-female', sex === 'Female' ? '☑ Female' : '☐ Female');
 
   const buildAddr = prefix => [
@@ -952,13 +760,13 @@ function buildReview() {
 
   se('rv-permAddr', buildAddr('permanent'));
   se('rv-presAddr', buildAddr('present'));
-  se('rv-fContact', gv('contactNumber')          ? '+63 ' + gv('contactNumber')          : '-');
+  se('rv-fContact', gv('contactNumber') ? '+63 ' + gv('contactNumber') : '-');
   se('rv-mContact', gv('alternateContactNumber') ? '+63 ' + gv('alternateContactNumber') : '-');
 
   const mFull = [gv('motherFirstName'), gv('motherMiddleName'), gv('motherMaidenName')].filter(Boolean).join(' ').toUpperCase();
   se('rv-motherName', mFull || '-');
 
-  se('rv-course1', gr('firstChoice')  || '-');
+  se('rv-course1', gr('firstChoice') || '-');
   se('rv-course2', gr('secondChoice') || '-');
   const g1 = parseFloat(gv('grade11GWA'));
   const g2 = parseFloat(gv('grade12GWA'));
@@ -973,10 +781,10 @@ function buildReview() {
   se('rv-type', gr('respondentType') || '-');
   const badge = (val, yesLabel, noLabel) =>
     `<span class="rs-badge${val === 'yes' ? '' : ' no'}">${val === 'yes' ? yesLabel : noLabel}</span>`;
-  si('rv-pwd',  badge(gr('differentlyAbled'), 'Yes - PWD', 'No'));
-  si('rv-solo', badge(gr('soloParent'),        'Yes',       'No'));
-  si('rv-indigenous', badge(gr('indigenous'),  'Yes',       'No'));
-  si('rv-4ps',  badge(gr('fourPs'),            'Yes - 4Ps', 'No'));
+  si('rv-pwd', badge(gr('differentlyAbled'), 'Yes - PWD', 'No'));
+  si('rv-solo', badge(gr('soloParent'), 'Yes', 'No'));
+  si('rv-indigenous', badge(gr('indigenous'), 'Yes', 'No'));
+  si('rv-4ps', badge(gr('fourPs'), 'Yes - 4Ps', 'No'));
 
   const docsDiv = document.getElementById('rv-docs');
   if (docsDiv) {
@@ -990,7 +798,7 @@ function buildReview() {
   }
 }
 
-function trySubmit()  { openModal('moConfirm'); }
+function trySubmit() { openModal('moConfirm'); }
 
 function setSubmitState(isSubmitting) {
   const confirmBtn = document.getElementById('submitBtn');
@@ -1000,14 +808,12 @@ function setSubmitState(isSubmitting) {
       ? '<i data-iconsax="refresh" style="width:13px;height:13px"></i>Submitting...'
       : '<i data-iconsax="check" style="width:13px;height:13px"></i>Confirm &amp; Submit';
   }
-
   document.querySelectorAll('.review-action-bar .bsub').forEach(function (button) {
     button.disabled = isSubmitting;
     button.innerHTML = isSubmitting
       ? '<i data-iconsax="refresh" style="width:14px;height:14px"></i>Submitting...'
       : '<i data-iconsax="check" style="width:14px;height:14px"></i>Submit Application';
   });
-
   if (typeof iconsax !== 'undefined') iconsax.createIcons();
 }
 
@@ -1028,13 +834,8 @@ function applicationTypeFromRespondent(type) {
 
 async function doSubmit() {
   if (isSubmittingGlobal) return;
-  
   closeModal('moConfirm');
-  if (typeof AdmissionAPI === 'undefined') {
-    alert('Cannot submit: API is not loaded.');
-    return;
-  }
-
+  if (typeof AdmissionAPI === 'undefined') { alert('Cannot submit: API is not loaded.'); return; }
   try {
     isSubmittingGlobal = true;
     setSubmitState(true);
@@ -1120,23 +921,15 @@ async function uploadSubmittedFiles(data) {
   const applicationId = data && (data.id || data.application_id);
   if (!applicationId) return;
   const uploadToken = data && data.upload_token;
-
   if (uploadedPic && uploadedPic.file) {
-    try {
-      await AdmissionAPI.uploadDocument(applicationId, 'id_photo', uploadedPic.file, uploadToken);
-    } catch (err) {
-      console.warn('ID photo upload failed after submission:', err);
-    }
+    try { await AdmissionAPI.uploadDocument(applicationId, 'id_photo', uploadedPic.file, uploadToken); }
+    catch (err) { console.warn('ID photo upload failed after submission:', err); }
   }
-
   if (uploadedDocs.length > 0) {
     for (const doc of uploadedDocs) {
       if (!doc.file) continue;
-      try {
-        await AdmissionAPI.uploadDocument(applicationId, 'other', doc.file, uploadToken);
-      } catch (err) {
-        console.warn('Supporting document upload failed after submission:', err);
-      }
+      try { await AdmissionAPI.uploadDocument(applicationId, 'other', doc.file, uploadToken); }
+      catch (err) { console.warn('Supporting document upload failed after submission:', err); }
     }
   }
 }
@@ -1144,10 +937,10 @@ async function uploadSubmittedFiles(data) {
 function resetForm() {
   const form = document.getElementById('aForm');
   if (form) form.reset();
-  uploadedPic  = null;
+  uploadedPic = null;
   uploadedDocs = [];
   generatedRef = '';
-  currentStep  = 1;
+  currentStep = 1;
   const zone = document.getElementById('picZone');
   if (zone) {
     zone.classList.remove('uploaded');
@@ -1185,9 +978,7 @@ function showToast() {
   setTimeout(() => toast.classList.remove('show'), 2200);
 }
 
-function showReqModal(type) {
-  showReq(type);
-}
+function showReqModal(type) { showReq(type); }
 
 function initReqModal() {
   const types = ['Freshmen', 'Transferee', 'ALS Graduate', 'Returnee'];
@@ -1207,7 +998,6 @@ function initReqModal() {
   });
 }
 
-// Categories that require a board/licensure exam - not allowed as 2nd choice
 const BOARD_EXAM_CATEGORIES = ['Education', 'Accountancy'];
 
 function renderProgramRadios(containerId, name, excludeBoardExam) {
@@ -1228,17 +1018,13 @@ function renderProgramRadios(containerId, name, excludeBoardExam) {
         if (btn) btn.addEventListener('click', () => renderProgramRadios(containerId, name, excludeBoardExam));
         return;
       }
-
       let visible = programs;
-
-      // For 2nd choice: exclude board-exam programs
       if (excludeBoardExam) {
         visible = visible.filter(p => {
           const cat = (p.category || '').trim();
           return !BOARD_EXAM_CATEGORIES.some(b => cat.toLowerCase() === b.toLowerCase());
         });
       }
-
       const programState = p => {
         const status = (p.status || '').toLowerCase();
         const slotsLeft = Number(p.slots_left ?? 0);
@@ -1246,22 +1032,17 @@ function renderProgramRadios(containerId, name, excludeBoardExam) {
         const byFlag = p.is_active !== false;
         const bySlots = Number.isFinite(slotsLeft) ? slotsLeft > 0 : true;
         const selectable = byStatus && byFlag && bySlots;
-        const reason = !byFlag || !byStatus
-          ? 'Admissions closed'
-          : (!bySlots ? 'Full slot' : '');
+        const reason = !byFlag || !byStatus ? 'Admissions closed' : (!bySlots ? 'Full slot' : '');
         return { selectable, reason, slotsLeft };
       };
-
       if (visible.length === 0) {
         el.innerHTML = '<p style="color:#6b7280;font-size:13px">No programs available at this time.</p>';
         return;
       }
-
       const selectableCount = visible.filter(p => programState(p).selectable).length;
       const notice = selectableCount < visible.length
         ? '<p style="font-size:12px;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 10px;margin-bottom:10px">Programs marked closed or full cannot be selected.</p>'
         : '';
-
       el.innerHTML = notice + visible.map(p => {
         const state = programState(p);
         const isBoardExam = BOARD_EXAM_CATEGORIES.some(b => (p.category || '').toLowerCase() === b.toLowerCase());
@@ -1274,8 +1055,6 @@ function renderProgramRadios(containerId, name, excludeBoardExam) {
         const disabledStyle = state.selectable ? '' : 'opacity:.62;cursor:not-allowed;background:#f8fafc;';
         return `<label class="oc" style="${disabledStyle}"><input type="radio" name="${name}" value="${escapeHtml(p.name)}" ${state.selectable ? '' : 'disabled'} style="width:15px;height:15px;accent-color:var(--navy);margin-top:2px"><span style="margin-left:10px;font-size:13px;font-weight:600">${escapeHtml(p.name)}${badge}${availabilityBadge}</span></label>`;
       }).join('');
-
-      // Re-bind conflict check after new radios are injected
       initCourseConflict();
     })
     .catch(() => {
@@ -1293,9 +1072,7 @@ function escapeHtml(s) {
 }
 
 function loadPrograms() {
-  // 1st choice: all active programs (board-exam ones shown with a badge)
   renderProgramRadios('firstChoiceList', 'firstChoice', false);
-  // 2nd choice: board-exam programs excluded
   renderProgramRadios('secondChoiceList', 'secondChoice', true);
 }
 
@@ -1310,7 +1087,7 @@ async function initPublicSettings() {
             <i data-iconsax="lock" style="color:#ef4444;width:40px;height:40px"></i>
           </div>
           <h1 style="color:#1e293b;margin-bottom:10px;font-size:24px;font-weight:700">Applications are currently closed</h1>
-          <p style="color:#64748b;max-width:400px;line-height:1.6">The online admission application for ${s.school_year || 'the current term'} is not yet open or has already ended. Please contact the admissions office for more information.</p>
+          <p style="color:#64748b;max-width:400px;line-height:1.6">The online admission application for ${s.school_year || 'the current term'} is not yet open or has already ended.</p>
           <a href="/" style="margin-top:24px;color:#254d82;text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px">
             <i data-iconsax="arrow-left" style="width:16px;height:16px"></i>
             Back to Home
@@ -1320,45 +1097,29 @@ async function initPublicSettings() {
       if (typeof iconsax !== 'undefined') iconsax.createIcons();
       return;
     }
-
-    // Update institution labels
     const instName = s.institution_name || 'Baliwag Polytechnic College';
     const instAddr = s.campus_address || 'Baliwag City, Bulacan, Philippines';
     const instEmail = s.admissions_email || 'admissions@btech.edu.ph';
-
-    // Header and Review labels
     const h1 = document.querySelector('.hdr-text h1');
     if (h1) h1.textContent = instName + ' Admissions Office';
-    
     const rsName = document.querySelector('.rs-school-name');
     if (rsName) rsName.textContent = instName.toUpperCase();
-
     const rsAddr = document.querySelector('.rs-addr');
-    if (rsAddr) {
-      rsAddr.innerHTML = `
-        ${instAddr} &nbsp;|&nbsp; Email: ${instEmail}<br>
-        Admission Period: ${s.school_year || 'S.Y. 2025-2026'}
-      `;
-    }
-
-    // Update footer in review
+    if (rsAddr) rsAddr.innerHTML = `${instAddr} &nbsp;|&nbsp; Email: ${instEmail}<br>Admission Period: ${s.school_year || 'S.Y. 2026-2027'}`;
     const rsFooterLeft = document.querySelector('.rs-footer-left');
     if (rsFooterLeft) rsFooterLeft.innerHTML = `${instName} - Office of Admissions &nbsp;|&nbsp; For Official Use Only`;
-
   } catch (e) {
     console.warn('Could not load public settings:', e);
   }
 }
 
 function showReq(type) {
-  const reqs  = DOCS_MAP[type] || [];
+  const reqs = DOCS_MAP[type] || [];
   const modal = document.getElementById('moReq');
-  const list  = document.getElementById('moReqList');
+  const list = document.getElementById('moReqList');
   const title = document.getElementById('moReqTitle');
   if (!modal || !list || !title) return;
-  
   title.textContent = `${type} - Required Documents`;
-  
   if (reqs.length) {
     list.innerHTML = reqs.map(r => `
       <div class="req-item-card">
@@ -1369,7 +1130,6 @@ function showReq(type) {
   } else {
     list.innerHTML = '<p style="text-align:center;color:#64748b;font-size:13px">No requirements listed for this category.</p>';
   }
-  
   if (typeof iconsax !== 'undefined') iconsax.createIcons();
   openModal('moReq');
 }

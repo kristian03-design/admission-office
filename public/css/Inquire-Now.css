@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   BTECH ONLINE ADMISSION — styles.css
+   BTECH ONLINE ADMISSION — Inquire-Now.css
    Aesthetic: Refined Institutional · Navy + Gold + Warm White
    Fonts: Nunito (body) · Playfair Display (document headers)
 ═══════════════════════════════════════════════════════════ */
@@ -86,31 +86,13 @@ html {
 body {
   font-family: 'Nunito', sans-serif;
   font-size: 14px;
-  color: var(--gray-800);
-  background: var(--cream);
-  background-image:
-    radial-gradient(circle at 20% 10%, rgba(37, 77, 130, .06) 0%, transparent 50%),
-    radial-gradient(circle at 80% 90%, rgba(45, 106, 79, .05) 0%, transparent 50%);
-  min-height: 100vh;
-}
-
-/* Professional application UI refresh */
-:root {
-  --app-ink: #102033;
-  --app-muted: #667085;
-  --app-line: #dbe3ee;
-  --app-panel: rgba(255, 255, 255, .92);
-  --app-canvas: #f5f7fb;
-  --app-focus: rgba(37, 77, 130, .16);
-}
-
-body {
-  color: var(--app-ink);
+  color: #102033;
   background:
     linear-gradient(rgba(219, 227, 238, .42) 1px, transparent 1px),
     linear-gradient(90deg, rgba(219, 227, 238, .42) 1px, transparent 1px),
     linear-gradient(180deg, #f7f9fc 0%, #eef3f8 48%, #f8f6f1 100%);
   background-size: 32px 32px, 32px 32px, auto;
+  min-height: 100vh;
 }
 
 /* ════════════════════════════════
@@ -120,8 +102,6 @@ body {
   background: var(--navy);
   border-bottom: 1px solid rgba(255, 255, 255, .12);
   box-shadow: 0 18px 44px rgba(16, 32, 51, .22);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   position: sticky;
   top: 0;
   z-index: 40;
@@ -137,18 +117,16 @@ body {
   gap: 18px;
 }
 
-.hdr-brand,
-.hdr-actions {
+.hdr-brand {
   display: flex;
   align-items: center;
-}
-
-.hdr-brand {
   gap: 14px;
   min-width: 0;
 }
 
 .hdr-actions {
+  display: flex;
+  align-items: center;
   gap: 12px;
   flex-shrink: 0;
 }
@@ -159,7 +137,6 @@ body {
   border-radius: 14px;
   background: rgba(255, 255, 255, .12);
   border: 1px solid rgba(255, 255, 255, .2);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), 0 10px 22px rgba(0, 0, 0, .18);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -178,8 +155,6 @@ body {
 }
 
 .hdr-text h1 {
-  font-family: 'Nunito', sans-serif;
-  /* FIX: fluid font so it never overflows on narrow headers */
   font-size: clamp(13px, 2.2vw, 18px);
   font-weight: 400;
   color: var(--white);
@@ -217,36 +192,6 @@ body {
 .home-link:hover {
   background: rgba(255, 255, 255, .18);
   transform: translateY(-1px);
-}
-
-.c-ring {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  transition: background .6s ease;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
-}
-
-.c-ring::before {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  border-radius: 50%;
-  background: var(--navy);
-  z-index: 1;
-}
-
-.c-ring span {
-  position: relative;
-  z-index: 2;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--white);
-  letter-spacing: -.3px;
 }
 
 /* ════════════════════════════════
@@ -293,7 +238,6 @@ body {
 .apply-hero h2 {
   margin-top: 10px;
   font-family: 'Playfair Display', serif;
-  /* FIX: fluid heading so it never breaks layout on small screens */
   font-size: clamp(22px, 4vw, 34px);
   line-height: 1.05;
   color: var(--navy);
@@ -303,7 +247,7 @@ body {
 .apply-hero p {
   max-width: 620px;
   margin-top: 8px;
-  color: var(--app-muted);
+  color: #667085;
   font-size: 14px;
   line-height: 1.6;
 }
@@ -330,6 +274,7 @@ body {
 
 /* ════════════════════════════════
    STEPPER CARD
+   — Hidden on step 12 via body.step-12
 ════════════════════════════════ */
 .stepper-card {
   position: sticky;
@@ -343,6 +288,12 @@ body {
   box-shadow: 0 18px 46px rgba(16, 32, 51, .10);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+/* ── KEY RULE: hide stepper on step 12 ── */
+body.step-12 .stepper-card {
+  display: none !important;
 }
 
 .stepper-meta {
@@ -355,7 +306,7 @@ body {
 .stepper-meta h2 {
   font-size: 10px;
   font-weight: 900;
-  color: var(--app-muted);
+  color: #667085;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -363,10 +314,9 @@ body {
 .stepper-meta span {
   font-size: 11px;
   font-weight: 900;
-  color: var(--app-muted);
+  color: #667085;
 }
 
-/* FIX: use grid so steps share space equally without connectors getting squished */
 .stepper-row {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -405,7 +355,6 @@ body {
 .step-btn.done {
   border-color: rgba(45, 106, 79, .36);
   background: #eef8f2;
-  box-shadow: none;
 }
 
 .step-btn .snum {
@@ -418,7 +367,7 @@ body {
   font-weight: 700;
   font-size: 11px;
   background: #fff;
-  color: var(--app-muted);
+  color: #667085;
   box-shadow: 0 1px 3px rgba(16, 32, 51, .08);
 }
 
@@ -438,7 +387,6 @@ body {
   font-weight: 900;
   color: #667085;
   text-align: center;
-  /* FIX: allow wrapping on small sizes instead of overflowing */
   white-space: normal;
   word-break: break-word;
   line-height: 1.15;
@@ -453,7 +401,6 @@ body {
   color: var(--sage);
 }
 
-/* connectors are hidden in grid layout */
 .step-conn {
   display: none;
 }
@@ -501,7 +448,7 @@ body {
    FORM CARD
 ════════════════════════════════ */
 .fcard {
-  background: var(--app-panel);
+  background: rgba(255, 255, 255, .92);
   border-radius: 18px;
   box-shadow: 0 22px 60px rgba(16, 32, 51, .12);
   overflow: hidden;
@@ -532,13 +479,11 @@ body {
   width: 148px;
   height: 148px;
   background: repeating-linear-gradient(45deg, rgba(255, 255, 255, .08) 0 2px, transparent 2px 10px);
-  border-radius: 0;
   transform: rotate(8deg);
 }
 
 .fhdr h2 {
   font-family: 'Playfair Display', serif;
-  /* FIX: fluid so long titles don't overflow on mobile */
   font-size: clamp(18px, 3.5vw, 26px);
   font-weight: 800;
   color: var(--white);
@@ -570,10 +515,8 @@ body {
   color: var(--navy);
   margin-top: 30px;
   margin-bottom: 16px;
-  padding: 0;
-  border-left: 0;
-  letter-spacing: .08em;
   text-transform: uppercase;
+  letter-spacing: .08em;
 }
 
 .stitle:first-child {
@@ -617,19 +560,17 @@ body {
   transition: var(--transition);
   outline: none;
   box-shadow: 0 1px 2px rgba(16, 32, 51, .04);
-  /* FIX: prevent inputs from overflowing their container */
   max-width: 100%;
 }
 
 .fi:hover {
   border-color: #b8c9dc;
-  background: #fff;
 }
 
 .fi:focus {
   border-color: var(--navy-mid);
   background: var(--white);
-  box-shadow: 0 0 0 4px var(--app-focus), 0 1px 2px rgba(16, 32, 51, .05);
+  box-shadow: 0 0 0 4px rgba(37, 77, 130, .16), 0 1px 2px rgba(16, 32, 51, .05);
 }
 
 .fi.err {
@@ -647,12 +588,6 @@ body {
 select.fi {
   padding-right: 42px;
   background-color: #fff;
-}
-
-input[type="date"].fi,
-input[type="number"].fi,
-input[type="tel"].fi {
-  font-variant-numeric: tabular-nums;
 }
 
 .ppfx {
@@ -717,20 +652,10 @@ input[type="tel"].fi {
 }
 
 /* ════════════════════════════════
-   GRIDS — FIX: fluid columns with
-   min() so they never overflow
+   GRIDS
 ════════════════════════════════ */
-.contact-email-grid {
-  display: grid;
-  /* FIX: use auto-fit so columns collapse gracefully */
-  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
-  gap: 12px;
-  width: 100%;
-}
-
 .personal-contact-grid {
   display: grid;
-  /* FIX: three responsive columns that stack to 1 on small screens */
   grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
   gap: 12px;
   align-items: start;
@@ -777,7 +702,6 @@ input[type="tel"].fi {
   background: #fff8e8 !important;
   border: 1px solid #ead7a1 !important;
   color: #8a6208 !important;
-  box-shadow: 0 1px 2px rgba(16, 32, 51, .05);
 }
 
 .gd {
@@ -786,11 +710,9 @@ input[type="tel"].fi {
   border-radius: var(--radius-md);
   padding: 16px 20px;
   margin-top: 14px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8);
 }
 
 .gd-avg {
-  font-family: 'Nunito', sans-serif;
   font-size: 36px;
   color: var(--navy);
   line-height: 1;
@@ -892,49 +814,20 @@ input[type="tel"].fi {
   box-shadow: 0 18px 44px rgba(16, 32, 51, .14);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  /* FIX: respect notch / home-bar on iPhones */
   padding-bottom: max(14px, env(safe-area-inset-bottom));
 }
 
 .nav-hint {
   font-size: 12px;
-  color: var(--app-muted);
+  color: #667085;
   font-weight: 800;
 }
 
 /* ════════════════════════════════
    UPLOAD ZONES
 ════════════════════════════════ */
-.upzone {
-  border: 2px dashed #b5cce4;
-  border-radius: var(--radius-md);
-  background: #f3f8fd;
-  padding: 28px 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: var(--transition);
-  position: relative;
-  overflow: hidden;
-}
-
-.upzone:hover,
-.upzone.drag {
-  border-color: var(--navy-mid);
-  background: #dceaf7;
-}
-
-.upzone input[type="file"] {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-}
-
 .upload-photo-panel {
   display: grid;
-  /* FIX: collapse left column at mid-widths without breaking */
   grid-template-columns: minmax(0, 168px) minmax(0, 1fr);
   gap: 20px;
   align-items: start;
@@ -997,46 +890,6 @@ input[type="tel"].fi {
   justify-content: center;
 }
 
-.doc-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--gray-50);
-  border: 1.5px solid var(--gray-200);
-  border-radius: var(--radius-sm);
-  padding: 12px 16px;
-  transition: var(--transition);
-}
-
-.doc-item.ok {
-  border-color: #7dd3b0;
-  background: #f0fdf8;
-}
-
-.doc-icon {
-  font-size: 20px;
-  flex-shrink: 0;
-}
-
-.doc-remove {
-  margin-left: auto;
-  background: #fee2e2;
-  color: var(--red);
-  border: none;
-  border-radius: 6px;
-  padding: 4px 10px;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--transition);
-  font-family: 'Nunito', sans-serif;
-  white-space: nowrap;
-}
-
-.doc-remove:hover {
-  background: #fca5a5;
-}
-
 /* ════════════════════════════════
    SAVE TOAST
 ════════════════════════════════ */
@@ -1078,7 +931,6 @@ input[type="tel"].fi {
   align-items: center;
   justify-content: center;
   padding: 16px;
-  /* FIX: keeps modal off screen edges on mobile */
   z-index: 1000;
   opacity: 0;
   pointer-events: none;
@@ -1099,12 +951,10 @@ input[type="tel"].fi {
   padding: 36px;
   max-width: 460px;
   width: 100%;
-  /* FIX: was 92%, now fills modal container properly */
   transform: translateZ(0) scale(.92) translateY(24px);
   transition: all .4s cubic-bezier(.4, 0, .2, 1);
   box-shadow: var(--shadow-xl);
   will-change: transform, opacity;
-  /* FIX: modal content scrolls if it exceeds viewport height */
   max-height: calc(100vh - 32px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -1116,22 +966,21 @@ input[type="tel"].fi {
 
 /* ════════════════════════════════
    REVIEW DOCUMENT SHEET
+   — Step 12 specific layout
 ════════════════════════════════ */
 .review-wrap {
-  max-width: 800px;
-  margin: 0 auto;
-  /* FIX: allow horizontal scroll on the review sheet on narrow screens
-     instead of breaking the outer layout */
+  width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
+/* Action bar */
 .review-action-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   margin-bottom: 18px;
   background: var(--white);
   border-radius: 16px;
@@ -1141,10 +990,10 @@ input[type="tel"].fi {
 }
 
 .review-action-bar h3 {
-  font-family: 'Nunito', sans-serif;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 700;
   color: var(--gray-800);
+  margin: 0;
 }
 
 .review-action-bar p {
@@ -1155,23 +1004,25 @@ input[type="tel"].fi {
 
 .action-btns {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
-/* FIX: give the sheet a minimum width so its internal tables don't crumble;
-   the parent .review-wrap handles scrolling instead */
+/* The document sheet — min-width prevents internal collapse;
+   .review-wrap handles horizontal scroll on mobile           */
 .review-sheet {
   background: #fff;
-  min-width: 560px;
+  min-width: 580px;
+  width: 100%;
   font-family: 'Times New Roman', Times, serif;
   font-size: 11.5px;
   color: #111;
-  border: 3px double #1b3557;
+  border: 2px solid #1b3557;
   outline: 1px solid #1b3557;
-  outline-offset: 4px;
+  outline-offset: 3px;
   box-shadow: 0 8px 40px rgba(27, 53, 87, .18);
   position: relative;
+  box-sizing: border-box;
 }
 
 .review-sheet::before,
@@ -1197,16 +1048,16 @@ input[type="tel"].fi {
   border-width: 2px 2px 0 0;
 }
 
+/* Header */
 .rs-header {
   background: #fff;
-  border-bottom: 3px solid var(--navy);
-  padding: 20px 24px 18px;
+  border-bottom: 2px solid var(--navy);
+  padding: 18px 22px 16px;
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
   position: relative;
   flex-wrap: wrap;
-  /* FIX: wrap when very narrow */
 }
 
 .rs-header::before {
@@ -1220,11 +1071,11 @@ input[type="tel"].fi {
 }
 
 .rs-logo-box {
-  width: 78px;
-  height: 78px;
-  border: 2px solid var(--navy);
-  border-radius: 4px;
-  background: #f8f9fb;
+  width: 72px;
+  height: 72px;
+  border: 1.5px solid var(--navy);
+  border-radius: 3px;
+  background: #f0f4f8;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1241,21 +1092,20 @@ input[type="tel"].fi {
 .rs-school-info {
   flex: 1;
   text-align: center;
-  min-width: 160px;
+  min-width: 140px;
 }
 
 .rs-republic-line {
-  font-family: 'Times New Roman', serif;
-  font-size: 9.5px;
+  font-size: 9px;
   letter-spacing: 1.2px;
   text-transform: uppercase;
-  color: #555;
+  color: #666;
   margin-bottom: 3px;
 }
 
 .rs-school-name {
   font-family: 'Playfair Display', 'Times New Roman', serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 800;
   color: var(--navy);
   letter-spacing: .5px;
@@ -1263,38 +1113,37 @@ input[type="tel"].fi {
 }
 
 .rs-subtitle {
-  font-family: 'Times New Roman', serif;
-  font-size: 10px;
-  color: #444;
+  font-size: 9.5px;
+  color: #555;
   font-style: italic;
   margin-top: 2px;
 }
 
 .rs-divider-line {
-  width: 60%;
+  width: 55%;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
-  margin: 6px auto;
+  margin: 5px auto;
 }
 
 .rs-addr {
-  font-size: 9px;
-  color: #666;
-  line-height: 1.6;
+  font-size: 8.5px;
+  color: #777;
+  line-height: 1.7;
 }
 
 .rs-pic-box {
-  width: 90px;
-  height: 100px;
-  border: 1.5px solid #333;
+  width: 86px;
+  height: 98px;
+  border: 1.5px solid #444;
   border-radius: 2px;
   background: #f5f5f5;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   overflow: hidden;
-  flex-direction: column;
   gap: 2px;
 }
 
@@ -1305,24 +1154,24 @@ input[type="tel"].fi {
 }
 
 .rs-pic-placeholder {
-  font-family: 'Times New Roman', serif;
   font-size: 9px;
+  color: #bbb;
   text-align: center;
-  color: #aaa;
-  font-weight: 400;
   line-height: 1.5;
+  font-family: 'Times New Roman', serif;
 }
 
 .rs-pic-label {
   font-size: 7.5px;
-  color: #aaa;
+  color: #bbb;
   text-align: center;
-  font-family: 'Times New Roman', serif;
   border-top: 1px solid #ddd;
   padding-top: 2px;
   width: 100%;
+  font-family: 'Times New Roman', serif;
 }
 
+/* Title band */
 .rs-title-band {
   background: var(--navy);
   padding: 10px 24px;
@@ -1331,13 +1180,15 @@ input[type="tel"].fi {
 
 .rs-title-band h3 {
   font-family: 'Playfair Display', 'Times New Roman', serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   color: #fff;
   letter-spacing: 2px;
   text-transform: uppercase;
+  margin: 0;
 }
 
+/* Meta strip */
 .rs-form-meta {
   display: flex;
   justify-content: space-between;
@@ -1348,17 +1199,17 @@ input[type="tel"].fi {
   border-bottom: 1.5px solid var(--gold-border);
   padding: 6px 20px;
   font-size: 9.5px;
-  color: #444;
+  color: #555;
   font-family: 'Times New Roman', serif;
 }
 
-.rs-form-meta .ref-block {
+.ref-block {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.rs-form-meta .ref-key {
+.ref-key {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .5px;
@@ -1366,7 +1217,7 @@ input[type="tel"].fi {
   font-size: 8.5px;
 }
 
-.rs-form-meta .ref-val {
+.ref-val {
   font-size: 12px;
   font-weight: 700;
   color: var(--navy);
@@ -1374,14 +1225,15 @@ input[type="tel"].fi {
   font-family: 'Playfair Display', serif;
 }
 
-.rs-form-meta .instr {
+.instr {
   font-style: italic;
-  color: #666;
+  color: #777;
   font-size: 9px;
   text-align: center;
   flex: 1;
 }
 
+/* Sections */
 .rs-section {
   border-bottom: 1.5px solid #ccc;
 }
@@ -1391,13 +1243,13 @@ input[type="tel"].fi {
 }
 
 .rs-sec-hdr {
-  background: linear-gradient(90deg, #f0f4f8, #fafbfc);
+  background: linear-gradient(90deg, #eef2f8, #fafbfc);
   border-bottom: 1px solid #d0d8e4;
   border-left: 4px solid var(--navy);
   padding: 6px 14px 6px 12px;
   font-family: 'Times New Roman', serif;
   font-weight: 700;
-  font-size: 10px;
+  font-size: 9.5px;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--navy);
@@ -1407,35 +1259,39 @@ input[type="tel"].fi {
 }
 
 .rs-sec-num {
-  font-size: 9px;
-  color: #888;
+  font-size: 8.5px;
+  color: #999;
   font-style: italic;
   font-weight: 400;
   letter-spacing: 0;
   text-transform: none;
 }
 
+/* Tables — fixed layout stops auto-expansion */
 .rs-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .rs-table td {
   border: 1px solid #d0d8e4;
-  padding: 6px 12px;
-  font-size: 11px;
+  padding: 6px 11px;
+  font-size: 10.5px;
   vertical-align: middle;
   line-height: 1.4;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .rs-table td.lbl {
   font-family: 'Times New Roman', serif;
   font-weight: 700;
   background: #f7f9fb;
-  width: 148px;
-  white-space: nowrap;
+  width: 130px;
+  white-space: normal;
   color: #1a2e4a;
-  font-size: 10px;
+  font-size: 9.5px;
   letter-spacing: .1px;
   border-right: 1px solid #c8d4e0;
 }
@@ -1443,11 +1299,40 @@ input[type="tel"].fi {
 .rs-table td.val {
   font-family: 'Times New Roman', serif;
   color: #111;
-  font-weight: 400;
-  min-width: 100px;
+  font-size: 11px;
+}
+
+/* Badges */
+.rs-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: #e8f5ec;
+  color: var(--sage);
+  border: 1px solid #a3d9b5;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+  font-family: 'Times New Roman', serif;
+}
+
+.rs-badge.no {
+  background: #fef2f2;
+  color: var(--red);
+  border-color: #fca5a5;
+}
+
+.sex-check {
+  display: inline-block;
+  margin-right: 24px;
+  font-family: 'Times New Roman', serif;
   font-size: 11.5px;
 }
 
+/* Docs grid */
 .rs-docs-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1470,47 +1355,13 @@ input[type="tel"].fi {
   border-right: none;
 }
 
-.rs-doc-item .doc-check {
+.doc-check {
   color: var(--sage);
   font-size: 12px;
   flex-shrink: 0;
 }
 
-.rs-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  background: #e8f5ec;
-  color: var(--sage);
-  border: 1px solid #a3d9b5;
-  font-size: 9.5px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 2px;
-  letter-spacing: .3px;
-  font-family: 'Times New Roman', serif;
-  text-transform: uppercase;
-}
-
-.rs-badge.no {
-  background: #fef2f2;
-  color: var(--red);
-  border-color: #fca5a5;
-}
-
-.rs-badge.up {
-  background: #eff6ff;
-  color: var(--navy-mid);
-  border-color: #bfdbfe;
-}
-
-.sex-check {
-  display: inline-block;
-  margin-right: 24px;
-  font-family: 'Times New Roman', serif;
-  font-size: 11.5px;
-}
-
+/* Declaration */
 .rs-declaration {
   padding: 10px 18px;
   font-family: 'Times New Roman', serif;
@@ -1522,6 +1373,7 @@ input[type="tel"].fi {
   text-align: justify;
 }
 
+/* Signature row */
 .rs-sig-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -1546,56 +1398,12 @@ input[type="tel"].fi {
 .rs-sig-lbl {
   font-family: 'Times New Roman', serif;
   font-size: 8.5px;
-  color: #555;
-  font-weight: 400;
+  color: #666;
   text-transform: uppercase;
   letter-spacing: .5px;
 }
 
-.rs-official-use {
-  background: #f7f9fb;
-  border-bottom: 1.5px solid #ccc;
-  padding: 10px 18px;
-}
-
-.rs-official-use-hdr {
-  font-family: 'Times New Roman', serif;
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: #999;
-  margin-bottom: 8px;
-}
-
-.rs-official-cells {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  border: 1px solid #d0d8e4;
-}
-
-.rs-official-cell {
-  padding: 12px 10px 6px;
-  border-right: 1px solid #d0d8e4;
-  text-align: center;
-}
-
-.rs-official-cell:last-child {
-  border-right: none;
-}
-
-.rs-official-cell-lbl {
-  font-family: 'Times New Roman', serif;
-  font-size: 8.5px;
-  color: #888;
-  margin-top: 6px;
-  border-top: 1px solid #999;
-  padding-top: 3px;
-  text-transform: uppercase;
-  letter-spacing: .3px;
-}
-
+/* Footer */
 .rs-footer {
   background: var(--navy);
   padding: 8px 20px;
@@ -1607,7 +1415,6 @@ input[type="tel"].fi {
   font-family: 'Times New Roman', serif;
   font-size: 8.5px;
   color: rgba(255, 255, 255, .7);
-  letter-spacing: .4px;
 }
 
 .rs-footer-left {
@@ -1655,9 +1462,7 @@ body.site-loader-lock {
   display: flex;
   align-items: center;
   justify-content: center;
-  background:
-    radial-gradient(circle at 50% 42%, rgba(217, 154, 34, .10), transparent 28%),
-    linear-gradient(135deg, #f8f6f1 0%, #ffffff 48%, #eef3f9 100%);
+  background: linear-gradient(135deg, #f8f6f1 0%, #ffffff 48%, #eef3f9 100%);
   opacity: 1;
   visibility: visible;
   transition: opacity .45s ease, visibility .45s ease;
@@ -1687,7 +1492,6 @@ body.site-loader-lock {
   justify-content: center;
   background: rgba(255, 255, 255, .86);
   border: 1px solid rgba(27, 53, 87, .12);
-  box-shadow: 0 18px 55px rgba(27, 53, 87, .16);
   animation: loaderFloat 1.8s ease-in-out infinite;
 }
 
@@ -1699,7 +1503,6 @@ body.site-loader-lock {
 }
 
 .site-loader__eyebrow {
-  margin: 0;
   color: var(--gold);
   font-size: 11px;
   font-weight: 900;
@@ -1708,7 +1511,6 @@ body.site-loader-lock {
 }
 
 .site-loader__title {
-  margin: 8px 0 0;
   color: var(--navy);
   font-family: 'Playfair Display', Georgia, serif;
   font-size: clamp(1.55rem, 4vw, 2.1rem);
@@ -1738,26 +1540,26 @@ body.site-loader-lock {
 
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateY(0)
   }
 
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-8px)
   }
 }
 
 @keyframes loaderBar {
   0% {
-    transform: translateX(-110%);
+    transform: translateX(-110%)
   }
 
   100% {
-    transform: translateX(260%);
+    transform: translateX(260%)
   }
 }
 
 /* ════════════════════════════════
-   REQUIREMENTS COMPACT UI
+   REQUIREMENTS MODAL
 ════════════════════════════════ */
 .req-link-btn {
   margin-left: auto;
@@ -1806,23 +1608,10 @@ body.site-loader-lock {
   font-size: 13.5px;
   color: #334155;
   font-weight: 500;
-  transition: all .2s ease;
-}
-
-.req-item-card:hover {
-  background: #fff;
-  border-color: var(--navy-pale);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, .03);
-}
-
-.req-item-card i {
-  width: 16px;
-  height: 16px;
-  color: #64748b;
 }
 
 /* ════════════════════════════════
-   PRINT STYLES
+   PRINT
 ════════════════════════════════ */
 @media print {
 
@@ -1843,6 +1632,7 @@ body.site-loader-lock {
   .review-sheet {
     outline: none;
     box-shadow: none !important;
+    min-width: unset;
   }
 
   .review-wrap {
@@ -1851,16 +1641,8 @@ body.site-loader-lock {
 }
 
 /* ════════════════════════════════
-   RESPONSIVE BREAKPOINTS
-   ─────────────────────────────
-   1180px  large desktop (default)
-    900px  tablet / small laptop
-    640px  large phone / phablet
-    480px  ← NEW: phone landscape / small phone portrait
-    380px  ← NEW: very small phones (SE, Galaxy A series)
+   RESPONSIVE — 900px
 ════════════════════════════════ */
-
-/* ── 900px ── */
 @media (max-width: 900px) {
   .apply-hero {
     flex-direction: column;
@@ -1872,7 +1654,6 @@ body.site-loader-lock {
     justify-content: flex-start;
   }
 
-  /* Stepper becomes non-sticky on tablet to avoid huge sticky overhead */
   .stepper-card {
     position: relative;
     top: auto;
@@ -1882,7 +1663,6 @@ body.site-loader-lock {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
-  /* personal grid collapses to 2 columns */
   .personal-contact-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -1892,7 +1672,9 @@ body.site-loader-lock {
   }
 }
 
-/* ── 640px ── */
+/* ════════════════════════════════
+   RESPONSIVE — 640px
+════════════════════════════════ */
 @media (max-width: 640px) {
   .hdr-inner {
     padding: 10px 14px;
@@ -1904,22 +1686,8 @@ body.site-loader-lock {
     border-radius: 10px;
   }
 
-  /* collapse home-link to icon only */
-  .home-link {
-    width: 38px;
-    min-width: 38px;
-    padding: 0;
-    justify-content: center;
-    font-size: 0;
-  }
-
-  .home-link svg {
-    margin: 0;
-  }
-
-  .c-ring {
-    width: 46px;
-    height: 46px;
+  .hdr-text {
+    display: none;
   }
 
   .main-wrap {
@@ -1936,7 +1704,6 @@ body.site-loader-lock {
     border-radius: 14px;
   }
 
-  /* FIX: 4 columns — shows labels only on wider phones, hidden on very small */
   .stepper-row {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 5px;
@@ -1953,7 +1720,6 @@ body.site-loader-lock {
     font-size: 10px;
   }
 
-  /* hide labels at 640 to keep stepper tight */
   .step-btn .slbl {
     display: none;
   }
@@ -1963,7 +1729,7 @@ body.site-loader-lock {
   }
 
   .fhdr {
-    padding: 20px 20px;
+    padding: 20px;
   }
 
   .fbdy {
@@ -1975,8 +1741,6 @@ body.site-loader-lock {
     min-height: 48px;
   }
 
-  /* FIX: all grids go single-column on mobile */
-  .contact-email-grid,
   .personal-contact-grid {
     grid-template-columns: 1fr;
   }
@@ -1985,7 +1749,6 @@ body.site-loader-lock {
     grid-column: auto;
   }
 
-  /* photo upload stacks vertically */
   .upload-photo-panel {
     grid-template-columns: 1fr;
     padding: 16px;
@@ -1995,7 +1758,6 @@ body.site-loader-lock {
     margin: 0 auto;
   }
 
-  /* sticky nav stays above home indicator */
   .nav-bar {
     bottom: 10px;
     flex-wrap: wrap;
@@ -2011,10 +1773,11 @@ body.site-loader-lock {
     padding-right: 12px;
   }
 
-  /* review sheet: action bar stacks */
+  /* Action bar stacks on mobile */
   .review-action-bar {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    padding: 14px 16px;
   }
 
   .action-btns {
@@ -2022,7 +1785,12 @@ body.site-loader-lock {
     width: 100%;
   }
 
-  /* Review sheet internal layouts */
+  .action-btns .bprint,
+  .action-btns .bsub {
+    width: 100%;
+    justify-content: center;
+  }
+
   .rs-docs-grid {
     grid-template-columns: 1fr;
   }
@@ -2040,17 +1808,15 @@ body.site-loader-lock {
     border-bottom: 1px solid #d0d8e4;
   }
 
-  .rs-official-cells {
-    grid-template-columns: 1fr 1fr;
-  }
-
   .rs-form-meta {
     flex-direction: column;
     text-align: center;
   }
 }
 
-/* ── 480px — NEW ── */
+/* ════════════════════════════════
+   RESPONSIVE — 480px
+════════════════════════════════ */
 @media (max-width: 480px) {
   .apply-hero h2 {
     font-size: 22px;
@@ -2060,7 +1826,6 @@ body.site-loader-lock {
     font-size: 13px;
   }
 
-  /* stepper shows 3 steps at a time on small phones */
   .stepper-row {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 4px;
@@ -2090,31 +1855,21 @@ body.site-loader-lock {
     border-radius: 16px;
   }
 
-  /* toast hugs bottom on small screens */
   .save-toast {
     right: 12px;
     bottom: 18px;
     font-size: 11px;
     padding: 9px 14px;
   }
-
-  /* make official-use single col on very narrow */
-  .rs-official-cells {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
-/* ── 380px — NEW: very small phones ── */
+/* ════════════════════════════════
+   RESPONSIVE — 380px
+════════════════════════════════ */
 @media (max-width: 380px) {
-  .hdr-text h1 {
-    font-size: 13px;
-  }
-
   .hdr-text p {
     display: none;
   }
-
-  /* hide subtitle to save space */
 
   .stepper-row {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2145,16 +1900,12 @@ body.site-loader-lock {
   }
 
   .nav-bar {
-    padding: 10px 10px;
+    padding: 10px;
   }
 
   .nav-bar .bp,
   .nav-bar .bs {
     font-size: 11px;
     padding: 9px 10px;
-  }
-
-  .rs-official-cells {
-    grid-template-columns: 1fr;
   }
 }

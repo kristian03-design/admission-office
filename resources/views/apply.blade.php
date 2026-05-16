@@ -5,6 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BTECH Online Admission Application</title>
+  <script>
+    window.ICONSAX_SPRITE_PATH = "{{ asset('assets/iconsax-sprite.svg') }}";
+  </script>
   @include('partials.iconsax')
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;" />
   <link rel="stylesheet" href="{{ asset('css/Inquire-Now.css') }}?v=6">
@@ -74,13 +77,11 @@
         </div>
       </div>
 
-      <!-- RIGHT SIDE: Back button + progress ring -->
       <div class="hdr-actions">
         <a href="{{ route('home') }}" class="home-link">
           <i data-iconsax="chevron-left" style="width:14px;height:14px;stroke-width:2.5"></i>
           Back to Home
         </a>
-        <div class="c-ring" id="ring"><span id="pctTxt">0%</span></div>
       </div>
 
     </div>
@@ -215,10 +216,7 @@
             <div class="personal-contact-grid" style="margin-top:12px">
               <div>
                 <label class="fl">Civil Status <span style="color:var(--red)">*</span></label>
-                <select
-                  name="civilStatus"
-                  class="fi"
-                  style="padding-right:36px">
+                <select name="civilStatus" class="fi" style="padding-right:36px">
                   <option value="">Select civil status</option>
                   <option value="Single">Single</option>
                   <option value="Married">Married</option>
@@ -236,7 +234,7 @@
               </div>
             </div>
             <div id="marriageNoteDiv" style="display:none;background:#fff3cd;border:1.5px solid #ffc107;border-radius:8px;padding:10px 12px;margin-top:12px">
-              <p style="font-size:12px;color:#856404;font-weight:600;margin-bottom:4px">âš  Marriage Certificate Required</p>
+              <p style="font-size:12px;color:#856404;font-weight:600;margin-bottom:4px">⚠ Marriage Certificate Required</p>
               <p style="font-size:11px;color:#856404">Please upload a scanned copy of your marriage certificate in the documents section.</p>
             </div>
             <p class="stitle">Mother's Information <span style="font-size:11px;font-weight:400;color:#9aa5b1;text-transform:none">(Refer to your PSA Birth Certificate)</span></p>
@@ -572,8 +570,6 @@
       <!-- STEP 12 - REVIEW & SUBMIT -->
       <div class="sc" data-step="12">
         <div class="review-wrap">
-
-          <!-- Action Bar -->
           <div class="review-action-bar no-print">
             <div>
               <h3>Application Review</h3>
@@ -591,10 +587,7 @@
             </div>
           </div>
 
-          <!-- REVIEW DOCUMENT SHEET -->
           <div class="review-sheet" id="reviewSheet">
-
-            <!-- Letterhead -->
             <div class="rs-header">
               <div class="rs-logo-box">
                 <img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
@@ -607,7 +600,7 @@
                 <div class="rs-divider-line"></div>
                 <div class="rs-addr">
                   Baliwag City, Bulacan, Philippines &nbsp;|&nbsp; Tel: (044) xxx-xxxx &nbsp;|&nbsp; Fax: (044) xxx-xxxx<br>
-                  Email: admissions@btech.edu.ph &nbsp;|&nbsp; Website: www.btech.edu.ph
+                  Email: btechadmissionoffice@gmail.com &nbsp;|&nbsp; Website: www.btech.edu.ph
                 </div>
               </div>
               <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0">
@@ -618,12 +611,10 @@
               </div>
             </div>
 
-            <!-- Form Title -->
             <div class="rs-title-band">
               <h3>College Admission Application Form</h3>
             </div>
 
-            <!-- Ref / Date Meta -->
             <div class="rs-form-meta">
               <div class="ref-block">
                 <span class="ref-key">Reference No.</span>
@@ -636,7 +627,6 @@
               </div>
             </div>
 
-            <!-- Section I -->
             <div class="rs-section">
               <div class="rs-sec-hdr">Section I - Applicant's Personal Information <span class="rs-sec-num">As it appears on official government ID</span></div>
               <table class="rs-table">
@@ -673,7 +663,6 @@
               </table>
             </div>
 
-            <!-- Section II -->
             <div class="rs-section">
               <div class="rs-sec-hdr">Section II - Family &amp; Contact Information</div>
               <table class="rs-table">
@@ -692,7 +681,6 @@
               </table>
             </div>
 
-            <!-- Section III -->
             <div class="rs-section">
               <div class="rs-sec-hdr">Section III - Academic Details &amp; Course Preference</div>
               <table class="rs-table">
@@ -717,7 +705,6 @@
               </table>
             </div>
 
-            <!-- Section IV -->
             <div class="rs-section">
               <div class="rs-sec-hdr">Section IV - Applicant Classification</div>
               <table class="rs-table">
@@ -740,13 +727,11 @@
               </table>
             </div>
 
-            <!-- Section V -->
             <div class="rs-section">
               <div class="rs-sec-hdr">Section V - Uploaded Photo</div>
               <div class="rs-docs-grid" id="rv-docs"></div>
             </div>
 
-            <!-- Section VI -->
             <div class="rs-section">
               <div class="rs-sec-hdr">Section VI - Applicant's Declaration</div>
               <div class="rs-declaration">
@@ -771,26 +756,6 @@
               </div>
             </div>
 
-            <!-- Official Use Only -->
-            <div class="rs-official-use">
-              <div class="rs-official-use-hdr">For Official Use Only</div>
-              <div class="rs-official-cells">
-                <div class="rs-official-cell">
-                  <div class="rs-official-cell-lbl">Received by</div>
-                </div>
-                <div class="rs-official-cell">
-                  <div class="rs-official-cell-lbl">Verified by</div>
-                </div>
-                <div class="rs-official-cell">
-                  <div class="rs-official-cell-lbl">Approved by</div>
-                </div>
-                <div class="rs-official-cell">
-                  <div class="rs-official-cell-lbl">Remarks</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Footer -->
             <div class="rs-footer">
               <span class="rs-footer-left">BTECH - Office of Admissions &nbsp;|&nbsp; For Official Use Only</span>
               <span class="rs-footer-right">Ref: <span id="rv-ref2"></span></span>
@@ -798,9 +763,8 @@
 
             <div class="rs-corner-bl"></div>
             <div class="rs-corner-br"></div>
-
-          </div><!-- /review-sheet -->
-        </div><!-- /review-wrap -->
+          </div>
+        </div>
       </div>
 
       <!-- Nav Bar -->
@@ -866,7 +830,6 @@
     </div>
   </div>
 
-  <!-- API base is auto-detected by api-config.js (e.g. /admission-office/api on XAMPP). -->
   <script src="{{ asset('js/api-config.js') }}?v=9"></script>
   <script src="{{ asset('js/admission-api.js') }}?v=13"></script>
   <script src="{{ asset('js/form.js') }}?v=11"></script>
@@ -875,7 +838,6 @@
       iconsax.createIcons();
     }
 
-    // Hide site loader
     function hideSiteLoader() {
       const loader = document.getElementById('site-loader');
       if (!loader) return;
@@ -887,7 +849,7 @@
     window.addEventListener('load', () => {
       setTimeout(hideSiteLoader, 350);
     });
-    setTimeout(hideSiteLoader, 4500); // fallback
+    setTimeout(hideSiteLoader, 4500);
   </script>
 </body>
 
