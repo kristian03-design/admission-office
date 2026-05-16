@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Application;
 use App\Models\Program;
+use App\Models\Interview;
 use App\Models\SystemSetting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
@@ -253,7 +254,7 @@ class ApplicationController extends Controller
     {
         $validated = $request->validate([
             'ids' => ['required', 'array'],
-            'ids.*' => ['required', 'string', 'exists:applications,id'],
+            'ids.*' => ['required', 'exists:applications,id'],
         ]);
 
         $ids = $validated['ids'];
@@ -274,6 +275,9 @@ class ApplicationController extends Controller
                         }
                     }
                 }
+                // Delete related interviews first to maintain database integrity
+                Interview::where('application_id', $application->id)->delete();
+                
                 $application->delete();
             }
         });
@@ -286,19 +290,23 @@ class ApplicationController extends Controller
     {
         $application = Application::findOrFail($id);
         
-        // Restore slot if application was tied to a program
-        if ($application->program_id) {
-            $program = Program::find($application->program_id);
-            if ($program) {
-                $program->increment('slots_left');
-                // Re-activate if it was full
-                if (!$program->is_active && $program->slots_left > 0) {
-                    $program->update(['is_active' => $this->databaseBoolean(true)]);
+        DB::transaction(function () use ($application) {
+            // Restore slot
+            if ($application->program_id) {
+                $program = Program::find($application->program_id);
+                if ($program) {
+                    $program->increment('slots_left');
+                    if (!$program->is_active && $program->slots_left > 0) {
+                        $program->update(['is_active' => $this->databaseBoolean(true)]);
+                    }
                 }
             }
-        }
 
-        $application->delete();
+            // Delete related interviews
+            Interview::where('application_id', $application->id)->delete();
+
+            $application->delete();
+        });
         Cache::forget('welcome_page_data');
 
         return response()->json(['message' => 'Application deleted successfully']);
