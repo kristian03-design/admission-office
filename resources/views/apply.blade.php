@@ -211,7 +211,6 @@
         </div>
       </div>
     </div>
-  </div>
 
     <!-- STEP 3 -->
     <div class="sc" data-step="3">
@@ -635,7 +634,7 @@
 <!-- API base is auto-detected by api-config.js (e.g. /admission-office/api on XAMPP). -->
 <script src="{{ asset('js/api-config.js') }}?v=9"></script>
 <script src="{{ asset('js/admission-api.js') }}?v=13"></script>
-<script src="{{ asset('js/form.js') }}?v=10"></script>
+<script src="{{ asset('js/form.js') }}?v=11"></script>
 <script>
   if (typeof iconsax !== 'undefined') {
     iconsax.createIcons();

@@ -46,7 +46,7 @@ const STEP_PANELS = {
   12: [11],  // Review
 };
 
-const PSGC_API_BASE = 'https://psgc.gitlab.io/api';
+// PSGC_API_BASE is already declared in admission-api.js
 const ZIP_BY_CITY = {
   // Bulacan
   'Angat': '3012',
