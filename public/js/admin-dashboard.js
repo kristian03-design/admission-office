@@ -57,6 +57,7 @@ function showConfirmModal(options) {
     modal.style.display = 'none';
     confirmBtn.onclick = null;
     cancelBtn.onclick = null;
+    modal.onclick = null;
   };
 
   confirmBtn.onclick = () => {
@@ -65,6 +66,10 @@ function showConfirmModal(options) {
   };
 
   cancelBtn.onclick = cleanup;
+
+  modal.onclick = (e) => {
+    if (e.target === modal) cleanup();
+  };
 }
 
 /* ─── DATA (from API only) ─── */
@@ -4333,30 +4338,6 @@ function renderNotifications() {
   }
 
   if (typeof iconsax !== 'undefined') iconsax.createIcons();
-  return;
-
-  if (hasNotif) {
-    body.innerHTML = notifications.map(n => `
-      <div class="notif-item notif-item--unread" data-app-id="${n.appId != null ? n.appId : ''}" data-app-ref="${escapeHtml(n.ref || '')}" role="button" tabindex="0">
-        <div class="notif-content">
-          <div class="notif-badge-dot"></div>
-          <div class="notif-text">
-            <div class="notif-msg"><strong>${escapeHtml(n.title)}</strong> — ${escapeHtml(n.message)}</div>
-            <div class="notif-time">${escapeHtml(n.program)} • ${escapeHtml(n.time)}</div>
-          </div>
-        </div>
-      </div>
-    `).join('');
-    buttons.querySelectorAll('.notif-btn').forEach(b => b.style.display = 'block');
-  } else {
-    body.innerHTML = `
-      <div class="notif-empty">
-        <i data-iconsax="bell-off" style="width:48px;height:48px;opacity:0.3;margin-bottom:16px"></i>
-        <p>No new notifications</p>
-      </div>
-    `;
-    buttons.querySelectorAll('.notif-btn').forEach(b => b.style.display = 'none');
-  }
 }
 
 function toggleNotifications() {
@@ -4385,6 +4366,7 @@ function updatePendingBadge() {
   const dot = document.getElementById('notifDot');
   if (badge) {
     badge.textContent = count;
+    badge.style.display = count > 0 ? '' : 'none';
     badge.classList.toggle('has-pending', count > 0);
   }
   if (dot) dot.style.display = count > 0 ? '' : 'none';

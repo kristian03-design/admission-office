@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BTECH Online Admission Application</title>
-  <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}?v=1" />
   @include('partials.iconsax')
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
   <link rel="stylesheet" href="{{ asset('css/Inquire-Now.css') }}?v=6">
@@ -606,9 +605,9 @@
 </div>
 
 <!-- API base is auto-detected by api-config.js (e.g. /admission-office/api on XAMPP). -->
-<script src="{{ asset('js/api-config.js') }}?v=8"></script>
-<script src="{{ asset('js/admission-api.js') }}?v=12"></script>
-<script src="{{ asset('js/form.js') }}?v=9"></script>
+<script src="{{ asset('js/api-config.js') }}?v=9"></script>
+<script src="{{ asset('js/admission-api.js') }}?v=13"></script>
+<script src="{{ asset('js/form.js') }}?v=10"></script>
 <script>
   if (typeof iconsax !== 'undefined') {
     iconsax.createIcons();

@@ -2,47 +2,40 @@
  * Admission Office â€“ frontend API helper (no modules)
  * Load api-config.js before this. Use: AdmissionAPI.getPrograms(), AdmissionAPI.submitPublic(), etc.
  */
+const PSGC_API_BASE = 'https://psgc.gitlab.io/api';
+
 (function () {
+  const loc = window.location;
+  const pages = [
+    '/dashboard', '/apply', '/about', '/news-events', '/news-event-details', 
+    '/course-details', '/welcome', '/admin/dashboard', '/admin/login', '/admin'
+  ];
+  
+  let currentPath = loc.pathname.replace(/\/+$/, '');
+  let rootPath = currentPath;
+  const sortedPages = [...pages].sort((a, b) => b.length - a.length);
+  sortedPages.forEach(p => {
+    if (rootPath.endsWith(p)) {
+      rootPath = rootPath.slice(0, -p.length);
+    }
+  });
+  rootPath = rootPath.replace(/\/public$/, '').replace(/\/+$/, '');
+
   function normalizeApiBase(base) {
     if (base) return base.replace(/\/+$/, '');
-    
-    const loc = window.location;
-    const isVercel = /\.vercel\.app$/i.test(loc.hostname);
-    const segment = isVercel ? '/backend' : '/api';
-    
-    let path = loc.pathname.replace(/\/+$/, '');
-    const pages = [
-      '/dashboard', '/apply', '/about', '/news-events', '/news-event-details', 
-      '/course-details', '/welcome', '/admin/dashboard', '/admin/login', '/admin'
-    ];
-    
-    let rootPath = path;
-    const sortedPages = [...pages].sort((a, b) => b.length - a.length);
-    sortedPages.forEach(p => {
-      if (rootPath.endsWith(p)) {
-        rootPath = rootPath.slice(0, -p.length);
-      }
-    });
-
-    rootPath = rootPath.replace(/\/public$/, '').replace(/\/+$/, '');
-    return loc.origin + rootPath + segment;
+    return loc.origin + rootPath + '/api';
   }
 
   const API_BASE = normalizeApiBase(window.ADMISSION_API_BASE);
 
   function alternateApiBase() {
-    const loc = window.location;
-    const rootPath = loc.pathname.split('/admin')[0].replace(/\/+$/, '');
     const current = API_BASE.replace(/\/+$/, '');
-
     if (/\/api$/i.test(current)) {
       return loc.origin + rootPath + '/backend';
     }
-
     if (/\/backend$/i.test(current)) {
       return loc.origin + rootPath + '/api';
     }
-
     return '';
   }
 
@@ -385,8 +378,6 @@
         return await request('/admin/clear-cache', { method: 'POST' });
       } catch (error) {
         if (error && error.status === 404) {
-          const loc = window.location;
-          const rootPath = loc.pathname.split('/admin')[0].replace(/\/+$/, '');
           return request(loc.origin + rootPath + '/admin/clear-cache', { method: 'POST' });
         }
         throw error;

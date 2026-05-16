@@ -11,22 +11,21 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet" />
   @include('partials.iconsax')
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}?v=1" />
-  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=13" />
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=1" />
+  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=13" />
 
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
     (function () {
       const root = window.location.pathname.split('/admin')[0].replace(/\/+$/, '');
-      const apiSegment = /\.vercel\.app$/i.test(window.location.hostname) ? '/backend' : '/api';
+      const apiSegment = '/api';
       window.ADMISSION_API_BASE = window.location.origin + root + apiSegment;
     })();
     sessionStorage.setItem('_at', "{{ $admissionApiToken ?? session('admission_api_token') ?? '' }}");
   </script>
-  <script src="{{ asset('js/api-config.js') }}?v=8"></script>
-  <script src="{{ asset('js/admission-api.js') }}?v=17"></script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=45" defer></script>
+  <script src="{{ asset('js/api-config.js') }}?v=9"></script>
+  <script src="{{ asset('js/admission-api.js') }}?v=18"></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=46" defer></script>
 </head>
 <body>
   @include('partials.site-loader')

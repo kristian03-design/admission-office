@@ -7,7 +7,6 @@
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}?v=1" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
   @include('partials.iconsax')
   <style>
@@ -286,8 +285,8 @@
 
 </div>
 
-<script src="{{ asset('js/api-config.js') }}?v=7"></script>
-<script src="{{ asset('js/admission-api.js') }}?v=7"></script>
+<script src="{{ asset('js/api-config.js') }}?v=9"></script>
+<script src="{{ asset('js/admission-api.js') }}?v=13"></script>
 <script>
   /* ── TOGGLE PASSWORD VISIBILITY ── */
   document.getElementById('togglePw').addEventListener('click', () => {

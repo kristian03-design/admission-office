@@ -7,7 +7,7 @@
 
   const loc = window.location;
   const isVercel = /\.vercel\.app$/i.test(loc.hostname);
-  const apiSegment = isVercel ? '/backend' : '/api';
+  const apiSegment = '/api';
 
   // Strategy 1: Derive base from current page path
   // We want to find the "app root" by stripping known page paths and segments

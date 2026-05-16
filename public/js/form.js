@@ -729,7 +729,14 @@ function copyAddressSelect(field) {
 }
 
 async function fetchPSGC(endpoint) {
-  const res = await fetch(PSGC_API_BASE + endpoint);
+  const url = (window.PSGC_API_BASE || 'https://psgc.gitlab.io/api') + endpoint;
+  const res = await fetch(url, {
+    method: 'GET',
+    mode: 'cors',
+    credentials: 'omit',
+    headers: { 'Accept': 'application/json' },
+    referrerPolicy: 'no-referrer'
+  });
   if (!res.ok) throw new Error('PSGC request failed');
   return res.json();
 }

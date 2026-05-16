@@ -555,6 +555,8 @@ body {
   z-index: 9999;
   align-items: center;
   justify-content: center;
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
 
 .modal-box {
