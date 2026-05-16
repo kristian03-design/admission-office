@@ -339,9 +339,9 @@ const PSGC_API_BASE = 'https://psgc.gitlab.io/api';
       });
     },
     
-    /** POST /api/applications/bulk-delete */
+    /** POST /api/batch-delete-applications */
     async bulkDeleteApplications(ids) {
-      return request('/applications/bulk-delete', {
+      return request('/batch-delete-applications', {
         method: 'POST',
         body: JSON.stringify({ ids }),
       });

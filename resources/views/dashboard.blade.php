@@ -295,6 +295,9 @@
         <option>Approved</option>
         <option>Rejected</option>
       </select>
+      <select class="filter-select" id="filterYear">
+        <option value="">All Years</option>
+      </select>
       <button class="btn-ghost" id="clearFilters">Clear</button>
     </div>
 

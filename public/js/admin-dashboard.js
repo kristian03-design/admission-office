@@ -80,6 +80,7 @@ let isRefreshingData = false;
 let programFilter = 'All';
 let interviewFilter = 'All';
 let reportYearFilter = '';
+let yearFilter = '';
 
 
 let currentPage = 'dashboard';
@@ -623,22 +624,55 @@ function renderApplicationsTable() {
       sel.appendChild(opt);
     });
   }
+
+  // Populate Year Filter
+  const yearSel = document.getElementById('filterYear');
+  if (yearSel && yearSel.options.length <= 1) {
+    const years = new Set();
+    getApplications().forEach(a => {
+      const y = a.academic_year || (a.raw && a.raw.academic_year);
+      if (y) years.add(y);
+    });
+    Array.from(years).sort().reverse().forEach(y => {
+      const opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y;
+      yearSel.appendChild(opt);
+    });
+    yearSel.addEventListener('change', applyFilters);
+  }
+
+  const clearBtn = document.getElementById('clearFilters');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('filterType').value = '';
+      document.getElementById('filterStatus').value = '';
+      document.getElementById('filterProgram').value = '';
+      if (document.getElementById('filterYear')) document.getElementById('filterYear').value = '';
+      applyFilters();
+    });
+  }
+
   applyFilters();
 }
 
 function applyFilters() {
   const search = document.getElementById('searchInput').value.toLowerCase();
   const type = document.getElementById('filterType').value;
-  const status = document.getElementById('filterStatus').value;
-  const program = document.getElementById('filterProgram').value;
+    const status = document.getElementById('filterStatus').value;
+    const program = document.getElementById('filterProgram').value;
+    const year = document.getElementById('filterYear') ? document.getElementById('filterYear').value : '';
 
-  filteredApps = getApplications().filter(a => {
-    const fullName = `${a.surname} ${a.firstName} ${a.middleName || ''}`.trim().toLowerCase();
-    return (!search || fullName.includes(search) || (a.ref || '').toLowerCase().includes(search))
-      && (!type || a.type === type)
-      && (!status || a.status === status)
-      && (!program || a.firstChoice === program);
-  });
+    filteredApps = getApplications().filter(a => {
+      const fullName = `${a.surname} ${a.firstName} ${a.middleName || ''}`.trim().toLowerCase();
+      const appYear = a.academic_year || (a.raw && a.raw.academic_year);
+      return (!search || fullName.includes(search) || (a.ref || '').toLowerCase().includes(search))
+        && (!type || a.type === type)
+        && (!status || a.status === status)
+        && (!program || a.firstChoice === program)
+        && (!year || appYear === year);
+    });
   appPage = 1;
   selectedAppIds.clear();
   renderTable();
