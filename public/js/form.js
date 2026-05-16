@@ -242,6 +242,7 @@ let uploadedDocs = [];
 let generatedRef = '';
 const FORM_PROGRESS_KEY = 'btech_admission_form_progress_v1';
 let isRestoringProgress = false;
+let isSubmittingGlobal = false;
 
 function debounceProgress(fn, ms = 250) {
   let timer;
@@ -1016,12 +1017,20 @@ function applicationTypeFromRespondent(type) {
 }
 
 async function doSubmit() {
-  closeModal('moConfirm');
+  if (isSubmittingGlobal) return;
+
+  const confirmBtn = document.getElementById('submitBtn');
+  if (confirmBtn) confirmBtn.disabled = true;
+
   if (typeof AdmissionAPI === 'undefined') {
-    alert('Cannot submit: API is not loaded. Make sure the backend is running and you opened this page from the correct URL (e.g. http://localhost/admission-office/...).');
+    alert('Cannot submit: API is not loaded. Make sure the backend is running and you opened this page from the correct URL.');
+    if (confirmBtn) confirmBtn.disabled = false;
     return;
   }
+
+  isSubmittingGlobal = true;
   setSubmitState(true);
+
   try {
     const year = new Date().getFullYear();
     const payload = {
@@ -1075,12 +1084,24 @@ async function doSubmit() {
       admin_notes: null,
       reference_number: generatedRef
     };
+
     const data = await AdmissionAPI.submitPublic(payload);
+    
+    // Success: disable submittability permanently for this session
+    closeModal('moConfirm');
+    
     generatedRef = data.reference_number || generatedRef;
     se('refNum', generatedRef);
+    
+    // Clear saved progress so they can't re-submit the same data
+    clearSavedProgress();
+    
     AdmissionAPI.setToken(data.access_token, data.refresh_token);
     openModal('moSuccess');
+    
+    // Handle file uploads in the background
     uploadSubmittedFiles(data);
+    
   } catch (err) {
     let msg = err.message || 'Submission failed. Please try again.';
     const errors = (err.data && err.data.data && err.data.data.errors) || (err.data && err.data.errors) || null;
@@ -1093,9 +1114,12 @@ async function doSubmit() {
       if (list.length) msg = 'Validation failed:\n\n' + list.join('\n');
     }
     alert(msg);
+    isSubmittingGlobal = false;
     setSubmitState(false);
     return;
   }
+  
+  // Keep isSubmittingGlobal true to prevent accidental double clicks even after success modal shows
   setSubmitState(false);
 }
 
@@ -1180,23 +1204,6 @@ function showReqModal(type) {
   openModal('moReq');
 }
 
-function initReqModal() {
-  const types = ['Freshmen', 'Transferee', 'ALS Graduate', 'Returnee'];
-  types.forEach(type => {
-    const input = $(`input[name='respondentType'][value='${type}']`);
-    if (!input) return;
-    const card = input.closest('.oc');
-    if (!card) return;
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.textContent = 'View docs';
-    btn.style.cssText = 'margin-left:auto;padding:3px 10px;font-size:10px;font-weight:700;background:#eef3fa;border:1.5px solid #c3dafe;border-radius:999px;color:var(--navy-mid);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background .2s;font-family:inherit';
-    btn.addEventListener('mouseenter', () => { btn.style.background = '#dbeafe'; });
-    btn.addEventListener('mouseleave', () => { btn.style.background = '#eef3fa'; });
-    btn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); showReqModal(type); });
-    card.appendChild(btn);
-  });
-}
 
 // Categories that require a board/licensure exam - not allowed as 2nd choice
 const BOARD_EXAM_CATEGORIES = ['Education', 'Accountancy'];
@@ -1342,6 +1349,7 @@ async function initPublicSettings() {
 }
 
 function init() {
+  restoreProgress();
   initPublicSettings();
   initSameAsPermanent();
   initPSGCLocation();
@@ -1349,7 +1357,6 @@ function init() {
   initCourseConflict();
   initDigitOnly();
   initModalClose();
-  initReqModal();
   loadPrograms();
   $$('input[name="respondentType"]').forEach(r => r.addEventListener('change', updateAcadBlocks));
   show();
