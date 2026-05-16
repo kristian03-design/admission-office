@@ -1955,3 +1955,66 @@ body.site-loader-lock {
     transform: translateX(260%);
   }
 }
+
+/* ── REQUIREMENTS COMPACT UI ── */
+.req-link-btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(213, 154, 51, 0.08);
+  border: 1px solid rgba(213, 154, 51, 0.3);
+  border-radius: 10px;
+  color: #856404;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.req-link-btn:hover {
+  background: rgba(213, 154, 51, 0.15);
+  border-color: rgba(213, 154, 51, 0.5);
+  transform: translateY(-1px);
+}
+
+.req-link-btn i {
+  width: 14px;
+  height: 14px;
+}
+
+.req-list-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.req-item-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 13.5px;
+  color: #334155;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.req-item-card:hover {
+  background: #fff;
+  border-color: var(--navy-pale);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.req-item-card i {
+  width: 16px;
+  height: 16px;
+  color: #64748b;
+}

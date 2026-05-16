@@ -128,7 +128,10 @@
                 <div style="font-weight:700;color:#1f2937">Freshmen</div>
                 <p style="font-size:12px;color:#6b7280;margin-top:2px">High school graduate applying for the first time</p>
               </div>
-              <button type="button" class="bs" style="font-size:11px;padding:6px 12px;border-radius:99px;margin-left:auto" onclick="showReq('Freshmen')">View Requirements</button>
+              <button type="button" class="req-link-btn" onclick="showReq('Freshmen')">
+                <i data-iconsax="document-text"></i>
+                Requirements
+              </button>
             </label>
             <label class="oc" style="align-items:center">
               <input type="radio" name="respondentType" value="Transferee" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--navy)">
@@ -136,7 +139,10 @@
                 <div style="font-weight:700;color:#1f2937">Transferee</div>
                 <p style="font-size:12px;color:#6b7280;margin-top:2px">Transferring from another higher education institution</p>
               </div>
-              <button type="button" class="bs" style="font-size:11px;padding:6px 12px;border-radius:99px;margin-left:auto" onclick="showReq('Transferee')">View Requirements</button>
+              <button type="button" class="req-link-btn" onclick="showReq('Transferee')">
+                <i data-iconsax="document-text"></i>
+                Requirements
+              </button>
             </label>
             <label class="oc" style="align-items:center">
               <input type="radio" name="respondentType" value="ALS Graduate" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--navy)">
@@ -144,7 +150,10 @@
                 <div style="font-weight:700;color:#1f2937">ALS Graduate</div>
                 <p style="font-size:12px;color:#6b7280;margin-top:2px">Alternative Learning System graduate with A&amp;E Certificate</p>
               </div>
-              <button type="button" class="bs" style="font-size:11px;padding:6px 12px;border-radius:99px;margin-left:auto" onclick="showReq('ALS Graduate')">View Requirements</button>
+              <button type="button" class="req-link-btn" onclick="showReq('ALS Graduate')">
+                <i data-iconsax="document-text"></i>
+                Requirements
+              </button>
             </label>
             <label class="oc" style="align-items:center">
               <input type="radio" name="respondentType" value="Returnee" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--navy)">
@@ -152,7 +161,10 @@
                 <div style="font-weight:700;color:#1f2937">Returnee</div>
                 <p style="font-size:12px;color:#6b7280;margin-top:2px">Previously enrolled at BTECH, returning after a study break</p>
               </div>
-              <button type="button" class="bs" style="font-size:11px;padding:6px 12px;border-radius:99px;margin-left:auto" onclick="showReq('Returnee')">View Requirements</button>
+              <button type="button" class="req-link-btn" onclick="showReq('Returnee')">
+                <i data-iconsax="document-text"></i>
+                Requirements
+              </button>
             </label>
             <div class="eb" id="e1"><i data-iconsax="alert-circle" style="width:16px;height:16px"></i>Please select a respondent type to continue.</div>
           </div>
@@ -841,14 +853,14 @@
 
   <!-- REQUIREMENTS MODAL -->
   <div class="mo" id="moReq">
-    <div class="mb" style="max-width:640px;padding:32px 28px 24px 28px;">
-      <div style="width:56px;height:56px;border-radius:50%;background:#e0e7ff;display:flex;align-items:center;justify-content:center;margin:0 auto 20px">
-        <i data-iconsax="document-text" style="width:26px;height:26px;color:#4338ca"></i>
+    <div class="mb" style="max-width:480px;padding:28px;">
+      <div style="width:48px;height:48px;border-radius:12px;background:rgba(37,77,130,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;border:1px solid rgba(37,77,130,0.1)">
+        <i data-iconsax="document-text" style="width:24px;height:24px;color:var(--navy)"></i>
       </div>
-      <h2 id="moReqTitle" style="font-size:22px;font-weight:700;color:#254d82;margin-bottom:18px;text-align:center;"></h2>
-      <ul id="moReqList" style="font-size:15px;color:#1b3557;margin-bottom:22px;list-style:disc inside;padding-left:10px;line-height:2;"></ul>
-      <button class="bp" style="width:100%;margin-top:8px;justify-content:center;" onclick="closeModal('moReq')">
-        <i data-iconsax="close-circle" style="width:15px;height:15px"></i>
+      <h2 id="moReqTitle" style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:20px;text-align:center;"></h2>
+      <div id="moReqList" class="req-list-compact"></div>
+      <button class="bp" style="width:100%;margin-top:10px;justify-content:center;height:42px;font-size:13px" onclick="closeModal('moReq')">
+        <i data-iconsax="close-circle" style="width:14px;height:14px"></i>
         Close
       </button>
     </div>

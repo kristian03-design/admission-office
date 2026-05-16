@@ -1180,14 +1180,7 @@ function showToast() {
 }
 
 function showReqModal(type) {
-  const reqs  = DOCS_MAP[type] || [];
-  const modal = document.getElementById('moReq');
-  const list  = document.getElementById('moReqList');
-  const title = document.getElementById('moReqTitle');
-  if (!modal || !list || !title) return;
-  title.textContent = `${type} - Required Documents`;
-  list.innerHTML = reqs.length ? reqs.map(r => `<li>${r}</li>`).join('') : '<li>No requirements listed.</li>';
-  openModal('moReq');
+  showReq(type);
 }
 
 function initReqModal() {
@@ -1357,8 +1350,21 @@ function showReq(type) {
   const list  = document.getElementById('moReqList');
   const title = document.getElementById('moReqTitle');
   if (!modal || !list || !title) return;
+  
   title.textContent = `${type} - Required Documents`;
-  list.innerHTML = reqs.length ? reqs.map(r => `<li>${r}</li>`).join('') : '<li>No requirements listed.</li>';
+  
+  if (reqs.length) {
+    list.innerHTML = reqs.map(r => `
+      <div class="req-item-card">
+        <i data-iconsax="info-circle"></i>
+        <span>${r}</span>
+      </div>
+    `).join('');
+  } else {
+    list.innerHTML = '<p style="text-align:center;color:#64748b;font-size:13px">No requirements listed for this category.</p>';
+  }
+  
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
   openModal('moReq');
 }
 
