@@ -117,11 +117,6 @@
               @endif
             </h1>
 
-            <div class="hero-program-label" data-animate="fade-up" data-delay="150">
-              <span class="program-label-dot"></span>
-              <span id="hero-program-name">Hospitality Management</span>
-            </div>
-
             <p class="hero-sub mt-4 text-lg leading-relaxed max-w-lg" data-animate="fade-up" data-delay="200">
               {{ $settings['hero_subheadline'] ?? 'Baliwag Polytechnic College has been shaping futures through quality, accessible higher education for over a decade. Your story starts with a single step.' }}
             </p>
@@ -164,12 +159,6 @@
           <div class="hero-visual" data-animate="fade-up" data-delay="200">
             <div class="hero-visual-ring"></div>
             <div class="hero-visual-ring hero-visual-ring--2"></div>
-
-            <div class="hero-badge-float" id="hero-badge-float">
-              <div>
-                <p class="hero-badge-title" id="hero-badge-title">{{ $heroSlides[0]['department'] ?? 'Academic Programs' }}</p>
-              </div>
-            </div>
 
             <div class="hero-img-stage" id="hero-img-stage"></div>
 

@@ -2174,40 +2174,6 @@ body.menu-open {
   transform: translate(0) !important;
 }
 
-/* ─── PROGRAM LABEL ─── */
-.hero-program-label {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 1.25rem;
-  padding: .55rem 1.1rem .55rem .7rem;
-  background: rgba(212, 168, 67, .12);
-  border: 1px solid rgba(212, 168, 67, .3);
-  border-radius: 100px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #e8c55e;
-  letter-spacing: .04em;
-  min-width: 220px;
-  transition: all .4s ease;
-}
-
-.hero-program-label>*+* {
-  margin-left: .6rem;
-}
-
-.program-label-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #e8c55e;
-  flex-shrink: 0;
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-#hero-program-name {
-  transition: opacity .3s ease;
-}
-
 /* ─── SLIDER NAV DOTS ─── */
 .hero-slider-nav {
   display: flex;
@@ -2344,51 +2310,6 @@ body.menu-open {
 .hero-img-slide.active img {
   mix-blend-mode: normal;
   filter: none;
-}
-
-/* ─── FLOATING BADGE ─── */
-.hero-badge-float {
-  position: absolute;
-  bottom: 2rem;
-  left: -1.5rem;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  background: rgba(15, 35, 64, .9);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(212, 168, 67, .3);
-  border-radius: 14px;
-  padding: .75rem 1.1rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, .3);
-  min-width: 160px;
-  transition: all .4s ease;
-}
-
-.hero-badge-float>*+* {
-  margin-left: .75rem;
-}
-
-.hero-badge-icon {
-  font-size: 1.5rem;
-  line-height: 1;
-  transition: all .3s ease;
-}
-
-.hero-badge-title {
-  font-size: .85rem;
-  font-weight: 700;
-  color: var(--white);
-  line-height: 1.2;
-  margin: 0;
-  transition: opacity .3s ease;
-}
-
-.hero-badge-sub {
-  font-size: .7rem;
-  color: rgba(255, 255, 255, .5);
-  margin: 0;
-  line-height: 1.2;
 }
 
 /* ─── PROGRESS BAR ─── */
@@ -2960,12 +2881,6 @@ body.announcement-popup-open {
     justify-content: center;
   }
 
-  .hero-program-label {
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
   .hero-sub {
     margin-left: auto;
     margin-right: auto;
@@ -2989,11 +2904,6 @@ body.announcement-popup-open {
   .hero-visual-ring--2 {
     width: 460px;
     height: 460px;
-  }
-
-  .hero-badge-float {
-    left: 0;
-    bottom: 1rem;
   }
 
   .apply-cta-inner .flex.flex-col.lg\:flex-row {
@@ -3040,17 +2950,6 @@ body.announcement-popup-open {
   .nav-inner {
     padding-top: 0.875rem;
     padding-bottom: 0.875rem;
-  }
-
-  /* Hero: fix badge float on mobile */
-  .hero-badge-float {
-    position: relative !important;
-    left: auto !important;
-    bottom: auto !important;
-    transform: none !important;
-    margin-top: 1rem;
-    align-self: center;
-    white-space: nowrap;
   }
 
   .hero-img-stage {
@@ -3245,11 +3144,6 @@ body.announcement-popup-open {
 
   .text-line-3 {
     font-size: clamp(2.4rem, 8vw, 3rem);
-  }
-
-  .hero-program-label {
-    font-size: 1.1rem;
-    padding: .5rem 1rem .5rem .65rem;
   }
 
   .hero-sub {
@@ -3451,12 +3345,6 @@ body.announcement-popup-open {
 
   .text-line-3 {
     font-size: clamp(1.8rem, 8vw, 2.4rem);
-  }
-
-  .hero-program-label {
-    font-size: 0.9rem;
-    min-width: unset;
-    width: auto;
   }
 
   .hero-sub {
@@ -4558,11 +4446,6 @@ textarea:focus-visible,
     margin-left: .45rem;
   }
 
-  .hero-program-label {
-    justify-content: center;
-    min-width: 0;
-  }
-
   .contact-form-card .grid.grid-cols-2 {
     gap: .85rem;
   }
@@ -4795,10 +4678,6 @@ main {
   display: block !important;
 }
 
-.hero-badge-float {
-  left: 0 !important;
-}
-
 .hero-progress-wrap {
   width: min(100%, 420px) !important;
 }
@@ -4841,7 +4720,6 @@ main {
 
   .hero-content .inline-flex,
   .hero-content .pill-badge,
-  .hero-program-label,
   .hero-sub {
     margin-left: auto !important;
     margin-right: auto !important;
@@ -4858,12 +4736,6 @@ main {
     height: auto !important;
   }
 
-  .hero-badge-float {
-    position: relative !important;
-    left: auto !important;
-    bottom: auto !important;
-    margin-top: 1rem !important;
-  }
 }
 
 /* ─── MOBILE ─── */
@@ -4931,8 +4803,7 @@ main {
     height: auto !important;
   }
 
-  .pill-badge,
-  .hero-program-label {
+  .pill-badge {
     max-width: 100%;
     white-space: normal;
   }

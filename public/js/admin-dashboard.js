@@ -80,7 +80,6 @@ let isRefreshingData = false;
 let programFilter = 'All';
 let interviewFilter = 'All';
 let reportYearFilter = '';
-let reportLocationFilter = '';
 let yearFilter = '';
 
 
@@ -1133,7 +1132,7 @@ function exportCSV(data, filename) {
 function exportReportsCSV() {
   const headers = ['Program', 'Department', 'Total Applications', 'Approved', 'Pending', 'Rejected'];
   let rows = [];
-  const hasReportFilter = !!(reportYearFilter || reportLocationFilter);
+  const hasReportFilter = !!reportYearFilter;
 
   if (!hasReportFilter && DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.by_program) && DASHBOARD_STATS.by_program.length > 0) {
     const programs = getPrograms();
@@ -3987,27 +3986,9 @@ function buildAcademicYearOptions() {
   });
 }
 
-function getReportLocation(app) {
-  const raw = app.raw || {};
-  const address = app.presentAddress || app.permanentAddress || raw.present_address || raw.permanent_address || '';
-  const parts = String(address)
-    .split(',')
-    .map(part => part.trim())
-    .filter(Boolean)
-    .filter(part => !/^\d{4,}$/.test(part));
-
-  if (parts.length >= 2) {
-    return parts.slice(-2).join(', ');
-  }
-
-  return parts[0] || '';
-}
-
 function getFilteredReportApplications() {
   return getApplications().filter(app => {
-    const matchesYear = !reportYearFilter || getApplicationAcademicYear(app) === reportYearFilter;
-    const matchesLocation = !reportLocationFilter || getReportLocation(app) === reportLocationFilter;
-    return matchesYear && matchesLocation;
+    return !reportYearFilter || getApplicationAcademicYear(app) === reportYearFilter;
   });
 }
 
@@ -4035,8 +4016,7 @@ function buildReportsRenderKey() {
     programs.length,
     firstApp ? `${firstApp.id || ''}:${firstApp.status || ''}:${firstApp.filed || ''}` : '',
     lastApp ? `${lastApp.id || ''}:${lastApp.status || ''}:${lastApp.filed || ''}` : '',
-    `year:${reportYearFilter}`,
-    `location:${reportLocationFilter}`
+    `year:${reportYearFilter}`
   ].join('|');
 }
 
@@ -4083,38 +4063,18 @@ async function initReports() {
     });
   }
 
-  const locationSelect = document.getElementById('reportFilterLocation');
-  if (locationSelect && locationSelect.options.length <= 1) {
-    const locations = [...new Set(getApplications().map(getReportLocation).filter(Boolean))].sort((a, b) => a.localeCompare(b));
-    locations.forEach(location => {
-      const opt = document.createElement('option');
-      opt.value = location;
-      opt.textContent = location;
-      locationSelect.appendChild(opt);
-    });
-    locationSelect.value = reportLocationFilter;
-    locationSelect.addEventListener('change', (e) => {
-      reportLocationFilter = e.target.value;
+  const clearBtn = document.getElementById('clearReportFilters');
+  if (yearSelect && clearBtn && !clearBtn.dataset.boundReportFilters) {
+    clearBtn.dataset.boundReportFilters = '1';
+    clearBtn.addEventListener('click', () => {
+      reportYearFilter = '';
+      yearSelect.value = '';
       initReports();
     });
   }
 
-  if (yearSelect && locationSelect) {
-    const clearBtn = document.getElementById('clearReportFilters');
-    if (clearBtn && !clearBtn.dataset.boundReportFilters) {
-      clearBtn.dataset.boundReportFilters = '1';
-      clearBtn.addEventListener('click', () => {
-        reportYearFilter = '';
-        reportLocationFilter = '';
-        yearSelect.value = '';
-        locationSelect.value = '';
-        initReports();
-      });
-    }
-  }
-
   const list = getFilteredReportApplications();
-  const hasReportFilter = !!(reportYearFilter || reportLocationFilter);
+  const hasReportFilter = !!reportYearFilter;
   const total = Number(!hasReportFilter && DASHBOARD_STATS?.total_applications != null ? DASHBOARD_STATS.total_applications : list.length);
   const approved = Number(!hasReportFilter && DASHBOARD_STATS?.approved_applications != null ? DASHBOARD_STATS.approved_applications : list.filter(a => a.status === 'Approved').length);
   const yes = v => String(v || '').trim().toLowerCase() === 'yes';
@@ -4125,11 +4085,7 @@ async function initReports() {
     ? parseFloat(DASHBOARD_STATS.avg_gwa).toFixed(2)
     : (total ? (list.reduce((s, a) => s + ((parseFloat(a.g11) || 0) + (parseFloat(a.g12) || 0)) / 2, 0) / total).toFixed(2) : '0.00');
   const progCount = Number(Array.isArray(DASHBOARD_STATS?.by_program) ? DASHBOARD_STATS.by_program.length : getPrograms().length);
-  const filterSub = reportYearFilter && reportLocationFilter
-    ? `S.Y. ${reportYearFilter} - ${reportLocationFilter}`
-    : reportYearFilter
-      ? `S.Y. ${reportYearFilter}`
-      : reportLocationFilter || 'All Academic Years';
+  const filterSub = reportYearFilter ? `S.Y. ${reportYearFilter}` : 'All Academic Years';
 
   grid.innerHTML = [
     { label: 'Total Applications', value: total, sub: filterSub },
@@ -4153,7 +4109,7 @@ async function initReports() {
 
 function renderReportTable() {
   const apps = getFilteredReportApplications();
-  const hasReportFilter = !!(reportYearFilter || reportLocationFilter);
+  const hasReportFilter = !!reportYearFilter;
   // Use server-side per-program breakdown ONLY if no report filter is active (server doesn't support these filters yet)
   if (!hasReportFilter && DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.by_program) && DASHBOARD_STATS.by_program.length > 0) {
     const programs = getPrograms();
@@ -4203,7 +4159,7 @@ function renderReportTable() {
 function initReportCharts() {
   // GWA distribution: prefer server-side by_program data only when no report filter is active.
   let gwaLabels = [], gwaData = [];
-  const hasReportFilter = !!(reportYearFilter || reportLocationFilter);
+  const hasReportFilter = !!reportYearFilter;
   if (!hasReportFilter && DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.by_program)) {
     const sorted = [...DASHBOARD_STATS.by_program]
       .filter(r => r.avg_gwa != null)

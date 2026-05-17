@@ -700,10 +700,6 @@ console.log('%c BTC Admissions Landing Page loaded ✓', 'color:#254d82;font-wei
 (function initHeroSlider() {
   const stage = document.getElementById('hero-img-stage');
   const progressBar = document.getElementById('hero-progress-bar');
-  const programName = document.getElementById('hero-program-name');
-  const badgeFloat = document.getElementById('hero-badge-float');
-  const badgeIcon = document.getElementById('hero-badge-icon');
-  const badgeTitle = document.getElementById('hero-badge-title');
 
   if (!stage) return; // guard — hero not on page
 
@@ -789,29 +785,6 @@ console.log('%c BTC Admissions Landing Page loaded ✓', 'color:#254d82;font-wei
 
     // Enter animation on next
     next.classList.add('active');
-
-    // Update program label
-    const program = next.dataset.program || '';
-    const icon = next.dataset.icon || '🎓';
-    const dept = next.dataset.dept || '';
-
-    // Fade out then update text
-    if (programName) {
-      programName.style.opacity = '0';
-      setTimeout(() => {
-        programName.textContent = program;
-        programName.style.opacity = '1';
-      }, 200);
-    }
-
-    if (badgeIcon) badgeIcon.textContent = icon;
-    if (badgeTitle) {
-      badgeTitle.style.opacity = '0';
-      setTimeout(() => {
-        badgeTitle.textContent = dept;
-        badgeTitle.style.opacity = '1';
-      }, 200);
-    }
 
     // Update dots
     dots.forEach((dot, i) => {
@@ -903,11 +876,6 @@ console.log('%c BTC Admissions Landing Page loaded ✓', 'color:#254d82;font-wei
   // Make sure first slide is visible
   slides[0].classList.add('active');
 
-  // Set initial badge content from first slide
-  const firstSlide = slides[0];
-  if (badgeIcon) badgeIcon.textContent = firstSlide.dataset.icon || '🍳';
-  if (badgeTitle) badgeTitle.textContent = firstSlide.dataset.dept || 'Hospitality';
-  if (programName) programName.textContent = firstSlide.dataset.program || 'Hospitality Management';
 
   // Small delay before autoplay starts (let page load)
   if (slides.length > 1) {

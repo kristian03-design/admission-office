@@ -475,6 +475,10 @@
         <p class="page-sub">Analytics and summary exports for S.Y. {{ date('n') < 8 ? (date('Y') - 1) . '-' . date('Y') : date('Y') . '-' . (date('Y') + 1) }}</p>
       </div>
       <div class="page-actions">
+        <select class="filter-select report-year-select" id="reportFilterYear">
+          <option value="">All Academic Years</option>
+        </select>
+        <button class="btn-ghost report-filter-clear" id="clearReportFilters">Clear</button>
         <button class="btn-outline" id="rptCsvBtn">
           <i data-iconsax="download"></i>
           Export CSV
@@ -484,22 +488,6 @@
           Print
         </button>
       </div>
-    </div>
-
-    <div class="filter-bar report-filter-bar">
-      <label class="report-filter-field">
-        <span class="report-filter-label">Academic Year</span>
-        <select class="filter-select" id="reportFilterYear">
-          <option value="">All Academic Years</option>
-        </select>
-      </label>
-      <label class="report-filter-field">
-        <span class="report-filter-label">Location</span>
-        <select class="filter-select" id="reportFilterLocation">
-          <option value="">All Locations</option>
-        </select>
-      </label>
-      <button class="btn-ghost report-filter-clear" id="clearReportFilters">Clear</button>
     </div>
 
     <div class="reports-grid" id="reportsGrid"></div>
