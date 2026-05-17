@@ -700,8 +700,6 @@
   @if($popupAnn)
   <div id="announcementPopup"
     data-id="{{ $popupAnn->id }}"
-    data-always-show="{{ $popupAnn->popup_always_show ? 'true' : 'false' }}"
-    data-cookie-days="30"
     class="announcement-popup"
     role="dialog"
     aria-modal="true"
@@ -753,22 +751,7 @@
       const popup = document.getElementById('announcementPopup');
       if (!popup) return;
 
-      const cookieName = 'btech_announcement_' + popup.getAttribute('data-id');
-      const alwaysShow = popup.getAttribute('data-always-show') === 'true';
-      const cookieDays = parseInt(popup.getAttribute('data-cookie-days') || '30', 10);
       let lastFocusedElement = null;
-
-      function getCookie(name) {
-        return document.cookie
-          .split('; ')
-          .find((row) => row.startsWith(name + '='))
-          ?.split('=')[1] || '';
-      }
-
-      function setCookie(name, value, days) {
-        const expires = new Date(Date.now() + days * 864e5).toUTCString();
-        document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/; SameSite=Lax';
-      }
 
       function openPopup() {
         lastFocusedElement = document.activeElement;
@@ -785,10 +768,6 @@
         const card = document.getElementById('popupCard');
         popup.classList.remove('is-visible');
         document.body.classList.remove('announcement-popup-open');
-
-        if (!alwaysShow) {
-          setCookie(cookieName, 'dismissed', cookieDays);
-        }
 
         setTimeout(() => {
           popup.hidden = true;
@@ -811,10 +790,7 @@
       });
 
       window.addEventListener('DOMContentLoaded', () => {
-        const hasSeen = getCookie(cookieName) === 'dismissed';
-        if (!hasSeen || alwaysShow) {
-          setTimeout(openPopup, 900);
-        }
+        setTimeout(openPopup, 900);
       });
     })();
   </script>

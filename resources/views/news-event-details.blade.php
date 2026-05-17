@@ -10,13 +10,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   @include('partials.iconsax')
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=12" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=22" />
 
   <style>
   /* ── Navbar: dark on load, white on scroll ── */
   /* Un-scrolled: solid navy so text is readable over light page background */
   #navbar:not(.scrolled) {
-    background: rgba(27, 53, 87, 0.97) !important;
+    background: rgba(3, 16, 36, 0.97) !important;
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     box-shadow: 0 2px 24px rgba(0, 0, 0, .18);

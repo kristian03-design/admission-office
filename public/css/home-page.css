@@ -1792,7 +1792,7 @@ body.menu-open {
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(135deg, #0f2340 0%, var(--navy) 50%, #1a3f6e 100%);
+  background: linear-gradient(135deg, #031024 0%, #071b3d 48%, #0b2d6b 100%);
 }
 
 .apply-cta-pattern {
@@ -2007,7 +2007,11 @@ body.menu-open {
 
 /* ─── FOOTER ─── */
 .footer-section {
-  background: var(--navy);
+  background:
+    linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px),
+    linear-gradient(135deg, #031024 0%, #071b3d 48%, #0b2d6b 100%);
+  background-size: 60px 60px, 60px 60px, 100% 100%;
 }
 
 .footer-border {
@@ -4492,6 +4496,7 @@ textarea:focus-visible,
 .subpage-hero.hero-section {
   min-height: 45vh !important;
   min-height: 45dvh !important;
+  background: linear-gradient(135deg, #031024 0%, #071b3d 48%, #0b2d6b 100%) !important;
 }
 
 .subpage-hero .relative.z-10 {

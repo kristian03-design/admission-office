@@ -11,10 +11,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   @include('partials.iconsax')
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=16" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=22" />
   <style>
     #navbar:not(.scrolled) {
-      background: rgba(27, 53, 87, 0.98) !important;
+      background: rgba(3, 16, 36, 0.98) !important;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       box-shadow: 0 2px 24px rgba(0,0,0,.18);
@@ -40,7 +40,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 4px;
-      background: linear-gradient(90deg, #1b3557, #d99a22);
+      background: linear-gradient(90deg, #071b3d, #d99a22);
     }
     .schol-card:hover {
       transform: translateY(-4px);
@@ -67,7 +67,7 @@
       display: flex; align-items: center; gap: 8px;
       font-size: .88rem; color: #334155; font-weight: 500;
     }
-    .schol-benefit-dot { width: 7px; height: 7px; border-radius: 50%; background: #1b3557; flex-shrink: 0; }
+    .schol-benefit-dot { width: 7px; height: 7px; border-radius: 50%; background: #071b3d; flex-shrink: 0; }
   </style>
 </head>
 <body>

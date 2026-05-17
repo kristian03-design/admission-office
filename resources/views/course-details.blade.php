@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   @include('partials.iconsax')
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=12" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=22" />
 
   <style>
     /* ─── Page-level token overrides to match home-page.css ─── */
@@ -31,7 +31,7 @@
 
     /* ─── Navbar: Dark at top, White on scroll ─── */
     #navbar:not(.scrolled) {
-      background: rgba(27, 53, 87, 0.98) !important;
+      background: rgba(3, 16, 36, 0.98) !important;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
@@ -60,7 +60,7 @@
 
     /* ─── Breadcrumb Strip ─── */
     .breadcrumb-strip {
-      background: var(--navy);
+      background: #031024;
       padding: .85rem 0;
       border-bottom: 1px solid rgba(255,255,255,.08);
       position: relative;
@@ -74,7 +74,7 @@
 
     /* ─── Hero ─── */
     .program-hero {
-      background: var(--navy);
+      background: linear-gradient(135deg, #031024 0%, #071b3d 48%, #0b2d6b 100%);
       position: relative;
       overflow: hidden;
       padding: 4.5rem 0 4rem;
@@ -300,7 +300,7 @@
       box-shadow: 0 4px 32px rgba(15,30,61,.06);
       position: sticky; top: 96px;
     }
-    .sidebar-card-header { background: var(--navy); padding: 1.5rem; }
+    .sidebar-card-header { background: linear-gradient(135deg, #031024 0%, #071b3d 58%, #0b2d6b 100%); padding: 1.5rem; }
     .sidebar-card-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: #fff; }
     .sidebar-card-header p { font-size: .82rem; color: rgba(255,255,255,.55); margin-top: .25rem; line-height: 1.5; }
     .sidebar-card-body { padding: 1.5rem; }
@@ -331,7 +331,7 @@
 
     /* ─── Highlights Strip ─── */
     .highlights-section {
-      padding: 4rem 0; background: var(--navy);
+      padding: 4rem 0; background: linear-gradient(135deg, #031024 0%, #071b3d 48%, #0b2d6b 100%);
       position: relative; overflow: hidden;
     }
     .highlights-section::before {
@@ -359,7 +359,7 @@
     /* ─── Footer CTA ─── */
     .footer-cta-section { padding: 5rem 0; background: var(--cream); border-top: 1px solid var(--border); }
     .footer-cta-inner {
-      background: var(--navy); border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, #031024 0%, #071b3d 48%, #0b2d6b 100%); border-radius: var(--radius-xl);
       position: relative; overflow: hidden;
       padding: 4rem 3.5rem;
       display: flex; align-items: center; justify-content: space-between; gap: 3rem;
