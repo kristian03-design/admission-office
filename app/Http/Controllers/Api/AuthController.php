@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
@@ -24,12 +25,17 @@ class AuthController extends Controller
             $user = Auth::user();
 
             if (! $user->isAdmin()) {
+                Log::warning('Non-admin API login attempt blocked.', [
+                    'email' => $user->email,
+                    'ip' => $request->ip(),
+                ]);
+
                 Auth::logout();
 
                 return response()->json(['message' => 'This account is not authorized for admin access.'], 403);
             }
 
-            $token = $user->createToken('auth_token')->plainTextToken;
+            $token = $user->createToken('auth_token', ['*'], now()->addMinutes(max(1, (int) (config('sanctum.expiration') ?? 120))))->plainTextToken;
             return response()->json([
                 'access_token' => $token,
                 'token_type' => 'Bearer',

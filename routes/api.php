@@ -16,11 +16,11 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/auth/login', [AuthController::class, 'login'])->middleware('throttle:api-login');
-Route::get('/programs', [ProgramController::class, 'index']);
-Route::get('/settings', [SettingsController::class, 'publicShow']);
-Route::post('/applications/submit-public', [ApplicationController::class, 'submitPublic'])->middleware('throttle:public-form');
+Route::get('/programs', [ProgramController::class, 'index'])->middleware(['throttle:public-read', 'public.cache']);
+Route::get('/settings', [SettingsController::class, 'publicShow'])->middleware(['throttle:public-read', 'public.cache']);
+Route::post('/applications/submit-public', [ApplicationController::class, 'submitPublic'])->middleware(['throttle:public-application', 'public.spam']);
 Route::post('/applications/{id}/documents', [ApplicationController::class, 'uploadDocument'])->middleware('throttle:document-upload');
-Route::get('/news-events', [NewsEventController::class, 'publicIndex']);
+Route::get('/news-events', [NewsEventController::class, 'publicIndex'])->middleware(['throttle:public-read', 'public.cache']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/auth/me', [AuthController::class, 'me']);
@@ -88,10 +88,10 @@ Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(functi
 
     // Public Cache Control
     Route::post('/admin/clear-cache', function() {
-        \Illuminate\Support\Facades\Cache::forget('welcome_page_data');
+        \App\Support\PublicCache::clear();
         return response()->json(['message' => 'Cache cleared.']);
     });
 });
 
 // Public Inquiry submission
-Route::post('/contact', [\App\Http\Controllers\Api\InquiryController::class, 'store']);
+Route::post('/contact', [\App\Http\Controllers\Api\InquiryController::class, 'store'])->middleware(['throttle:public-contact', 'public.spam']);

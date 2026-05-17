@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
+use App\Support\PublicCache;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class AnnouncementController extends Controller
@@ -126,7 +126,7 @@ class AnnouncementController extends Controller
      */
     private function clearCache()
     {
-        Cache::forget('welcome_page_data');
+        PublicCache::clear();
     }
 
     private function deleteStoredImage(?string $path): void

@@ -4,6 +4,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\EnsureAdmin;
+use App\Http\Middleware\CachePublicResponseHeaders;
+use App\Http\Middleware\PreventPublicFormSpam;
 use App\Http\Middleware\SecureHeaders;
 
 $app = Application::configure(basePath: $_ENV['APP_BASE_PATH'] ?? $_SERVER['APP_BASE_PATH'] ?? dirname(__DIR__))
@@ -20,6 +22,8 @@ $app = Application::configure(basePath: $_ENV['APP_BASE_PATH'] ?? $_SERVER['APP_
         $middleware->append(SecureHeaders::class);
         $middleware->alias([
             'admin' => EnsureAdmin::class,
+            'public.cache' => CachePublicResponseHeaders::class,
+            'public.spam' => PreventPublicFormSpam::class,
         ]);
         $middleware->validateCsrfTokens(except: [
             'api/*',

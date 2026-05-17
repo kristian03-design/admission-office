@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\SystemSetting;
+use App\Support\PublicCache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -30,16 +31,18 @@ class SettingsController extends Controller
      */
     public function publicShow()
     {
-        $settings = SystemSetting::whereIn('key', [
-            'school_year',
-            'application_deadline',
-            'institution_name',
-            'admissions_email',
-            'campus_address',
-            'contact_address',
-            'accept_applications',
-            'scholarship_applications',
-        ])->pluck('value', 'key');
+        $settings = Cache::remember(PublicCache::SETTINGS_API, PublicCache::ttl(), function () {
+            return SystemSetting::whereIn('key', [
+                'school_year',
+                'application_deadline',
+                'institution_name',
+                'admissions_email',
+                'campus_address',
+                'contact_address',
+                'accept_applications',
+                'scholarship_applications',
+            ])->pluck('value', 'key');
+        });
 
         return response()->json(['data' => $settings]);
     }
@@ -97,7 +100,7 @@ class SettingsController extends Controller
             SystemSetting::set($key, $value);
         }
 
-        Cache::forget('welcome_page_data');
+        PublicCache::clear();
 
         // Re-read and return updated settings
         $settings = SystemSetting::all_as_array();

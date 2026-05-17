@@ -30,6 +30,7 @@ const STEP_HINTS = [
 ];
 
 let isSubmittingGlobal = false;
+const FORM_STARTED_AT = Math.floor(Date.now() / 1000);
 
 const STEP_PANELS = {
   1: [0],
@@ -888,7 +889,9 @@ async function doSubmit() {
       indigenous: gr('indigenous') || null,
       four_ps: gr('fourPs') || null,
       admin_notes: null,
-      reference_number: generatedRef
+      reference_number: generatedRef,
+      form_started_at: FORM_STARTED_AT,
+      _hp: ''
     };
 
     const data = await AdmissionAPI.submitPublic(payload);

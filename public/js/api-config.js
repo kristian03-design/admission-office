@@ -34,5 +34,4 @@
   rootPath = rootPath.replace(/\/+$/, '');
 
   window.ADMISSION_API_BASE = loc.origin + rootPath + apiSegment;
-  console.log('[API Config] Base URL:', window.ADMISSION_API_BASE);
 })();

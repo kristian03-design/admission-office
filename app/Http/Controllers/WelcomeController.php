@@ -6,6 +6,7 @@ use App\Models\SystemSetting;
 use App\Models\Announcement;
 use App\Models\Program;
 use App\Models\NewsEvent;
+use App\Support\PublicCache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -18,7 +19,7 @@ class WelcomeController extends Controller
     public function index()
     {
         // Cache data for 5 minutes to ensure high performance
-        $data = Cache::remember('welcome_page_data', 300, function () {
+        $data = Cache::remember(PublicCache::WELCOME, PublicCache::ttl(), function () {
             $announcements = Announcement::whereRaw('is_active = true')
                 ->orderBy('sort_order')
                 ->orderBy('created_at', 'desc')

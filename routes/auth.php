@@ -20,12 +20,14 @@ Route::middleware('guest')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('login', [AuthenticatedSessionController::class, 'store'])
+        ->middleware('throttle:api-login');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
 
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+        ->middleware('throttle:3,1')
         ->name('password.email');
 
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
@@ -49,6 +51,7 @@ Route::post('/admin/resend-otp', [\App\Http\Controllers\Auth\OtpVerificationCont
 Route::get('/admin/forgot-password', [PasswordResetLinkController::class, 'create'])
     ->name('admin.password.request');
 Route::post('/admin/forgot-password', [PasswordResetLinkController::class, 'store'])
+    ->middleware('throttle:3,1')
     ->name('admin.password.email');
 Route::get('/admin/reset-password/{token}', [NewPasswordController::class, 'create'])
     ->name('admin.password.reset');

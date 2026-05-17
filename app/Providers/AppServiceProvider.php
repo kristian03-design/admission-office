@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Program;
+use App\Support\PublicCache;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -35,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
         \Illuminate\Pagination\Paginator::useTailwind();
 
         View::composer(['welcome', 'about', 'news-events', 'news-event-details', 'course-details'], function ($view) {
-            $footerPrograms = Cache::remember('footer_programs', 300, function () {
+            $footerPrograms = Cache::remember(PublicCache::FOOTER_PROGRAMS, PublicCache::ttl(), function () {
                 $fallbackNames = collect(config('academic_programs.fallback', []))
                     ->pluck('name');
 
@@ -70,12 +71,36 @@ class AppServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by(strtolower((string) $request->input('email')).'|'.$request->ip());
         });
 
+        RateLimiter::for('public-read', function (Request $request) {
+            return Limit::perMinute(120)->by($request->ip());
+        });
+
         RateLimiter::for('public-form', function (Request $request) {
             return Limit::perMinute(10)->by($request->ip());
         });
 
+        RateLimiter::for('public-contact', function (Request $request) {
+            return [
+                Limit::perMinute(3)->by($request->ip()),
+                Limit::perHour(12)->by($request->ip()),
+            ];
+        });
+
+        RateLimiter::for('public-application', function (Request $request) {
+            $email = strtolower((string) $request->input('email', ''));
+
+            return [
+                Limit::perMinute(2)->by($request->ip()),
+                Limit::perHour(6)->by($request->ip()),
+                Limit::perHour(3)->by($email ?: $request->ip()),
+            ];
+        });
+
         RateLimiter::for('document-upload', function (Request $request) {
-            return Limit::perMinute(20)->by($request->ip());
+            return [
+                Limit::perMinute(10)->by($request->ip()),
+                Limit::perHour(40)->by($request->ip()),
+            ];
         });
 
         RateLimiter::for('admin-api', function (Request $request) {

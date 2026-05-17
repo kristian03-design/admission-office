@@ -93,6 +93,7 @@ let SYSTEM_SETTINGS = null;
 const ADMIN_LOGIN_URL = window.ADMIN_LOGIN_URL || '/admin/login';
 const ADMIN_REFRESH_MS = 0;
 let selectedAppIds = new Set();
+const inFlightAdminFetches = new Map();
 
 function getApplications() {
   return Array.isArray(API_APPLICATIONS) ? API_APPLICATIONS : [];
@@ -111,6 +112,13 @@ function apiUrl(path) {
 }
 
 function apiFetch(path, options = {}) {
+  const method = (options.method || 'GET').toUpperCase();
+  const url = apiUrl(path);
+  const requestKey = method === 'GET' ? url : '';
+  if (requestKey && inFlightAdminFetches.has(requestKey)) {
+    return inFlightAdminFetches.get(requestKey).then(response => response.clone());
+  }
+
   const headers = {
     'Accept': 'application/json',
     ...(options.headers || {}),
@@ -119,7 +127,12 @@ function apiFetch(path, options = {}) {
     ? AdmissionAPI.getToken()
     : sessionStorage.getItem('_at');
   if (token && !headers.Authorization) headers.Authorization = 'Bearer ' + token;
-  return fetch(apiUrl(path), { ...options, headers });
+  const promise = fetch(url, { ...options, headers });
+  if (requestKey) {
+    inFlightAdminFetches.set(requestKey, promise);
+    promise.finally(() => inFlightAdminFetches.delete(requestKey));
+  }
+  return promise;
 }
 
 function mapApiStatus(s) {
@@ -628,12 +641,7 @@ function renderApplicationsTable() {
   // Populate Year Filter
   const yearSel = document.getElementById('filterYear');
   if (yearSel && yearSel.options.length <= 1) {
-    const years = new Set();
-    getApplications().forEach(a => {
-      const y = a.academic_year || (a.raw && a.raw.academic_year);
-      if (y) years.add(y);
-    });
-    Array.from(years).sort().reverse().forEach(y => {
+    buildAcademicYearOptions().forEach(y => {
       const opt = document.createElement('option');
       opt.value = y;
       opt.textContent = y;

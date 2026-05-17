@@ -27,6 +27,7 @@ const PSGC_API_BASE = 'https://psgc.gitlab.io/api';
   }
 
   const API_BASE = normalizeApiBase(window.ADMISSION_API_BASE);
+  const inFlightGetRequests = new Map();
 
   function alternateApiBase() {
     const current = API_BASE.replace(/\/+$/, '');
@@ -54,8 +55,24 @@ const PSGC_API_BASE = 'https://psgc.gitlab.io/api';
   }
 
   async function request(endpoint, options = {}) {
+    const method = (options.method || 'GET').toUpperCase();
     const isAbsolute = endpoint.startsWith('http');
     const normalizedEndpoint = endpoint.startsWith('/') ? endpoint : '/' + endpoint;
+    const requestKey = method === 'GET' ? (isAbsolute ? endpoint : API_BASE + normalizedEndpoint) : '';
+    if (requestKey && inFlightGetRequests.has(requestKey)) {
+      return inFlightGetRequests.get(requestKey);
+    }
+
+    const promise = performRequest(endpoint, options, isAbsolute, normalizedEndpoint);
+    if (requestKey) {
+      inFlightGetRequests.set(requestKey, promise);
+      promise.finally(() => inFlightGetRequests.delete(requestKey));
+    }
+
+    return promise;
+  }
+
+  async function performRequest(endpoint, options = {}, isAbsolute = endpoint.startsWith('http'), normalizedEndpoint = endpoint.startsWith('/') ? endpoint : '/' + endpoint) {
     const urls = isAbsolute ? [endpoint] : [API_BASE + normalizedEndpoint];
     const fallbackBase = !isAbsolute ? alternateApiBase() : '';
 

@@ -50,8 +50,8 @@ Route::redirect('/admissions/apply', '/apply', 301);
 
 // Compatibility for stale public form assets that call the endpoint without
 // the /api or /backend prefix.
-Route::post('/contact', [InquiryController::class, 'store'])->middleware('throttle:public-form');
-Route::post('/applications/submit-public', [ApplicationController::class, 'submitPublic'])->middleware('throttle:public-form');
+Route::post('/contact', [InquiryController::class, 'store'])->middleware(['throttle:public-contact', 'public.spam']);
+Route::post('/applications/submit-public', [ApplicationController::class, 'submitPublic'])->middleware(['throttle:public-application', 'public.spam']);
 Route::post('/applications/{id}/documents', [ApplicationController::class, 'uploadDocument'])->middleware('throttle:document-upload');
 Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(function () {
     Route::post('/applications/bulk-delete', [ApplicationController::class, 'bulkDelete']);
@@ -70,7 +70,7 @@ Route::get('/dashboard', function (Request $request) {
     $user->tokens()->where('name', 'admin-dashboard')->delete();
 
     return view('dashboard', [
-        'admissionApiToken' => $user->createToken('admin-dashboard')->plainTextToken,
+        'admissionApiToken' => $user->createToken('admin-dashboard', ['*'], now()->addMinutes(max(1, (int) (config('sanctum.expiration') ?? 120))))->plainTextToken,
     ]);
 })->middleware(['auth', 'admin'])->name('dashboard');
 
@@ -84,6 +84,7 @@ Route::middleware('guest')->group(function () {
     })->name('admin.login');
 
     Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])
+        ->middleware('throttle:api-login')
         ->name('admin.login.submit');
 });
 
@@ -97,7 +98,7 @@ Route::get('/admin/dashboard', function (Request $request) {
     $user->tokens()->where('name', 'admin-dashboard')->delete();
 
     return view('dashboard', [
-        'admissionApiToken' => $user->createToken('admin-dashboard')->plainTextToken,
+        'admissionApiToken' => $user->createToken('admin-dashboard', ['*'], now()->addMinutes(max(1, (int) (config('sanctum.expiration') ?? 120))))->plainTextToken,
     ]);
 })->name('admin.dashboard');
 
@@ -150,8 +151,7 @@ Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(functi
     Route::delete('/admin/inquiries/{id}', [InquiryController::class, 'destroy']);
 
     Route::post('/admin/clear-cache', function() {
-        \Illuminate\Support\Facades\Cache::forget('welcome_page_data');
-        \Illuminate\Support\Facades\Cache::forget('news_events_page_data');
+        \App\Support\PublicCache::clear();
         return response()->json(['message' => 'Cache cleared.']);
     });
 });

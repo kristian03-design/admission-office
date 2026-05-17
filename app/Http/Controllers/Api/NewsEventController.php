@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\NewsEvent;
+use App\Support\PublicCache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -12,11 +13,13 @@ class NewsEventController extends Controller
 {
     public function publicIndex()
     {
-        $items = NewsEvent::whereRaw('is_active = true')
-            ->orderBy('sort_order')
-            ->orderBy('event_date', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $items = Cache::remember(PublicCache::NEWS_EVENTS_API, PublicCache::ttl(), function () {
+            return NewsEvent::whereRaw('is_active = true')
+                ->orderBy('sort_order')
+                ->orderBy('event_date', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        });
 
         return response()->json(['data' => $items]);
     }
@@ -166,8 +169,7 @@ class NewsEventController extends Controller
 
     private function clearCache(): void
     {
-        Cache::forget('welcome_page_data');
-        Cache::forget('news_events_page_data');
+        PublicCache::clear();
     }
 
     private function storeUploadedImages($files): array

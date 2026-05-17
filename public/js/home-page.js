@@ -404,6 +404,7 @@ function clearError(inputEl, errorEl) {
   const successEl = $('#form-success');
   const submitBtn = $('#submit-btn');
   if (!form) return;
+  const formStartedAt = Math.floor(Date.now() / 1000);
 
   const fields = {
     name: { input: $('#full-name'), error: $('#name-error') },
@@ -476,7 +477,9 @@ function clearError(inputEl, errorEl) {
           last_name: lastName,
           email: fields.email.input.value,
           subject: 'Program Inquiry: ' + fields.program.input.value,
-          message: 'Interested in: ' + fields.program.input.value
+          message: 'Interested in: ' + fields.program.input.value,
+          form_started_at: formStartedAt,
+          _hp: ''
         })
       });
 
@@ -499,6 +502,7 @@ function clearError(inputEl, errorEl) {
   const form = $('#contact-form');
   const submitBtn = $('#contact-submit-btn');
   if (!form) return;
+  const formStartedAt = Math.floor(Date.now() / 1000);
 
   const formCard = form.closest('.contact-form-card');
   let notice = formCard?.querySelector('.contact-form-notice');
@@ -579,7 +583,9 @@ function clearError(inputEl, errorEl) {
           last_name: form.querySelector('[name="last_name"]').value,
           email: form.querySelector('[name="email"]').value,
           subject: form.querySelector('[name="subject"]').value,
-          message: form.querySelector('[name="message"]').value
+          message: form.querySelector('[name="message"]').value,
+          form_started_at: formStartedAt,
+          _hp: ''
         })
       });
 

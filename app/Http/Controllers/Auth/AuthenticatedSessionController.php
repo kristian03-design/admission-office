@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Mail;
 
@@ -40,6 +41,11 @@ class AuthenticatedSessionController extends Controller
         $user = $request->user();
 
         if (! $user->isAdmin()) {
+            Log::warning('Non-admin login attempt blocked.', [
+                'email' => $user->email,
+                'ip' => $request->ip(),
+            ]);
+
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
@@ -62,6 +68,12 @@ class AuthenticatedSessionController extends Controller
         try {
             Mail::to($user->email)->send(new \App\Mail\LoginOtpMail($otp, $user->name));
         } catch (\Exception $e) {
+            Log::error('Admin OTP email failed.', [
+                'user_id' => $user->id,
+                'ip' => $request->ip(),
+                'error' => $e->getMessage(),
+            ]);
+
             return back()->withErrors(['email' => 'Could not send OTP email. Please check mail configuration.'])->withInput();
         }
 
@@ -77,6 +89,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        $request->user()?->tokens()->where('name', 'admin-dashboard')->delete();
+        $request->user()?->tokens()->where('name', 'auth_token')->delete();
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

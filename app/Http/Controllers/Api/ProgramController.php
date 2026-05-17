@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Program;
+use App\Support\PublicCache;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +14,10 @@ class ProgramController extends Controller
 {
     public function index(Request $request)
     {
-        $programs = Program::withCount('applications')->orderBy('name')->get();
+        $programs = Cache::remember(PublicCache::PROGRAMS_API, PublicCache::ttl(), function () {
+            return Program::withCount('applications')->orderBy('name')->get();
+        });
+
         return response()->json(['data' => $programs]);
     }
 
@@ -21,7 +25,7 @@ class ProgramController extends Controller
     {
         $program = Program::findOrFail($id);
         $program->update($request->only(['interview_schedule', 'interview_status']));
-        Cache::forget('welcome_page_data');
+        PublicCache::clear();
         return response()->json(['message' => 'Course schedule updated successfully', 'data' => $program]);
     }
 
@@ -41,7 +45,7 @@ class ProgramController extends Controller
 
         $program->update($updateData);
         $program->refresh();
-        Cache::forget('welcome_page_data');
+        PublicCache::clear();
 
         return response()->json([
             'message' => 'Program slots updated and status synced',
@@ -69,7 +73,7 @@ class ProgramController extends Controller
             'is_active' => $this->databaseBoolean($isActive),
         ]);
         $program->refresh();
-        Cache::forget('welcome_page_data');
+        PublicCache::clear();
 
         return response()->json([
             'message' => 'Program status updated successfully',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Support\PublicCache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -135,6 +136,7 @@ class FacultyStaffController extends Controller
     {
         usort($items, fn ($a, $b) => ($a['order'] ?? 0) <=> ($b['order'] ?? 0));
         \App\Models\SystemSetting::set('faculty_staff_data', json_encode(array_values($items), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        PublicCache::clear();
     }
 
     private function uniqueId(string $name, array $items): string

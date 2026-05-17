@@ -9,6 +9,7 @@ use App\Models\Application;
 use App\Models\Program;
 use App\Models\Interview;
 use App\Models\SystemSetting;
+use App\Support\PublicCache;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
@@ -127,7 +128,7 @@ class ApplicationController extends Controller
         });
 
         // Clear welcome page cache to reflect slot changes immediately
-        Cache::forget('welcome_page_data');
+        PublicCache::clear();
 
         $payload = $application->toArray();
         unset($payload['document_upload_token']);
@@ -282,7 +283,7 @@ class ApplicationController extends Controller
             }
         });
 
-        Cache::forget('welcome_page_data');
+        PublicCache::clear();
 
         return response()->json(['message' => 'Applications deleted successfully']);
     }
@@ -307,7 +308,7 @@ class ApplicationController extends Controller
 
             $application->delete();
         });
-        Cache::forget('welcome_page_data');
+        PublicCache::clear();
 
         return response()->json(['message' => 'Application deleted successfully']);
     }

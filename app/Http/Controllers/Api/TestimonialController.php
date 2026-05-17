@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Testimonial;
+use App\Support\PublicCache;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class TestimonialController extends Controller
@@ -39,7 +39,7 @@ class TestimonialController extends Controller
             $validated['is_active'] = \Illuminate\Support\Facades\DB::raw($validated['is_active'] ? 'TRUE' : 'FALSE');
         }
         $testimonial = Testimonial::create($validated);
-        Cache::forget('welcome_page_data');
+        PublicCache::clear();
 
         return response()->json(['message' => 'Testimonial added.', 'data' => $testimonial]);
     }
@@ -74,7 +74,7 @@ class TestimonialController extends Controller
             $validated['is_active'] = \Illuminate\Support\Facades\DB::raw($validated['is_active'] ? 'TRUE' : 'FALSE');
         }
         $testimonial->update($validated);
-        Cache::forget('welcome_page_data');
+        PublicCache::clear();
 
         return response()->json(['message' => 'Testimonial updated.', 'data' => $testimonial]);
     }
@@ -84,7 +84,7 @@ class TestimonialController extends Controller
         $testimonial = Testimonial::findOrFail($id);
         $this->deleteStoredAvatar($testimonial->author_avatar);
         $testimonial->delete();
-        Cache::forget('welcome_page_data');
+        PublicCache::clear();
         return response()->json(['message' => 'Testimonial deleted.']);
     }
 

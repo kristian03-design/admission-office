@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Mail;
 
@@ -54,6 +55,11 @@ class OtpVerificationController extends Controller
 
         // Check OTP value
         if (! Hash::check((string) $request->otp, (string) $user->login_otp)) {
+            Log::warning('Admin OTP verification failed.', [
+                'user_id' => $user->id,
+                'ip' => $request->ip(),
+            ]);
+
             return back()->withErrors(['otp' => 'Invalid OTP code. Please try again.']);
         }
 
@@ -67,7 +73,7 @@ class OtpVerificationController extends Controller
 
         // Issue API token for the dashboard
         $user->tokens()->delete();
-        $apiToken = $user->createToken('admin-dashboard')->plainTextToken;
+        $apiToken = $user->createToken('admin-dashboard', ['*'], now()->addMinutes(max(1, (int) (config('sanctum.expiration') ?? 120))))->plainTextToken;
         $request->session()->put('admission_api_token', $apiToken);
 
         return redirect()->intended(route('admin.dashboard', absolute: false));
@@ -99,6 +105,12 @@ class OtpVerificationController extends Controller
         try {
             Mail::to($user->email)->send(new \App\Mail\LoginOtpMail($otp, $user->name));
         } catch (\Exception $e) {
+            Log::error('Admin OTP resend failed.', [
+                'user_id' => $user->id,
+                'ip' => $request->ip(),
+                'error' => $e->getMessage(),
+            ]);
+
             return back()->withErrors(['otp' => 'Failed to resend OTP. Please try again.']);
         }
 
