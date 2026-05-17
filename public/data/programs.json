@@ -14,7 +14,7 @@
   },
   {
     "id": 2,
-    "code": "BA-MM",
+    "code": "BAMM",
     "name": "BS Business Administration Major in Marketing Management",
     "department": "Business",
     "category": "business",
@@ -27,7 +27,7 @@
   },
   {
     "id": 3,
-    "code": "BA-FM",
+    "code": "BAFM",
     "name": "BS Business Administration Major in Financial Management",
     "department": "Business",
     "category": "business",
@@ -40,7 +40,7 @@
   },
   {
     "id": 4,
-    "code": "BA-HRM",
+    "code": "BAHRM",
     "name": "BS Business Administration Major in Human Resource Management",
     "department": "Business",
     "category": "business",
@@ -53,7 +53,7 @@
   },
   {
     "id": 5,
-    "code": "BAECO",
+    "code": "BSENTREP",
     "name": "BS Entrepreneurship",
     "department": "Business",
     "category": "business",
@@ -66,8 +66,8 @@
   },
   {
     "id": 6,
-    "code": "BSECON",
-    "name": "BS Economics",
+    "code": "BAECO",
+    "name": "BA Economics",
     "department": "Business",
     "category": "business",
     "duration_years": 4,

@@ -208,7 +208,7 @@ class WelcomeController extends Controller
                 $imageFile = $imageMap[$code] ?? $fallbackFile;
 
                 if (!$imageFile || !is_file(public_path('assets/images/' . $imageFile))) {
-                    $imageFile = 'hero-logo.png';
+                    $imageFile = '';
                 }
 
                 $programName = data_get($program, 'name', $code);
