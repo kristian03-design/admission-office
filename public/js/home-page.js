@@ -704,11 +704,64 @@ console.log('%c BTC Admissions Landing Page loaded ✓', 'color:#254d82;font-wei
   const badgeFloat = document.getElementById('hero-badge-float');
   const badgeIcon = document.getElementById('hero-badge-icon');
   const badgeTitle = document.getElementById('hero-badge-title');
-  const dots = document.querySelectorAll('.hero-slider-dot');
 
   if (!stage) return; // guard — hero not on page
 
+  function getHeroSlidesData() {
+    const dataEl = document.getElementById('hero-slides-json');
+    if (!dataEl?.textContent?.trim()) return [];
+
+    try {
+      const data = JSON.parse(dataEl.textContent);
+      return Array.isArray(data) ? data : [];
+    } catch (error) {
+      console.warn('Hero slides JSON could not be parsed.', error);
+      return [];
+    }
+  }
+
+  function renderHeroSlides(slidesData) {
+    const dotsWrap = document.getElementById('hero-slider-nav');
+    if (!slidesData.length || !dotsWrap) return;
+
+    stage.replaceChildren();
+    dotsWrap.replaceChildren();
+
+    slidesData.forEach((slide, index) => {
+      const slideEl = document.createElement('div');
+      slideEl.className = `hero-img-slide${index === 0 ? ' active' : ''}`;
+      slideEl.dataset.program = slide.program || '';
+      slideEl.dataset.icon = slide.code || '';
+      slideEl.dataset.dept = slide.department || '';
+
+      const img = document.createElement('img');
+      img.src = slide.image || '';
+      img.alt = slide.alt || slide.program || 'Program image';
+      img.decoding = 'async';
+
+      if (index === 0) {
+        img.setAttribute('fetchpriority', 'high');
+      } else {
+        img.loading = 'lazy';
+      }
+
+      slideEl.appendChild(img);
+      stage.appendChild(slideEl);
+
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = `hero-slider-dot${index === 0 ? ' active' : ''}`;
+      dot.dataset.index = String(index);
+      dot.setAttribute('aria-label', slide.program || `Program ${index + 1}`);
+      dotsWrap.appendChild(dot);
+    });
+  }
+
+  renderHeroSlides(getHeroSlidesData());
+
   const slides = Array.from(stage.querySelectorAll('.hero-img-slide'));
+  const dots = Array.from(document.querySelectorAll('.hero-slider-dot'));
+  if (!slides.length) return;
   const INTERVAL = 4000;  // ms between slides
   const TICK = 50;    // ms for progress bar update
 
@@ -796,6 +849,7 @@ console.log('%c BTC Admissions Landing Page loaded ✓', 'color:#254d82;font-wei
 
   function startAutoplay() {
     clearInterval(timer);
+    clearInterval(progTimer);
     timer = setInterval(next, INTERVAL);
     isPaused = false;
     startProgress();
@@ -856,7 +910,9 @@ console.log('%c BTC Admissions Landing Page loaded ✓', 'color:#254d82;font-wei
   if (programName) programName.textContent = firstSlide.dataset.program || 'Hospitality Management';
 
   // Small delay before autoplay starts (let page load)
-  setTimeout(startAutoplay, 800);
+  if (slides.length > 1) {
+    setTimeout(startAutoplay, 800);
+  }
 
   console.log('%c Hero slider initialized ✓', 'color:#c9933a;font-weight:bold;');
 })();

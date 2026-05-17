@@ -25,6 +25,7 @@ class WelcomeController extends Controller
                 ->get();
 
             $programs = Program::orderBy('name')->get();
+            $displayPrograms = $programs->isNotEmpty() ? $programs : $this->fallbackPrograms();
 
             return [
                 'settings' => SystemSetting::all_as_array(),
@@ -34,12 +35,14 @@ class WelcomeController extends Controller
                     ->unique(fn ($announcement) => trim(mb_strtolower($announcement->message ?? '')))
                     ->values(),
                 'popupAnn' => $announcements->firstWhere('is_popup', true),
-                'programs' => $programs->isNotEmpty() ? $programs : $this->fallbackPrograms(),
+                'programs' => $displayPrograms,
                 'testimonials' => \App\Models\Testimonial::whereRaw('is_active = true')
                     ->orderBy('order')
                     ->get()
             ];
         });
+
+        $data['heroSlides'] = $this->heroSlidesFor($data['programs']);
 
         return view('welcome', $data);
     }
@@ -183,6 +186,39 @@ class WelcomeController extends Controller
             ], $program))
             ->sortBy('name')
             ->values();
+    }
+
+    private function heroSlidesFor($programs): array
+    {
+        $imageMap = [
+            'BAECO' => 'BSENTREP.png',
+            'BSECON' => 'BAECO.png',
+            'BSED-ENG' => 'BSED.png',
+        ];
+
+        return collect($programs)
+            ->values()
+            ->map(function ($program) use ($imageMap) {
+                $code = strtoupper((string) ($program->code ?? ''));
+                $fallbackFile = preg_replace('/[^A-Z0-9]/', '', $code) . '.png';
+                $imageFile = $imageMap[$code] ?? $fallbackFile;
+
+                if (!$imageFile || !is_file(public_path('assets/images/' . $imageFile))) {
+                    $imageFile = 'hero-logo.png';
+                }
+
+                $programName = $program->name ?? $code;
+                $department = $program->department ?? 'Academic Program';
+
+                return [
+                    'program' => $programName,
+                    'code' => $program->code ?? '',
+                    'department' => $department,
+                    'image' => asset('assets/images/' . $imageFile),
+                    'alt' => trim(($program->code ?? $programName) . ' program image'),
+                ];
+            })
+            ->all();
     }
 
     private function publicStorageUrl(?string $url): ?string

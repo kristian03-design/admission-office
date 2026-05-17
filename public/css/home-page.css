@@ -2212,10 +2212,12 @@ body.menu-open {
 .hero-slider-nav {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  gap: .5rem;
 }
 
 .hero-slider-nav>*+* {
-  margin-left: .5rem;
+  margin-left: 0;
 }
 
 .hero-slider-dot {

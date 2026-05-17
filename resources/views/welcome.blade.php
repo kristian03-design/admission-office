@@ -18,7 +18,7 @@ content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpk
   <!-- ✦ Iconsax Icons ✦ -->
   @include('partials.iconsax')
 
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=19" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=20" />
 
 </head>
 <body>
@@ -133,17 +133,10 @@ content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpk
               </a>
             </div>
 
+            <script type="application/json" id="hero-slides-json">@json($heroSlides ?? [])</script>
+
             <!-- Slider dots -->
-            <div class="hero-slider-nav mt-10" data-animate="fade-up" data-delay="350">
-              <button class="hero-slider-dot active" data-index="0" aria-label="Hospitality"></button>
-              <button class="hero-slider-dot" data-index="1" aria-label="Business Administration"></button>
-              <button class="hero-slider-dot" data-index="2" aria-label="Education"></button>
-              <button class="hero-slider-dot" data-index="3" aria-label="Accountancy"></button>
-              <button class="hero-slider-dot" data-index="4" aria-label="Tourism"></button>
-              <button class="hero-slider-dot" data-index="5" aria-label="Information Technology"></button>
-              <button class="hero-slider-dot" data-index="6" aria-label="Management"></button>
-              <button class="hero-slider-dot" data-index="7" aria-label="Arts & Sciences"></button>
-            </div>
+            <div class="hero-slider-nav mt-10" id="hero-slider-nav" data-animate="fade-up" data-delay="350"></div>
 
             <div class="hero-stats mt-10 grid grid-cols-3 gap-6" data-animate="fade-up" data-delay="400">
               <div class="stat-item">
@@ -170,36 +163,11 @@ content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpk
 
             <div class="hero-badge-float" id="hero-badge-float">
               <div>
-                <p class="hero-badge-title" id="hero-badge-title">Hospitality</p>
+                <p class="hero-badge-title" id="hero-badge-title">{{ $heroSlides[0]['department'] ?? 'Academic Programs' }}</p>
               </div>
             </div>
 
-            <div class="hero-img-stage" id="hero-img-stage">
-              <div class="hero-img-slide active" data-program="Hospitality Management"  data-icon="ðŸ³" data-dept="Hospitality Management">
-                <img src="{{ asset('assets/images/chef.png') }}" alt="Hospitality student" fetchpriority="high" decoding="async" />
-              </div>
-              <div class="hero-img-slide" data-program="Business Administration"        data-icon="ðŸ’¼" data-dept="Marketing Management">
-                <img src="{{ asset('assets/images/business-male.png') }}" alt="Business student" loading="lazy" decoding="async" />
-              </div>
-              <div class="hero-img-slide" data-program="Education Program"              data-icon="ðŸ“š" data-dept="Secondary Education">
-                <img src="{{ asset('assets/images/barong.png') }}" alt="Education student" loading="lazy" decoding="async" />
-              </div>
-              <div class="hero-img-slide" data-program="Accountancy"                   data-icon="ðŸ“Š" data-dept="Accountancy">
-                <img src="{{ asset('assets/images/business-female.png') }}" alt="Accountancy student" loading="lazy" decoding="async" />
-              </div>
-              <div class="hero-img-slide" data-program="Tourism Management"             data-icon="âœˆï¸" data-dept="Tourism Management">
-                <img src="{{ asset('assets/images/flight.png') }}" alt="Tourism student" loading="lazy" decoding="async" />
-              </div>
-              <div class="hero-img-slide" data-program="Information Technology"         data-icon="ðŸ’»" data-dept="Information Technology">
-                <img src="{{ asset('assets/images/it-female.png') }}" alt="IT student" loading="lazy" decoding="async" />
-              </div>
-              <div class="hero-img-slide" data-program="Business Management"            data-icon="ðŸ“–" data-dept="Business Administration">
-                <img src="{{ asset('assets/images/reading-male.png') }}" alt="Management student" loading="lazy" decoding="async" />
-              </div>
-              <div class="hero-img-slide" data-program="Arts & Sciences"                data-icon="ðŸŽ“" data-dept="Arts & Sciences">
-                <img src="{{ asset('assets/images/reading-female.png') }}" alt="Arts & Sciences student" loading="lazy" decoding="async" />
-              </div>
-            </div>
+            <div class="hero-img-stage" id="hero-img-stage"></div>
 
             <div class="hero-progress-wrap">
               <div class="hero-progress-bar" id="hero-progress-bar"></div>
@@ -1054,7 +1022,7 @@ content="script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpk
     </div>
   </div>
 
-  <script src="{{ asset('js/home-page.js') }}?v=8"></script>
+  <script src="{{ asset('js/home-page.js') }}?v=9"></script>
   <script>
     // Initialize all icons including those in the modal and footer
     if (window.iconsax) {
