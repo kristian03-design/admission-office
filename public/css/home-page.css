@@ -311,10 +311,17 @@ body.site-loader-lock {
   }
 }
 
-/* ─── BRAND TEXT: hide on mobile, show on desktop ─── */
-.nav-main,
-.nav-sub {
+/* ─── BRAND TEXT: show short name on mobile, full brand on desktop ─── */
+.nav-main {
   display: none !important;
+}
+
+.nav-sub {
+  display: block !important;
+  color: rgba(255, 255, 255, .82);
+  font-size: 0.68rem;
+  line-height: 1.15;
+  max-width: 165px;
 }
 
 @media (min-width: 1024px) {
@@ -4784,13 +4791,23 @@ main {
    Only logo icon + hamburger visible on small screens.
    ========================================================= */
 
-/* Hide brand text on all screens by default */
-.nav-main,
-.nav-sub {
+/* Hide long brand text on mobile/tablet */
+.nav-main {
   display: none !important;
 }
 
-/* Show brand text on desktop only */
+.nav-sub {
+  display: block !important;
+  color: rgba(255, 255, 255, .82);
+  font-size: 0.72rem;
+  line-height: 1.15;
+  max-width: min(210px, calc(100vw - 132px));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Show full brand text on desktop only */
 @media (min-width: 1024px) {
   .nav-main {
     display: block !important;

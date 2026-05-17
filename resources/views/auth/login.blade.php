@@ -13,9 +13,9 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:       #1b3557;
-      --navy-mid:   #254d82;
-      --navy-deep:  #0f2138;
+      --navy:       #071b3d;
+      --navy-mid:   #0b2d6b;
+      --navy-deep:  #031024;
       --gold:       #c9933a;
       --gold-light: #e8b96a;
       --gold-pale:  #f6e7d0;
@@ -26,13 +26,13 @@
 
     html, body { height: 100%; font-family: 'DM Sans', system-ui, sans-serif; background: var(--navy-deep); overflow: hidden; }
 
-    .bg { position: fixed; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 60% at 15% 50%, rgba(37,77,130,.55) 0%, transparent 70%), radial-gradient(ellipse 50% 80% at 90% 20%, rgba(201,147,58,.12) 0%, transparent 60%), radial-gradient(ellipse 60% 60% at 80% 90%, rgba(27,53,87,.8) 0%, transparent 70%), #0f2138; }
+    .bg { position: fixed; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 60% at 15% 50%, rgba(11,45,107,.58) 0%, transparent 70%), radial-gradient(ellipse 50% 80% at 90% 20%, rgba(201,147,58,.12) 0%, transparent 60%), radial-gradient(ellipse 60% 60% at 80% 90%, rgba(7,27,61,.82) 0%, transparent 70%), linear-gradient(135deg, #031024 0%, #071b3d 48%, #0b2d6b 100%); }
     .bg::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%); }
 
     .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; animation: drift 20s ease-in-out infinite; }
-    .orb-1 { width: 500px; height: 500px; top: -100px; left: -80px; background: rgba(37,77,130,.35); animation-delay: 0s; }
+    .orb-1 { width: 500px; height: 500px; top: -100px; left: -80px; background: rgba(11,45,107,.35); animation-delay: 0s; }
     .orb-2 { width: 350px; height: 350px; bottom: -60px; right: -60px; background: rgba(201,147,58,.15); animation-delay: -8s; }
-    .orb-3 { width: 250px; height: 250px; top: 40%; right: 15%; background: rgba(58,109,173,.2); animation-delay: -14s; }
+    .orb-3 { width: 250px; height: 250px; top: 40%; right: 15%; background: rgba(6,70,165,.2); animation-delay: -14s; }
 
     @keyframes drift { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(30px,-20px) scale(1.05); } 66% { transform: translate(-20px,25px) scale(.96); } }
 

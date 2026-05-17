@@ -132,7 +132,9 @@
               </a>
             </div>
 
-            <script type="application/json" id="hero-slides-json">@json($heroSlides ?? [])</script>
+            <script type="application/json" id="hero-slides-json">
+              @json($heroSlides ?? [])
+            </script>
 
             <!-- Slider dots -->
             <div class="hero-slider-nav mt-10" id="hero-slider-nav" data-animate="fade-up" data-delay="350"></div>

@@ -12,7 +12,7 @@
   @include('partials.iconsax')
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=1" />
-  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=13" />
+  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=14" />
 
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
