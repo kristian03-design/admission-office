@@ -705,15 +705,11 @@
     class="announcement-popup"
     role="dialog"
     aria-modal="true"
-    aria-labelledby="announcementPopupTitle"
+    aria-label="Announcement"
     aria-describedby="announcementPopupMessage"
     hidden>
 
     <div class="announcement-popup__card" id="popupCard" tabindex="-1">
-      <button type="button" class="announcement-popup__close" onclick="closePopup()" aria-label="Close announcement">
-        <i data-iconsax="x"></i>
-      </button>
-
       <div class="announcement-popup__media">
         @if($popupAnn->popup_image)
         <img src="{{ str_starts_with($popupAnn->popup_image, 'http') ? $popupAnn->popup_image : asset(str_starts_with($popupAnn->popup_image, 'storage/') || str_starts_with($popupAnn->popup_image, '/storage/') ? ltrim($popupAnn->popup_image, '/') : 'storage/' . $popupAnn->popup_image) }}" alt="Announcement" class="announcement-popup__image" loading="lazy" decoding="async">
@@ -732,10 +728,6 @@
           <i data-iconsax="notification"></i>
           Important Notice
         </span>
-
-        <h2 id="announcementPopupTitle" class="announcement-popup__title">
-          {{ $popupAnn->title ?? 'Announcement' }}
-        </h2>
 
         <p id="announcementPopupMessage" class="announcement-popup__message">
           {{ $popupAnn->message }}
