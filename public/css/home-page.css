@@ -2672,16 +2672,19 @@ body.announcement-popup-open {
 
 .announcement-popup__secondary {
   flex: 1;
-  border: 1px solid rgba(15, 30, 61, .12);
-  color: #0f1e3d;
-  background: #fff;
+  border: 1px solid rgba(255, 255, 255, .18);
+  color: #fff;
+  background: #071b3d;
   cursor: pointer;
+  box-shadow: 0 12px 24px rgba(7, 27, 61, .18);
 }
 
 .announcement-popup__secondary:hover,
 .announcement-popup__secondary:focus-visible {
-  background: #f7f9fc;
-  border-color: rgba(15, 30, 61, .22);
+  background: #031024;
+  border-color: rgba(255, 255, 255, .28);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(7, 27, 61, .24);
 }
 
 /* ─── GUIDE MODAL ─── */
@@ -4560,7 +4563,7 @@ main {
   min-height: 100vh !important;
   min-height: 100dvh !important;
   overflow: hidden !important;
-  background: linear-gradient(135deg, #0f2340 0%, #1b3557 45%, #254d82 100%) !important;
+  background: linear-gradient(135deg, #031024 0%, #071b3d 48%, #0b2d6b 100%) !important;
 }
 
 #hero>.relative.z-10,
