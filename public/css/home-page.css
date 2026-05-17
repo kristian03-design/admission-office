@@ -638,15 +638,15 @@ body.menu-open {
 
 /* ─── HERO ─── */
 .hero-section {
-  background: linear-gradient(135deg, #0f2340 0%, #1b3557 45%, #254d82 100%);
+  background: linear-gradient(135deg, #031024 0%, #071b3d 48%, #0b2d6b 100%);
   min-height: 85vh;
   min-height: 85dvh;
 }
 
 .hero-bg-overlay {
   background:
-    radial-gradient(ellipse 80% 60% at 70% 50%, rgba(58, 110, 168, .25) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 80% at 10% 80%, rgba(45, 106, 79, .2) 0%, transparent 60%);
+    radial-gradient(ellipse 80% 60% at 70% 50%, rgba(6, 70, 165, .28) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 80% at 10% 80%, rgba(7, 27, 61, .45) 0%, transparent 60%);
 }
 
 .hero-pattern {
@@ -666,7 +666,7 @@ body.menu-open {
 }
 
 .hero-section {
-  background: linear-gradient(135deg, #0f2340 0%, #1b3557 45%, #254d82 100%);
+  background: linear-gradient(135deg, #031024 0%, #071b3d 48%, #0b2d6b 100%);
   min-height: 85vh;
   min-height: 85dvh;
   overflow-x: hidden !important;
