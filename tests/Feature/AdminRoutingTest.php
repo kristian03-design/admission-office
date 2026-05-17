@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Application;
 use App\Models\Program;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -172,12 +173,60 @@ class AdminRoutingTest extends TestCase
         ]);
     }
 
+    public function test_legacy_application_bulk_delete_endpoint_deletes_selected_applications(): void
+    {
+        $user = User::factory()->create(['is_admin' => true]);
+        $token = $user->createToken('admin-dashboard')->plainTextToken;
+        $first = Application::create([
+            'reference_number' => 'BTECH-2026-000001',
+            'first_name' => 'First',
+            'last_name' => 'Applicant',
+            'status' => 'approved',
+        ]);
+        $second = Application::create([
+            'reference_number' => 'BTECH-2026-000002',
+            'first_name' => 'Second',
+            'last_name' => 'Applicant',
+            'status' => 'pending',
+        ]);
+
+        $this->withHeader('Authorization', 'Bearer '.$token)
+            ->postJson('/applications/bulk-delete', [
+                'ids' => [$first->id, $second->id],
+            ])
+            ->assertOk()
+            ->assertJsonPath('message', 'Applications deleted successfully');
+
+        $this->assertDatabaseMissing('applications', ['id' => $first->id]);
+        $this->assertDatabaseMissing('applications', ['id' => $second->id]);
+    }
+
+    public function test_legacy_application_delete_endpoint_deletes_single_application(): void
+    {
+        $user = User::factory()->create(['is_admin' => true]);
+        $token = $user->createToken('admin-dashboard')->plainTextToken;
+        $application = Application::create([
+            'reference_number' => 'BTECH-2026-000003',
+            'first_name' => 'Single',
+            'last_name' => 'Applicant',
+            'status' => 'pending',
+        ]);
+
+        $this->withHeader('Authorization', 'Bearer '.$token)
+            ->postJson("/applications/{$application->id}/delete")
+            ->assertOk()
+            ->assertJsonPath('message', 'Application deleted successfully');
+
+        $this->assertDatabaseMissing('applications', ['id' => $application->id]);
+    }
+
     public function test_uploaded_public_storage_files_can_be_served_by_laravel(): void
     {
         Storage::disk('public')->put('applications/1/photo.txt', 'photo-data');
 
-        $this->get('/uploaded-storage/applications/1/photo.txt')
-            ->assertOk()
-            ->assertSee('photo-data');
+        $response = $this->get('/uploaded-storage/applications/1/photo.txt')
+            ->assertOk();
+
+        $this->assertSame('photo-data', file_get_contents($response->baseResponse->getFile()->getPathname()));
     }
 }

@@ -486,12 +486,20 @@
       </div>
     </div>
 
-    <div class="filter-bar" style="margin-bottom: 24px; display: flex; gap: 12px; align-items: center;">
-      <div style="font-size: 13px; font-weight: 600; color: var(--text-2);">Filter by Academic Year:</div>
-      <select class="filter-select" id="reportFilterYear" style="min-width: 200px;">
-        <option value="">All Academic Years</option>
-      </select>
-      <button class="btn-ghost" id="clearReportFilters" style="padding: 8px 16px;">Clear</button>
+    <div class="filter-bar report-filter-bar">
+      <label class="report-filter-field">
+        <span class="report-filter-label">Academic Year</span>
+        <select class="filter-select" id="reportFilterYear">
+          <option value="">All Academic Years</option>
+        </select>
+      </label>
+      <label class="report-filter-field">
+        <span class="report-filter-label">Location</span>
+        <select class="filter-select" id="reportFilterLocation">
+          <option value="">All Locations</option>
+        </select>
+      </label>
+      <button class="btn-ghost report-filter-clear" id="clearReportFilters">Clear</button>
     </div>
 
     <div class="reports-grid" id="reportsGrid"></div>

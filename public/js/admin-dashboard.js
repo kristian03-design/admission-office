@@ -80,6 +80,7 @@ let isRefreshingData = false;
 let programFilter = 'All';
 let interviewFilter = 'All';
 let reportYearFilter = '';
+let reportLocationFilter = '';
 let yearFilter = '';
 
 
@@ -1132,8 +1133,9 @@ function exportCSV(data, filename) {
 function exportReportsCSV() {
   const headers = ['Program', 'Department', 'Total Applications', 'Approved', 'Pending', 'Rejected'];
   let rows = [];
+  const hasReportFilter = !!(reportYearFilter || reportLocationFilter);
 
-  if (DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.by_program) && DASHBOARD_STATS.by_program.length > 0) {
+  if (!hasReportFilter && DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.by_program) && DASHBOARD_STATS.by_program.length > 0) {
     const programs = getPrograms();
     rows = DASHBOARD_STATS.by_program.map(row => {
       const prog = programs.find(p => p.name === row.first_choice);
@@ -1142,7 +1144,7 @@ function exportReportsCSV() {
     });
   } else {
     const progCounts = {}, progStatuses = {}, progGWAs = {};
-    getApplications().forEach(a => {
+    getFilteredReportApplications().forEach(a => {
       const p = a.firstChoice;
       if (!p) return;
       progCounts[p] = (progCounts[p] || 0) + 1;
@@ -3964,6 +3966,51 @@ let DASHBOARD_STATS = null;
 let reportsRenderKey = '';
 let reportsStatsPromise = null;
 
+function getApplicationAcademicYear(app) {
+  return app.academic_year || (app.raw && app.raw.academic_year) || '';
+}
+
+function buildAcademicYearOptions() {
+  const years = new Set(getApplications().map(getApplicationAcademicYear).filter(Boolean));
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const startYear = Math.min(2026, currentYear);
+
+  for (let year = startYear; year <= currentYear + 10; year++) {
+    years.add(`${year}-${year + 1}`);
+  }
+
+  return [...years].sort((a, b) => {
+    const aYear = parseInt(String(a).match(/\d{4}/)?.[0] || '0', 10);
+    const bYear = parseInt(String(b).match(/\d{4}/)?.[0] || '0', 10);
+    return aYear - bYear || String(a).localeCompare(String(b));
+  });
+}
+
+function getReportLocation(app) {
+  const raw = app.raw || {};
+  const address = app.presentAddress || app.permanentAddress || raw.present_address || raw.permanent_address || '';
+  const parts = String(address)
+    .split(',')
+    .map(part => part.trim())
+    .filter(Boolean)
+    .filter(part => !/^\d{4,}$/.test(part));
+
+  if (parts.length >= 2) {
+    return parts.slice(-2).join(', ');
+  }
+
+  return parts[0] || '';
+}
+
+function getFilteredReportApplications() {
+  return getApplications().filter(app => {
+    const matchesYear = !reportYearFilter || getApplicationAcademicYear(app) === reportYearFilter;
+    const matchesLocation = !reportLocationFilter || getReportLocation(app) === reportLocationFilter;
+    return matchesYear && matchesLocation;
+  });
+}
+
 function buildReportsRenderKey() {
   const apps = getApplications();
   const programs = getPrograms();
@@ -3988,7 +4035,8 @@ function buildReportsRenderKey() {
     programs.length,
     firstApp ? `${firstApp.id || ''}:${firstApp.status || ''}:${firstApp.filed || ''}` : '',
     lastApp ? `${lastApp.id || ''}:${lastApp.status || ''}:${lastApp.filed || ''}` : '',
-    `year:${reportYearFilter}`
+    `year:${reportYearFilter}`,
+    `location:${reportLocationFilter}`
   ].join('|');
 }
 
@@ -4022,8 +4070,7 @@ async function initReports() {
   // Populate Year Filter Dropdown if empty
   const yearSelect = document.getElementById('reportFilterYear');
   if (yearSelect && yearSelect.options.length <= 1) {
-    const years = [...new Set(getApplications().map(a => a.academic_year || (a.raw && a.raw.academic_year)).filter(Boolean))].sort().reverse();
-    years.forEach(y => {
+    buildAcademicYearOptions().forEach(y => {
       const opt = document.createElement('option');
       opt.value = y;
       opt.textContent = y;
@@ -4034,30 +4081,58 @@ async function initReports() {
       reportYearFilter = e.target.value;
       initReports();
     });
+  }
+
+  const locationSelect = document.getElementById('reportFilterLocation');
+  if (locationSelect && locationSelect.options.length <= 1) {
+    const locations = [...new Set(getApplications().map(getReportLocation).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    locations.forEach(location => {
+      const opt = document.createElement('option');
+      opt.value = location;
+      opt.textContent = location;
+      locationSelect.appendChild(opt);
+    });
+    locationSelect.value = reportLocationFilter;
+    locationSelect.addEventListener('change', (e) => {
+      reportLocationFilter = e.target.value;
+      initReports();
+    });
+  }
+
+  if (yearSelect && locationSelect) {
     const clearBtn = document.getElementById('clearReportFilters');
-    if (clearBtn) {
+    if (clearBtn && !clearBtn.dataset.boundReportFilters) {
+      clearBtn.dataset.boundReportFilters = '1';
       clearBtn.addEventListener('click', () => {
         reportYearFilter = '';
+        reportLocationFilter = '';
         yearSelect.value = '';
+        locationSelect.value = '';
         initReports();
       });
     }
   }
 
-  const list = getApplications().filter(a => !reportYearFilter || (a.academic_year || (a.raw && a.raw.academic_year)) === reportYearFilter);
-  const total = Number(DASHBOARD_STATS?.total_applications ?? list.length ?? 0);
-  const approved = Number(DASHBOARD_STATS?.approved_applications ?? list.filter(a => a.status === 'Approved').length ?? 0);
+  const list = getFilteredReportApplications();
+  const hasReportFilter = !!(reportYearFilter || reportLocationFilter);
+  const total = Number(!hasReportFilter && DASHBOARD_STATS?.total_applications != null ? DASHBOARD_STATS.total_applications : list.length);
+  const approved = Number(!hasReportFilter && DASHBOARD_STATS?.approved_applications != null ? DASHBOARD_STATS.approved_applications : list.filter(a => a.status === 'Approved').length);
   const yes = v => String(v || '').trim().toLowerCase() === 'yes';
-  const pwdCount = Number(DASHBOARD_STATS?.pwd_count ?? list.filter(a => yes(a.pwd)).length ?? 0);
-  const indigenousCount = Number(DASHBOARD_STATS?.indigenous_count ?? list.filter(a => yes(a.indigenous)).length ?? 0);
-  const foursCount = Number(DASHBOARD_STATS?.four_ps_count ?? list.filter(a => yes(a.fours)).length ?? 0);
-  const avgGWAAll = DASHBOARD_STATS && DASHBOARD_STATS.avg_gwa != null
+  const pwdCount = Number(!hasReportFilter && DASHBOARD_STATS?.pwd_count != null ? DASHBOARD_STATS.pwd_count : list.filter(a => yes(a.pwd)).length);
+  const indigenousCount = Number(!hasReportFilter && DASHBOARD_STATS?.indigenous_count != null ? DASHBOARD_STATS.indigenous_count : list.filter(a => yes(a.indigenous)).length);
+  const foursCount = Number(!hasReportFilter && DASHBOARD_STATS?.four_ps_count != null ? DASHBOARD_STATS.four_ps_count : list.filter(a => yes(a.fours)).length);
+  const avgGWAAll = !hasReportFilter && DASHBOARD_STATS && DASHBOARD_STATS.avg_gwa != null
     ? parseFloat(DASHBOARD_STATS.avg_gwa).toFixed(2)
     : (total ? (list.reduce((s, a) => s + ((parseFloat(a.g11) || 0) + (parseFloat(a.g12) || 0)) / 2, 0) / total).toFixed(2) : '0.00');
   const progCount = Number(Array.isArray(DASHBOARD_STATS?.by_program) ? DASHBOARD_STATS.by_program.length : getPrograms().length);
+  const filterSub = reportYearFilter && reportLocationFilter
+    ? `S.Y. ${reportYearFilter} - ${reportLocationFilter}`
+    : reportYearFilter
+      ? `S.Y. ${reportYearFilter}`
+      : reportLocationFilter || 'All Academic Years';
 
   grid.innerHTML = [
-    { label: 'Total Applications', value: total, sub: reportYearFilter ? `S.Y. ${reportYearFilter}` : 'All Academic Years' },
+    { label: 'Total Applications', value: total, sub: filterSub },
     { label: 'Overall Approval Rate', value: total ? Math.round(approved / total * 100) + '%' : '0%', sub: `${approved} approved` },
     { label: 'PWD Applicants', value: pwdCount, sub: 'With disability' },
     { label: 'Indigenous Applicants', value: indigenousCount, sub: 'IP / tribe members' },
@@ -4077,9 +4152,10 @@ async function initReports() {
 }
 
 function renderReportTable() {
-  const apps = getApplications().filter(a => !reportYearFilter || (a.academic_year || (a.raw && a.raw.academic_year)) === reportYearFilter);
-  // Use server-side per-program breakdown ONLY if no year filter is active (server doesn't support year filter yet)
-  if (!reportYearFilter && DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.by_program) && DASHBOARD_STATS.by_program.length > 0) {
+  const apps = getFilteredReportApplications();
+  const hasReportFilter = !!(reportYearFilter || reportLocationFilter);
+  // Use server-side per-program breakdown ONLY if no report filter is active (server doesn't support these filters yet)
+  if (!hasReportFilter && DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.by_program) && DASHBOARD_STATS.by_program.length > 0) {
     const programs = getPrograms();
     document.getElementById('rptTableBody').innerHTML = DASHBOARD_STATS.by_program.map(row => {
       const prog = programs.find(p => p.name === row.first_choice);
@@ -4125,9 +4201,10 @@ function renderReportTable() {
 }
 
 function initReportCharts() {
-  // GWA distribution — prefer server-side by_program data ONLY if no year filter
+  // GWA distribution: prefer server-side by_program data only when no report filter is active.
   let gwaLabels = [], gwaData = [];
-  if (!reportYearFilter && DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.by_program)) {
+  const hasReportFilter = !!(reportYearFilter || reportLocationFilter);
+  if (!hasReportFilter && DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.by_program)) {
     const sorted = [...DASHBOARD_STATS.by_program]
       .filter(r => r.avg_gwa != null)
       .sort((a, b) => b.avg_gwa - a.avg_gwa)
@@ -4135,7 +4212,7 @@ function initReportCharts() {
     gwaLabels = sorted.map(r => shortProg(r.first_choice));
     gwaData = sorted.map(r => parseFloat(r.avg_gwa).toFixed(1));
   } else {
-    const list = getApplications().filter(a => !reportYearFilter || (a.academic_year || (a.raw && a.raw.academic_year)) === reportYearFilter);
+    const list = getFilteredReportApplications();
     const progGWAs = {};
     list.forEach(a => {
       if (!a.firstChoice) return;
@@ -4167,11 +4244,11 @@ function initReportCharts() {
     });
   }
 
-  // Eligibility doughnut — prefer server-side counts ONLY if no year filter
+  // Eligibility doughnut: prefer server-side counts only when no report filter is active.
   let pwd = 0, solo = 0, indigenous = 0, fours = 0, none = 0;
-  const list = getApplications().filter(a => !reportYearFilter || (a.academic_year || (a.raw && a.raw.academic_year)) === reportYearFilter);
+  const list = getFilteredReportApplications();
   
-  if (!reportYearFilter && DASHBOARD_STATS) {
+  if (!hasReportFilter && DASHBOARD_STATS) {
     pwd = DASHBOARD_STATS.pwd_count || 0;
     solo = DASHBOARD_STATS.solo_parent_count || 0;
     indigenous = DASHBOARD_STATS.indigenous_count || 0;
@@ -5008,6 +5085,8 @@ async function refreshData(isInitial = false) {
         indigenous: a.indigenous || a.indigenous_person || a.indigenousPerson || 'No',
         fours: a.fours || a.fourPs || 'No',
         sex: a.gender || a.sex || '',
+        permanentAddress: a.permanent_address || a.permanentAddress || '',
+        presentAddress: a.present_address || a.presentAddress || '',
         raw: a
       };
     });

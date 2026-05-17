@@ -54,6 +54,8 @@ Route::post('/contact', [InquiryController::class, 'store'])->middleware('thrott
 Route::post('/applications/submit-public', [ApplicationController::class, 'submitPublic'])->middleware('throttle:public-form');
 Route::post('/applications/{id}/documents', [ApplicationController::class, 'uploadDocument'])->middleware('throttle:document-upload');
 Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(function () {
+    Route::post('/applications/bulk-delete', [ApplicationController::class, 'bulkDelete']);
+    Route::post('/applications/{id}/delete', [ApplicationController::class, 'destroy']);
     Route::get('/applications', [ApplicationController::class, 'index']);
     Route::get('/applications/{id}', [ApplicationController::class, 'show']);
     Route::patch('/applications/{id}/status', [ApplicationController::class, 'updateStatus']);

@@ -1468,6 +1468,33 @@ body {
 }
 
 /* ── REPORTS ── */
+.report-filter-bar {
+  margin-bottom: 24px;
+  align-items: flex-end;
+}
+
+.report-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.report-filter-field .filter-select {
+  min-width: 200px;
+}
+
+.report-filter-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.report-filter-clear {
+  padding: 9px 16px;
+}
+
 .reports-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));

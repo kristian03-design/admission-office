@@ -51,11 +51,15 @@ $app = Application::configure(basePath: $_ENV['APP_BASE_PATH'] ?? $_SERVER['APP_
             'interviews/sync/*',
             '*/interviews/sync/*',
             'applications/submit-public',
+            'applications/bulk-delete',
             'applications/*/documents',
             'applications/*/status',
+            'applications/*/delete',
             '*/applications/submit-public',
+            '*/applications/bulk-delete',
             '*/applications/*/documents',
             '*/applications/*/status',
+            '*/applications/*/delete',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
