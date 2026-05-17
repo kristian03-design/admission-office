@@ -32,7 +32,7 @@ class WelcomeController extends Controller
                 'announcements' => $announcements,
                 'tickerAnnouncements' => $announcements
                     ->where('is_popup', false)
-                    ->unique(fn ($announcement) => trim(mb_strtolower($announcement->message ?? '')))
+                    ->unique(fn($announcement) => trim(mb_strtolower($announcement->message ?? '')))
                     ->values(),
                 'popupAnn' => $announcements->firstWhere('is_popup', true),
                 'programs' => $displayPrograms,
@@ -54,7 +54,7 @@ class WelcomeController extends Controller
     {
         $program = Program::findOrFail($id);
         $settings = SystemSetting::all_as_array();
-        
+
         return view('course-details', [
             'program' => $program,
             'settings' => $settings,
@@ -159,7 +159,7 @@ class WelcomeController extends Controller
             return [];
         }
 
-        $items = array_values(array_filter($items, fn ($item) => ($item['is_active'] ?? true)));
+        $items = array_values(array_filter($items, fn($item) => ($item['is_active'] ?? true)));
         $items = array_map(function ($item) {
             if (!is_array($item)) {
                 return $item;
@@ -169,7 +169,7 @@ class WelcomeController extends Controller
 
             return $item;
         }, $items);
-        usort($items, fn ($a, $b) => ($a['order'] ?? 0) <=> ($b['order'] ?? 0));
+        usort($items, fn($a, $b) => ($a['order'] ?? 0) <=> ($b['order'] ?? 0));
 
         return $items;
     }
@@ -177,10 +177,10 @@ class WelcomeController extends Controller
     private function fallbackPrograms()
     {
         return collect(config('academic_programs.fallback', []))
-            ->map(fn ($program) => (object) array_merge([
+            ->map(fn($program) => (object) array_merge([
                 'id' => null,
                 'duration_years' => 4,
-                'schedule' => 'Day / Evening',
+                'schedule' => 'Day',
                 'slots_left' => 1500,
                 'is_active' => true,
             ], $program))
@@ -190,16 +190,20 @@ class WelcomeController extends Controller
 
     private function heroSlidesFor($programs): array
     {
+        $jsonPrograms = $this->programsFromPublicJson();
+        $sourcePrograms = $jsonPrograms->isNotEmpty() ? $jsonPrograms : collect($programs);
+
         $imageMap = [
             'BAECO' => 'BSENTREP.png',
             'BSECON' => 'BAECO.png',
             'BSED-ENG' => 'BSED.png',
+
         ];
 
-        return collect($programs)
+        return $sourcePrograms
             ->values()
             ->map(function ($program) use ($imageMap) {
-                $code = strtoupper((string) ($program->code ?? ''));
+                $code = strtoupper((string) data_get($program, 'code', ''));
                 $fallbackFile = preg_replace('/[^A-Z0-9]/', '', $code) . '.png';
                 $imageFile = $imageMap[$code] ?? $fallbackFile;
 
@@ -207,18 +211,31 @@ class WelcomeController extends Controller
                     $imageFile = 'hero-logo.png';
                 }
 
-                $programName = $program->name ?? $code;
-                $department = $program->department ?? 'Academic Program';
+                $programName = data_get($program, 'name', $code);
+                $department = data_get($program, 'department', 'Academic Program');
 
                 return [
                     'program' => $programName,
-                    'code' => $program->code ?? '',
+                    'code' => data_get($program, 'code', ''),
                     'department' => $department,
                     'image' => asset('assets/images/' . $imageFile),
-                    'alt' => trim(($program->code ?? $programName) . ' program image'),
+                    'alt' => trim((data_get($program, 'code') ?? $programName) . ' program image'),
                 ];
             })
             ->all();
+    }
+
+    private function programsFromPublicJson()
+    {
+        $path = public_path('data/programs.json');
+
+        if (!is_file($path)) {
+            return collect();
+        }
+
+        $programs = json_decode(file_get_contents($path), true);
+
+        return is_array($programs) ? collect($programs) : collect();
     }
 
     private function publicStorageUrl(?string $url): ?string
