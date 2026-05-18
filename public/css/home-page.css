@@ -558,23 +558,36 @@ body.menu-open #menu-toggle svg {
   pointer-events: none;
 }
 
+.navbar-logo img,
 .logo-badge img {
   position: relative;
   z-index: 1;
-  width: 52px !important;
-  height: 52px !important;
+  width: 60px !important;
+  height: 60px !important;
   display: block;
   object-fit: contain;
   object-position: center;
-  border-radius: 0;
+  border-radius: 50%;
   background: transparent !important;
   filter:
-    saturate(1.08)
-    contrast(1.12)
-    drop-shadow(0 6px 10px rgba(2, 8, 23, .22))
-    drop-shadow(0 0 8px rgba(212, 168, 67, .24))
-    drop-shadow(0 0 14px rgba(27, 53, 87, .22));
+    brightness(1.05)
+    contrast(1.08)
+    saturate(1.05)
+    drop-shadow(0 0 8px rgba(255, 196, 0, .15))
+    drop-shadow(0 3px 10px rgba(0, 0, 0, .35));
   image-rendering: auto;
+  transition: .3s ease;
+}
+
+.navbar-logo img:hover,
+.logo-badge img:hover {
+  transform: translateY(-1px) scale(1.04);
+  filter:
+    brightness(1.08)
+    contrast(1.1)
+    saturate(1.08)
+    drop-shadow(0 0 12px rgba(255, 196, 0, .25))
+    drop-shadow(0 6px 14px rgba(0, 0, 0, .4));
 }
 
 .logo-badge img[src=''],
@@ -4620,8 +4633,8 @@ textarea:focus-visible,
   }
 
   .logo-badge img {
-    width: 46px !important;
-    height: 46px !important;
+    width: 50px !important;
+    height: 50px !important;
   }
 }
 
@@ -4834,8 +4847,8 @@ main {
   }
 
   .logo-badge img {
-    width: 46px !important;
-    height: 46px !important;
+    width: 50px !important;
+    height: 50px !important;
   }
 
   #hero>.relative.z-10,
