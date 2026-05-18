@@ -21,7 +21,7 @@ use Illuminate\Validation\ValidationException;
 
 class ApplicantPortalController extends Controller
 {
-    private const OTP_TTL_SECONDS = 600;
+    private const OTP_TTL_SECONDS = 1800;
     private const SESSION_TTL_SECONDS = 3600;
 
     private const EDITABLE_STATUSES = ['pending', 'submitted', 'pending_docs'];
@@ -37,7 +37,6 @@ class ApplicantPortalController extends Controller
 
         if ($application) {
             $otp = (string) random_int(100000, 999999);
-            $this->portalCache()->put($this->otpCacheKey($application), hash('sha256', $otp), self::OTP_TTL_SECONDS);
 
             if (SystemSetting::get('email_notifications', '1') !== '0') {
                 try {
@@ -46,10 +45,13 @@ class ApplicantPortalController extends Controller
                     Log::error('Failed to send applicant portal OTP: '.$e->getMessage());
                 }
             }
+
+            $this->portalCache()->put($this->otpCacheKey($application), hash('sha256', $otp), self::OTP_TTL_SECONDS);
         }
 
         return response()->json([
             'message' => 'If the reference number and email match an application, a verification code has been sent.',
+            'expires_in_seconds' => self::OTP_TTL_SECONDS,
         ]);
     }
 

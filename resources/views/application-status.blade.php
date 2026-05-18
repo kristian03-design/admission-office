@@ -16,7 +16,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   @include('partials.iconsax')
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=33" />
-  <link rel="stylesheet" href="{{ asset('css/applicant-portal.css') }}?v=2" />
+  <link rel="stylesheet" href="{{ asset('css/applicant-portal.css') }}?v=4" />
 </head>
 
 <body>
@@ -122,7 +122,7 @@
               <span class="portal-login-mark"><i data-iconsax="shield-tick"></i></span>
               <div>
                 <h2 class="text-xl font-bold text-[#0f1e3d]">Verify your email</h2>
-                <p class="text-sm text-slate-500 mt-1">Enter the 6-digit code sent to your application email.</p>
+                <p class="text-sm text-slate-500 mt-1">Enter the 6-digit code sent to your application email. It is valid for 30 minutes.</p>
               </div>
             </div>
             <form id="otpForm" class="mt-5 space-y-4">
@@ -135,13 +135,39 @@
         </div>
       </div>
     </section>
+    <!-- ── Help band ── -->
+    <section class="portal-help-band">
+      <div class="max-w-7xl mx-auto px-8 portal-help-grid">
+        <div class="portal-help-item">
+          <span class="portal-help-icon"><i data-iconsax="receipt-search"></i></span>
+          <div>
+            <p class="font-bold">Reference number</p>
+            <p>Use the number shown after submitting your application.</p>
+          </div>
+        </div>
+        <div class="portal-help-item">
+          <span class="portal-help-icon"><i data-iconsax="sms"></i></span>
+          <div>
+            <p class="font-bold">Submitted email</p>
+            <p>The OTP is sent to the email used on your form.</p>
+          </div>
+        </div>
+        <div class="portal-help-item">
+          <span class="portal-help-icon"><i data-iconsax="edit-2"></i></span>
+          <div>
+            <p class="font-bold">Editable while pending</p>
+            <p>Changes are locked once active review begins.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- ── Dashboard ── -->
     <section id="dashboardStep" class="portal-step max-w-7xl mx-auto px-8 py-10">
       <div class="portal-card p-5 md:p-7 mb-6">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <p class="text-sm text-slate-500">Welcome back,</p>
+            <p class="text-sm text-slate-500">Welcome back</p>
             <h2 id="applicantName" class="text-3xl font-bold text-[#0f1e3d]"></h2>
             <p class="text-sm text-slate-500 mt-1">Reference: <span id="applicantReference" class="font-bold text-slate-700"></span></p>
           </div>
