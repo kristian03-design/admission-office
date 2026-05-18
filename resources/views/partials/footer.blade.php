@@ -9,6 +9,7 @@
           </span>
           <div class="footer-brand-text">
             <p class="text-sm font-semibold footer-heading">BTECH ADMISSIONS OFFICE</p>
+            <p class="text-sm footer-heading">Baliwag Polytechnic College</p>
           </div>
         </div>
         <p class="text-sm footer-text leading-relaxed">Empowering Bulacan's future leaders through accessible, quality higher education since 2008.</p>
