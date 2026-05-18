@@ -2043,6 +2043,18 @@ body.menu-open {
   color: var(--white);
 }
 
+.footer-brand-text {
+  min-width: 0;
+}
+
+.footer-brand-sub {
+  margin-top: 3px;
+  color: rgba(255, 255, 255, .52);
+  font-size: .78rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
 .footer-text {
   color: rgba(255, 255, 255, .55);
 }
