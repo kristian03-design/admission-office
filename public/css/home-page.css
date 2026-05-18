@@ -136,23 +136,42 @@ body.site-loader-lock {
 }
 
 .site-loader__mark {
+  position: relative;
   width: 82px;
   height: 82px;
-  border-radius: 26px;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, .86);
-  border: 1px solid rgba(27, 53, 87, .12);
-  box-shadow: 0 18px 55px rgba(27, 53, 87, .16);
+  background: transparent;
+  border: 0;
   animation: loaderFloat 1.8s ease-in-out infinite;
+  isolation: isolate;
+}
+
+.site-loader__mark::before {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 168, 67, .25), rgba(37, 77, 130, .14) 44%, transparent 72%);
+  filter: blur(10px);
+  opacity: .78;
+  pointer-events: none;
 }
 
 .site-loader__mark img {
   width: 56px;
   height: 56px;
-  border-radius: 16px;
-  object-fit: cover;
+  border-radius: 0;
+  object-fit: contain;
+  background: transparent !important;
+  filter:
+    saturate(1.08)
+    contrast(1.06)
+    drop-shadow(0 6px 10px rgba(2, 8, 23, .18))
+    drop-shadow(0 0 7px rgba(212, 168, 67, .18));
 }
 
 .site-loader__eyebrow {
@@ -494,23 +513,47 @@ body.menu-open #menu-toggle svg {
 }
 
 .logo-badge {
-  width: 44px;
-  height: 44px;
+  position: relative;
+  width: 46px;
+  height: 46px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 44px;
-  overflow: hidden;
-  border-radius: 12px;
+  flex: 0 0 46px;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  isolation: isolate;
+}
+
+.logo-badge::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  z-index: -1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(212, 168, 67, .24) 0%, rgba(37, 77, 130, .12) 42%, transparent 72%);
+  filter: blur(8px);
+  opacity: .78;
+  pointer-events: none;
 }
 
 .logo-badge img {
-  width: 44px !important;
-  height: 44px !important;
+  width: 46px !important;
+  height: 46px !important;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
-  border-radius: 12px;
+  border-radius: 0;
+  background: transparent !important;
+  filter:
+    saturate(1.08)
+    contrast(1.06)
+    drop-shadow(0 6px 10px rgba(2, 8, 23, .22))
+    drop-shadow(0 0 7px rgba(212, 168, 67, .18))
+    drop-shadow(0 0 12px rgba(27, 53, 87, .18));
+  image-rendering: auto;
 }
 
 .btn-outline-nav {
@@ -2037,6 +2080,41 @@ body.menu-open {
 
 .footer-brand-col .footer-text {
   max-width: 280px;
+}
+
+.footer-logo-shell {
+  position: relative;
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
+  isolation: isolate;
+}
+
+.footer-logo-shell::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 168, 67, .23), rgba(37, 77, 130, .14) 44%, transparent 72%);
+  filter: blur(10px);
+  opacity: .78;
+  pointer-events: none;
+}
+
+.footer-logo-mark {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  border-radius: 0;
+  background: transparent !important;
+  filter:
+    saturate(1.08)
+    contrast(1.06)
+    drop-shadow(0 6px 10px rgba(2, 8, 23, .20))
+    drop-shadow(0 0 8px rgba(212, 168, 67, .18))
+    drop-shadow(0 0 12px rgba(27, 53, 87, .16));
 }
 
 .footer-heading {
@@ -4510,14 +4588,14 @@ textarea:focus-visible,
 
 @media (max-width: 480px) {
   .logo-badge {
-    width: 40px;
-    height: 40px;
-    flex-basis: 40px;
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
   }
 
   .logo-badge img {
-    width: 40px !important;
-    height: 40px !important;
+    width: 42px !important;
+    height: 42px !important;
   }
 }
 
@@ -4730,8 +4808,8 @@ main {
   }
 
   .logo-badge img {
-    width: 38px !important;
-    height: 38px !important;
+    width: 42px !important;
+    height: 42px !important;
   }
 
   #hero>.relative.z-10,

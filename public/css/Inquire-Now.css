@@ -136,22 +136,45 @@ body {
 }
 
 .hdr-logo {
+  position: relative;
   width: 48px;
   height: 48px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, .12);
-  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 0;
+  background: transparent;
+  border: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
   flex-shrink: 0;
+  isolation: isolate;
+}
+
+.hdr-logo::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 168, 67, .23), rgba(37, 77, 130, .12) 44%, transparent 72%);
+  filter: blur(8px);
+  opacity: .75;
+  pointer-events: none;
 }
 
 .hdr-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  object-position: center;
+  background: transparent !important;
+  border-radius: 0;
+  filter:
+    saturate(1.08)
+    contrast(1.06)
+    drop-shadow(0 6px 10px rgba(2, 8, 23, .22))
+    drop-shadow(0 0 7px rgba(212, 168, 67, .18))
+    drop-shadow(0 0 12px rgba(27, 53, 87, .18));
 }
 
 .hdr-text {
@@ -1075,22 +1098,44 @@ select.fi {
 }
 
 .rs-logo-box {
+  position: relative;
   width: 72px;
   height: 72px;
-  border: 1.5px solid var(--navy);
-  border-radius: 3px;
-  background: #f0f4f8;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  overflow: hidden;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.rs-logo-box::before {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 168, 67, .18), rgba(37, 77, 130, .10) 44%, transparent 72%);
+  filter: blur(9px);
+  opacity: .7;
+  pointer-events: none;
 }
 
 .rs-logo-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  object-position: center;
+  background: transparent !important;
+  border-radius: 0;
+  filter:
+    saturate(1.08)
+    contrast(1.06)
+    drop-shadow(0 4px 8px rgba(2, 8, 23, .15))
+    drop-shadow(0 0 6px rgba(212, 168, 67, .14));
 }
 
 .rs-school-info {
@@ -1687,7 +1732,12 @@ body.site-loader-lock {
   .hdr-logo {
     width: 42px;
     height: 42px;
-    border-radius: 10px;
+    border-radius: 0;
+  }
+
+  .hdr-logo img {
+    width: 42px;
+    height: 42px;
   }
 
   .hdr-text {

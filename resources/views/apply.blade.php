@@ -9,7 +9,7 @@
     window.ICONSAX_SPRITE_PATH = "{{ asset('assets/iconsax-sprite.svg') }}";
   </script>
   @include('partials.iconsax')
-  <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;" />
+  <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" />
   <link rel="stylesheet" href="{{ asset('css/Inquire-Now.css') }}?v=7">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -590,7 +590,7 @@
           <div class="review-sheet" id="reviewSheet">
             <div class="rs-header">
               <div class="rs-logo-box">
-                <img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
                 <i data-iconsax="graduation-cap" style="display:none;width:44px;height:44px;color:var(--navy)"></i>
               </div>
               <div class="rs-school-info">
