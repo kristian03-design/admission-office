@@ -152,8 +152,8 @@ body {
 
 .brand-logo {
   position: relative;
-  width: 62px;
-  height: 62px;
+  width: 68px;
+  height: 68px;
   border-radius: 0;
   color: #fff;
   font-weight: 700;
@@ -170,14 +170,19 @@ body {
 }
 
 .brand-logo::before {
-  content: '';
+  content: "";
   position: absolute;
-  inset: -8px;
+  inset: -6px;
   z-index: -1;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 168, 67, .22), rgba(37, 77, 130, .12) 44%, transparent 72%);
-  filter: blur(12px);
-  opacity: .8;
+  background: radial-gradient(
+    circle,
+    rgba(255, 196, 0, 0.14) 0%,
+    rgba(255, 196, 0, 0.06) 38%,
+    transparent 72%
+  );
+  filter: blur(10px);
+  opacity: 0.85;
   pointer-events: none;
 }
 
@@ -199,29 +204,27 @@ body {
 .brand-logo img {
   position: relative;
   z-index: 1;
-  width: 60px;
-  height: 60px;
+  width: 66px;
+  height: 66px;
   object-fit: contain;
   object-position: center;
   background: transparent !important;
-  border-radius: 50%;
+  border-radius: 0;
   filter:
-    brightness(1.05)
-    contrast(1.08)
-    saturate(1.05)
-    drop-shadow(0 0 8px rgba(255, 196, 0, .15))
-    drop-shadow(0 3px 10px rgba(0, 0, 0, .35));
-  transition: .3s ease;
+    brightness(1.22)
+    contrast(1.15)
+    saturate(1.08)
+    drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+  transition: transform 0.25s ease, filter 0.25s ease;
 }
 
 .brand-logo img:hover {
-  transform: translateY(-1px) scale(1.04);
+  transform: translateY(-1px) scale(1.035);
   filter:
-    brightness(1.08)
-    contrast(1.1)
-    saturate(1.08)
-    drop-shadow(0 0 12px rgba(255, 196, 0, .25))
-    drop-shadow(0 6px 14px rgba(0, 0, 0, .4));
+    brightness(1.28)
+    contrast(1.18)
+    saturate(1.1)
+    drop-shadow(0 5px 12px rgba(0, 0, 0, 0.42));
 }
 
 .brand-name {

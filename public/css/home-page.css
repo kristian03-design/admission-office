@@ -514,85 +514,73 @@ body.menu-open #menu-toggle svg {
 
 .logo-badge {
   position: relative;
-  width: 62px;
-  height: 62px;
+  width: 68px;
+  height: 68px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 62px;
+  flex: 0 0 68px;
   overflow: visible;
-  border-radius: 0;
   background: transparent;
   border: 0;
   box-shadow: none;
   isolation: isolate;
 }
 
+/* very subtle visibility glow */
 .logo-badge::before {
-  content: '';
+  content: "";
   position: absolute;
-  inset: -8px;
+  inset: -6px;
   z-index: -1;
   border-radius: 50%;
-  background:
-    radial-gradient(circle, rgba(212, 168, 67, .28) 0%, rgba(37, 77, 130, .18) 45%, transparent 72%);
-  filter: blur(12px);
-  opacity: .9;
+  background: radial-gradient(
+    circle,
+    rgba(255, 196, 0, 0.14) 0%,
+    rgba(255, 196, 0, 0.06) 38%,
+    transparent 72%
+  );
+  filter: blur(10px);
+  opacity: 0.85;
   pointer-events: none;
-}
-
-.logo-badge::after {
-  content: 'BTECH';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  display: grid;
-  place-items: center;
-  color: var(--navy);
-  font-size: .56rem;
-  font-weight: 800;
-  letter-spacing: .04em;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.logo-badge:empty::after {
-  opacity: 1;
 }
 
 .navbar-logo img,
 .logo-badge img {
   position: relative;
   z-index: 1;
-  width: 60px !important;
-  height: 60px !important;
+  width: 66px !important;
+  height: 66px !important;
   display: block;
   object-fit: contain;
   object-position: center;
-  border-radius: 50%;
+
+  /* important: do not make logo circular */
+  border-radius: 0;
+
   background: transparent !important;
+
   filter:
-    brightness(1.05)
-    contrast(1.08)
-    saturate(1.05)
-    drop-shadow(0 0 8px rgba(255, 196, 0, .15))
-    drop-shadow(0 3px 10px rgba(0, 0, 0, .35));
+    brightness(1.22)
+    contrast(1.15)
+    saturate(1.08)
+    drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+
   image-rendering: auto;
-  transition: .3s ease;
+  transition: transform 0.25s ease, filter 0.25s ease;
 }
 
 .navbar-logo img:hover,
 .logo-badge img:hover {
-  transform: translateY(-1px) scale(1.04);
+  transform: translateY(-1px) scale(1.035);
   filter:
-    brightness(1.08)
-    contrast(1.1)
-    saturate(1.08)
-    drop-shadow(0 0 12px rgba(255, 196, 0, .25))
-    drop-shadow(0 6px 14px rgba(0, 0, 0, .4));
+    brightness(1.28)
+    contrast(1.18)
+    saturate(1.1)
+    drop-shadow(0 5px 12px rgba(0, 0, 0, 0.42));
 }
 
-.logo-badge img[src=''],
+.logo-badge img[src=""],
 .logo-badge img:not([src]) {
   display: none;
 }
@@ -2125,37 +2113,51 @@ body.menu-open {
 
 .footer-logo-shell {
   position: relative;
-  flex: 0 0 64px;
-  width: 64px;
-  height: 64px;
+  flex: 0 0 68px;
+  width: 68px;
+  height: 68px;
   isolation: isolate;
 }
 
 .footer-logo-shell::before {
-  content: '';
+  content: "";
   position: absolute;
-  inset: 8px;
+  inset: -6px;
   z-index: -1;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 168, 67, .23), rgba(37, 77, 130, .14) 44%, transparent 72%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 196, 0, 0.14) 0%,
+    rgba(255, 196, 0, 0.06) 38%,
+    transparent 72%
+  );
   filter: blur(10px);
-  opacity: .78;
+  opacity: 0.85;
   pointer-events: none;
 }
 
 .footer-logo-mark {
   display: block;
-  width: 64px;
-  height: 64px;
+  width: 66px;
+  height: 66px;
   object-fit: contain;
   border-radius: 0;
   background: transparent !important;
   filter:
+    brightness(1.22)
+    contrast(1.15)
     saturate(1.08)
-    contrast(1.06)
-    drop-shadow(0 6px 10px rgba(2, 8, 23, .20))
-    drop-shadow(0 0 8px rgba(212, 168, 67, .18))
-    drop-shadow(0 0 12px rgba(27, 53, 87, .16));
+    drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.footer-logo-mark:hover {
+  transform: translateY(-1px) scale(1.035);
+  filter:
+    brightness(1.28)
+    contrast(1.18)
+    saturate(1.1)
+    drop-shadow(0 5px 12px rgba(0, 0, 0, 0.42));
 }
 
 .footer-heading {

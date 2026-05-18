@@ -40,9 +40,10 @@
 
     .left-panel { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 60px 64px; animation: fadeUp .8s cubic-bezier(.4,0,.2,1) both; }
     .left-logo { display: flex; align-items: center; gap: 14px; margin-bottom: 64px; animation: fadeUp .7s cubic-bezier(.4,0,.2,1) .1s both; }
-    .logo-mark { position: relative; width: 80px; height: 85px; border-radius: 0; background: transparent; display: flex; align-items: center; justify-content: center; overflow: visible; isolation: isolate; }
-    .logo-mark::before { content: ''; position: absolute; inset: 10px; z-index: -1; border-radius: 50%; background: radial-gradient(circle, rgba(201,147,58,.26), rgba(11,45,107,.14) 44%, transparent 72%); filter: blur(11px); opacity: .8; pointer-events: none; }
-    .logo-mark img { width: 80px; height: 80px; object-fit: contain; border-radius: 0; background: transparent !important; filter: saturate(1.08) contrast(1.06) drop-shadow(0 8px 12px rgba(2,8,23,.24)) drop-shadow(0 0 8px rgba(201,147,58,.2)); }
+    .logo-mark { position: relative; width: 86px; height: 86px; border-radius: 0; background: transparent; display: flex; align-items: center; justify-content: center; overflow: visible; isolation: isolate; }
+    .logo-mark::before { content: ""; position: absolute; inset: -6px; z-index: -1; border-radius: 50%; background: radial-gradient(circle, rgba(255,196,0,.14) 0%, rgba(255,196,0,.06) 38%, transparent 72%); filter: blur(10px); opacity: .85; pointer-events: none; }
+    .logo-mark img { width: 84px; height: 84px; object-fit: contain; border-radius: 0; background: transparent !important; filter: brightness(1.22) contrast(1.15) saturate(1.08) drop-shadow(0 3px 8px rgba(0,0,0,.35)); transition: transform .25s ease, filter .25s ease; }
+    .logo-mark img:hover { transform: translateY(-1px) scale(1.035); filter: brightness(1.28) contrast(1.18) saturate(1.1) drop-shadow(0 5px 12px rgba(0,0,0,.42)); }
     .logo-text { color: #fff; }
     .logo-name { display: block; font-size: 18px; font-weight: 700; letter-spacing: .2px; }
     .logo-sub  { display: block; font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: .8px; text-transform: uppercase; margin-top: 1px; }

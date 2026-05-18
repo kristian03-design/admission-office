@@ -137,8 +137,8 @@ body {
 
 .hdr-logo {
   position: relative;
-  width: 56px;
-  height: 56px;
+  width: 68px;
+  height: 68px;
   border-radius: 0;
   background: transparent;
   border: 0;
@@ -151,30 +151,44 @@ body {
 }
 
 .hdr-logo::before {
-  content: '';
+  content: "";
   position: absolute;
-  inset: 6px;
+  inset: -6px;
   z-index: -1;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 168, 67, .23), rgba(37, 77, 130, .12) 44%, transparent 72%);
-  filter: blur(9px);
-  opacity: .82;
+  background: radial-gradient(
+    circle,
+    rgba(255, 196, 0, 0.14) 0%,
+    rgba(255, 196, 0, 0.06) 38%,
+    transparent 72%
+  );
+  filter: blur(10px);
+  opacity: 0.85;
   pointer-events: none;
 }
 
 .hdr-logo img {
-  width: 56px;
-  height: 56px;
+  width: 66px;
+  height: 66px;
   object-fit: contain;
   object-position: center;
   background: transparent !important;
   border-radius: 0;
   filter:
+    brightness(1.22)
+    contrast(1.15)
     saturate(1.08)
-    contrast(1.12)
-    drop-shadow(0 6px 10px rgba(2, 8, 23, .22))
-    drop-shadow(0 0 8px rgba(212, 168, 67, .24))
-    drop-shadow(0 0 14px rgba(27, 53, 87, .22));
+    drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.hdr-logo img:hover {
+  transform: translateY(-1px) scale(1.035);
+  filter:
+    brightness(1.28)
+    contrast(1.18)
+    saturate(1.1)
+    drop-shadow(0 5px 12px rgba(0, 0, 0, 0.42));
 }
 
 .hdr-text {
@@ -1113,29 +1127,44 @@ select.fi {
 }
 
 .rs-logo-box::before {
-  content: '';
+  content: "";
   position: absolute;
-  inset: 9px;
+  inset: -6px;
   z-index: -1;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 168, 67, .18), rgba(37, 77, 130, .10) 44%, transparent 72%);
-  filter: blur(9px);
-  opacity: .7;
+  background: radial-gradient(
+    circle,
+    rgba(255, 196, 0, 0.14) 0%,
+    rgba(255, 196, 0, 0.06) 38%,
+    transparent 72%
+  );
+  filter: blur(10px);
+  opacity: 0.85;
   pointer-events: none;
 }
 
 .rs-logo-box img {
-  width: 72px;
-  height: 72px;
+  width: 66px;
+  height: 66px;
   object-fit: contain;
   object-position: center;
   background: transparent !important;
   border-radius: 0;
   filter:
+    brightness(1.22)
+    contrast(1.15)
     saturate(1.08)
-    contrast(1.06)
-    drop-shadow(0 4px 8px rgba(2, 8, 23, .15))
-    drop-shadow(0 0 6px rgba(212, 168, 67, .14));
+    drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.rs-logo-box img:hover {
+  transform: translateY(-1px) scale(1.035);
+  filter:
+    brightness(1.28)
+    contrast(1.18)
+    saturate(1.1)
+    drop-shadow(0 5px 12px rgba(0, 0, 0, 0.42));
 }
 
 .rs-school-info {
@@ -1730,14 +1759,14 @@ body.site-loader-lock {
   }
 
   .hdr-logo {
-    width: 50px;
-    height: 50px;
+    width: 54px;
+    height: 54px;
     border-radius: 0;
   }
 
   .hdr-logo img {
-    width: 50px;
-    height: 50px;
+    width: 52px;
+    height: 52px;
   }
 
   .hdr-text {
