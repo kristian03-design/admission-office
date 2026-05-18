@@ -19,6 +19,7 @@
       --navy: #071b3d;
       --navy-dark: #031024;
       --navy-mid: #0b2d6b;
+      --course-dark-bg: #071b3d;
       --gold: #c9933a;
       --gold-light: #dfb36a;
       --gold-pale: #fdf6e3;
@@ -33,7 +34,7 @@
 
     /* ─── Navbar: Dark at top, White on scroll ─── */
     #navbar:not(.scrolled) {
-      background: rgba(3, 16, 36, 0.98) !important;
+      background: var(--course-dark-bg) !important;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
@@ -89,7 +90,7 @@
 
     /* ─── Breadcrumb Strip ─── */
     .breadcrumb-strip {
-      background: #031024;
+      background: var(--course-dark-bg);
       padding: .85rem 0;
       border-bottom: 1px solid rgba(255, 255, 255, .08);
       position: relative;
@@ -132,7 +133,7 @@
       background:
         linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px),
-        linear-gradient(135deg, #031024 0%, #071b3d 58%, #0b2d6b 100%);
+        var(--course-dark-bg);
       background-size: 60px 60px, 60px 60px, 100% 100%;
       position: relative;
       overflow: hidden;
@@ -143,9 +144,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(6, 70, 165, .18), transparent 72%),
-        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(3, 16, 36, .48), transparent 68%);
+      background: transparent;
     }
 
     .hero-deco-ring {
@@ -763,7 +762,7 @@
       background:
         linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px),
-        linear-gradient(135deg, #031024 0%, #071b3d 58%, #0b2d6b 100%);
+        var(--course-dark-bg);
       background-size: 60px 60px, 60px 60px, 100% 100%;
       position: relative;
       overflow: hidden;
@@ -1178,7 +1177,11 @@
               </div>
               <div>
                 <p class="hero-meta-label">Schedule</p>
-                <p class="hero-meta-value">{{ $program->schedule ?? 'Day' }}</p>
+                @php
+                $scheduleParts = preg_split('/[\/,|]+/', (string) ($program->schedule ?? 'Day'));
+                $displaySchedule = trim($scheduleParts[0] ?? '') ?: 'Day';
+                @endphp
+                <p class="hero-meta-value">{{ $displaySchedule }}</p>
               </div>
             </div><!-- /.hero-meta-item -->
 
