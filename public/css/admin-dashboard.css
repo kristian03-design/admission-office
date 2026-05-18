@@ -172,7 +172,7 @@ body {
 .brand-logo::before {
   content: "";
   position: absolute;
-  inset: -10px -9px -5px;
+  inset: -6px -6px -3px;
   z-index: -1;
   border-radius: 50%;
   background:
@@ -188,16 +188,16 @@ body {
 .brand-logo::after {
   content: "";
   position: absolute;
-  left: 8%;
-  right: 8%;
-  bottom: -5px;
+  left: -20%;
+  right: -20%;
+  bottom: -6px;
   z-index: -1;
-  height: 12px;
+  height: 14px;
   border-radius: 50%;
   background:
-    radial-gradient(ellipse at center, rgba(255, 196, 0, .32) 0%, rgba(255, 196, 0, .14) 36%, rgba(255, 196, 0, .06) 58%, transparent 78%);
-  filter: blur(8px);
-  opacity: .72;
+    radial-gradient(ellipse at center, rgba(255, 196, 0, .36) 0%, rgba(255, 196, 0, .16) 40%, rgba(255, 196, 0, .06) 60%, transparent 80%);
+  filter: blur(9px);
+  opacity: .75;
   pointer-events: none;
 }
 
@@ -237,7 +237,6 @@ body {
   font-weight: 700;
   font-size: 15px;
   letter-spacing: .3px;
-  text-align: center;
 }
 
 .brand-sub {

@@ -32,10 +32,10 @@
       --radius-xl: 16px;
     }
 
-    /* ─── Navbar: Dark at top, White on scroll ─── */
     /* ─── Navbar height spacer (pushes content below fixed navbar) ─── */
     .navbar-spacer {
       height: var(--navbar-height, 104px);
+      background: var(--course-dark-bg);
     }
 
     /* ─── Breadcrumb Strip ─── */
@@ -83,7 +83,7 @@
       background:
         linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px),
-        var(--course-dark-bg);
+        linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 58%, var(--navy-mid) 100%);
       background-size: 60px 60px, 60px 60px, 100% 100%;
       position: relative;
       overflow: hidden;
@@ -94,7 +94,10 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: transparent;
+      background:
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(6, 70, 165, .18), transparent 72%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(3, 16, 36, .48), transparent 68%);
+      pointer-events: none;
     }
 
     .hero-deco-ring {
