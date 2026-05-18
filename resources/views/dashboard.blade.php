@@ -12,8 +12,8 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet" />
   @include('partials.iconsax')
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=32" />
-  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=19" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=33" />
+  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=21" />
 
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
@@ -764,145 +764,160 @@
         </div>
       </div>
 
-      <div class="settings-grid">
-        <div class="settings-card">
-          <div class="settings-card-title">
-            <i data-iconsax="calendar-range"></i>
-            Academic Year & Deadline
+      <div class="settings-layout">
+        <section class="settings-main-stack">
+          <div class="settings-card settings-card--hero">
+            <div class="settings-card-title">
+              <i data-iconsax="calendar-range"></i>
+              Academic Year & Deadline
+            </div>
+            <div class="settings-form-grid settings-form-grid--three">
+              <div class="settings-field">
+                <label class="settings-label">School Year</label>
+                <select class="filter-select" id="settingSY" style="width:100%">
+                  <option>S.Y. 2026-2027</option>
+                  <option>S.Y. 2027-2028</option>
+                  <option>S.Y. 2028-2029</option>
+                  <option>S.Y. 2029-2030</option>
+                  <option>S.Y. 2030-2031</option>
+                  <option>S.Y. 2031-2032</option>
+                  <option>S.Y. 2032-2033</option>
+                  <option>S.Y. 2033-2034</option>
+                  <option>S.Y. 2034-2035</option>
+                  <option>S.Y. 2035-2036</option>
+                </select>
+              </div>
+              <div class="settings-field">
+                <label class="settings-label">Application Deadline</label>
+                <input type="text" class="settings-input" id="settingDeadline" value="TBA" />
+              </div>
+              <div class="settings-field">
+                <label class="settings-label">Total Applications</label>
+                <input type="text" class="settings-input" id="settingTotal" readonly style="background:#f8fafc;color:var(--text-2)" />
+              </div>
+              <div class="settings-field settings-field--full">
+                <label class="settings-label">Interview Schedule</label>
+                <input type="text" class="settings-input" id="settingInterviewSchedule" value="Monday - Friday, 9:00 AM - 3:00 PM" />
+              </div>
+            </div>
           </div>
-          <div class="settings-field">
-            <label class="settings-label">School Year</label>
-            <select class="filter-select" id="settingSY" style="width:100%">
-              <option>S.Y. 2026-2027</option>
-              <option>S.Y. 2027-2028</option>
-              <option>S.Y. 2028-2029</option>
-              <option>S.Y. 2029-2030</option>
-              <option>S.Y. 2030-2031</option>
-              <option>S.Y. 2031-2032</option>
-              <option>S.Y. 2032-2033</option>
-              <option>S.Y. 2033-2034</option>
-              <option>S.Y. 2034-2035</option>
-              <option>S.Y. 2035-2036</option>
-            </select>
-          </div>
-          <div class="settings-field">
-            <label class="settings-label">Application Deadline</label>
-            <input type="text" class="settings-input" id="settingDeadline" value="TBA" />
-          </div>
-          <div class="settings-field">
-            <label class="settings-label">Interview Schedule</label>
-            <input type="text" class="settings-input" id="settingInterviewSchedule" value="Monday - Friday, 9:00 AM - 3:00 PM" />
-          </div>
-          <div class="settings-field">
-            <label class="settings-label">Total Applications (read-only)</label>
-            <input type="text" class="settings-input" id="settingTotal" readonly style="background:#f8fafc;color:var(--text-2)" />
-          </div>
-        </div>
 
-        <div class="settings-card">
-          <div class="settings-card-title">
-            <i data-iconsax="shield-check"></i>
-            Application Controls
+          <div class="settings-card">
+            <div class="settings-card-title">
+              <i data-iconsax="building-2"></i>
+              Institution Details
+            </div>
+            <div class="settings-form-grid">
+              <div class="settings-field">
+                <label class="settings-label">Institution Name</label>
+                <input type="text" class="settings-input" id="settingInstitutionName" value="Baliwag Polytechnic College" />
+              </div>
+              <div class="settings-field">
+                <label class="settings-label">Admissions Email</label>
+                <input type="email" class="settings-input" id="settingAdmissionsEmail" value="admission@btech.edu.ph" />
+              </div>
+              <div class="settings-field settings-field--full">
+                <label class="settings-label">Campus Address</label>
+                <input type="text" class="settings-input" id="settingCampusAddress" value="Baliwag City, Bulacan 3006" />
+              </div>
+            </div>
           </div>
-          <div class="settings-toggle-row">
+
+          <div class="settings-card settings-card--maintenance">
             <div>
-              <p class="settings-toggle-label">Accept Applications</p>
-              <p class="settings-toggle-sub">Allow new applications to be submitted</p>
+              <div class="settings-card-title">
+                <i data-iconsax="refresh"></i>
+                System Maintenance
+              </div>
+              <p class="settings-toggle-sub">If your public website doesn't reflect your latest changes, refresh the public cache.</p>
             </div>
-            <label class="toggle-switch"><input type="checkbox" id="toggleAcceptApplications" checked /><span class="toggle-slider"></span></label>
+            <button type="button" class="btn-outline" id="manualClearCacheBtn">
+              <i data-iconsax="rotate-right"></i>
+              Refresh Website Cache
+            </button>
           </div>
-          <div class="settings-toggle-row">
+        </section>
+
+        <aside class="settings-side-stack">
+          <div class="settings-card">
+            <div class="settings-card-title">
+              <i data-iconsax="shield-check"></i>
+              Application Controls
+            </div>
+            <div class="settings-toggle-row">
+              <div>
+                <p class="settings-toggle-label">Accept Applications</p>
+                <p class="settings-toggle-sub">Allow new applications to be submitted</p>
+              </div>
+              <label class="toggle-switch"><input type="checkbox" id="toggleAcceptApplications" checked /><span class="toggle-slider"></span></label>
+            </div>
+            <div class="settings-toggle-row">
+              <div>
+                <p class="settings-toggle-label">Email Notifications</p>
+                <p class="settings-toggle-sub">Send application and interview email updates</p>
+              </div>
+              <label class="toggle-switch"><input type="checkbox" id="toggleEmailNotifications" checked /><span class="toggle-slider"></span></label>
+            </div>
+            <div class="settings-toggle-row">
+              <div>
+                <p class="settings-toggle-label">Dashboard Notifications</p>
+                <p class="settings-toggle-sub">Show toast alerts when new admin notifications arrive</p>
+              </div>
+              <label class="toggle-switch"><input type="checkbox" id="toggleDashboardNotifications" checked /><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="settings-card-title">
+              <i data-iconsax="key-round"></i>
+              Change Password
+            </div>
+            <div class="settings-field">
+              <label class="settings-label">Current Password</label>
+              <div style="position:relative;">
+                <input type="password" class="settings-input" id="currentAdminPassword" autocomplete="current-password" style="padding-right:44px;" />
+                <button type="button" class="password-toggle-btn" data-target="currentAdminPassword" aria-label="Show current password" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);border:none;background:transparent;color:#64748b;cursor:pointer;padding:4px;display:inline-flex;align-items:center;justify-content:center;">
+                  <i data-iconsax="eye" style="width:18px;height:18px;"></i>
+                </button>
+              </div>
+            </div>
+            <div class="settings-field" style="margin-top:12px;">
+              <label class="settings-label">New Password</label>
+              <div style="position:relative;">
+                <input type="password" class="settings-input" id="newAdminPassword" autocomplete="new-password" style="padding-right:44px;" />
+                <button type="button" class="password-toggle-btn" data-target="newAdminPassword" aria-label="Show new password" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);border:none;background:transparent;color:#64748b;cursor:pointer;padding:4px;display:inline-flex;align-items:center;justify-content:center;">
+                  <i data-iconsax="eye" style="width:18px;height:18px;"></i>
+                </button>
+              </div>
+            </div>
+            <div class="settings-field" style="margin-top:12px;">
+              <label class="settings-label">Confirm New Password</label>
+              <div style="position:relative;">
+                <input type="password" class="settings-input" id="confirmAdminPassword" autocomplete="new-password" style="padding-right:44px;" />
+                <button type="button" class="password-toggle-btn" data-target="confirmAdminPassword" aria-label="Show password confirmation" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);border:none;background:transparent;color:#64748b;cursor:pointer;padding:4px;display:inline-flex;align-items:center;justify-content:center;">
+                  <i data-iconsax="eye" style="width:18px;height:18px;"></i>
+                </button>
+              </div>
+            </div>
+            <p id="changePasswordError" style="display:none;margin-top:8px;font-size:12px;color:#b91c1c;font-weight:600;"></p>
+            <button type="button" class="btn-primary" id="changePasswordBtn" style="margin-top:16px;width:100%;justify-content:center;">
+              <i data-iconsax="save"></i>
+              Save New Password
+            </button>
+          </div>
+
+          <div class="settings-card settings-action-card">
             <div>
-              <p class="settings-toggle-label">Email Notifications</p>
-              <p class="settings-toggle-sub">Send application and interview email updates</p>
+              <p class="settings-action-eyebrow">Global Settings</p>
+              <h3>Save your changes</h3>
+              <p>Applies school year, deadlines, controls, and institution details.</p>
             </div>
-            <label class="toggle-switch"><input type="checkbox" id="toggleEmailNotifications" checked /><span class="toggle-slider"></span></label>
+            <button class="btn-primary" id="saveSettingsBtn">
+              <i data-iconsax="save"></i>
+              Save Changes
+            </button>
           </div>
-          <div class="settings-toggle-row">
-            <div>
-              <p class="settings-toggle-label">Dashboard Notifications</p>
-              <p class="settings-toggle-sub">Show toast alerts when new admin notifications arrive</p>
-            </div>
-            <label class="toggle-switch"><input type="checkbox" id="toggleDashboardNotifications" checked /><span class="toggle-slider"></span></label>
-          </div>
-        </div>
-
-        <div class="settings-card">
-          <div class="settings-card-title">
-            <i data-iconsax="key-round"></i>
-            Change Password
-          </div>
-          <div class="settings-field">
-            <label class="settings-label">Current Password</label>
-            <div style="position:relative;">
-              <input type="password" class="settings-input" id="currentAdminPassword" autocomplete="current-password" style="padding-right:44px;" />
-              <button type="button" class="password-toggle-btn" data-target="currentAdminPassword" aria-label="Show current password" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);border:none;background:transparent;color:#64748b;cursor:pointer;padding:4px;display:inline-flex;align-items:center;justify-content:center;">
-                <i data-iconsax="eye" style="width:18px;height:18px;"></i>
-              </button>
-            </div>
-          </div>
-          <div class="settings-field" style="margin-top:12px;">
-            <label class="settings-label">New Password</label>
-            <div style="position:relative;">
-              <input type="password" class="settings-input" id="newAdminPassword" autocomplete="new-password" style="padding-right:44px;" />
-              <button type="button" class="password-toggle-btn" data-target="newAdminPassword" aria-label="Show new password" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);border:none;background:transparent;color:#64748b;cursor:pointer;padding:4px;display:inline-flex;align-items:center;justify-content:center;">
-                <i data-iconsax="eye" style="width:18px;height:18px;"></i>
-              </button>
-            </div>
-          </div>
-          <div class="settings-field" style="margin-top:12px;">
-            <label class="settings-label">Confirm New Password</label>
-            <div style="position:relative;">
-              <input type="password" class="settings-input" id="confirmAdminPassword" autocomplete="new-password" style="padding-right:44px;" />
-              <button type="button" class="password-toggle-btn" data-target="confirmAdminPassword" aria-label="Show password confirmation" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);border:none;background:transparent;color:#64748b;cursor:pointer;padding:4px;display:inline-flex;align-items:center;justify-content:center;">
-                <i data-iconsax="eye" style="width:18px;height:18px;"></i>
-              </button>
-            </div>
-          </div>
-          <p id="changePasswordError" style="display:none;margin-top:8px;font-size:12px;color:#b91c1c;font-weight:600;"></p>
-          <button type="button" class="btn-primary" id="changePasswordBtn" style="margin-top:16px;width:100%;justify-content:center;">
-            <i data-iconsax="save"></i>
-            Save New Password
-          </button>
-        </div>
-
-        <div class="settings-card">
-          <div class="settings-card-title">
-            <i data-iconsax="building-2"></i>
-            Institution Details
-          </div>
-          <div class="settings-field">
-            <label class="settings-label">Institution Name</label>
-            <input type="text" class="settings-input" id="settingInstitutionName" value="Baliwag Polytechnic College" />
-          </div>
-          <div class="settings-field">
-            <label class="settings-label">Admissions Email</label>
-            <input type="email" class="settings-input" id="settingAdmissionsEmail" value="admission@btech.edu.ph" />
-          </div>
-          <div class="settings-field">
-            <label class="settings-label">Campus Address</label>
-            <input type="text" class="settings-input" id="settingCampusAddress" value="Baliwag City, Bulacan 3006" />
-          </div>
-        </div>
-
-        <div class="settings-card" style="border: 1px solid var(--navy-pale); background: #f8fafc;">
-          <div class="settings-card-title" style="color: var(--navy-mid);">
-            <i data-iconsax="refresh"></i>
-            System Maintenance
-          </div>
-          <p class="settings-toggle-sub" style="margin-bottom: 16px;">If your public website doesn't reflect your latest changes, click the button below to force a refresh.</p>
-          <button type="button" class="btn-outline" id="manualClearCacheBtn" style="width: 100%; justify-content: center; background: white; border-color: var(--navy-pale);">
-            <i data-iconsax="rotate-right"></i>
-            Refresh Website Cache
-          </button>
-        </div>
-      </div>
-
-      <div class="settings-save-row">
-        <button class="btn-primary" id="saveSettingsBtn">
-          <i data-iconsax="save"></i>
-          Save Changes
-        </button>
+        </aside>
       </div>
     </div>
 

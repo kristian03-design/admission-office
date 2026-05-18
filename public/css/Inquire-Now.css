@@ -169,15 +169,16 @@ body {
 .hdr-logo::after {
   content: "";
   position: absolute;
-  left: 18%;
-  right: 18%;
-  bottom: 1px;
+  left: 8%;
+  right: 8%;
+  bottom: -5px;
   z-index: -1;
-  height: 6px;
+  height: 12px;
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(255, 196, 0, .22) 0%, rgba(255, 196, 0, .07) 46%, transparent 76%);
-  filter: blur(5px);
-  opacity: .55;
+  background:
+    radial-gradient(ellipse at center, rgba(255, 196, 0, .32) 0%, rgba(255, 196, 0, .14) 36%, rgba(255, 196, 0, .06) 58%, transparent 78%);
+  filter: blur(8px);
+  opacity: .72;
   pointer-events: none;
 }
 
@@ -1163,15 +1164,16 @@ select.fi {
 .rs-logo-box::after {
   content: "";
   position: absolute;
-  left: 18%;
-  right: 18%;
-  bottom: 1px;
+  left: 8%;
+  right: 8%;
+  bottom: -5px;
   z-index: -1;
-  height: 6px;
+  height: 12px;
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(255, 196, 0, .22) 0%, rgba(255, 196, 0, .07) 46%, transparent 76%);
-  filter: blur(5px);
-  opacity: .55;
+  background:
+    radial-gradient(ellipse at center, rgba(255, 196, 0, .32) 0%, rgba(255, 196, 0, .14) 36%, rgba(255, 196, 0, .06) 58%, transparent 78%);
+  filter: blur(8px);
+  opacity: .72;
   pointer-events: none;
 }
 
@@ -1630,15 +1632,16 @@ body.site-loader-lock {
 .site-loader__mark::after {
   content: "";
   position: absolute;
-  left: 18%;
-  right: 18%;
-  bottom: 1px;
+  left: 8%;
+  right: 8%;
+  bottom: -5px;
   z-index: -1;
-  height: 6px;
+  height: 12px;
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(255, 196, 0, .22) 0%, rgba(255, 196, 0, .07) 46%, transparent 76%);
-  filter: blur(5px);
-  opacity: .55;
+  background:
+    radial-gradient(ellipse at center, rgba(255, 196, 0, .32) 0%, rgba(255, 196, 0, .14) 36%, rgba(255, 196, 0, .06) 58%, transparent 78%);
+  filter: blur(8px);
+  opacity: .72;
   pointer-events: none;
 }
 

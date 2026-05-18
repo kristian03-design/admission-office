@@ -21,7 +21,7 @@
   <!-- ✦ Iconsax Icons ✦ -->
   @include('partials.iconsax')
 
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=32" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=33" />
 
 </head>
 
