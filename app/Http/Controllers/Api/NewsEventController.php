@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\NewsEvent;
 use App\Support\PublicCache;
+use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -84,7 +86,7 @@ class NewsEventController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
         $item = NewsEvent::findOrFail($id);
 
@@ -151,7 +153,7 @@ class NewsEventController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $item = NewsEvent::findOrFail($id);
 
@@ -172,19 +174,40 @@ class NewsEventController extends Controller
         PublicCache::clear();
     }
 
-    private function storeUploadedImages($files): array
+    /**
+     * @param  UploadedFile|array<int, UploadedFile>|null  $files
+     * @return array<int, string>
+     */
+    private function storeUploadedImages(UploadedFile|array|null $files): array
     {
-        if (!is_array($files)) {
+        if ($files === null) {
+            return [];
+        }
+
+        if ($files instanceof UploadedFile) {
             $files = [$files];
         }
 
         $uploadedUrls = [];
         foreach ($files as $file) {
+            if (!$file instanceof UploadedFile) {
+                continue;
+            }
+
             $path = $file->store('news-events', 'supabase');
-            $uploadedUrls[] = Storage::disk('supabase')->url($path);
+            abort_unless(is_string($path), 500, 'Unable to store uploaded image.');
+            $uploadedUrls[] = $this->supabaseUrl($path);
         }
 
         return $uploadedUrls;
+    }
+
+    private function supabaseUrl(string $path): string
+    {
+        /** @var FilesystemAdapter $disk */
+        $disk = Storage::disk('supabase');
+
+        return $disk->url($path);
     }
 
     private function decodeUrlList(?string $json): array

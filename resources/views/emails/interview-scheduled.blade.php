@@ -6,7 +6,6 @@
   <title>Interview Scheduled — Baliwag Polytechnic College</title>
   <style>
     body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
     img { border: 0; outline: none; text-decoration: none; display: block; }
     body { margin: 0; padding: 0; background-color: #F1F5F9; font-family: Arial, Helvetica, sans-serif; }
   </style>

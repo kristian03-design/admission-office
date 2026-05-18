@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use App\Support\PublicCache;
+use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,9 +42,9 @@ class AnnouncementController extends Controller
             'clear_popup_image' => 'nullable|boolean',
         ]);
 
-        if ($request->hasFile('popup_image_file')) {
-            $path = $request->file('popup_image_file')->store('announcements', 'supabase');
-            $validated['popup_image'] = Storage::disk('supabase')->url($path);
+        $popupImageFile = $request->file('popup_image_file');
+        if ($popupImageFile instanceof UploadedFile) {
+            $validated['popup_image'] = $this->storeSupabaseImage($popupImageFile, 'announcements');
         }
         unset($validated['popup_image_file'], $validated['clear_popup_image']);
 
@@ -82,10 +84,10 @@ class AnnouncementController extends Controller
             'clear_popup_image' => 'nullable|boolean',
         ]);
 
-        if ($request->hasFile('popup_image_file')) {
+        $popupImageFile = $request->file('popup_image_file');
+        if ($popupImageFile instanceof UploadedFile) {
             $this->deleteStoredImage($announcement->popup_image);
-            $path = $request->file('popup_image_file')->store('announcements', 'supabase');
-            $validated['popup_image'] = Storage::disk('supabase')->url($path);
+            $validated['popup_image'] = $this->storeSupabaseImage($popupImageFile, 'announcements');
         } elseif (!empty($validated['clear_popup_image'])) {
             $this->deleteStoredImage($announcement->popup_image);
             $validated['popup_image'] = null;
@@ -127,6 +129,17 @@ class AnnouncementController extends Controller
     private function clearCache()
     {
         PublicCache::clear();
+    }
+
+    private function storeSupabaseImage(UploadedFile $file, string $directory): string
+    {
+        $path = $file->store($directory, 'supabase');
+        abort_unless(is_string($path), 500, 'Unable to store uploaded image.');
+
+        /** @var FilesystemAdapter $disk */
+        $disk = Storage::disk('supabase');
+
+        return $disk->url($path);
     }
 
     private function deleteStoredImage(?string $path): void

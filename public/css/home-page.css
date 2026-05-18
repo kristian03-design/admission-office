@@ -657,7 +657,6 @@ body.menu-open #menu-toggle svg {
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   padding-top: var(--navbar-height);
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .mobile-menu.active {
@@ -2263,7 +2262,6 @@ body.menu-open {
 }
 
 .footer-program-links li {
-  -webkit-column-break-inside: avoid;
   break-inside: avoid;
   page-break-inside: avoid;
   margin-bottom: .6rem;
@@ -4196,7 +4194,7 @@ textarea:focus-visible,
 .section-desc,
 .hero-sub,
 .apply-cta-sub {
-  text-wrap: pretty;
+  overflow-wrap: break-word;
 }
 
 .section-desc,
@@ -4715,7 +4713,7 @@ textarea:focus-visible,
 
 @media (max-width: 768px) {
   .subpage-hero.hero-section {
-    min-height: auto !important;
+    min-height: unset !important;
   }
 
   .subpage-hero .relative.z-10 {
@@ -4854,7 +4852,7 @@ main {
   }
 
   #hero.hero-section {
-    min-height: auto !important;
+    min-height: unset !important;
   }
 
   #hero>.relative.z-10,

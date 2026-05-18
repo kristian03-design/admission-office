@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Testimonial;
 use App\Support\PublicCache;
+use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,9 +30,9 @@ class TestimonialController extends Controller
             'is_active'     => 'boolean',
         ]);
 
-        if ($request->hasFile('author_avatar_file')) {
-            $path = $request->file('author_avatar_file')->store('testimonials', 'supabase');
-            $validated['author_avatar'] = Storage::disk('supabase')->url($path);
+        $avatarFile = $request->file('author_avatar_file');
+        if ($avatarFile instanceof UploadedFile) {
+            $validated['author_avatar'] = $this->storeSupabaseAvatar($avatarFile);
         }
 
         unset($validated['author_avatar_file']);
@@ -59,10 +61,10 @@ class TestimonialController extends Controller
             'is_active'     => 'boolean',
         ]);
 
-        if ($request->hasFile('author_avatar_file')) {
+        $avatarFile = $request->file('author_avatar_file');
+        if ($avatarFile instanceof UploadedFile) {
             $this->deleteStoredAvatar($testimonial->author_avatar);
-            $path = $request->file('author_avatar_file')->store('testimonials', 'supabase');
-            $validated['author_avatar'] = Storage::disk('supabase')->url($path);
+            $validated['author_avatar'] = $this->storeSupabaseAvatar($avatarFile);
         } elseif (!empty($validated['clear_avatar'])) {
             $this->deleteStoredAvatar($testimonial->author_avatar);
             $validated['author_avatar'] = null;
@@ -86,6 +88,17 @@ class TestimonialController extends Controller
         $testimonial->delete();
         PublicCache::clear();
         return response()->json(['message' => 'Testimonial deleted.']);
+    }
+
+    private function storeSupabaseAvatar(UploadedFile $file): string
+    {
+        $path = $file->store('testimonials', 'supabase');
+        abort_unless(is_string($path), 500, 'Unable to store uploaded avatar.');
+
+        /** @var FilesystemAdapter $disk */
+        $disk = Storage::disk('supabase');
+
+        return $disk->url($path);
     }
 
     private function deleteStoredAvatar(?string $path): void

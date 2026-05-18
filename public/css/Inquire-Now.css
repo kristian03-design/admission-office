@@ -346,8 +346,8 @@ body {
   background: rgba(255, 255, 255, .94);
   border: 1px solid rgba(219, 227, 238, .96);
   box-shadow: 0 18px 46px rgba(16, 32, 51, .10);
-  backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   transition: opacity .3s ease, transform .3s ease;
 }
 
@@ -872,8 +872,8 @@ select.fi {
   border-radius: 16px;
   background: rgba(255, 255, 255, .94);
   box-shadow: 0 18px 44px rgba(16, 32, 51, .14);
-  backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   padding-bottom: max(14px, env(safe-area-inset-bottom));
 }
 
@@ -985,8 +985,8 @@ select.fi {
   position: fixed;
   inset: 0;
   background: rgba(15, 23, 42, .65);
-  backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1017,7 +1017,6 @@ select.fi {
   will-change: transform, opacity;
   max-height: calc(100vh - 32px);
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .mo.show .mb {
@@ -1031,7 +1030,6 @@ select.fi {
 .review-wrap {
   width: 100%;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 /* Action bar */

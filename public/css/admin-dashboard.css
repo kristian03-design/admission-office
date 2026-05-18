@@ -2713,7 +2713,6 @@ body {
   flex: 1;
   overflow-y: auto;
   padding: 24px 28px 30px;
-  scrollbar-gutter: stable;
 }
 
 .detail-section {
@@ -3262,8 +3261,6 @@ body {
     width: 320px;
     right: 12px;
   }
-
-  .table-wrap {}
 
   .app-table th,
   .app-table td {
