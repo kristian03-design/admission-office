@@ -1,12 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About BTECH Admission Office — Baliwag Polytechnic College</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
+  <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   @include('partials.iconsax')
@@ -147,23 +148,65 @@
     }
 
     @media (max-width: 1024px) {
-      .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .team-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 640px) {
-      .team-grid { grid-template-columns: 1fr; gap: 20px; }
-      .team-card-inner { padding: 24px; }
-      .team-card-header { flex-direction: column; align-items: flex-start; gap: 14px; }
-      .team-photo, .team-fallback { width: 72px; height: 72px; border-radius: 18px; }
-      .team-name { font-size: 1.35rem; margin-top: 8px; }
-      .team-role { font-size: 10px; padding: 4px 10px; }
+      .team-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .team-card-inner {
+        padding: 24px;
+      }
+
+      .team-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+
+      .team-photo,
+      .team-fallback {
+        width: 72px;
+        height: 72px;
+        border-radius: 18px;
+      }
+
+      .team-name {
+        font-size: 1.35rem;
+        margin-top: 8px;
+      }
+
+      .team-role {
+        font-size: 10px;
+        padding: 4px 10px;
+      }
     }
 
     @media (max-width: 480px) {
-      .team-card-inner { padding: 20px; align-items: center; text-align: center; }
-      .team-card-header { flex-direction: column; align-items: center; text-align: center; }
-      .team-name { font-size: 1.25rem; }
-      .team-note { font-size: 0.9rem; }
+      .team-card-inner {
+        padding: 20px;
+        align-items: center;
+        text-align: center;
+      }
+
+      .team-card-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .team-name {
+        font-size: 1.25rem;
+      }
+
+      .team-note {
+        font-size: 0.9rem;
+      }
     }
 
     /* ─── Navbar: dark on load (no hero image behind it), white on scroll ─── */
@@ -174,15 +217,31 @@
       -webkit-backdrop-filter: blur(16px);
       box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
     }
-    #navbar:not(.scrolled) .nav-sub   { color: rgba(255, 255, 255, .7)  !important; }
-    #navbar:not(.scrolled) .nav-main  { color: #ffffff                  !important; }
-    #navbar:not(.scrolled) .nav-link  { color: rgba(255, 255, 255, .75) !important; }
-    #navbar:not(.scrolled) .nav-link:hover { color: #ffffff             !important; }
-    #navbar:not(.scrolled) #menu-toggle { color: #ffffff; }
+
+    #navbar:not(.scrolled) .nav-sub {
+      color: rgba(255, 255, 255, .7) !important;
+    }
+
+    #navbar:not(.scrolled) .nav-main {
+      color: #ffffff !important;
+    }
+
+    #navbar:not(.scrolled) .nav-link {
+      color: rgba(255, 255, 255, .75) !important;
+    }
+
+    #navbar:not(.scrolled) .nav-link:hover {
+      color: #ffffff !important;
+    }
+
+    #navbar:not(.scrolled) #menu-toggle {
+      color: #ffffff;
+    }
 
     /* Scrolled: let home-page.css handle the white/light styles — no override here */
   </style>
 </head>
+
 <body>
   @include('partials.site-loader')
 
@@ -190,7 +249,7 @@
   <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-        <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
+        <div class="logo-badge"><img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
         <div class="leading-tight">
           <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSION OFFICE' }}</p>
           <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
@@ -316,52 +375,50 @@
 
         <div class="team-grid">
           @forelse($team as $index => $member)
-            <article class="team-card" data-animate="fade-up" data-delay="{{ ($index % 6) * 70 }}">
-              <div class="team-card-inner">
-                <div class="team-card-header">
-                  <div class="team-photo-wrap">
+          <article class="team-card" data-animate="fade-up" data-delay="{{ ($index % 6) * 70 }}">
+            <div class="team-card-inner">
+              <div class="team-card-header">
+                <div class="team-photo-wrap">
+                  @php
+                  $memberImage = $member['image'] ?? '';
+                  $memberImageUrl = $memberImage
+                  ? (str_starts_with($memberImage, 'http') ? $memberImage : asset(str_starts_with($memberImage, 'storage/') || str_starts_with($memberImage, '/storage/') ? ltrim($memberImage, '/') : 'storage/' . $memberImage))
+                  : '';
+                  @endphp
+                  @if($memberImageUrl)
+                  <img
+                    src="{{ $memberImageUrl }}"
+                    alt="{{ $member['name'] }}"
+                    class="team-photo"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  @endif
+                  <div
+                    class="team-fallback {{ $memberImageUrl ? 'hidden' : 'flex' }}"
+                    aria-label="{{ $member['name'] }}">
                     @php
-                      $memberImage = $member['image'] ?? '';
-                      $memberImageUrl = $memberImage
-                        ? (str_starts_with($memberImage, 'http') ? $memberImage : asset(str_starts_with($memberImage, 'storage/') || str_starts_with($memberImage, '/storage/') ? ltrim($memberImage, '/') : 'storage/' . $memberImage))
-                        : '';
+                    $nameParts = explode(' ', preg_replace('/^(Mr\.|Mrs\.|Ms\.|Dr\.)\s+/i', '', trim($member['name'])));
+                    $initial = strtoupper(substr($nameParts[0] ?? '?', 0, 1));
                     @endphp
-                    @if($memberImageUrl)
-                      <img
-                        src="{{ $memberImageUrl }}"
-                        alt="{{ $member['name'] }}"
-                        class="team-photo"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                      >
-                    @endif
-                    <div
-                      class="team-fallback {{ $memberImageUrl ? 'hidden' : 'flex' }}"
-                      aria-label="{{ $member['name'] }}"
-                    >
-                      @php
-                        $nameParts = explode(' ', preg_replace('/^(Mr\.|Mrs\.|Ms\.|Dr\.)\s+/i', '', trim($member['name'])));
-                        $initial = strtoupper(substr($nameParts[0] ?? '?', 0, 1));
-                      @endphp
-                      {{ $initial }}
-                    </div>
-                  </div>
-                  <div>
-                    <div class="team-role">{{ $member['role'] }}</div>
-                    <h3 class="team-name">{{ $member['name'] }}</h3>
+                    {{ $initial }}
                   </div>
                 </div>
-                <p class="team-note">{{ $member['note'] }}</p>
-                <div class="team-footer">
-                  <i data-iconsax="{{ $member['icon'] ?? 'user-round' }}"></i>
-                  <span>BTECH Admissions Team</span>
+                <div>
+                  <div class="team-role">{{ $member['role'] }}</div>
+                  <h3 class="team-name">{{ $member['name'] }}</h3>
                 </div>
               </div>
-            </article>
-          @empty
-            <div class="feature-card" style="grid-column:1/-1;">
-              <h3 class="feature-title">Faculty &amp; staff list is being updated.</h3>
-              <p class="feature-desc mt-2">Please check back soon.</p>
+              <p class="team-note">{{ $member['note'] }}</p>
+              <div class="team-footer">
+                <i data-iconsax="{{ $member['icon'] ?? 'user-round' }}"></i>
+                <span>BTECH Admissions Team</span>
+              </div>
             </div>
+          </article>
+          @empty
+          <div class="feature-card" style="grid-column:1/-1;">
+            <h3 class="feature-title">Faculty &amp; staff list is being updated.</h3>
+            <p class="feature-desc mt-2">Please check back soon.</p>
+          </div>
           @endforelse
         </div>
       </div>
@@ -373,7 +430,7 @@
         <div class="apply-cta-pattern"></div>
         <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 py-20 px-8">
           <div class="text-center lg:text-left">
-            <h2 class="apply-cta-title">Need Help With Your<br/><em>Admission Requirements?</em></h2>
+            <h2 class="apply-cta-title">Need Help With Your<br /><em>Admission Requirements?</em></h2>
             <p class="apply-cta-sub mt-4 max-w-xl">Reach out to our team and we will guide you on program selection, document preparation, and enrollment timelines.</p>
           </div>
           <div class="flex flex-col gap-4 min-w-64">
@@ -402,4 +459,5 @@
     }
   </script>
 </body>
+
 </html>

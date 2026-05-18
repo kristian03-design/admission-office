@@ -16,8 +16,9 @@
   <style>
     /* ─── Page-level token overrides to match home-page.css ─── */
     :root {
-      --navy: #1b3557;
-      --navy-dark: #0f2340;
+      --navy: #071b3d;
+      --navy-dark: #031024;
+      --navy-mid: #0b2d6b;
       --gold: #c9933a;
       --gold-light: #dfb36a;
       --gold-pale: #fdf6e3;
@@ -128,7 +129,11 @@
 
     /* ─── Hero ─── */
     .program-hero {
-      background: linear-gradient(135deg, #031024 0%, #071b3d 48%, #0b2d6b 100%);
+      background:
+        linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px),
+        linear-gradient(135deg, #031024 0%, #071b3d 58%, #0b2d6b 100%);
+      background-size: 60px 60px, 60px 60px, 100% 100%;
       position: relative;
       overflow: hidden;
       padding: 4.5rem 0 4rem;
@@ -139,8 +144,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201, 147, 58, .08), transparent),
-        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(27, 53, 87, .4), transparent);
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(6, 70, 165, .18), transparent 72%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(3, 16, 36, .48), transparent 68%);
     }
 
     .hero-deco-ring {
@@ -755,7 +760,11 @@
     /* ─── Highlights Strip ─── */
     .highlights-section {
       padding: 4rem 0;
-      background: linear-gradient(135deg, #031024 0%, #071b3d 48%, #0b2d6b 100%);
+      background:
+        linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px),
+        linear-gradient(135deg, #031024 0%, #071b3d 58%, #0b2d6b 100%);
+      background-size: 60px 60px, 60px 60px, 100% 100%;
       position: relative;
       overflow: hidden;
     }

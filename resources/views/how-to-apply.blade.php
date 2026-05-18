@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,29 +18,46 @@
       background: rgba(3, 16, 36, 0.98) !important;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 2px 24px rgba(0,0,0,.18);
+      box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
     }
-    #navbar:not(.scrolled) .nav-sub   { color: rgba(255,255,255,.7)  !important; }
-    #navbar:not(.scrolled) .nav-main  { color: #ffffff !important; }
-    #navbar:not(.scrolled) .nav-link  { color: rgba(255,255,255,.75) !important; }
-    #navbar:not(.scrolled) .nav-link:hover { color: #ffffff !important; }
-    #navbar:not(.scrolled) #menu-toggle { color: #ffffff; }
+
+    #navbar:not(.scrolled) .nav-sub {
+      color: rgba(255, 255, 255, .7) !important;
+    }
+
+    #navbar:not(.scrolled) .nav-main {
+      color: #ffffff !important;
+    }
+
+    #navbar:not(.scrolled) .nav-link {
+      color: rgba(255, 255, 255, .75) !important;
+    }
+
+    #navbar:not(.scrolled) .nav-link:hover {
+      color: #ffffff !important;
+    }
+
+    #navbar:not(.scrolled) #menu-toggle {
+      color: #ffffff;
+    }
 
     .step-card {
       display: flex;
       gap: 24px;
       align-items: flex-start;
       background: #fff;
-      border: 1px solid rgba(148,163,184,.25);
+      border: 1px solid rgba(148, 163, 184, .25);
       border-radius: 18px;
       padding: 28px;
-      box-shadow: 0 4px 20px rgba(15,30,61,.06);
+      box-shadow: 0 4px 20px rgba(15, 30, 61, .06);
       transition: transform .2s ease, box-shadow .2s ease;
     }
+
     .step-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 36px rgba(15,30,61,.1);
+      box-shadow: 0 12px 36px rgba(15, 30, 61, .1);
     }
+
     .step-number {
       flex-shrink: 0;
       width: 52px;
@@ -53,13 +71,20 @@
       align-items: center;
       justify-content: center;
     }
+
     .step-title {
       font-size: 1.1rem;
       font-weight: 700;
       color: #1b3557;
       margin-bottom: 6px;
     }
-    .step-desc { color: #475569; font-size: .95rem; line-height: 1.7; }
+
+    .step-desc {
+      color: #475569;
+      font-size: .95rem;
+      line-height: 1.7;
+    }
+
     .req-tag {
       display: inline-flex;
       align-items: center;
@@ -74,13 +99,14 @@
     }
   </style>
 </head>
+
 <body>
   @include('partials.site-loader')
 
   <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-        <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
+        <div class="logo-badge"><img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
         <div class="leading-tight">
           <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSION OFFICE' }}</p>
           <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
@@ -131,8 +157,8 @@
           <p class="hero-sub mt-4 text-lg leading-relaxed max-w-2xl" data-animate="fade-up" data-delay="200">
             Follow these simple steps to begin your academic journey at Baliwag Polytechnic College.
           </p>
-          </div>
         </div>
+      </div>
       </div>
     </section>
 
@@ -147,12 +173,12 @@
         <div class="flex flex-col gap-6">
           @php
           $steps = [
-            ['num' => 1, 'title' => 'Submit Your Application', 'desc' => 'Fill out the online application form at this website or visit the Admissions Office in person. Make sure all fields are complete and accurate.', 'tag' => 'Online or Walk-in', 'icon' => 'edit'],
-            ['num' => 2, 'title' => 'Prepare Your Documents', 'desc' => 'Gather all required documents including your Form 138, PSA Birth Certificate, good moral certificate, and 2x2 ID photos. See the Requirements page for the full list.', 'tag' => 'Document Submission', 'icon' => 'document'],
-            ['num' => 3, 'title' => 'Submit Requirements', 'desc' => 'Bring or send your complete documents to the Admissions Office for verification. Incomplete submissions will be returned.', 'tag' => 'Verification', 'icon' => 'clipboard-check'],
-            ['num' => 4, 'title' => 'Attend the Interview / Evaluation', 'desc' => 'You will be scheduled for an interview or evaluation with the Program Director of your chosen course. This helps confirm your readiness and suitability for the program.', 'tag' => 'Interview', 'icon' => 'users'],
-            ['num' => 5, 'title' => 'Receive Your Admission Result', 'desc' => 'After evaluation, you will receive your admission status. Accepted applicants will be given instructions for enrollment.', 'tag' => 'Decision', 'icon' => 'check-circle'],
-            ['num' => 6, 'title' => 'Proceed to Enrollment', 'desc' => 'Once accepted, follow the enrollment instructions provided by the Admissions Office to complete your registration for the upcoming semester.', 'tag' => 'Enrollment', 'icon' => 'star'],
+          ['num' => 1, 'title' => 'Submit Your Application', 'desc' => 'Fill out the online application form at this website or visit the Admissions Office in person. Make sure all fields are complete and accurate.', 'tag' => 'Online or Walk-in', 'icon' => 'edit'],
+          ['num' => 2, 'title' => 'Prepare Your Documents', 'desc' => 'Gather all required documents including your Form 138, PSA Birth Certificate, good moral certificate, and 2x2 ID photos. See the Requirements page for the full list.', 'tag' => 'Document Submission', 'icon' => 'document'],
+          ['num' => 3, 'title' => 'Submit Requirements', 'desc' => 'Bring or send your complete documents to the Admissions Office for verification. Incomplete submissions will be returned.', 'tag' => 'Verification', 'icon' => 'clipboard-check'],
+          ['num' => 4, 'title' => 'Attend the Interview / Evaluation', 'desc' => 'You will be scheduled for an interview or evaluation with the Program Director of your chosen course. This helps confirm your readiness and suitability for the program.', 'tag' => 'Interview', 'icon' => 'users'],
+          ['num' => 5, 'title' => 'Receive Your Admission Result', 'desc' => 'After evaluation, you will receive your admission status. Accepted applicants will be given instructions for enrollment.', 'tag' => 'Decision', 'icon' => 'check-circle'],
+          ['num' => 6, 'title' => 'Proceed to Enrollment', 'desc' => 'Once accepted, follow the enrollment instructions provided by the Admissions Office to complete your registration for the upcoming semester.', 'tag' => 'Enrollment', 'icon' => 'star'],
           ];
           @endphp
 
@@ -187,11 +213,14 @@
     </section>
   </main>
 
- <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
+  <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
   @include('partials.footer')
 
   <button id="back-to-top" class="back-to-top" aria-label="Back to top"><i data-iconsax="arrow-up"></i></button>
   <script src="{{ asset('js/home-page.js') }}?v=8"></script>
-  <script>if (window.iconsax) iconsax.createIcons();</script>
+  <script>
+    if (window.iconsax) iconsax.createIcons();
+  </script>
 </body>
+
 </html>

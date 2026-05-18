@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,28 +18,49 @@
       background: rgba(3, 16, 36, 0.98) !important;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 2px 24px rgba(0,0,0,.18);
+      box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
     }
-    #navbar:not(.scrolled) .nav-sub   { color: rgba(255,255,255,.7)  !important; }
-    #navbar:not(.scrolled) .nav-main  { color: #ffffff !important; }
-    #navbar:not(.scrolled) .nav-link  { color: rgba(255,255,255,.75) !important; }
-    #navbar:not(.scrolled) .nav-link:hover { color: #ffffff !important; }
-    #navbar:not(.scrolled) #menu-toggle { color: #ffffff; }
 
-    .faq-container { max-width: 800px; margin: 0 auto; }
+    #navbar:not(.scrolled) .nav-sub {
+      color: rgba(255, 255, 255, .7) !important;
+    }
+
+    #navbar:not(.scrolled) .nav-main {
+      color: #ffffff !important;
+    }
+
+    #navbar:not(.scrolled) .nav-link {
+      color: rgba(255, 255, 255, .75) !important;
+    }
+
+    #navbar:not(.scrolled) .nav-link:hover {
+      color: #ffffff !important;
+    }
+
+    #navbar:not(.scrolled) #menu-toggle {
+      color: #ffffff;
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
     .faq-item {
       background: #fff;
-      border: 1px solid rgba(148,163,184,.2);
+      border: 1px solid rgba(148, 163, 184, .2);
       border-radius: 16px;
       margin-bottom: 16px;
       overflow: hidden;
       transition: all 0.3s ease;
-      box-shadow: 0 2px 10px rgba(15,30,61,0.04);
+      box-shadow: 0 2px 10px rgba(15, 30, 61, 0.04);
     }
+
     .faq-item:hover {
-      border-color: rgba(27,53,87,0.3);
-      box-shadow: 0 8px 25px rgba(15,30,61,0.08);
+      border-color: rgba(27, 53, 87, 0.3);
+      box-shadow: 0 8px 25px rgba(15, 30, 61, 0.08);
     }
+
     .faq-trigger {
       width: 100%;
       padding: 24px 28px;
@@ -53,6 +75,7 @@
       color: #1b3557;
       font-size: 1.05rem;
     }
+
     .faq-icon {
       width: 24px;
       height: 24px;
@@ -64,27 +87,32 @@
       justify-content: center;
       transition: all 0.3s ease;
     }
+
     .faq-item.active .faq-icon {
       background: #071b3d;
       color: #fff;
       transform: rotate(180deg);
     }
+
     .faq-content {
       max-height: 0;
       overflow: hidden;
-      transition: all 0.3s cubic-bezier(0,1,0,1);
+      transition: all 0.3s cubic-bezier(0, 1, 0, 1);
       background: #fff;
     }
+
     .faq-item.active .faq-content {
       max-height: 1000px;
-      transition: all 0.3s cubic-bezier(1,0,1,0);
+      transition: all 0.3s cubic-bezier(1, 0, 1, 0);
     }
+
     .faq-body {
       padding: 0 28px 24px;
       color: #475569;
       font-size: 0.95rem;
       line-height: 1.7;
     }
+
     .faq-category-title {
       font-size: 1.25rem;
       font-weight: 700;
@@ -95,16 +123,20 @@
       align-items: center;
       gap: 12px;
     }
-    .faq-category-title:first-child { margin-top: 0; }
+
+    .faq-category-title:first-child {
+      margin-top: 0;
+    }
   </style>
 </head>
+
 <body>
   @include('partials.site-loader')
 
   <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-        <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
+        <div class="logo-badge"><img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
         <div class="leading-tight">
           <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSION OFFICE' }}</p>
           <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
@@ -162,7 +194,7 @@
     <section class="py-28">
       <div class="max-w-7xl mx-auto px-8">
         <div class="faq-container">
-          
+
           <h3 class="faq-category-title"><i data-iconsax="edit" style="width:24px;height:24px;"></i> General Admission</h3>
           <div class="faq-item" data-animate="fade-up">
             <button class="faq-trigger">
@@ -247,7 +279,7 @@
     </section>
   </main>
 
- <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
+  <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
   @include('partials.footer')
   <button id="back-to-top" class="back-to-top" aria-label="Back to top"><i data-iconsax="arrow-up"></i></button>
   <script src="{{ asset('js/home-page.js') }}?v=8"></script>
@@ -259,10 +291,10 @@
       trigger.addEventListener('click', () => {
         const item = trigger.parentElement;
         const isActive = item.classList.contains('active');
-        
+
         // Close all other items
         document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-        
+
         // Toggle current item
         if (!isActive) {
           item.classList.add('active');
@@ -271,4 +303,5 @@
     });
   </script>
 </body>
+
 </html>

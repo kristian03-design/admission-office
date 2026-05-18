@@ -8,9 +8,9 @@
 
 /* ── CSS Variables ── */
 :root {
-  --navy: #1b3557;
-  --navy-mid: #254d82;
-  --navy-light: #3a6ea8;
+  --navy: #071b3d;
+  --navy-mid: #0b2d6b;
+  --navy-light: #0646a5;
   --sage: #2d6a4f;
   --sage-light: #40916c;
   --sage-pale: #d8f3dc;
@@ -99,7 +99,11 @@ body {
    HEADER
 ════════════════════════════════ */
 .hdr {
-  background: var(--navy);
+  background:
+    linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px),
+    linear-gradient(135deg, #031024 0%, #071b3d 48%, #0b2d6b 100%);
+  background-size: 56px 56px, 56px 56px, 100% 100%;
   border-bottom: 1px solid rgba(255, 255, 255, .12);
   box-shadow: 0 18px 44px rgba(16, 32, 51, .22);
   position: sticky;

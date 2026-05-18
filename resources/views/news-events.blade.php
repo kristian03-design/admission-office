@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>News & Events — BTECH Admission Office</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;"/>
+  <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   @include('partials.iconsax')
@@ -20,11 +21,26 @@
       -webkit-backdrop-filter: blur(16px);
       box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
     }
-    #navbar:not(.scrolled) .nav-sub   { color: rgba(255, 255, 255, .7)  !important; }
-    #navbar:not(.scrolled) .nav-main  { color: #ffffff                  !important; }
-    #navbar:not(.scrolled) .nav-link  { color: rgba(255, 255, 255, .75) !important; }
-    #navbar:not(.scrolled) .nav-link:hover { color: #ffffff             !important; }
-    #navbar:not(.scrolled) #menu-toggle { color: #ffffff; }
+
+    #navbar:not(.scrolled) .nav-sub {
+      color: rgba(255, 255, 255, .7) !important;
+    }
+
+    #navbar:not(.scrolled) .nav-main {
+      color: #ffffff !important;
+    }
+
+    #navbar:not(.scrolled) .nav-link {
+      color: rgba(255, 255, 255, .75) !important;
+    }
+
+    #navbar:not(.scrolled) .nav-link:hover {
+      color: #ffffff !important;
+    }
+
+    #navbar:not(.scrolled) #menu-toggle {
+      color: #ffffff;
+    }
 
     /* Scrolled: let home-page.css handle the white styles — no override here */
 
@@ -203,6 +219,7 @@
     }
   </style>
 </head>
+
 <body>
   @include('partials.site-loader')
 
@@ -210,7 +227,7 @@
   <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-        <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
+        <div class="logo-badge"><img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
         <div class="leading-tight">
           <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSION OFFICE' }}</p>
           <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
@@ -286,120 +303,120 @@
       <div class="max-w-7xl mx-auto px-8">
         <div class="news-results-summary mb-8">
           @if($newsEvents->total() > 0)
-            Showing {{ $newsEvents->firstItem() }}-{{ $newsEvents->lastItem() }} of {{ $newsEvents->total() }} updates
+          Showing {{ $newsEvents->firstItem() }}-{{ $newsEvents->lastItem() }} of {{ $newsEvents->total() }} updates
           @else
-            No published updates yet
+          No published updates yet
           @endif
         </div>
 
         <div class="programs-grid news-events-grid">
           @forelse($newsEvents as $item)
-            @php
-              $galleryUrls = is_array($item->image_urls) && count($item->image_urls)
-                ? $item->image_urls
-                : ($item->image_url ? [$item->image_url] : []);
-              $gallery = array_map(fn($url) => str_starts_with($url, 'http') ? $url : asset(ltrim(str_replace('/storage/', 'storage/', $url), '/')), $galleryUrls);
-              $previewText = $item->summary ?: $item->content ?: '';
-            @endphp
-            <article class="program-card">
-              <div class="program-card-inner">
-                <div class="news-card-media">
-                  @if(count($gallery))
-                    <img src="{{ $gallery[0] }}" alt="{{ $item->title }}" loading="lazy" decoding="async">
-                  @else
-                    <div class="news-card-fallback" aria-hidden="true">
-                      <i data-iconsax="{{ $item->type === 'event' ? 'calendar-days' : 'notification' }}"></i>
-                    </div>
-                  @endif
+          @php
+          $galleryUrls = is_array($item->image_urls) && count($item->image_urls)
+          ? $item->image_urls
+          : ($item->image_url ? [$item->image_url] : []);
+          $gallery = array_map(fn($url) => str_starts_with($url, 'http') ? $url : asset(ltrim(str_replace('/storage/', 'storage/', $url), '/')), $galleryUrls);
+          $previewText = $item->summary ?: $item->content ?: '';
+          @endphp
+          <article class="program-card">
+            <div class="program-card-inner">
+              <div class="news-card-media">
+                @if(count($gallery))
+                <img src="{{ $gallery[0] }}" alt="{{ $item->title }}" loading="lazy" decoding="async">
+                @else
+                <div class="news-card-fallback" aria-hidden="true">
+                  <i data-iconsax="{{ $item->type === 'event' ? 'calendar-days' : 'notification' }}"></i>
                 </div>
-                <div class="program-badge {{ $item->type === 'event' ? 'badge--hosp' : 'badge--biz' }}">
-                  {{ strtoupper($item->type) }}
-                </div>
-                <h3 class="program-name mt-4">{{ $item->title }}</h3>
-                @if($previewText)
-                  <p class="program-desc mt-2">{{ \Illuminate\Support\Str::limit(strip_tags($previewText), 170) }}</p>
                 @endif
-                <div class="program-meta mt-4">
-                  @if($item->event_date)
-                    <span class="meta-item"><i data-iconsax="calendar-days"></i> {{ $item->event_date->format('M d, Y') }}</span>
-                  @endif
-                  @if($item->location)
-                    <span class="meta-item"><i data-iconsax="map-pin"></i> {{ $item->location }}</span>
-                  @endif
-                </div>
-                <a href="{{ route('news-events.show', $item->id) }}" class="program-cta group">
-                  View More <i data-iconsax="chevron-right"></i>
-                </a>
               </div>
-            </article>
-          @empty
-            <div class="feature-card" style="grid-column: 1 / -1;">
-              <h3 class="feature-title">No news or events yet.</h3>
-              <p class="feature-desc mt-2">Please check back soon for updates.</p>
+              <div class="program-badge {{ $item->type === 'event' ? 'badge--hosp' : 'badge--biz' }}">
+                {{ strtoupper($item->type) }}
+              </div>
+              <h3 class="program-name mt-4">{{ $item->title }}</h3>
+              @if($previewText)
+              <p class="program-desc mt-2">{{ \Illuminate\Support\Str::limit(strip_tags($previewText), 170) }}</p>
+              @endif
+              <div class="program-meta mt-4">
+                @if($item->event_date)
+                <span class="meta-item"><i data-iconsax="calendar-days"></i> {{ $item->event_date->format('M d, Y') }}</span>
+                @endif
+                @if($item->location)
+                <span class="meta-item"><i data-iconsax="map-pin"></i> {{ $item->location }}</span>
+                @endif
+              </div>
+              <a href="{{ route('news-events.show', $item->id) }}" class="program-cta group">
+                View More <i data-iconsax="chevron-right"></i>
+              </a>
             </div>
+          </article>
+          @empty
+          <div class="feature-card" style="grid-column: 1 / -1;">
+            <h3 class="feature-title">No news or events yet.</h3>
+            <p class="feature-desc mt-2">Please check back soon for updates.</p>
+          </div>
           @endforelse
         </div>
 
         @if($newsEvents->hasPages())
-          @php
-            $currentPage = $newsEvents->currentPage();
-            $lastPage = $newsEvents->lastPage();
-            $startPage = max(1, $currentPage - 2);
-            $endPage = min($lastPage, $currentPage + 2);
-          @endphp
-          <nav class="mt-16 news-pagination" aria-label="News and events pagination">
-            <div class="news-pagination__summary news-results-summary">
-              Page {{ $newsEvents->currentPage() }} of {{ $newsEvents->lastPage() }}
-            </div>
+        @php
+        $currentPage = $newsEvents->currentPage();
+        $lastPage = $newsEvents->lastPage();
+        $startPage = max(1, $currentPage - 2);
+        $endPage = min($lastPage, $currentPage + 2);
+        @endphp
+        <nav class="mt-16 news-pagination" aria-label="News and events pagination">
+          <div class="news-pagination__summary news-results-summary">
+            Page {{ $newsEvents->currentPage() }} of {{ $newsEvents->lastPage() }}
+          </div>
 
-            <div class="news-pagination__pages">
-              @if($newsEvents->onFirstPage())
-                <span class="news-page-disabled news-page-disabled--nav" aria-disabled="true">
-                  <i data-iconsax="chevron-left"></i>
-                  Previous
-                </span>
+          <div class="news-pagination__pages">
+            @if($newsEvents->onFirstPage())
+            <span class="news-page-disabled news-page-disabled--nav" aria-disabled="true">
+              <i data-iconsax="chevron-left"></i>
+              Previous
+            </span>
+            @else
+            <a href="{{ $newsEvents->previousPageUrl() }}" class="news-page-link news-page-link--nav" rel="prev">
+              <i data-iconsax="chevron-left"></i>
+              Previous
+            </a>
+            @endif
+
+            @if($startPage > 1)
+            <a href="{{ $newsEvents->url(1) }}" class="news-page-link" aria-label="Go to page 1">1</a>
+            @if($startPage > 2)
+            <span class="news-page-gap" aria-hidden="true">...</span>
+            @endif
+            @endif
+
+            @for($page = $startPage; $page <= $endPage; $page++)
+              @if($page==$currentPage)
+              <span class="news-page-current" aria-current="page">{{ $page }}</span>
               @else
-                <a href="{{ $newsEvents->previousPageUrl() }}" class="news-page-link news-page-link--nav" rel="prev">
-                  <i data-iconsax="chevron-left"></i>
-                  Previous
-                </a>
+              <a href="{{ $newsEvents->url($page) }}" class="news-page-link" aria-label="Go to page {{ $page }}">{{ $page }}</a>
               @endif
-
-              @if($startPage > 1)
-                <a href="{{ $newsEvents->url(1) }}" class="news-page-link" aria-label="Go to page 1">1</a>
-                @if($startPage > 2)
-                  <span class="news-page-gap" aria-hidden="true">...</span>
-                @endif
-              @endif
-
-              @for($page = $startPage; $page <= $endPage; $page++)
-                @if($page == $currentPage)
-                  <span class="news-page-current" aria-current="page">{{ $page }}</span>
-                @else
-                  <a href="{{ $newsEvents->url($page) }}" class="news-page-link" aria-label="Go to page {{ $page }}">{{ $page }}</a>
-                @endif
               @endfor
 
               @if($endPage < $lastPage)
                 @if($endPage < $lastPage - 1)
-                  <span class="news-page-gap" aria-hidden="true">...</span>
+                <span class="news-page-gap" aria-hidden="true">...</span>
                 @endif
                 <a href="{{ $newsEvents->url($lastPage) }}" class="news-page-link" aria-label="Go to page {{ $lastPage }}">{{ $lastPage }}</a>
-              @endif
+                @endif
 
-              @if($newsEvents->hasMorePages())
+                @if($newsEvents->hasMorePages())
                 <a href="{{ $newsEvents->nextPageUrl() }}" class="news-page-link news-page-link--nav" rel="next">
                   Next
                   <i data-iconsax="chevron-right"></i>
                 </a>
-              @else
+                @else
                 <span class="news-page-disabled news-page-disabled--nav" aria-disabled="true">
                   Next
                   <i data-iconsax="chevron-right"></i>
                 </span>
-              @endif
-            </div>
-          </nav>
+                @endif
+          </div>
+        </nav>
         @endif
       </div>
     </section>
@@ -412,4 +429,5 @@
     if (window.iconsax) iconsax.createIcons();
   </script>
 </body>
+
 </html>

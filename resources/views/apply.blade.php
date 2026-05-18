@@ -10,7 +10,7 @@
   </script>
   @include('partials.iconsax')
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" style="border-radius:50%;width:32px;height:32px;" />
-  <link rel="stylesheet" href="{{ asset('css/Inquire-Now.css') }}?v=6">
+  <link rel="stylesheet" href="{{ asset('css/Inquire-Now.css') }}?v=7">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .mo {
@@ -68,7 +68,7 @@
     <div class="hdr-inner">
       <div class="hdr-brand">
         <div class="hdr-logo">
-          <img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <i data-iconsax="graduation-cap" style="display:none;color:white;width:26px;height:26px"></i>
         </div>
         <div class="hdr-text">

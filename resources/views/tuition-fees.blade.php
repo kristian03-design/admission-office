@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,39 +18,92 @@
       background: rgba(3, 16, 36, 0.98) !important;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 2px 24px rgba(0,0,0,.18);
+      box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
     }
-    #navbar:not(.scrolled) .nav-sub   { color: rgba(255,255,255,.7)  !important; }
-    #navbar:not(.scrolled) .nav-main  { color: #ffffff !important; }
-    #navbar:not(.scrolled) .nav-link  { color: rgba(255,255,255,.75) !important; }
-    #navbar:not(.scrolled) .nav-link:hover { color: #ffffff !important; }
-    #navbar:not(.scrolled) #menu-toggle { color: #ffffff; }
+
+    #navbar:not(.scrolled) .nav-sub {
+      color: rgba(255, 255, 255, .7) !important;
+    }
+
+    #navbar:not(.scrolled) .nav-main {
+      color: #ffffff !important;
+    }
+
+    #navbar:not(.scrolled) .nav-link {
+      color: rgba(255, 255, 255, .75) !important;
+    }
+
+    #navbar:not(.scrolled) .nav-link:hover {
+      color: #ffffff !important;
+    }
+
+    #navbar:not(.scrolled) #menu-toggle {
+      color: #ffffff;
+    }
 
     .fee-card {
       background: #fff;
-      border: 1px solid rgba(148,163,184,.25);
+      border: 1px solid rgba(148, 163, 184, .25);
       border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(15,30,61,.06);
+      box-shadow: 0 4px 20px rgba(15, 30, 61, .06);
     }
+
     .fee-card-header {
       background: linear-gradient(135deg, #031024, #071b3d 58%, #0b2d6b);
       color: #fff;
       padding: 24px 28px;
     }
-    .fee-card-header h3 { font-size: 1.05rem; font-weight: 700; margin: 0; }
-    .fee-card-header p { font-size: .85rem; opacity: .8; margin: 4px 0 0; }
-    .fee-table { width: 100%; border-collapse: collapse; }
-    .fee-table td { padding: 14px 28px; font-size: .92rem; border-bottom: 1px solid #f1f5f9; color: #475569; }
-    .fee-table td:last-child { text-align: right; font-weight: 600; color: #1b3557; }
-    .fee-table tr:last-child td { border-bottom: none; }
-    .fee-table tr:hover td { background: #f8fafc; }
-    .fee-total td { background: #f0f4ff !important; font-weight: 700 !important; color: #1b3557 !important; }
+
+    .fee-card-header h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .fee-card-header p {
+      font-size: .85rem;
+      opacity: .8;
+      margin: 4px 0 0;
+    }
+
+    .fee-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .fee-table td {
+      padding: 14px 28px;
+      font-size: .92rem;
+      border-bottom: 1px solid #f1f5f9;
+      color: #475569;
+    }
+
+    .fee-table td:last-child {
+      text-align: right;
+      font-weight: 600;
+      color: #1b3557;
+    }
+
+    .fee-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .fee-table tr:hover td {
+      background: #f8fafc;
+    }
+
+    .fee-total td {
+      background: #f0f4ff !important;
+      font-weight: 700 !important;
+      color: #1b3557 !important;
+    }
+
     .free-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(16,185,129,.12);
+      background: rgba(16, 185, 129, .12);
       color: #fff;
       font-size: .78rem;
       font-weight: 700;
@@ -58,13 +112,14 @@
     }
   </style>
 </head>
+
 <body>
   @include('partials.site-loader')
 
   <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-        <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
+        <div class="logo-badge"><img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
         <div class="leading-tight">
           <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSION OFFICE' }}</p>
           <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
@@ -144,12 +199,30 @@
               <p>Approximate schedule — verify with Registrar</p>
             </div>
             <table class="fee-table">
-              <tr><td>Registration Fee</td><td>As assessed</td></tr>
-              <tr><td>Laboratory Fee (if applicable)</td><td>As assessed</td></tr>
-              <tr><td>Student Organization Fee</td><td>As assessed</td></tr>
-              <tr><td>Library Fee</td><td>As assessed</td></tr>
-              <tr><td>ID Fee (First Year)</td><td>As assessed</td></tr>
-              <tr class="fee-total"><td>Tuition Fee</td><td>FREE ✓</td></tr>
+              <tr>
+                <td>Registration Fee</td>
+                <td>As assessed</td>
+              </tr>
+              <tr>
+                <td>Laboratory Fee (if applicable)</td>
+                <td>As assessed</td>
+              </tr>
+              <tr>
+                <td>Student Organization Fee</td>
+                <td>As assessed</td>
+              </tr>
+              <tr>
+                <td>Library Fee</td>
+                <td>As assessed</td>
+              </tr>
+              <tr>
+                <td>ID Fee (First Year)</td>
+                <td>As assessed</td>
+              </tr>
+              <tr class="fee-total">
+                <td>Tuition Fee</td>
+                <td>FREE ✓</td>
+              </tr>
             </table>
           </div>
 
@@ -159,12 +232,30 @@
               <p>One-time or conditional fees</p>
             </div>
             <table class="fee-table">
-              <tr><td>Entrance Examination</td><td>As assessed</td></tr>
-              <tr><td>Medical / Health Certificate</td><td>As assessed</td></tr>
-              <tr><td>Graduation Fee (Final Year)</td><td>As assessed</td></tr>
-              <tr><td>Late Enrollment Penalty</td><td>As assessed</td></tr>
-              <tr><td>Transcript of Records</td><td>As assessed</td></tr>
-              <tr><td>Other Certifications</td><td>As assessed</td></tr>
+              <tr>
+                <td>Entrance Examination</td>
+                <td>As assessed</td>
+              </tr>
+              <tr>
+                <td>Medical / Health Certificate</td>
+                <td>As assessed</td>
+              </tr>
+              <tr>
+                <td>Graduation Fee (Final Year)</td>
+                <td>As assessed</td>
+              </tr>
+              <tr>
+                <td>Late Enrollment Penalty</td>
+                <td>As assessed</td>
+              </tr>
+              <tr>
+                <td>Transcript of Records</td>
+                <td>As assessed</td>
+              </tr>
+              <tr>
+                <td>Other Certifications</td>
+                <td>As assessed</td>
+              </tr>
             </table>
           </div>
         </div>
@@ -198,10 +289,13 @@
     </section>
   </main>
 
- <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
+  <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
   @include('partials.footer')
   <button id="back-to-top" class="back-to-top" aria-label="Back to top"><i data-iconsax="arrow-up"></i></button>
   <script src="{{ asset('js/home-page.js') }}?v=8"></script>
-  <script>if (window.iconsax) iconsax.createIcons();</script>
+  <script>
+    if (window.iconsax) iconsax.createIcons();
+  </script>
 </body>
+
 </html>

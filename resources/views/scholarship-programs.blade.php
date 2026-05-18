@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,40 +18,60 @@
       background: rgba(3, 16, 36, 0.98) !important;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 2px 24px rgba(0,0,0,.18);
+      box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
     }
-    #navbar:not(.scrolled) .nav-sub   { color: rgba(255,255,255,.7)  !important; }
-    #navbar:not(.scrolled) .nav-main  { color: #ffffff !important; }
-    #navbar:not(.scrolled) .nav-link  { color: rgba(255,255,255,.75) !important; }
-    #navbar:not(.scrolled) .nav-link:hover { color: #ffffff !important; }
-    #navbar:not(.scrolled) #menu-toggle { color: #ffffff; }
+
+    #navbar:not(.scrolled) .nav-sub {
+      color: rgba(255, 255, 255, .7) !important;
+    }
+
+    #navbar:not(.scrolled) .nav-main {
+      color: #ffffff !important;
+    }
+
+    #navbar:not(.scrolled) .nav-link {
+      color: rgba(255, 255, 255, .75) !important;
+    }
+
+    #navbar:not(.scrolled) .nav-link:hover {
+      color: #ffffff !important;
+    }
+
+    #navbar:not(.scrolled) #menu-toggle {
+      color: #ffffff;
+    }
 
     .schol-card {
       background: #fff;
-      border: 1px solid rgba(148,163,184,.25);
+      border: 1px solid rgba(148, 163, 184, .25);
       border-radius: 20px;
       padding: 32px;
-      box-shadow: 0 4px 20px rgba(15,30,61,.06);
+      box-shadow: 0 4px 20px rgba(15, 30, 61, .06);
       transition: transform .2s ease, box-shadow .2s ease;
       position: relative;
       overflow: hidden;
     }
+
     .schol-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       height: 4px;
       background: linear-gradient(90deg, #071b3d, #d99a22);
     }
+
     .schol-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(15,30,61,.12);
+      box-shadow: 0 16px 48px rgba(15, 30, 61, .12);
     }
+
     .schol-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(217,154,34,.12);
+      background: rgba(217, 154, 34, .12);
       color: #a36b00;
       font-size: .75rem;
       font-weight: 700;
@@ -60,23 +81,53 @@
       border-radius: 999px;
       margin-bottom: 14px;
     }
-    .schol-title { font-size: 1.15rem; font-weight: 700; color: #1b3557; margin-bottom: 10px; }
-    .schol-desc  { color: #475569; font-size: .95rem; line-height: 1.7; }
-    .schol-benefits { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
-    .schol-benefit {
-      display: flex; align-items: center; gap: 8px;
-      font-size: .88rem; color: #334155; font-weight: 500;
+
+    .schol-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1b3557;
+      margin-bottom: 10px;
     }
-    .schol-benefit-dot { width: 7px; height: 7px; border-radius: 50%; background: #071b3d; flex-shrink: 0; }
+
+    .schol-desc {
+      color: #475569;
+      font-size: .95rem;
+      line-height: 1.7;
+    }
+
+    .schol-benefits {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .schol-benefit {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .88rem;
+      color: #334155;
+      font-weight: 500;
+    }
+
+    .schol-benefit-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #071b3d;
+      flex-shrink: 0;
+    }
   </style>
 </head>
+
 <body>
   @include('partials.site-loader')
 
   <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-        <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
+        <div class="logo-badge"><img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
         <div class="leading-tight">
           <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSION OFFICE' }}</p>
           <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
@@ -142,42 +193,42 @@
         <div class="grid md:grid-cols-2 gap-8">
           @php
           $scholarships = [
-            [
-              'badge' => 'Government-Funded',
-              'title' => 'Universal Access to Quality Tertiary Education (UAQTE / Free Tuition)',
-              'desc' => 'Under Republic Act 10931, BTECH offers free tuition and other school fees for qualified Filipino students enrolled in government-funded programs.',
-              'benefits' => ['Free tuition and miscellaneous fees', 'Available to all Filipino students', 'Must maintain satisfactory academic standing'],
-            ],
-            [
-              'badge' => 'Government-Funded',
-              'title' => 'Tertiary Education Subsidy (TES)',
-              'desc' => 'The TES program by CHED provides additional financial assistance beyond free tuition for students from low-income families.',
-              'benefits' => ['Monthly stipend for qualified recipients', 'Covers living and educational allowance', 'Administered by CHED and UNIFAST'],
-            ],
-            [
-              'badge' => 'Government Program',
-              'title' => 'Pantawid Pamilyang Pilipino Program (4Ps)',
-              'desc' => 'Students who are 4Ps beneficiaries are entitled to additional educational support and priority during the enrollment process.',
-              'benefits' => ['Educational cash grants for 4Ps beneficiaries', 'Priority assistance during enrollment', 'Subject to DSWD eligibility'],
-            ],
-            [
-              'badge' => 'Institutional',
-              'title' => 'BTECH Academic Excellence Scholarship',
-              'desc' => 'Awarded to incoming students who demonstrated exceptional academic performance during Senior High School, recognizing their hard work and dedication.',
-              'benefits' => ['Partial to full tuition subsidy', 'Requires minimum GWA of 90 or above', 'Renewable each semester based on performance'],
-            ],
-            [
-              'badge' => 'Government-Funded',
-              'title' => 'CHED Merit Scholarship',
-              'desc' => 'The CHED Merit Scholarship is awarded to academically excellent students who meet the qualifying criteria set by the Commission on Higher Education.',
-              'benefits' => ['Full tuition and monthly stipend', 'Based on academic merit and entrance exam', 'Renewable per semester'],
-            ],
-            [
-              'badge' => 'Special Program',
-              'title' => 'PWD & Solo Parent Assistance',
-              'desc' => 'BTECH provides special assistance and priority services for students with disabilities and solo parent beneficiaries in accordance with national law.',
-              'benefits' => ['Discounts and priority processing', 'Access to special accommodations', 'Subject to submission of valid certification'],
-            ],
+          [
+          'badge' => 'Government-Funded',
+          'title' => 'Universal Access to Quality Tertiary Education (UAQTE / Free Tuition)',
+          'desc' => 'Under Republic Act 10931, BTECH offers free tuition and other school fees for qualified Filipino students enrolled in government-funded programs.',
+          'benefits' => ['Free tuition and miscellaneous fees', 'Available to all Filipino students', 'Must maintain satisfactory academic standing'],
+          ],
+          [
+          'badge' => 'Government-Funded',
+          'title' => 'Tertiary Education Subsidy (TES)',
+          'desc' => 'The TES program by CHED provides additional financial assistance beyond free tuition for students from low-income families.',
+          'benefits' => ['Monthly stipend for qualified recipients', 'Covers living and educational allowance', 'Administered by CHED and UNIFAST'],
+          ],
+          [
+          'badge' => 'Government Program',
+          'title' => 'Pantawid Pamilyang Pilipino Program (4Ps)',
+          'desc' => 'Students who are 4Ps beneficiaries are entitled to additional educational support and priority during the enrollment process.',
+          'benefits' => ['Educational cash grants for 4Ps beneficiaries', 'Priority assistance during enrollment', 'Subject to DSWD eligibility'],
+          ],
+          [
+          'badge' => 'Institutional',
+          'title' => 'BTECH Academic Excellence Scholarship',
+          'desc' => 'Awarded to incoming students who demonstrated exceptional academic performance during Senior High School, recognizing their hard work and dedication.',
+          'benefits' => ['Partial to full tuition subsidy', 'Requires minimum GWA of 90 or above', 'Renewable each semester based on performance'],
+          ],
+          [
+          'badge' => 'Government-Funded',
+          'title' => 'CHED Merit Scholarship',
+          'desc' => 'The CHED Merit Scholarship is awarded to academically excellent students who meet the qualifying criteria set by the Commission on Higher Education.',
+          'benefits' => ['Full tuition and monthly stipend', 'Based on academic merit and entrance exam', 'Renewable per semester'],
+          ],
+          [
+          'badge' => 'Special Program',
+          'title' => 'PWD & Solo Parent Assistance',
+          'desc' => 'BTECH provides special assistance and priority services for students with disabilities and solo parent beneficiaries in accordance with national law.',
+          'benefits' => ['Discounts and priority processing', 'Access to special accommodations', 'Subject to submission of valid certification'],
+          ],
           ];
           @endphp
 
@@ -230,10 +281,13 @@
     </section>
   </main>
 
- <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
+  <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
   @include('partials.footer')
   <button id="back-to-top" class="back-to-top" aria-label="Back to top"><i data-iconsax="arrow-up"></i></button>
   <script src="{{ asset('js/home-page.js') }}?v=8"></script>
-  <script>if (window.iconsax) iconsax.createIcons();</script>
+  <script>
+    if (window.iconsax) iconsax.createIcons();
+  </script>
 </body>
+
 </html>

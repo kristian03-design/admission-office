@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,21 +18,37 @@
       background: rgba(3, 16, 36, 0.98) !important;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 2px 24px rgba(0,0,0,.18);
+      box-shadow: 0 2px 24px rgba(0, 0, 0, .18);
     }
-    #navbar:not(.scrolled) .nav-sub   { color: rgba(255,255,255,.7)  !important; }
-    #navbar:not(.scrolled) .nav-main  { color: #ffffff !important; }
-    #navbar:not(.scrolled) .nav-link  { color: rgba(255,255,255,.75) !important; }
-    #navbar:not(.scrolled) .nav-link:hover { color: #ffffff !important; }
-    #navbar:not(.scrolled) #menu-toggle { color: #ffffff; }
+
+    #navbar:not(.scrolled) .nav-sub {
+      color: rgba(255, 255, 255, .7) !important;
+    }
+
+    #navbar:not(.scrolled) .nav-main {
+      color: #ffffff !important;
+    }
+
+    #navbar:not(.scrolled) .nav-link {
+      color: rgba(255, 255, 255, .75) !important;
+    }
+
+    #navbar:not(.scrolled) .nav-link:hover {
+      color: #ffffff !important;
+    }
+
+    #navbar:not(.scrolled) #menu-toggle {
+      color: #ffffff;
+    }
 
     .req-card {
       background: #fff;
-      border: 1px solid rgba(148,163,184,.25);
+      border: 1px solid rgba(148, 163, 184, .25);
       border-radius: 18px;
       padding: 32px;
-      box-shadow: 0 4px 20px rgba(15,30,61,.06);
+      box-shadow: 0 4px 20px rgba(15, 30, 61, .06);
     }
+
     .req-card-title {
       font-size: 1.15rem;
       font-weight: 700;
@@ -41,6 +58,7 @@
       gap: 12px;
       margin-bottom: 20px;
     }
+
     .req-card-icon {
       width: 44px;
       height: 44px;
@@ -52,7 +70,16 @@
       color: #fff;
       flex-shrink: 0;
     }
-    .req-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+
+    .req-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
     .req-list li {
       display: flex;
       align-items: flex-start;
@@ -61,6 +88,7 @@
       color: #475569;
       line-height: 1.6;
     }
+
     .req-list li::before {
       content: '';
       width: 7px;
@@ -70,6 +98,7 @@
       flex-shrink: 0;
       margin-top: 7px;
     }
+
     .note-box {
       background: #fef3c7;
       border: 1px solid #fcd34d;
@@ -79,17 +108,29 @@
       gap: 14px;
       align-items: flex-start;
     }
-    .note-box-icon { color: #b45309; flex-shrink: 0; margin-top: 2px; }
-    .note-box p { color: #92400e; font-size: .9rem; line-height: 1.7; margin: 0; }
+
+    .note-box-icon {
+      color: #b45309;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .note-box p {
+      color: #92400e;
+      font-size: .9rem;
+      line-height: 1.7;
+      margin: 0;
+    }
   </style>
 </head>
+
 <body>
   @include('partials.site-loader')
 
   <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-        <div class="logo-badge"><img src="{{ asset('assets/images/logo.jpg') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
+        <div class="logo-badge"><img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" width="40" height="40" decoding="async"></div>
         <div class="leading-tight">
           <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSION OFFICE' }}</p>
           <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
@@ -235,10 +276,13 @@
     </section>
   </main>
 
- <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
+  <!-- ───────────────────────────────────── FOOTER ───────────────────────────────────── -->
   @include('partials.footer')
   <button id="back-to-top" class="back-to-top" aria-label="Back to top"><i data-iconsax="arrow-up"></i></button>
   <script src="{{ asset('js/home-page.js') }}?v=8"></script>
-  <script>if (window.iconsax) iconsax.createIcons();</script>
+  <script>
+    if (window.iconsax) iconsax.createIcons();
+  </script>
 </body>
+
 </html>
