@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   @include('partials.iconsax')
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=31" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=32" />
 
   <style>
     /* ─── Page-level token overrides to match home-page.css ─── */
@@ -33,7 +33,7 @@
     }
 
     /* ─── Navbar: Dark at top, White on scroll ─── */
-/* ─── Navbar height spacer (pushes content below fixed navbar) ─── */
+    /* ─── Navbar height spacer (pushes content below fixed navbar) ─── */
     .navbar-spacer {
       height: var(--navbar-height, 104px);
     }
@@ -1021,7 +1021,7 @@
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
         <div class="logo-badge"><img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" width="74" height="74" decoding="async" onerror="this.remove()"></div>
         <div class="leading-tight">
-          <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSION OFFICE' }}</p>
+          <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSIONS OFFICE' }}</p>
           <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
         </div>
       </a>
