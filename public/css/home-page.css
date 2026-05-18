@@ -520,14 +520,11 @@ body.menu-open #menu-toggle svg {
   align-items: center;
   justify-content: center;
   flex: 0 0 62px;
-  overflow: hidden;
-  border-radius: 50%;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, .98), rgba(232, 239, 248, .92));
-  border: 1px solid rgba(255, 255, 255, .75);
-  box-shadow:
-    0 10px 24px rgba(2, 8, 23, .22),
-    inset 0 0 0 1px rgba(5, 18, 38, .08);
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
   isolation: isolate;
 }
 
@@ -555,7 +552,12 @@ body.menu-open #menu-toggle svg {
   font-size: .56rem;
   font-weight: 800;
   letter-spacing: .04em;
+  opacity: 0;
   pointer-events: none;
+}
+
+.logo-badge:empty::after {
+  opacity: 1;
 }
 
 .navbar-logo img,
