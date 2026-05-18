@@ -514,34 +514,55 @@ body.menu-open #menu-toggle svg {
 
 .logo-badge {
   position: relative;
-  width: 46px;
-  height: 46px;
+  width: 62px;
+  height: 62px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 46px;
-  overflow: visible;
-  border-radius: 0;
-  background: transparent;
+  flex: 0 0 62px;
+  overflow: hidden;
+  border-radius: 50%;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, .98), rgba(232, 239, 248, .92));
+  border: 1px solid rgba(255, 255, 255, .75);
+  box-shadow:
+    0 10px 24px rgba(2, 8, 23, .22),
+    inset 0 0 0 1px rgba(5, 18, 38, .08);
   isolation: isolate;
 }
 
 .logo-badge::before {
   content: '';
   position: absolute;
-  inset: 5px;
+  inset: -8px;
   z-index: -1;
   border-radius: 50%;
   background:
-    radial-gradient(circle, rgba(212, 168, 67, .24) 0%, rgba(37, 77, 130, .12) 42%, transparent 72%);
-  filter: blur(8px);
-  opacity: .78;
+    radial-gradient(circle, rgba(212, 168, 67, .28) 0%, rgba(37, 77, 130, .18) 45%, transparent 72%);
+  filter: blur(12px);
+  opacity: .9;
+  pointer-events: none;
+}
+
+.logo-badge::after {
+  content: 'BTECH';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  color: var(--navy);
+  font-size: .56rem;
+  font-weight: 800;
+  letter-spacing: .04em;
   pointer-events: none;
 }
 
 .logo-badge img {
-  width: 46px !important;
-  height: 46px !important;
+  position: relative;
+  z-index: 1;
+  width: 52px !important;
+  height: 52px !important;
   display: block;
   object-fit: contain;
   object-position: center;
@@ -549,11 +570,16 @@ body.menu-open #menu-toggle svg {
   background: transparent !important;
   filter:
     saturate(1.08)
-    contrast(1.06)
+    contrast(1.12)
     drop-shadow(0 6px 10px rgba(2, 8, 23, .22))
-    drop-shadow(0 0 7px rgba(212, 168, 67, .18))
-    drop-shadow(0 0 12px rgba(27, 53, 87, .18));
+    drop-shadow(0 0 8px rgba(212, 168, 67, .24))
+    drop-shadow(0 0 14px rgba(27, 53, 87, .22));
   image-rendering: auto;
+}
+
+.logo-badge img[src=''],
+.logo-badge img:not([src]) {
+  display: none;
 }
 
 .btn-outline-nav {
@@ -4588,14 +4614,14 @@ textarea:focus-visible,
 
 @media (max-width: 480px) {
   .logo-badge {
-    width: 42px;
-    height: 42px;
-    flex-basis: 42px;
+    width: 54px;
+    height: 54px;
+    flex-basis: 54px;
   }
 
   .logo-badge img {
-    width: 42px !important;
-    height: 42px !important;
+    width: 46px !important;
+    height: 46px !important;
   }
 }
 
@@ -4808,8 +4834,8 @@ main {
   }
 
   .logo-badge img {
-    width: 42px !important;
-    height: 42px !important;
+    width: 46px !important;
+    height: 46px !important;
   }
 
   #hero>.relative.z-10,

@@ -137,8 +137,8 @@ body {
 
 .hdr-logo {
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   border-radius: 0;
   background: transparent;
   border: 0;
@@ -153,28 +153,28 @@ body {
 .hdr-logo::before {
   content: '';
   position: absolute;
-  inset: 5px;
+  inset: 6px;
   z-index: -1;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(212, 168, 67, .23), rgba(37, 77, 130, .12) 44%, transparent 72%);
-  filter: blur(8px);
-  opacity: .75;
+  filter: blur(9px);
+  opacity: .82;
   pointer-events: none;
 }
 
 .hdr-logo img {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
   object-position: center;
   background: transparent !important;
   border-radius: 0;
   filter:
     saturate(1.08)
-    contrast(1.06)
+    contrast(1.12)
     drop-shadow(0 6px 10px rgba(2, 8, 23, .22))
-    drop-shadow(0 0 7px rgba(212, 168, 67, .18))
-    drop-shadow(0 0 12px rgba(27, 53, 87, .18));
+    drop-shadow(0 0 8px rgba(212, 168, 67, .24))
+    drop-shadow(0 0 14px rgba(27, 53, 87, .22));
 }
 
 .hdr-text {
@@ -1730,14 +1730,14 @@ body.site-loader-lock {
   }
 
   .hdr-logo {
-    width: 42px;
-    height: 42px;
+    width: 50px;
+    height: 50px;
     border-radius: 0;
   }
 
   .hdr-logo img {
-    width: 42px;
-    height: 42px;
+    width: 50px;
+    height: 50px;
   }
 
   .hdr-text {
