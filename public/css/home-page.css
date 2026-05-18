@@ -2026,7 +2026,17 @@ body.menu-open {
 }
 
 .footer-section .footer-main-grid {
-  grid-template-columns: minmax(220px, .9fr) minmax(560px, 2.2fr) minmax(160px, .7fr) minmax(170px, .8fr);
+  grid-template-columns: minmax(280px, 1.1fr) minmax(420px, 1.8fr) minmax(160px, .8fr) minmax(170px, .9fr);
+  column-gap: clamp(2.75rem, 5vw, 5rem);
+  row-gap: 2.5rem;
+}
+
+.footer-brand-col {
+  min-width: 0;
+}
+
+.footer-brand-col .footer-text {
+  max-width: 280px;
 }
 
 .footer-heading {
