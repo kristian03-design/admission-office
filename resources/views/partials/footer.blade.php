@@ -5,7 +5,7 @@
       <div class="md:col-span-1 footer-brand-col">
         <div class="flex items-center gap-3 mb-4">
           <span class="footer-logo-shell" aria-hidden="true">
-            <img src="{{ asset('assets/images/logo_v2.png') }}" alt="" class="footer-logo-mark" loading="lazy" decoding="async" width="64" height="64">
+            <img src="{{ asset('assets/images/logo_v2.png') }}" alt="" class="footer-logo-mark" loading="lazy" decoding="async" width="74" height="74">
           </span>
           <div class="footer-brand-text">
             <p class="text-sm font-semibold footer-heading">BTECH ADMISSIONS OFFICE</p>

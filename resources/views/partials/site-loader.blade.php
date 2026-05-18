@@ -1,7 +1,7 @@
 <div id="site-loader" class="site-loader" role="status" aria-live="polite" aria-label="Loading website">
   <div class="site-loader__panel">
     <div class="site-loader__mark">
-      <img src="{{ asset('assets/images/logo_v2.png') }}" alt="" width="56" height="56" decoding="async">
+      <img src="{{ asset('assets/images/logo_v2.png') }}" alt="" width="74" height="74" decoding="async">
     </div>
     <div class="site-loader__copy">
       <p class="site-loader__eyebrow">BTECH Admission Office</p>

@@ -24,7 +24,7 @@
             <table role="presentation" cellpadding="0" cellspacing="0" style="margin-bottom:22px;">
               <tr>
                 <td width="48" height="48" style="width:48px; height:48px; background-color:transparent; border:0; text-align:center; vertical-align:middle;">
-                  <img src="{{ $message->embed(public_path('assets/images/logo_v2.png')) }}" width="42" height="42" alt="BTECH" style="margin:3px auto; border:0; border-radius:0; display:block; object-fit:contain;" />
+                  <img src="{{ $message->embed(public_path('assets/images/logo_v2.png')) }}" width="42" height="42" alt="BTECH" style="margin:3px auto; border:0; border-radius:0; display:block; object-fit:contain; filter:brightness(1.25) contrast(1.15) saturate(1.1) drop-shadow(0 2px 6px rgba(0,0,0,.22));" />
                 </td>
                 <td style="padding-left:12px; vertical-align:middle;">
                   <div style="font-size:14px; font-weight:bold; color:#0F172A; line-height:1.35; font-family:Arial,Helvetica,sans-serif;">Baliwag Polytechnic College</div>
