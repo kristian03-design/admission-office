@@ -953,29 +953,54 @@ select.fi {
 /* ════════════════════════════════
    SAVE TOAST
 ════════════════════════════════ */
-.save-toast {
+.toast {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background: var(--sage);
-  color: var(--white);
-  padding: 10px 18px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  box-shadow: 0 16px 36px rgba(45, 106, 79, .24);
-  z-index: 500;
-  transform: translateY(70px);
+  background: #1e293b;
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, .1), 0 10px 10px -5px rgba(0, 0, 0, .04);
+  z-index: 10001;
   opacity: 0;
-  transition: all .4s cubic-bezier(.4, 0, .2, 1);
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: all .35s cubic-bezier(.4, 0, .2, 1);
+  max-width: calc(100vw - 32px);
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 10px;
+  border: 1px solid rgba(255, 255, 255, .1);
 }
 
-.save-toast.show {
+.toast.show {
   transform: translateY(0);
   opacity: 1;
+}
+
+.toast--success {
+  background: #059669;
+  border-color: #064e3b;
+}
+
+.toast--error {
+  background: #dc2626;
+  border-color: #7f1d1d;
+}
+
+.toast--warning {
+  background: #d97706;
+  border-color: #78350f;
+}
+
+.toast i,
+.toast svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 /* ════════════════════════════════
@@ -2016,11 +2041,11 @@ body.site-loader-lock {
     border-radius: 16px;
   }
 
-  .save-toast {
+  .toast {
     right: 12px;
     bottom: 18px;
-    font-size: 11px;
-    padding: 9px 14px;
+    font-size: 13px;
+    padding: 11px 16px;
   }
 }
 

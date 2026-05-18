@@ -974,11 +974,21 @@ function initModalClose() {
   });
 }
 
-function showToast() {
+function showToast(msg = 'Progress saved', type = 'success') {
   const toast = document.getElementById('saveToast');
   if (!toast) return;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2200);
+  const iconMap = {
+    success: 'tick-circle',
+    error: 'info-circle',
+    warning: 'warning-2'
+  };
+  const variant = ['success', 'error', 'warning'].includes(type) ? type : 'success';
+  const icon = iconMap[variant];
+
+  toast.className = `toast no-print show toast--${variant}`;
+  toast.innerHTML = `<i data-iconsax="${icon}"></i><span>${escapeHtml(msg)}</span>`;
+  if (typeof iconsax !== 'undefined') iconsax.createIcons();
+  setTimeout(() => toast.classList.remove('show'), 2800);
 }
 
 function showReqModal(type) { showReq(type); }

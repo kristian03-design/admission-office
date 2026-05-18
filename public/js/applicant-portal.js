@@ -6,6 +6,10 @@
     token: sessionStorage.getItem('applicant_portal_token') || '',
     payload: null,
     editing: false,
+    sendingOtp: false,
+    verifyingOtp: false,
+    resendSeconds: 0,
+    resendTimer: null,
   };
 
   const fields = [
@@ -28,8 +32,6 @@
         ['place_of_birth', 'Place of Birth', 'text'],
         ['sex', 'Sex', 'text'],
         ['civil_status', 'Civil Status', 'text'],
-        ['religion', 'Religion', 'text'],
-        ['citizenship', 'Citizenship', 'text'],
         ['email', 'Email Address', 'email'],
         ['contact_number', 'Contact Number', 'text'],
       ],
@@ -46,14 +48,9 @@
       items: [
         ['father_name', 'Father Name', 'text'],
         ['father_suffix', 'Father Suffix', 'text'],
-        ['father_occupation', 'Father Occupation', 'text'],
         ['father_contact', 'Father Contact', 'text'],
         ['mother_name', 'Mother Name', 'text'],
-        ['mother_occupation', 'Mother Occupation', 'text'],
         ['mother_contact', 'Mother Contact', 'text'],
-        ['guardian_name', 'Guardian Name', 'text'],
-        ['guardian_relationship', 'Guardian Relationship', 'text'],
-        ['guardian_contact', 'Guardian Contact', 'text'],
       ],
     },
     {
@@ -147,10 +144,21 @@
     return data;
   }
 
-  function toast(message) {
+  function toast(message, type = 'success') {
     const el = $('portalToast');
     if (!el) return;
-    el.textContent = message;
+    const iconMap = {
+      success: 'tick-circle',
+      error: 'info-circle',
+      warning: 'alert-triangle',
+    };
+    const icon = iconMap[type] || 'tick-circle';
+    el.className = `toast show toast--${type}`;
+    el.innerHTML = `
+      <i data-iconsax="${icon}"></i>
+      <span>${escapeHtml(message)}</span>
+    `;
+    if (window.iconsax) window.iconsax.createIcons();
     el.classList.add('show');
     setTimeout(() => el.classList.remove('show'), 3200);
   }
@@ -162,6 +170,42 @@
 
   function setBusy(form, busy) {
     form?.querySelectorAll('button, input, select, textarea').forEach(el => { el.disabled = busy; });
+  }
+
+  function setButtonLoading(button, loading) {
+    if (!button) return;
+    const idleText = button.dataset.idleText || button.textContent;
+    const loadingText = button.dataset.loadingText || 'Loading...';
+    button.classList.toggle('is-loading', loading);
+    button.disabled = loading;
+    button.textContent = loading ? loadingText : idleText;
+  }
+
+  function updateResendButton() {
+    const button = $('resendOtp');
+    if (!button) return;
+    if (button.classList.contains('is-loading')) return;
+    if (state.resendSeconds > 0) {
+      button.disabled = true;
+      button.textContent = `Resend OTP (${state.resendSeconds}s)`;
+      return;
+    }
+    button.disabled = state.sendingOtp || state.verifyingOtp;
+    button.textContent = button.dataset.idleText || 'Resend OTP';
+  }
+
+  function startResendCooldown(seconds = 60) {
+    state.resendSeconds = seconds;
+    if (state.resendTimer) clearInterval(state.resendTimer);
+    updateResendButton();
+    state.resendTimer = setInterval(() => {
+      state.resendSeconds = Math.max(0, state.resendSeconds - 1);
+      updateResendButton();
+      if (state.resendSeconds <= 0) {
+        clearInterval(state.resendTimer);
+        state.resendTimer = null;
+      }
+    }, 1000);
   }
 
   function formatDate(value) {
@@ -322,13 +366,47 @@
   }
 
   function bind() {
+    const navbar = document.getElementById('navbar');
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    function updateNavbar() {
+      if (!navbar) return;
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }
+
+    function toggleMenu(forceClose = false) {
+      const isOpen = forceClose ? false : !mobileMenu?.classList.contains('active');
+      menuToggle?.classList.toggle('active', isOpen);
+      mobileMenu?.classList.toggle('active', isOpen);
+      document.body.classList.toggle('menu-open', isOpen);
+      menuToggle?.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      const navCta = document.querySelector('.btn-primary-nav');
+      if (navCta) navCta.style.display = (isOpen && window.innerWidth < 768) ? 'none' : '';
+    }
+
+    updateNavbar();
+    window.addEventListener('scroll', updateNavbar, { passive: true });
+    menuToggle?.addEventListener('click', e => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+    document.querySelectorAll('.mobile-nav-link, .mobile-btn-primary').forEach(link => {
+      link.addEventListener('click', () => toggleMenu(true));
+    });
+
     $('lookupForm')?.addEventListener('submit', async e => {
       e.preventDefault();
+      if (state.sendingOtp) return;
       const form = e.currentTarget;
+      const button = $('sendOtpBtn');
       const fd = new FormData(form);
       state.ref = String(fd.get('reference_number') || '').trim();
       state.email = String(fd.get('email') || '').trim();
+      state.sendingOtp = true;
       setBusy(form, true);
+      setButtonLoading(button, true);
+      updateResendButton();
       try {
         await api('/application-status/request-otp', {
           method: 'POST',
@@ -336,18 +414,28 @@
         });
         toast('Verification code sent if the details match.');
         showStep('otpStep');
+        startResendCooldown(60);
       } catch (err) {
-        toast(err.message);
+        toast(err.message, 'error');
       } finally {
+        state.sendingOtp = false;
         setBusy(form, false);
+        setButtonLoading(button, false);
+        updateResendButton();
       }
     });
 
     $('otpForm')?.addEventListener('submit', async e => {
       e.preventDefault();
+      if (state.verifyingOtp) return;
       const form = e.currentTarget;
+      const button = $('verifyOtpBtn');
       const otp = String(new FormData(form).get('otp') || '').replace(/\D/g, '').slice(0, 6);
+      state.verifyingOtp = true;
       setBusy(form, true);
+      setButtonLoading(button, true);
+      updateResendButton();
+      $('backToLookup')?.setAttribute('disabled', 'disabled');
       try {
         const data = await api('/application-status/verify', {
           method: 'POST',
@@ -359,14 +447,38 @@
         render();
         toast('Applicant portal opened.');
       } catch (err) {
-        toast(err.message);
+        toast(err.message, 'error');
       } finally {
+        state.verifyingOtp = false;
         setBusy(form, false);
+        setButtonLoading(button, false);
+        $('backToLookup')?.removeAttribute('disabled');
+        updateResendButton();
       }
     });
 
     $('backToLookup')?.addEventListener('click', () => showStep('lookupStep'));
-    $('resendOtp')?.addEventListener('click', () => $('lookupForm')?.requestSubmit());
+    $('resendOtp')?.addEventListener('click', async () => {
+      if (state.sendingOtp || state.verifyingOtp || state.resendSeconds > 0) return;
+      const button = $('resendOtp');
+      state.sendingOtp = true;
+      setButtonLoading(button, true);
+      updateResendButton();
+      try {
+        await api('/application-status/request-otp', {
+          method: 'POST',
+          body: JSON.stringify({ reference_number: state.ref, email: state.email }),
+        });
+        toast('A new verification code was sent if the details match.');
+        startResendCooldown(60);
+      } catch (err) {
+        toast(err.message, 'error');
+      } finally {
+        state.sendingOtp = false;
+        setButtonLoading(button, false);
+        updateResendButton();
+      }
+    });
 
     $('portalTabs')?.addEventListener('click', e => {
       const tab = e.target.closest('.portal-tab');
@@ -398,7 +510,7 @@
         render();
         toast('Application updated.');
       } catch (err) {
-        toast(err.message);
+        toast(err.message, 'error');
       }
     });
 
@@ -408,7 +520,7 @@
       e.preventDefault();
       const file = form.querySelector('[name="file"]')?.files?.[0];
       if (!file) {
-        toast('Please choose a file first.');
+        toast('Please choose a file first.', 'warning');
         return;
       }
       const fd = new FormData();
@@ -421,7 +533,7 @@
         render();
         toast('Document uploaded.');
       } catch (err) {
-        toast(err.message);
+        toast(err.message, 'error');
       } finally {
         setBusy(form, false);
       }

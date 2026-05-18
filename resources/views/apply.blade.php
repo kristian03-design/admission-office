@@ -42,10 +42,7 @@
 <body>
   @include('partials.site-loader')
 
-  <div class="save-toast no-print" id="saveToast">
-    <i data-iconsax="check" style="width:14px;height:14px;stroke-width:3"></i>
-    Progress saved
-  </div>
+  <div class="toast no-print" id="saveToast"></div>
 
   @if(($settings['accept_applications'] ?? '1') === '0')
   <div class="fixed inset-0 z-[9999] bg-[#0f1e3d]/90 backdrop-blur-xl flex items-center justify-center p-6 text-center">
@@ -835,7 +832,7 @@
 
   <script src="{{ asset('js/api-config.js') }}?v=9"></script>
   <script src="{{ asset('js/admission-api.js') }}?v=13"></script>
-  <script src="{{ asset('js/form.js') }}?v=12"></script>
+  <script src="{{ asset('js/form.js') }}?v=13"></script>
   <script>
     if (typeof iconsax !== 'undefined') {
       iconsax.createIcons();

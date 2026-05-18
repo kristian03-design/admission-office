@@ -37,7 +37,7 @@ class ApplicantPortalController extends Controller
 
         if ($application) {
             $otp = (string) random_int(100000, 999999);
-            Cache::put($this->otpCacheKey($application), hash('sha256', $otp), self::OTP_TTL_SECONDS);
+            $this->portalCache()->put($this->otpCacheKey($application), hash('sha256', $otp), self::OTP_TTL_SECONDS);
 
             if (SystemSetting::get('email_notifications', '1') !== '0') {
                 try {
@@ -62,7 +62,7 @@ class ApplicantPortalController extends Controller
         ]);
 
         $application = $this->findApplication($validated['reference_number'], $validated['email']);
-        $storedHash = $application ? Cache::get($this->otpCacheKey($application)) : null;
+        $storedHash = $application ? $this->portalCache()->get($this->otpCacheKey($application)) : null;
 
         if (!$application || !$storedHash || !hash_equals((string) $storedHash, hash('sha256', $validated['otp']))) {
             throw ValidationException::withMessages([
@@ -70,10 +70,10 @@ class ApplicantPortalController extends Controller
             ]);
         }
 
-        Cache::forget($this->otpCacheKey($application));
+        $this->portalCache()->forget($this->otpCacheKey($application));
 
         $token = Str::random(64);
-        Cache::put($this->sessionCacheKey($token), $application->id, self::SESSION_TTL_SECONDS);
+        $this->portalCache()->put($this->sessionCacheKey($token), $application->id, self::SESSION_TTL_SECONDS);
 
         return response()->json([
             'message' => 'Applicant portal verified.',
@@ -355,12 +355,12 @@ class ApplicantPortalController extends Controller
             $token = (string) $request->input('portal_token', $request->query('portal_token', ''));
         }
 
-        $applicationId = $token !== '' ? Cache::get($this->sessionCacheKey($token)) : null;
+        $applicationId = $token !== '' ? $this->portalCache()->get($this->sessionCacheKey($token)) : null;
         if (!$applicationId) {
             abort(401, 'Applicant portal session expired. Please verify again.');
         }
 
-        Cache::put($this->sessionCacheKey($token), $applicationId, self::SESSION_TTL_SECONDS);
+        $this->portalCache()->put($this->sessionCacheKey($token), $applicationId, self::SESSION_TTL_SECONDS);
 
         return Application::with('program')->findOrFail($applicationId);
     }
@@ -375,6 +375,11 @@ class ApplicantPortalController extends Controller
     private function otpCacheKey(Application $application): string
     {
         return 'applicant_portal_otp:'.$application->id;
+    }
+
+    private function portalCache(): \Illuminate\Contracts\Cache\Repository
+    {
+        return Cache::store('database');
     }
 
     private function sessionCacheKey(string $token): string
