@@ -36,7 +36,7 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <a href="#" class="brand-logo">
-        <img src="{{ asset('assets/images/logo-header.png') }}" alt="BTECH" onerror="this.remove()" />
+        <img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH" onerror="this.remove()" />
       </a>
       <div style="flex:1;min-width:0">
         <span class="brand-name">BTECH</span>
