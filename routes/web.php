@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Api\ApplicationController;
+use App\Http\Controllers\Api\ApplicantPortalController;
 use App\Http\Controllers\Api\AnnouncementController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FacultyStaffController;
@@ -43,6 +43,12 @@ Route::get('/faqs', [WelcomeController::class, 'faqs'])->name('faqs');
 Route::get('/apply', function () {
     return view('apply', ['settings' => \App\Models\SystemSetting::all_as_array()]);
 })->name('apply');
+Route::get('/application-status', function () {
+    return view('application-status', [
+        'settings' => \App\Models\SystemSetting::all_as_array(),
+        'programs' => \App\Models\Program::orderBy('name')->get(),
+    ]);
+})->name('application-status');
 Route::redirect('/inquire', '/apply', 301);
 Route::redirect('/inquiry', '/apply', 301);
 Route::redirect('/application', '/apply', 301);
@@ -53,6 +59,11 @@ Route::redirect('/admissions/apply', '/apply', 301);
 Route::post('/contact', [InquiryController::class, 'store'])->middleware(['throttle:public-contact', 'public.spam']);
 Route::post('/applications/submit-public', [ApplicationController::class, 'submitPublic'])->middleware(['throttle:public-application', 'public.spam']);
 Route::post('/applications/{id}/documents', [ApplicationController::class, 'uploadDocument'])->middleware('throttle:document-upload');
+Route::post('/application-status/request-otp', [ApplicantPortalController::class, 'requestOtp'])->middleware('throttle:api-login');
+Route::post('/application-status/verify', [ApplicantPortalController::class, 'verify'])->middleware('throttle:api-login');
+Route::get('/application-status/data', [ApplicantPortalController::class, 'show'])->middleware('throttle:public-read');
+Route::patch('/application-status/data', [ApplicantPortalController::class, 'update'])->middleware('throttle:public-application');
+Route::post('/application-status/documents', [ApplicantPortalController::class, 'uploadDocument'])->middleware('throttle:document-upload');
 Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(function () {
     Route::post('/applications/bulk-delete', [ApplicationController::class, 'bulkDelete']);
     Route::post('/applications/{id}/delete', [ApplicationController::class, 'destroy']);
@@ -154,12 +165,6 @@ Route::middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(functi
         \App\Support\PublicCache::clear();
         return response()->json(['message' => 'Cache cleared.']);
     });
-});
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';

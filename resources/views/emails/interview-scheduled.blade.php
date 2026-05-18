@@ -151,6 +151,14 @@
             <!-- Closing -->
             <p style="font-size:13px; color:#64748B; line-height:1.7; margin:20px 0 18px; font-family:Arial,Helvetica,sans-serif;">We look forward to meeting you. Best of luck on your interview!</p>
 
+            <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 22px;">
+              <tr>
+                <td align="center" style="background-color:#0F172A; border-radius:10px;">
+                  <a href="{{ route('application-status') }}" style="display:inline-block; background-color:#0F172A; color:#ffffff; font-size:13px; font-weight:bold; text-decoration:none; padding:13px 22px; border-radius:10px; font-family:Arial,Helvetica,sans-serif; letter-spacing:0.2px;">Open Applicant Portal</a>
+                </td>
+              </tr>
+            </table>
+
             <!-- Signature -->
             <table role="presentation" cellpadding="0" cellspacing="0">
               <tr>

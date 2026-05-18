@@ -810,8 +810,11 @@
         <p style="font-size:11px;color:#9aa5b1;margin-bottom:4px;font-weight:600">Your Reference Number</p>
         <p style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy);letter-spacing:2px" id="refNum">--</p>
       </div>
-      <p style="font-size:11px;color:#9aa5b1;margin-bottom:20px;line-height:1.6">Please save your reference number. The admissions office will contact you regarding the next steps.</p>
-      <button class="bp" style="width:100%;justify-content:center" data-home-url="{{ route('home') }}" onclick="window.location.href = this.dataset.homeUrl"><i data-iconsax="home" style="width:15px;height:15px"></i>Return to Home</button>
+      <p style="font-size:11px;color:#9aa5b1;margin-bottom:20px;line-height:1.6">Please save your reference number. You can use it with your submitted email to open the Applicant Portal.</p>
+      <div style="display:grid;gap:10px">
+        <a class="bp" style="width:100%;justify-content:center;text-decoration:none" href="{{ route('application-status') }}"><i data-iconsax="document-text" style="width:15px;height:15px"></i>Check Application Status</a>
+        <button class="bs" style="width:100%;justify-content:center" data-home-url="{{ route('home') }}" onclick="window.location.href = this.dataset.homeUrl"><i data-iconsax="home" style="width:15px;height:15px"></i>Return to Home</button>
+      </div>
     </div>
   </div>
 
@@ -832,7 +835,7 @@
 
   <script src="{{ asset('js/api-config.js') }}?v=9"></script>
   <script src="{{ asset('js/admission-api.js') }}?v=13"></script>
-  <script src="{{ asset('js/form.js') }}?v=11"></script>
+  <script src="{{ asset('js/form.js') }}?v=12"></script>
   <script>
     if (typeof iconsax !== 'undefined') {
       iconsax.createIcons();

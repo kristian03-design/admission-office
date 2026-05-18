@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Program;
+use App\Models\Application;
+use App\Mail\ApplicantPortalOtpMail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
@@ -22,18 +24,91 @@ class PublicRoutingTest extends TestCase
     public function test_public_pages_link_inquire_now_to_apply_page(): void
     {
         $applyHref = 'href="'.route('apply');
+        $portalHref = 'href="'.route('application-status').'"';
 
         $this->get('/')
             ->assertOk()
-            ->assertSee($applyHref, false);
+            ->assertSee($applyHref, false)
+            ->assertSee($portalHref, false);
 
         $this->get('/about')
             ->assertOk()
-            ->assertSee($applyHref, false);
+            ->assertSee($applyHref, false)
+            ->assertSee($portalHref, false);
 
         $this->get('/news-events')
             ->assertOk()
-            ->assertSee($applyHref, false);
+            ->assertSee($applyHref, false)
+            ->assertSee($portalHref, false);
+    }
+
+    public function test_applicant_portal_otp_opens_status_payload(): void
+    {
+        $application = Application::create([
+            'reference_number' => 'BTECH-2026-000123',
+            'email' => 'student@example.com',
+            'first_name' => 'Ada',
+            'last_name' => 'Student',
+            'status' => 'pending',
+            'submitted_at' => now(),
+        ]);
+
+        $this->postJson('/api/application-status/request-otp', [
+            'reference_number' => $application->reference_number,
+            'email' => $application->email,
+        ])->assertOk();
+
+        $otp = null;
+        Mail::assertSent(ApplicantPortalOtpMail::class, function (ApplicantPortalOtpMail $mail) use (&$otp) {
+            $otp = $mail->otp;
+            return true;
+        });
+
+        $this->postJson('/api/application-status/verify', [
+            'reference_number' => $application->reference_number,
+            'email' => $application->email,
+            'otp' => $otp,
+        ])->assertOk()
+            ->assertJsonPath('data.application.reference_number', $application->reference_number)
+            ->assertJsonMissingPath('data.application.document_upload_token');
+    }
+
+    public function test_second_choice_cannot_be_board_exam_program(): void
+    {
+        Program::create([
+            'code' => 'BSIT',
+            'name' => 'Bachelor of Science in Information Technology',
+            'department' => 'Technology',
+            'category' => 'technology',
+            'duration_years' => 4,
+            'schedule' => 'Day',
+            'slots_left' => 10,
+            'is_active' => true,
+            'has_board_exam' => false,
+        ]);
+
+        Program::create([
+            'code' => 'BSA',
+            'name' => 'BS Accountancy',
+            'department' => 'Accountancy',
+            'category' => 'accountancy',
+            'duration_years' => 4,
+            'schedule' => 'Day',
+            'slots_left' => 10,
+            'is_active' => true,
+            'has_board_exam' => true,
+        ]);
+
+        $this->postJson('/api/applications/submit-public', [
+            'first_choice' => 'Bachelor of Science in Information Technology',
+            'second_choice' => 'BS Accountancy',
+            'first_name' => 'Ada',
+            'last_name' => 'Student',
+            'email' => 'student@example.com',
+            'form_started_at' => now()->subSeconds(10)->timestamp,
+            '_hp' => '',
+        ])->assertUnprocessable()
+            ->assertJsonValidationErrors('second_choice');
     }
 
     public function test_inquiry_routes_redirect_to_apply_page(): void

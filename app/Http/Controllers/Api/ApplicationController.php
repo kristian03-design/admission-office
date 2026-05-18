@@ -122,6 +122,18 @@ class ApplicationController extends Controller
                         'second_choice' => ['Selected second choice program is already full or disabled. Please choose another program.'],
                     ]);
                 }
+
+                if ($secondChoice->has_board_exam) {
+                    throw ValidationException::withMessages([
+                        'second_choice' => ['Second choice must be a non-board-exam program. Please choose another program.'],
+                    ]);
+                }
+
+                if (!empty($data['first_choice']) && $data['first_choice'] === $data['second_choice']) {
+                    throw ValidationException::withMessages([
+                        'second_choice' => ['First choice and second choice must be different.'],
+                    ]);
+                }
             }
 
             return Application::create($data);

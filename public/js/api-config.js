@@ -15,7 +15,7 @@
   
   // List of possible route segments to strip to find the actual app root folder
   const pages = [
-    '/dashboard', '/apply', '/about', '/news-events', '/news-event-details', 
+    '/dashboard', '/apply', '/application-status', '/about', '/news-events', '/news-event-details', 
     '/course-details', '/welcome', '/admin/dashboard', '/admin/login', '/admin'
   ];
   

@@ -19,6 +19,7 @@ class Application extends Model
     protected $casts = [
         'date_of_birth' => 'date',
         'submitted_at' => 'datetime',
+        'last_edited_at' => 'datetime',
     ];
 
     public function program()

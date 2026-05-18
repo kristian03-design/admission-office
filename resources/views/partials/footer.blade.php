@@ -53,6 +53,7 @@
       <div>
         <h4 class="footer-col-title mb-4">Quick Links</h4>
         <ul class="footer-links">
+          <li><a href="{{ route('application-status') }}">Applicant Portal</a></li>
           <li><a href="{{ route('about') }}#about-office">About BTECH Admission</a></li>
           <li><a href="{{ route('about') }}#faculty-staff">Faculty &amp; Staff</a></li>
           <li><a href="{{ route('news-events') }}">News &amp; Events</a></li>

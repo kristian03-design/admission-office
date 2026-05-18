@@ -1024,6 +1024,7 @@ function renderProgramRadios(containerId, name, excludeBoardExam) {
       let visible = programs;
       if (excludeBoardExam) {
         visible = visible.filter(p => {
+          if (p.has_board_exam === true) return false;
           const cat = (p.category || '').trim();
           return !BOARD_EXAM_CATEGORIES.some(b => cat.toLowerCase() === b.toLowerCase());
         });
@@ -1048,7 +1049,7 @@ function renderProgramRadios(containerId, name, excludeBoardExam) {
         : '';
       el.innerHTML = notice + visible.map(p => {
         const state = programState(p);
-        const isBoardExam = BOARD_EXAM_CATEGORIES.some(b => (p.category || '').toLowerCase() === b.toLowerCase());
+        const isBoardExam = p.has_board_exam === true || BOARD_EXAM_CATEGORIES.some(b => (p.category || '').toLowerCase() === b.toLowerCase());
         const badge = (isBoardExam && !excludeBoardExam)
           ? ' <span style="font-size:10px;font-weight:700;color:#7c3aed;background:#ede9fe;padding:2px 7px;border-radius:99px;margin-left:6px;vertical-align:middle">Board Exam</span>'
           : '';

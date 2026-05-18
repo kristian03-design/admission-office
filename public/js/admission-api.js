@@ -7,7 +7,7 @@ const PSGC_API_BASE = 'https://psgc.gitlab.io/api';
 (function () {
   const loc = window.location;
   const pages = [
-    '/dashboard', '/apply', '/about', '/news-events', '/news-event-details', 
+    '/dashboard', '/apply', '/application-status', '/about', '/news-events', '/news-event-details', 
     '/course-details', '/welcome', '/admin/dashboard', '/admin/login', '/admin'
   ];
   

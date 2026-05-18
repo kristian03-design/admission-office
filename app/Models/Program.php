@@ -15,6 +15,7 @@ class Program extends Model
         'career_opportunities' => 'array',
         'core_areas' => 'array',
         'is_active' => 'boolean',
+        'has_board_exam' => 'boolean',
     ];
 
     public function applications()

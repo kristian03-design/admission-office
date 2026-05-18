@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProgramController;
 use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\AdminDashboardController;
+use App\Http\Controllers\Api\ApplicantPortalController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\InterviewController;
 use App\Http\Controllers\Api\SettingsController;
@@ -21,6 +22,11 @@ Route::get('/settings', [SettingsController::class, 'publicShow'])->middleware([
 Route::post('/applications/submit-public', [ApplicationController::class, 'submitPublic'])->middleware(['throttle:public-application', 'public.spam']);
 Route::post('/applications/{id}/documents', [ApplicationController::class, 'uploadDocument'])->middleware('throttle:document-upload');
 Route::get('/news-events', [NewsEventController::class, 'publicIndex'])->middleware(['throttle:public-read', 'public.cache']);
+Route::post('/application-status/request-otp', [ApplicantPortalController::class, 'requestOtp'])->middleware('throttle:api-login');
+Route::post('/application-status/verify', [ApplicantPortalController::class, 'verify'])->middleware('throttle:api-login');
+Route::get('/application-status', [ApplicantPortalController::class, 'show'])->middleware('throttle:public-read');
+Route::patch('/application-status', [ApplicantPortalController::class, 'update'])->middleware('throttle:public-application');
+Route::post('/application-status/documents', [ApplicantPortalController::class, 'uploadDocument'])->middleware('throttle:document-upload');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/auth/me', [AuthController::class, 'me']);
