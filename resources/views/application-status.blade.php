@@ -88,6 +88,23 @@
   @include('partials.footer')
   <div id="portalToast" class="toast"></div>
 
+  <script>
+    (function () {
+      function hideSiteLoader() {
+        const loader = document.getElementById('site-loader');
+        if (!loader) return;
+        loader.classList.add('is-hidden');
+        document.body.classList.remove('site-loader-lock');
+        setTimeout(() => loader.remove(), 550);
+      }
+
+      document.body.classList.add('site-loader-lock');
+      window.addEventListener('load', () => {
+        setTimeout(hideSiteLoader, 450);
+      });
+      setTimeout(hideSiteLoader, 3000);
+    })();
+  </script>
   <script src="{{ asset('js/api-config.js') }}?v=4"></script>
   <script src="{{ asset('js/applicant-portal.js') }}?v=10"></script>
 </body>
