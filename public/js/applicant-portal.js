@@ -121,12 +121,6 @@
     {
       title: 'Other Details',
       items: [
-        ['scholarship_type', 'Scholarship Type', 'text'],
-        ['scholarship_name', 'Scholarship Name', 'text'],
-        ['health_conditions', 'Health Conditions', 'textarea'],
-        ['emergency_contact_name', 'Emergency Contact Name', 'text'],
-        ['emergency_contact_relationship', 'Emergency Contact Relationship', 'text'],
-        ['emergency_contact_number', 'Emergency Contact Number', 'text'],
         ['pwd', 'PWD', 'text'],
         ['solo_parent', 'Solo Parent', 'text'],
         ['indigenous', 'Indigenous', 'text'],

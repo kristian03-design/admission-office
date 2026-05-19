@@ -21,7 +21,7 @@ class SecureHeaders
             "img-src 'self' data: blob: https:",
             "font-src 'self' data: https:",
             "style-src 'self' 'unsafe-inline' https:",
-            "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com",
+            "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://cdn.tailwindcss.com",
             "connect-src 'self' {$frontendUrl} https://*.supabase.co https://psgc.gitlab.io",
             "form-action 'self'",
             'upgrade-insecure-requests',

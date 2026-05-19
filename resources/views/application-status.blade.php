@@ -16,7 +16,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   @include('partials.iconsax')
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=33" />
-  <link rel="stylesheet" href="{{ asset('css/applicant-portal.css') }}?v=7" />
+  <link rel="stylesheet" href="{{ asset('css/applicant-portal.css') }}?v=8" />
 </head>
 
 <body>
