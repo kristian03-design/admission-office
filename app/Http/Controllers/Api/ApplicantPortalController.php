@@ -302,10 +302,38 @@ class ApplicantPortalController extends Controller
                 'interview_date' => $interview->interview_date,
                 'interview_time' => $interview->interview_time,
                 'status' => $interview->status,
+                'display_status' => $this->displayInterviewStatus($interview),
                 'program' => $interview->program?->name,
             ] : null,
             'programs' => Program::orderBy('name')->get(['id', 'code', 'name', 'department', 'slots_left', 'is_active', 'has_board_exam']),
         ];
+    }
+
+    private function displayInterviewStatus(Interview $interview): string
+    {
+        $status = strtolower(trim((string) $interview->status));
+
+        if (in_array($status, ['scheduled', 'interview scheduled'], true)) {
+            return 'Scheduled';
+        }
+
+        if ($status === 'pending' && ($interview->interview_date || $interview->interview_time)) {
+            return 'Scheduled';
+        }
+
+        if (in_array($status, ['completed', 'done'], true)) {
+            return 'Completed';
+        }
+
+        if (in_array($status, ['cancelled', 'canceled'], true)) {
+            return 'Cancelled';
+        }
+
+        if (in_array($status, ['no show', 'no_show', 'noshow', 'no-show'], true)) {
+            return 'No Show';
+        }
+
+        return $interview->status ?: 'Pending';
     }
 
     private function documentPayload(Application $application): array

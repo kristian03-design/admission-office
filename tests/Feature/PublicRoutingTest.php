@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Program;
 use App\Models\Application;
+use App\Models\Interview;
 use App\Mail\ApplicantPortalOtpMail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
@@ -108,6 +109,59 @@ class PublicRoutingTest extends TestCase
                 'contact_number' => '09171234567',
             ])->assertOk()
             ->assertJsonPath('data.application.contact_number', '09171234567');
+    }
+
+    public function test_portal_displays_scheduled_when_interview_has_date(): void
+    {
+        $program = Program::create([
+            'code' => 'BSIT',
+            'name' => 'Bachelor of Science in Information Technology',
+            'department' => 'Technology',
+            'category' => 'technology',
+            'duration_years' => 4,
+            'schedule' => 'Day',
+            'slots_left' => 10,
+            'is_active' => true,
+            'has_board_exam' => false,
+        ]);
+
+        $application = Application::create([
+            'reference_number' => 'BTECH-2026-000125',
+            'email' => 'interview@example.com',
+            'first_name' => 'Interview',
+            'last_name' => 'Student',
+            'status' => 'for_interview',
+            'submitted_at' => now(),
+        ]);
+
+        Interview::create([
+            'program_id' => $program->id,
+            'application_id' => $application->id,
+            'student_name' => 'Interview Student',
+            'reference_number' => $application->reference_number,
+            'interview_date' => '2026-05-20',
+            'interview_time' => '10:00:00',
+            'status' => 'Pending',
+        ]);
+
+        $this->postJson('/api/application-status/request-otp', [
+            'reference_number' => $application->reference_number,
+            'email' => $application->email,
+        ])->assertOk();
+
+        $otp = null;
+        Mail::assertSent(ApplicantPortalOtpMail::class, function (ApplicantPortalOtpMail $mail) use (&$otp) {
+            $otp = $mail->otp;
+            return true;
+        });
+
+        $this->postJson('/api/application-status/verify', [
+            'reference_number' => $application->reference_number,
+            'email' => $application->email,
+            'otp' => $otp,
+        ])->assertOk()
+            ->assertJsonPath('data.interview.status', 'Pending')
+            ->assertJsonPath('data.interview.display_status', 'Scheduled');
     }
 
     public function test_second_choice_cannot_be_board_exam_program(): void

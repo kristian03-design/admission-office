@@ -1,9 +1,13 @@
 (function () {
   const apiBase = (window.ADMISSION_API_BASE || (window.location.origin + '/api')).replace(/\/+$/, '');
+  const SESSION_KEY = 'applicant_portal_token';
+  const ACTIVITY_KEY = 'applicant_portal_last_activity';
+  const IDLE_LIMIT_MS = 60 * 60 * 1000;
+
   const state = {
     ref: '',
     email: '',
-    token: sessionStorage.getItem('applicant_portal_token') || '',
+    token: '',
     payload: null,
     editing: false,
     sendingOtp: false,
@@ -11,7 +15,47 @@
     otpReady: true,
     resendSeconds: 0,
     resendTimer: null,
+    idleTimer: null,
   };
+
+  function now() {
+    return Date.now();
+  }
+
+  function readStoredToken() {
+    const token = sessionStorage.getItem(SESSION_KEY) || '';
+    const lastActivity = Number(sessionStorage.getItem(ACTIVITY_KEY) || 0);
+    if (!token || !lastActivity || now() - lastActivity > IDLE_LIMIT_MS) {
+      clearStoredSession();
+      return '';
+    }
+    return token;
+  }
+
+  function rememberSession(token) {
+    if (!token) return;
+    sessionStorage.setItem(SESSION_KEY, token);
+    sessionStorage.setItem(ACTIVITY_KEY, String(now()));
+  }
+
+  function touchSession() {
+    if (!state.token) return;
+    sessionStorage.setItem(ACTIVITY_KEY, String(now()));
+  }
+
+  function clearStoredSession() {
+    sessionStorage.removeItem(SESSION_KEY);
+    sessionStorage.removeItem(ACTIVITY_KEY);
+  }
+
+  function resetPortalSession(message) {
+    clearStoredSession();
+    state.token = '';
+    state.payload = null;
+    state.editing = false;
+    showStep('lookupStep');
+    if (message) toast(message, 'warning');
+  }
 
   const fields = [
     {
@@ -127,7 +171,18 @@
     return labels[status] || String(status || 'Pending');
   }
 
+  function labelInterviewStatus(interview) {
+    const raw = String(interview?.status || '').trim().toLowerCase();
+    if (['scheduled', 'interview scheduled'].includes(raw)) return 'Scheduled';
+    if (raw === 'pending' && (interview?.interview_date || interview?.interview_time)) return 'Scheduled';
+    if (raw === 'completed' || raw === 'done') return 'Completed';
+    if (raw === 'cancelled' || raw === 'canceled') return 'Cancelled';
+    if (raw === 'no show' || raw === 'no-show') return 'No Show';
+    return interview?.status || 'Pending';
+  }
+
   async function api(endpoint, options = {}) {
+    if (state.token) touchSession();
     const headers = { Accept: 'application/json', ...(options.headers || {}) };
     const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     if (csrf) headers['X-CSRF-TOKEN'] = csrf;
@@ -142,6 +197,7 @@
       const errors = data.errors ? Object.values(data.errors).flat().join(' ') : '';
       throw new Error(errors || data.message || 'Request failed.');
     }
+    if (state.token) touchSession();
     return data;
   }
 
@@ -166,6 +222,8 @@
 
   function showStep(name) {
     ['lookupStep', 'otpStep', 'dashboardStep'].forEach(id => $(id)?.classList.toggle('active', id === name));
+    document.body.classList.toggle('portal-dashboard-open', name === 'dashboardStep');
+    document.getElementById('navbar')?.classList.toggle('scrolled', name === 'dashboardStep' || window.scrollY > 60);
     $('portalAccess')?.classList.toggle('hidden', name === 'dashboardStep');
     $('portalHelpBand')?.classList.toggle('hidden', name === 'dashboardStep');
     if (name === 'dashboardStep') window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -342,7 +400,8 @@
     $('interviewCard').innerHTML = `
       <div class="portal-card p-5 shadow-none">
         <p class="text-sm text-slate-500">Interview Status</p>
-        <p class="text-2xl font-bold text-[#0f1e3d]">${escapeHtml(interview.status || 'Scheduled')}</p>
+        <p class="text-2xl font-bold text-[#0f1e3d]">${escapeHtml(interview.display_status || labelInterviewStatus(interview))}</p>
+        <p class="text-sm text-slate-500 mt-1">This status is updated by the admissions office.</p>
         <div class="grid md:grid-cols-3 gap-4 mt-5">
           <div><p class="text-xs font-bold text-slate-500 uppercase">Date</p><p class="font-bold">${escapeHtml(formatDate(interview.interview_date))}</p></div>
           <div><p class="text-xs font-bold text-slate-500 uppercase">Time</p><p class="font-bold">${escapeHtml(interview.interview_time || 'Not set')}</p></div>
@@ -383,7 +442,7 @@
 
     function updateNavbar() {
       if (!navbar) return;
-      navbar.classList.toggle('scrolled', window.scrollY > 60);
+      navbar.classList.toggle('scrolled', document.body.classList.contains('portal-dashboard-open') || window.scrollY > 60);
     }
 
     function toggleMenu(forceClose = false) {
@@ -405,6 +464,18 @@
     document.querySelectorAll('.mobile-nav-link, .mobile-btn-primary').forEach(link => {
       link.addEventListener('click', () => toggleMenu(true));
     });
+
+    ['click', 'keydown', 'mousemove', 'touchstart', 'scroll'].forEach(eventName => {
+      window.addEventListener(eventName, touchSession, { passive: true });
+    });
+
+    state.idleTimer = setInterval(() => {
+      if (!state.token) return;
+      const lastActivity = Number(sessionStorage.getItem(ACTIVITY_KEY) || 0);
+      if (!lastActivity || now() - lastActivity > IDLE_LIMIT_MS) {
+        resetPortalSession('Your applicant portal session expired due to inactivity.');
+      }
+    }, 60000);
 
     $('lookupForm')?.addEventListener('submit', async e => {
       e.preventDefault();
@@ -459,9 +530,10 @@
           body: JSON.stringify({ reference_number: state.ref, email: state.email, otp }),
         });
         state.token = data.portal_token;
-        sessionStorage.setItem('applicant_portal_token', state.token);
+        rememberSession(state.token);
         state.payload = data.data;
         render();
+        updateNavbar();
         toast('Applicant portal opened.');
       } catch (err) {
         toast(err.message, 'error');
@@ -574,14 +646,16 @@
 
   document.addEventListener('DOMContentLoaded', async () => {
     bind();
-    if (state.token) {
-      try {
-        await loadPortal();
-      } catch (_) {
-        sessionStorage.removeItem('applicant_portal_token');
-        state.token = '';
-        showStep('lookupStep');
-      }
+    state.token = readStoredToken();
+    if (!state.token) {
+      showStep('lookupStep');
+      return;
+    }
+
+    try {
+      await loadPortal();
+    } catch (_) {
+      resetPortalSession();
     }
   });
 })();

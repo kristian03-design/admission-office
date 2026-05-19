@@ -165,6 +165,10 @@ body {
   display: block;
 }
 
+#dashboardStep.portal-step.active {
+  padding-top: calc(var(--navbar-height, 96px) + 42px) !important;
+}
+
 .portal-tabs {
   display: flex;
   gap: 8px;
@@ -428,6 +432,10 @@ body {
 }
 
 @media (max-width: 768px) {
+  #dashboardStep.portal-step.active {
+    padding-top: calc(var(--navbar-height, 82px) + 28px) !important;
+  }
+
   .portal-hero-grid {
     padding-top: calc(var(--navbar-height, 82px) + 32px);
     padding-bottom: 40px;
