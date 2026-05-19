@@ -6,9 +6,15 @@
         <h2 id="applicantName" class="text-3xl font-bold text-[#0f1e3d]"></h2>
         <p class="text-sm text-slate-500 mt-1">Reference: <span id="applicantReference" class="font-bold text-slate-700"></span></p>
       </div>
-      <div class="flex flex-wrap items-center gap-2">
-        <span id="statusBadge" class="status-badge"></span>
-        <span id="lastUpdated" class="text-xs font-semibold text-slate-500"></span>
+      <div class="portal-dashboard-actions">
+        <div class="portal-dashboard-meta">
+          <span id="statusBadge" class="status-badge"></span>
+          <span id="lastUpdated" class="text-xs font-semibold text-slate-500"></span>
+        </div>
+        <button id="applicantLogoutBtn" class="portal-btn portal-btn-logout" type="button">
+          <i data-iconsax="logout"></i>
+          <span>Log out</span>
+        </button>
       </div>
     </div>
   </div>

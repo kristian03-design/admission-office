@@ -53,6 +53,9 @@
     state.token = '';
     state.payload = null;
     state.editing = false;
+    state.otpReady = true;
+    $('lookupForm')?.reset();
+    $('otpForm')?.reset();
     showStep('lookupStep');
     if (message) toast(message, 'warning');
   }
@@ -463,6 +466,10 @@
     });
     document.querySelectorAll('.mobile-nav-link, .mobile-btn-primary').forEach(link => {
       link.addEventListener('click', () => toggleMenu(true));
+    });
+
+    $('applicantLogoutBtn')?.addEventListener('click', () => {
+      resetPortalSession('You have been logged out of the applicant portal.');
     });
 
     ['click', 'keydown', 'mousemove', 'touchstart', 'scroll'].forEach(eventName => {
