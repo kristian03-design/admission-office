@@ -22,7 +22,7 @@
           </div>
           <div>
             <label class="portal-field-label">Submitted Email</label>
-            <input class="portal-input" type="email" name="email" placeholder="you@example.com" required>
+            <input class="portal-input" type="email" name="email" placeholder="johndoe@gmail.com" required>
           </div>
           <button id="sendOtpBtn" class="portal-btn portal-btn-primary w-full" type="submit" data-idle-text="Send OTP" data-loading-text="Sending OTP...">Send OTP</button>
         </form>
