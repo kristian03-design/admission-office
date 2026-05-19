@@ -422,7 +422,7 @@
   }
 
   async function loadPortal() {
-    const data = await api('/application-status');
+    const data = await api('/application-status/data');
     state.payload = data.data;
     render();
   }
@@ -597,10 +597,13 @@
 
     $('saveDetailsBtn')?.addEventListener('click', async () => {
       if (!state.payload?.editable) return;
+      const button = $('saveDetailsBtn');
+      const payload = collectDetails();
+      setButtonLoading(button, true);
       try {
-        const data = await api('/application-status', {
+        const data = await api('/application-status/data', {
           method: 'PATCH',
-          body: JSON.stringify(collectDetails()),
+          body: JSON.stringify(payload),
         });
         state.payload = data.data;
         state.editing = false;
@@ -608,6 +611,8 @@
         toast('Application updated.');
       } catch (err) {
         toast(err.message, 'error');
+      } finally {
+        setButtonLoading(button, false);
       }
     });
 

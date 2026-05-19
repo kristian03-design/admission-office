@@ -38,7 +38,7 @@
           </div>
           <div class="flex gap-2">
             <button id="editDetailsBtn" class="portal-btn portal-btn-ghost" type="button">Edit</button>
-            <button id="saveDetailsBtn" class="portal-btn portal-btn-primary hidden" type="button">Save Changes</button>
+            <button id="saveDetailsBtn" class="portal-btn portal-btn-primary hidden" type="button" data-idle-text="Save Changes" data-loading-text="Saving...">Save Changes</button>
             <button id="cancelEditBtn" class="portal-btn portal-btn-ghost hidden" type="button">Cancel</button>
           </div>
         </div>

@@ -87,7 +87,7 @@
   <div id="portalToast" class="toast"></div>
 
   <script src="{{ asset('js/api-config.js') }}?v=4"></script>
-  <script src="{{ asset('js/applicant-portal.js') }}?v=7"></script>
+  <script src="{{ asset('js/applicant-portal.js') }}?v=8"></script>
 </body>
 
 </html>

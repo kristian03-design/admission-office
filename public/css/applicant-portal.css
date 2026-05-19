@@ -84,6 +84,41 @@ body {
   min-height: 44px;
 }
 
+.portal-select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: 42px;
+  background-color: #fff;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #0f1e3d 50%),
+    linear-gradient(135deg, #0f1e3d 50%, transparent 50%);
+  background-position:
+    calc(100% - 19px) 50%,
+    calc(100% - 13px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+}
+
+.portal-select:hover {
+  border-color: #94a3b8;
+  background-color: #f8fafc;
+}
+
+.portal-select:disabled {
+  cursor: not-allowed;
+  background-color: #f8fafc;
+  color: #64748b;
+}
+
+.portal-select option {
+  color: #0f172a;
+  background: #fff;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
 .portal-textarea {
   min-height: 92px;
   resize: vertical;

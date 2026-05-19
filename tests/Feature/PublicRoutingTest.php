@@ -105,7 +105,7 @@ class PublicRoutingTest extends TestCase
             ->json('portal_token');
 
         $this->withHeader('Authorization', 'Bearer '.$token)
-            ->patchJson('/api/application-status', [
+            ->patchJson('/api/application-status/data', [
                 'contact_number' => '09171234567',
             ])->assertOk()
             ->assertJsonPath('data.application.contact_number', '09171234567');

@@ -26,6 +26,8 @@ Route::post('/application-status/request-otp', [ApplicantPortalController::class
 Route::post('/application-status/verify', [ApplicantPortalController::class, 'verify'])->middleware('throttle:api-login');
 Route::get('/application-status', [ApplicantPortalController::class, 'show'])->middleware('throttle:public-read');
 Route::patch('/application-status', [ApplicantPortalController::class, 'update'])->middleware('throttle:public-application');
+Route::get('/application-status/data', [ApplicantPortalController::class, 'show'])->middleware('throttle:public-read');
+Route::patch('/application-status/data', [ApplicantPortalController::class, 'update'])->middleware('throttle:public-application');
 Route::post('/application-status/documents', [ApplicantPortalController::class, 'uploadDocument'])->middleware('throttle:document-upload');
 
 Route::middleware('auth:sanctum')->group(function () {
