@@ -458,6 +458,14 @@
       if (navCta) navCta.style.display = (isOpen && window.innerWidth < 768) ? 'none' : '';
     }
 
+    function toggleLogoutModal(open) {
+      const modal = $('applicantLogoutModal');
+      if (!modal) return;
+      modal.classList.toggle('is-open', open);
+      modal.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (open) $('cancelApplicantLogout')?.focus();
+    }
+
     updateNavbar();
     window.addEventListener('scroll', updateNavbar, { passive: true });
     menuToggle?.addEventListener('click', e => {
@@ -469,7 +477,20 @@
     });
 
     $('applicantLogoutBtn')?.addEventListener('click', () => {
+      toggleLogoutModal(true);
+    });
+    $('cancelApplicantLogout')?.addEventListener('click', () => {
+      toggleLogoutModal(false);
+    });
+    $('confirmApplicantLogout')?.addEventListener('click', () => {
+      toggleLogoutModal(false);
       resetPortalSession('You have been logged out of the applicant portal.');
+    });
+    $('applicantLogoutModal')?.addEventListener('click', e => {
+      if (e.target === e.currentTarget) toggleLogoutModal(false);
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') toggleLogoutModal(false);
     });
 
     ['click', 'keydown', 'mousemove', 'touchstart', 'scroll'].forEach(eventName => {

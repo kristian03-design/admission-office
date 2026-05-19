@@ -65,3 +65,19 @@
     </div>
   </div>
 </section>
+
+<div id="applicantLogoutModal" class="portal-modal" aria-hidden="true">
+  <div class="portal-modal-panel" role="dialog" aria-modal="true" aria-labelledby="applicantLogoutTitle">
+    <div class="portal-modal-icon">
+      <i data-iconsax="logout"></i>
+    </div>
+    <div>
+      <h3 id="applicantLogoutTitle" class="portal-modal-title">Log out of applicant portal?</h3>
+      <p class="portal-modal-copy">You will need to verify your email again before opening your application dashboard.</p>
+    </div>
+    <div class="portal-modal-actions">
+      <button id="cancelApplicantLogout" class="portal-btn portal-btn-ghost" type="button">Cancel</button>
+      <button id="confirmApplicantLogout" class="portal-btn portal-btn-logout portal-btn-logout-solid" type="button">Log out</button>
+    </div>
+  </div>
+</div>

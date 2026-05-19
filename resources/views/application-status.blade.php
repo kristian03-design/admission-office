@@ -16,7 +16,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   @include('partials.iconsax')
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=33" />
-  <link rel="stylesheet" href="{{ asset('css/applicant-portal.css') }}?v=6" />
+  <link rel="stylesheet" href="{{ asset('css/applicant-portal.css') }}?v=7" />
 </head>
 
 <body>
@@ -87,7 +87,7 @@
   <div id="portalToast" class="toast"></div>
 
   <script src="{{ asset('js/api-config.js') }}?v=4"></script>
-  <script src="{{ asset('js/applicant-portal.js') }}?v=9"></script>
+  <script src="{{ asset('js/applicant-portal.js') }}?v=10"></script>
 </body>
 
 </html>
