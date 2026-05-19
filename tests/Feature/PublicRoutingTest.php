@@ -73,6 +73,43 @@ class PublicRoutingTest extends TestCase
             ->assertJsonMissingPath('data.application.document_upload_token');
     }
 
+    public function test_accepted_applicant_can_update_allowed_details(): void
+    {
+        $application = Application::create([
+            'reference_number' => 'BTECH-2026-000124',
+            'email' => 'accepted@example.com',
+            'first_name' => 'Accepted',
+            'last_name' => 'Student',
+            'status' => 'accepted',
+            'submitted_at' => now(),
+        ]);
+
+        $this->postJson('/api/application-status/request-otp', [
+            'reference_number' => $application->reference_number,
+            'email' => $application->email,
+        ])->assertOk();
+
+        $otp = null;
+        Mail::assertSent(ApplicantPortalOtpMail::class, function (ApplicantPortalOtpMail $mail) use (&$otp) {
+            $otp = $mail->otp;
+            return true;
+        });
+
+        $token = $this->postJson('/api/application-status/verify', [
+            'reference_number' => $application->reference_number,
+            'email' => $application->email,
+            'otp' => $otp,
+        ])->assertOk()
+            ->assertJsonPath('data.editable', true)
+            ->json('portal_token');
+
+        $this->withHeader('Authorization', 'Bearer '.$token)
+            ->patchJson('/api/application-status', [
+                'contact_number' => '09171234567',
+            ])->assertOk()
+            ->assertJsonPath('data.application.contact_number', '09171234567');
+    }
+
     public function test_second_choice_cannot_be_board_exam_program(): void
     {
         Program::create([

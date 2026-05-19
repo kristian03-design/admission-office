@@ -24,7 +24,7 @@ class ApplicantPortalController extends Controller
     private const OTP_TTL_SECONDS = 1800;
     private const SESSION_TTL_SECONDS = 3600;
 
-    private const EDITABLE_STATUSES = ['pending', 'submitted', 'pending_docs'];
+    private const EDITABLE_STATUSES = ['pending', 'submitted', 'pending_docs', 'for_interview', 'approved', 'accepted'];
 
     public function requestOtp(Request $request)
     {

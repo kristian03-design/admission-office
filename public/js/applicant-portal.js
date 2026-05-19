@@ -8,6 +8,7 @@
     editing: false,
     sendingOtp: false,
     verifyingOtp: false,
+    otpReady: true,
     resendSeconds: 0,
     resendTimer: null,
   };
@@ -165,6 +166,8 @@
 
   function showStep(name) {
     ['lookupStep', 'otpStep', 'dashboardStep'].forEach(id => $(id)?.classList.toggle('active', id === name));
+    $('portalAccess')?.classList.toggle('hidden', name === 'dashboardStep');
+    $('portalHelpBand')?.classList.toggle('hidden', name === 'dashboardStep');
     if (name === 'dashboardStep') window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -192,6 +195,14 @@
     }
     button.disabled = state.sendingOtp || state.verifyingOtp;
     button.textContent = button.dataset.idleText || 'Resend OTP';
+  }
+
+  function updateVerifyButton() {
+    const button = $('verifyOtpBtn');
+    if (!button || state.verifyingOtp) return;
+    const idleText = button.dataset.idleText || 'Verify and Continue';
+    button.disabled = !state.otpReady || state.sendingOtp;
+    button.textContent = button.disabled ? 'Waiting for OTP...' : idleText;
   }
 
   function startResendCooldown(seconds = 60) {
@@ -404,24 +415,30 @@
       state.ref = String(fd.get('reference_number') || '').trim();
       state.email = String(fd.get('email') || '').trim();
       state.sendingOtp = true;
+      state.otpReady = false;
+      showStep('otpStep');
       setBusy(form, true);
       setButtonLoading(button, true);
       updateResendButton();
+      updateVerifyButton();
       try {
         await api('/application-status/request-otp', {
           method: 'POST',
           body: JSON.stringify({ reference_number: state.ref, email: state.email }),
         });
+        state.otpReady = true;
         toast('Verification code sent if the details match.');
-        showStep('otpStep');
         startResendCooldown(60);
       } catch (err) {
+        state.otpReady = false;
+        showStep('lookupStep');
         toast(err.message, 'error');
       } finally {
         state.sendingOtp = false;
         setBusy(form, false);
         setButtonLoading(button, false);
         updateResendButton();
+        updateVerifyButton();
       }
     });
 
@@ -457,26 +474,34 @@
       }
     });
 
-    $('backToLookup')?.addEventListener('click', () => showStep('lookupStep'));
+    $('backToLookup')?.addEventListener('click', () => {
+      state.otpReady = false;
+      showStep('lookupStep');
+    });
     $('resendOtp')?.addEventListener('click', async () => {
       if (state.sendingOtp || state.verifyingOtp || state.resendSeconds > 0) return;
       const button = $('resendOtp');
       state.sendingOtp = true;
+      state.otpReady = false;
       setButtonLoading(button, true);
       updateResendButton();
+      updateVerifyButton();
       try {
         await api('/application-status/request-otp', {
           method: 'POST',
           body: JSON.stringify({ reference_number: state.ref, email: state.email }),
         });
+        state.otpReady = true;
         toast('A new verification code was sent if the details match.');
         startResendCooldown(60);
       } catch (err) {
+        state.otpReady = false;
         toast(err.message, 'error');
       } finally {
         state.sendingOtp = false;
         setButtonLoading(button, false);
         updateResendButton();
+        updateVerifyButton();
       }
     });
 
