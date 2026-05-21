@@ -2189,18 +2189,11 @@ function setContentTablePage(key, page) {
 }
 
 function initWebsiteContent() {
-  loadWebsiteSettings();
   loadAnnouncements();
   loadNewsEvents();
   loadTestimonials();
   loadFacultyStaff();
   initContentStudioSidebar();
-
-  // Wire up save button
-  const saveBtn = document.getElementById("saveWebsiteSettingsBtn");
-  if (saveBtn) {
-    saveBtn.onclick = saveWebsiteSettings;
-  }
 
 
   // Wire up announcement modal popup toggle
@@ -2363,64 +2356,7 @@ function initContentStudioSidebar() {
   });
 }
 
-function loadWebsiteSettings() {
-  if (!SYSTEM_SETTINGS) return;
 
-  const fields = {
-    settingHeroHeadline: "hero_headline",
-    settingHeroSubheadline: "hero_subheadline",
-    settingSYLabel: "school_year_label",
-    settingCTAText: "cta_text",
-    settingContactPhone: "contact_phone",
-    settingOfficeHours: "contact_office_hours",
-    settingFacebook: "facebook_link",
-    settingInstagram: "instagram_link"
-  };
-
-  for (const [id, key] of Object.entries(fields)) {
-    const el = document.getElementById(id);
-    if (el) el.value = SYSTEM_SETTINGS[key] || "";
-  }
-}
-
-async function saveWebsiteSettings() {
-  const fields = {
-    hero_headline: "settingHeroHeadline",
-    hero_subheadline: "settingHeroSubheadline",
-    school_year_label: "settingSYLabel",
-    cta_text: "settingCTAText",
-    contact_phone: "settingContactPhone",
-    contact_office_hours: "settingOfficeHours",
-    facebook_link: "settingFacebook",
-    instagram_link: "settingInstagram"
-  };
-
-  const data = {};
-  for (const [key, id] of Object.entries(fields)) {
-    const el = document.getElementById(id);
-    if (el) data[key] = el.value;
-  }
-
-  const btn = document.getElementById("saveWebsiteSettingsBtn");
-  const originalText = btn.innerHTML;
-  btn.disabled = true;
-  btn.innerHTML = savingButtonMarkup();
-
-  try {
-    if (typeof AdmissionAPI === 'undefined' || !AdmissionAPI.getToken()) {
-      throw new Error('Not authenticated. Please log in.');
-    }
-    const updated = await AdmissionAPI.saveSettings(data);
-    SYSTEM_SETTINGS = Object.assign(SYSTEM_SETTINGS || {}, updated);
-    showToast("Website settings saved successfully.");
-  } catch (err) {
-    showToast('Failed to save settings: ' + (err.message || 'Unknown error'));
-    console.error('Save website settings error:', err);
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = originalText;
-  }
-}
 
 async function loadAnnouncements() {
   const tbody = document.getElementById("announcementsTableBody");

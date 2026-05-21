@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BTECH - Admissions Admin Dashboard</title>
+  <title>BTECH - Admin Dashboard</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -602,15 +602,7 @@
 
       <div class="content-studio-layout">
         <aside class="content-studio-sidebar">
-          <button type="button" class="studio-nav-item active" data-target="studio-panel-hero">
-            <i data-iconsax="image"></i>
-            <span>Hero & CTA</span>
-          </button>
-          <button type="button" class="studio-nav-item" data-target="studio-panel-contact">
-            <i data-iconsax="phone"></i>
-            <span>Contact & Social</span>
-          </button>
-          <button type="button" class="studio-nav-item" data-target="studio-panel-announcements">
+          <button type="button" class="studio-nav-item active" data-target="studio-panel-announcements">
             <i data-iconsax="megaphone"></i>
             <span>Announcements</span>
           </button>
@@ -629,55 +621,7 @@
         </aside>
 
         <div class="content-studio-panels">
-          <div class="settings-card studio-card studio-panel active" id="studio-panel-hero">
-            <div class="settings-card-title">
-              <i data-iconsax="image"></i>
-              Hero & CTA Section
-            </div>
-            <p class="studio-card-subtitle">Control the first impression of your landing page.</p>
-            <div class="settings-field">
-              <label class="settings-label">Hero Headline</label>
-              <input type="text" class="settings-input" id="settingHeroHeadline" placeholder="e.g. Begin Your Journey Here." />
-            </div>
-            <div class="settings-field">
-              <label class="settings-label">Hero Sub-headline</label>
-              <textarea class="settings-input" id="settingHeroSubheadline" rows="3" style="height:auto;padding-top:8px;" placeholder="Landing page description..."></textarea>
-            </div>
-            <div class="settings-field">
-              <label class="settings-label">School Year Label</label>
-              <input type="text" class="settings-input" id="settingSYLabel" placeholder="e.g. Admissions Open - S.Y. 2025-2026" />
-            </div>
-            <div class="settings-field">
-              <label class="settings-label">CTA Button Text</label>
-              <input type="text" class="settings-input" id="settingCTAText" placeholder="e.g. Start Your Application" />
-            </div>
-          </div>
-
-          <div class="settings-card studio-card studio-panel" id="studio-panel-contact">
-            <div class="settings-card-title">
-              <i data-iconsax="phone"></i>
-              Contact & Social Links
-            </div>
-            <p class="studio-card-subtitle">Keep public contact information accurate and consistent.</p>
-            <div class="settings-field">
-              <label class="settings-label">Contact Phone</label>
-              <input type="text" class="settings-input" id="settingContactPhone" />
-            </div>
-            <div class="settings-field">
-              <label class="settings-label">Office Hours</label>
-              <input type="text" class="settings-input" id="settingOfficeHours" placeholder="e.g. Mon-Fri, 9AM-5PM" />
-            </div>
-            <div class="settings-field">
-              <label class="settings-label">Facebook URL</label>
-              <input type="url" class="settings-input" id="settingFacebook" />
-            </div>
-            <div class="settings-field">
-              <label class="settings-label">Instagram URL</label>
-              <input type="url" class="settings-input" id="settingInstagram" />
-            </div>
-          </div>
-
-          <div class="settings-card studio-table-card studio-panel" id="studio-panel-announcements">
+          <div class="settings-card studio-table-card studio-panel active" id="studio-panel-announcements">
             <div class="studio-table-card__header">
               <div class="settings-card-title">
                 <i data-iconsax="megaphone"></i>
@@ -802,12 +746,7 @@
         </div>
       </div>
 
-      <div class="settings-save-row studio-save-row">
-        <button class="btn-primary" id="saveWebsiteSettingsBtn">
-          <i data-iconsax="save"></i>
-          Save Website Changes
-        </button>
-      </div>
+
     </div>
 
     <!-- --- SETTINGS --- -->

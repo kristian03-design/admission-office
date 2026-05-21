@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your OTP Code — BTECH Admin</title>
+  <title>Your OTP Code - BTECH Admin</title>
   <style>
     body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
     img { border: 0; outline: none; text-decoration: none; display: block; }
