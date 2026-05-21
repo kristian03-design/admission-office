@@ -1,6 +1,5 @@
-
 /* =========================================
-   BTECH ANNOUNCEMENT POPUP
+   BTECH ANNOUNCEMENT POPUP - FINAL CSS
 ========================================= */
 
 .announcement-popup {
@@ -15,27 +14,22 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   padding: 1rem;
-
-  background: rgba(4, 10, 22, 0.76);
-
+  background: rgba(4, 10, 22, 0.78);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-
-  transition:
-    opacity .3s ease,
-    visibility .3s ease;
-
+  transition: opacity .3s ease, visibility .3s ease;
   font-family: "Poppins", sans-serif;
+}
+
+.announcement-popup[hidden] {
+  display: none;
 }
 
 .announcement-popup.is-open {
@@ -44,167 +38,96 @@
   pointer-events: auto;
 }
 
-.announcement-popup[hidden] {
-  display: none;
-}
-
-/* =========================================
-   MODAL CARD
-========================================= */
-
 .announcement-popup__card {
   position: relative;
-
-  width: min(1100px, 92vw);
-
-  background: #fff;
-
-  border-radius: 34px;
-
+  width: min(980px, 90vw);
+  max-height: 90vh;
   overflow: hidden;
-
-  border: 1px solid rgba(255,255,255,.08);
-
-  box-shadow:
-    0 40px 120px rgba(0,0,0,.38);
-
+  border-radius: 30px;
+  background: #fff;
+  border: 1px solid rgba(255, 255, 255, .08);
+  box-shadow: 0 35px 100px rgba(0, 0, 0, .38);
   opacity: 0;
-
-  transform:
-    translateY(18px)
-    scale(.96);
-
-  transition:
-    opacity .35s cubic-bezier(.16,1,.3,1),
-    transform .35s cubic-bezier(.16,1,.3,1);
+  transform: translateY(18px) scale(.96);
+  transition: opacity .35s cubic-bezier(.16, 1, .3, 1),
+              transform .35s cubic-bezier(.16, 1, .3, 1);
 }
 
 .announcement-popup.is-open .announcement-popup__card {
   opacity: 1;
-
-  transform:
-    translateY(0)
-    scale(1);
+  transform: translateY(0) scale(1);
 }
-
-/* =========================================
-   MAIN BODY
-========================================= */
 
 .announcement-popup__body {
   position: relative;
-
-  min-height: 420px;
-
+  min-height: 360px;
   overflow: hidden;
 }
-
-/* =========================================
-   LEFT CONTENT
-========================================= */
 
 .announcement-popup__content {
   position: relative;
   z-index: 5;
-
-  width: 56%;
-
-  padding:
-    42px
-    44px
-    110px;
+  width: 54%;
+  padding: 30px 36px 90px;
 }
-
-/* =========================================
-   BRAND
-========================================= */
 
 .announcement-popup__brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 .announcement-popup__logo {
   width: 42px !important;
   height: 42px !important;
-
+  max-width: 42px !important;
+  max-height: 42px !important;
   object-fit: contain;
-
   flex-shrink: 0;
 }
 
 .announcement-popup__college-name {
   margin: 0;
-
   font-size: 11px;
   font-weight: 800;
-
   letter-spacing: .05em;
-
   text-transform: uppercase;
-
   color: var(--ap-navy);
 }
 
 .announcement-popup__college-motto {
   margin-top: 3px;
-
   font-size: 10px;
-
   color: #8a97ad;
 }
-
-/* =========================================
-   BADGE
-========================================= */
 
 .announcement-popup__badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-
+  width: fit-content;
   margin-top: 22px;
-
-  padding:
-    8px
-    16px;
-
+  padding: 7px 15px;
   border-radius: 999px;
-
   border: 1px solid var(--ap-gold);
-
   background: var(--ap-cream);
-
   font-size: 10px;
   font-weight: 800;
-
   letter-spacing: .08em;
-
   text-transform: uppercase;
-
   color: var(--ap-gold-text);
 }
 
-/* =========================================
-   TITLE
-========================================= */
-
 .announcement-popup__headline-wrap {
-  margin-top: 24px;
+  margin-top: 22px;
 }
 
 .announcement-popup__title {
   margin: 0;
-
-  font-size: clamp(3rem, 4vw, 4.2rem);
-
+  font-size: clamp(2.2rem, 3vw, 3.4rem);
   font-weight: 800;
-
   line-height: 1.05;
-
   letter-spacing: -.04em;
-
   color: var(--ap-navy);
 }
 
@@ -215,78 +138,53 @@
 
 .announcement-popup__title-accent {
   display: block;
-
-  width: 78px;
+  width: 75px;
   height: 4px;
-
-  margin-top: 22px;
-
+  margin-top: 18px;
   border-radius: 999px;
-
   background: var(--ap-gold);
 }
 
-/* =========================================
-   DESCRIPTION
-========================================= */
-
 .announcement-popup__message {
-  max-width: 560px;
-
-  margin-top: 22px;
-
-  font-size: 15px;
-
-  line-height: 1.8;
-
+  max-width: 480px;
+  margin-top: 20px;
+  font-size: 14px;
+  line-height: 1.7;
   color: var(--ap-gray);
 }
 
-/* =========================================
-   HERO SECTION
-========================================= */
-
 .announcement-popup__hero {
   position: absolute;
-
   top: 0;
   right: 0;
-
-  width: 52%;
+  width: 50%;
   height: 100%;
-
   overflow: hidden;
+  z-index: 1;
 }
 
 .announcement-popup__hero-image {
   position: absolute;
   inset: 0;
-
   width: 100%;
   height: 100%;
-
   object-fit: cover;
   object-position: center right;
 }
 
-/* =========================================
-   WHITE FADE
-========================================= */
-
 .announcement-popup__hero-fade {
   position: absolute;
   inset: 0;
-
+  z-index: 2;
   background:
     linear-gradient(
       90deg,
       #fff 0%,
-      rgba(255,255,255,.96) 12%,
-      rgba(255,255,255,.62) 30%,
+      rgba(255,255,255,.96) 13%,
+      rgba(255,255,255,.62) 31%,
       rgba(255,255,255,.12) 58%,
       rgba(255,255,255,0) 74%
     ),
-
     linear-gradient(
       180deg,
       rgba(255,255,255,0) 68%,
@@ -294,39 +192,24 @@
     );
 }
 
-/* =========================================
-   CLOSE BUTTON
-========================================= */
-
 .announcement-popup__close {
   position: absolute;
-
-  top: 18px;
-  right: 18px;
-
+  top: 16px;
+  right: 16px;
   z-index: 30;
-
-  width: 42px;
-  height: 42px;
-
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-
   border: 1px solid rgba(255,255,255,.35);
-
   background: rgba(8, 28, 64, .8);
-
   color: #fff;
-
-  font-size: 24px;
-
+  font-size: 23px;
+  line-height: 1;
   cursor: pointer;
-
   backdrop-filter: blur(8px);
-
   transition: .25s ease;
 }
 
@@ -334,159 +217,92 @@
   background: rgba(8, 28, 64, 1);
 }
 
-/* =========================================
-   FEATURES
-========================================= */
-
 .announcement-popup__features {
   position: relative;
   z-index: 10;
-
   display: grid;
-
   grid-template-columns: repeat(4, 1fr);
-
-  gap: 14px;
-
-  margin-top: -58px;
-
-  padding:
-    0
-    44px;
+  gap: 12px;
+  margin-top: -42px;
+  padding: 0 36px;
 }
 
 .announcement-popup__feature-card {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-
-  min-height: 110px;
-
-  padding: 16px;
-
-  border-radius: 16px;
-
+  gap: 12px;
+  min-height: 92px;
+  padding: 14px;
+  border-radius: 15px;
   border: 1px solid #e8edf4;
-
   background: rgba(255,255,255,.98);
-
-  box-shadow:
-    0 10px 30px rgba(10,31,68,.08);
+  box-shadow: 0 10px 25px rgba(10,31,68,.08);
 }
 
 .announcement-popup__feature-icon {
-  width: 42px;
-  height: 42px;
-
+  width: 38px;
+  height: 38px;
   flex-shrink: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-
   background: #edf4ff;
-
   color: var(--ap-navy);
 }
 
 .announcement-popup__feature-title {
   margin: 0;
-
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
-
   line-height: 1.3;
-
   color: var(--ap-navy);
 }
 
 .announcement-popup__feature-desc {
-  margin-top: 5px;
-
-  font-size: 11px;
-
-  line-height: 1.6;
-
+  margin-top: 4px;
+  font-size: 10px;
+  line-height: 1.55;
   color: #6d7c92;
 }
-
-/* =========================================
-   ALERT
-========================================= */
 
 .announcement-popup__alert {
   display: flex;
   align-items: center;
   gap: 14px;
-
-  margin:
-    18px
-    44px
-    24px;
-
-  padding:
-    18px
-    20px;
-
-  border-radius: 16px;
-
+  margin: 16px 36px 18px;
+  padding: 16px 18px;
+  border-radius: 15px;
   border: 1px solid rgba(244,185,66,.4);
-
-  background:
-    linear-gradient(
-      90deg,
-      #fff8e8,
-      #fffdf6
-    );
+  background: linear-gradient(90deg, #fff8e8, #fffdf6);
 }
 
 .announcement-popup__alert-icon {
-  width: 42px;
-  height: 42px;
-
+  width: 38px;
+  height: 38px;
   flex-shrink: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-
   background: rgba(244,185,66,.18);
-
   color: #9a7b1a;
 }
 
 .announcement-popup__alert-text {
   margin: 0;
-
-  font-size: 15px;
-
+  font-size: 14px;
   line-height: 1.6;
-
   color: var(--ap-navy);
 }
-
-/* =========================================
-   FOOTER
-========================================= */
 
 .announcement-popup__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 1rem;
-
-  padding:
-    22px
-    44px
-    28px;
-
+  padding: 18px 36px 22px;
   border-top: 1px solid var(--ap-border);
-
   background: #fff;
 }
 
@@ -494,57 +310,42 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-
   cursor: pointer;
 }
 
 .announcement-popup__dont-show span {
   font-size: 13px;
-
   color: var(--ap-gray-light);
 }
 
 .announcement-popup__dont-show input {
   width: 16px;
   height: 16px;
-
   accent-color: var(--ap-navy);
 }
 
 .announcement-popup__actions {
   display: flex;
-  gap: 14px;
+  gap: 12px;
 }
 
-/* =========================================
-   BUTTONS
-========================================= */
-
 .announcement-popup__btn {
-  min-width: 190px;
-  min-height: 52px;
-
+  min-width: 170px;
+  min-height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  padding: 0 24px;
-
-  border-radius: 12px;
-
+  padding: 0 22px;
+  border-radius: 11px;
   font-size: 14px;
   font-weight: 700;
-
   text-decoration: none;
-
   transition: .25s ease;
 }
 
 .announcement-popup__btn--secondary {
   border: 1px solid #d7dfeb;
-
   background: #fff;
-
   color: var(--ap-navy);
 }
 
@@ -554,23 +355,16 @@
 
 .announcement-popup__btn--primary {
   background: var(--ap-navy);
-
   color: #fff;
-
-  box-shadow:
-    0 10px 24px rgba(10,31,68,.22);
+  box-shadow: 0 10px 24px rgba(10,31,68,.22);
 }
 
 .announcement-popup__btn--primary:hover {
   transform: translateY(-2px);
 }
 
-/* =========================================
-   MOBILE
-========================================= */
-
+/* Mobile */
 @media (max-width: 991px) {
-
   .announcement-popup {
     align-items: flex-end;
     padding: .75rem;
@@ -578,7 +372,9 @@
 
   .announcement-popup__card {
     width: 100%;
+    max-height: 94vh;
     border-radius: 24px;
+    overflow-y: auto;
   }
 
   .announcement-popup__body {
@@ -587,44 +383,38 @@
 
   .announcement-popup__content {
     width: 100%;
-
-    padding:
-      28px
-      22px
-      24px;
+    padding: 28px 22px 24px;
   }
 
   .announcement-popup__hero {
     position: relative;
-
     width: 100%;
-    height: 260px;
+    height: 250px;
+  }
+
+  .announcement-popup__hero-fade {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255,255,255,0) 55%,
+        #fff 100%
+      );
   }
 
   .announcement-popup__features {
     grid-template-columns: repeat(2, 1fr);
-
     margin-top: 10px;
-
-    padding:
-      0
-      22px;
+    padding: 0 22px;
   }
 
   .announcement-popup__alert {
-    margin:
-      16px
-      22px;
+    margin: 16px 22px;
   }
 
   .announcement-popup__footer {
     flex-direction: column;
     align-items: stretch;
-
-    padding:
-      20px
-      22px
-      24px;
+    padding: 18px 22px 24px;
   }
 
   .announcement-popup__actions {
@@ -637,13 +427,12 @@
 }
 
 @media (max-width: 640px) {
-
   .announcement-popup__features {
     grid-template-columns: 1fr;
   }
 
   .announcement-popup__title {
-    font-size: 2.3rem;
+    font-size: 2.2rem;
   }
 
   .announcement-popup__hero {
