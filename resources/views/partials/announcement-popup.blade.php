@@ -129,7 +129,7 @@
         </a>
         @endif
 
-        <a href="{{ route('apply') }}?fresh=true" class="announcement-popup__btn announcement-popup__btn--primary" data-announcement-close-nav>
+        <a href="{{ route('home') }}?fresh=true" class="announcement-popup__btn announcement-popup__btn--primary" data-announcement-close-nav>
           Get Started
         </a>
       </div>
