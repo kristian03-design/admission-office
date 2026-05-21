@@ -22,7 +22,7 @@
     || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
 @endphp
 
-<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=10">
+<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=11">
 
 <div
   id="announcementPopup"
@@ -65,16 +65,14 @@
         <div class="announcement-popup__headline-wrap">
           @if($titleIsWelcome)
             <h2 class="announcement-popup__title">
-              Welcome to the<br>
-              <span class="announcement-popup__title-line2">
-                BTECH Admission Website!
-              </span>
+              <span class="announcement-popup__title-line1">Welcome to the</span>
+              <span class="announcement-popup__title-accent" aria-hidden="true"></span>
+              <span class="announcement-popup__title-line2">BTECH Admission Website!</span>
             </h2>
           @else
             <h2 class="announcement-popup__title">{{ $popupTitle }}</h2>
+            <span class="announcement-popup__title-accent" aria-hidden="true"></span>
           @endif
-
-          <span class="announcement-popup__title-accent" aria-hidden="true"></span>
         </div>
 
         <p id="announcementPopupMessage" class="announcement-popup__message">
@@ -83,24 +81,23 @@
       </div>
 
       <div class="announcement-popup__hero" aria-hidden="true">
+        <div class="announcement-popup__hero-bg" aria-hidden="true"></div>
         <img
           src="{{ asset('assets/images/announcement_popup.png') }}"
           alt=""
           class="announcement-popup__hero-image"
           loading="lazy"
           decoding="async">
-
         <div class="announcement-popup__hero-fade" aria-hidden="true"></div>
       </div>
-
-      <button
-        type="button"
-        class="announcement-popup__close"
-        aria-label="Close modal">
-        &times;
-      </button>
-
     </div>
+
+    <button
+      type="button"
+      class="announcement-popup__close"
+      aria-label="Close modal">
+      &times;
+    </button>
 
     @if($showOnboardingExtras)
       <div class="announcement-popup__features">
@@ -173,5 +170,5 @@
   </div>
 </div>
 
-<script src="{{ asset('js/announcement-popup.js') }}?v=10" defer></script>
+<script src="{{ asset('js/announcement-popup.js') }}?v=11" defer></script>
 @endif
