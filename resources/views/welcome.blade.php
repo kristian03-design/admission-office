@@ -21,7 +21,7 @@
   <!-- ✦ Iconsax Icons ✦ -->
   @include('partials.iconsax')
 
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=34" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=35" />
 
 </head>
 
@@ -704,14 +704,15 @@
     $popupTitle = filled(trim($popupAnn->title ?? ''))
       ? $popupAnn->title
       : 'Welcome to the BTECH Admission Website!';
-    $popupMessage = filled(trim($popupAnn->message ?? ''))
-      ? $popupAnn->message
-      : "We've made it easier than ever to start your journey. Explore programs, check requirements, and begin your application with just a few clicks.";
-    $showOnboardingExtras = !filled(trim($popupAnn->message ?? ''))
-      || str_contains(strtolower($popupAnn->title ?? ''), 'welcome')
-      || str_contains(strtolower($popupTitle), 'welcome');
+    $defaultPopupMessage = "We've made it easier than ever to start your journey. Explore programs, check requirements, and begin your application with just a few clicks.";
     $titleIsWelcome = str_contains(strtolower($popupTitle), 'welcome')
       && str_contains(strtolower($popupTitle), 'btech');
+    $popupMessage = $titleIsWelcome
+      ? $defaultPopupMessage
+      : (filled(trim($popupAnn->message ?? '')) ? $popupAnn->message : $defaultPopupMessage);
+    $showOnboardingExtras = $titleIsWelcome
+      || !filled(trim($popupAnn->message ?? ''))
+      || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
   @endphp
   <div id="announcementPopup"
     data-id="{{ $popupAnn->id }}"
@@ -727,8 +728,8 @@
         &times;
       </button>
 
-      <div class="announcement-popup__grid">
-        <div class="announcement-popup__content-column">
+      <div class="announcement-popup__layout">
+        <div class="announcement-popup__intro">
           <div class="announcement-popup__header">
             <div class="announcement-popup__logo-wrap">
               <img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" class="announcement-popup__logo" onerror="this.remove()">
@@ -749,81 +750,76 @@
           <div class="announcement-popup__headline-block">
             @if($titleIsWelcome)
             <h2 class="announcement-popup__title-main">
-              <span class="announcement-popup__title-lead">Welcome to the </span>
-              <span class="announcement-popup__title-emphasis">BTECH Admission Website!</span>
+              Welcome to the<br>
+              <span class="announcement-popup__title-line2">BTECH Admission Website!</span>
             </h2>
             @else
-            <h2 class="announcement-popup__title-main announcement-popup__title-main--single">
-              {{ $popupTitle }}
-            </h2>
+            <h2 class="announcement-popup__title-main announcement-popup__title-main--single">{{ $popupTitle }}</h2>
             @endif
             <span class="announcement-popup__title-accent" aria-hidden="true"></span>
           </div>
 
-          <p id="announcementPopupMessage" class="announcement-popup__message-main">
-            {{ $popupMessage }}
-          </p>
-
-          @if($showOnboardingExtras)
-          <div class="announcement-popup__features-grid">
-            <div class="announcement-popup__feature-card">
-              <div class="announcement-popup__feature-icon-wrap">
-                <i data-iconsax="monitor" class="announcement-popup__feature-icon"></i>
-              </div>
-              <div class="announcement-popup__feature-info">
-                <h4 class="announcement-popup__feature-title">Easy Access</h4>
-                <p class="announcement-popup__feature-desc">All admission information in one convenient place.</p>
-              </div>
-            </div>
-
-            <div class="announcement-popup__feature-card">
-              <div class="announcement-popup__feature-icon-wrap">
-                <i data-iconsax="document-text" class="announcement-popup__feature-icon"></i>
-              </div>
-              <div class="announcement-popup__feature-info">
-                <h4 class="announcement-popup__feature-title">Simple Process</h4>
-                <p class="announcement-popup__feature-desc">Step-by-step guidance for a smooth application.</p>
-              </div>
-            </div>
-
-            <div class="announcement-popup__feature-card">
-              <div class="announcement-popup__feature-icon-wrap">
-                <i data-iconsax="notification" class="announcement-popup__feature-icon"></i>
-              </div>
-              <div class="announcement-popup__feature-info">
-                <h4 class="announcement-popup__feature-title">Stay Updated</h4>
-                <p class="announcement-popup__feature-desc">Get the latest announcements and reminders.</p>
-              </div>
-            </div>
-
-            <div class="announcement-popup__feature-card">
-              <div class="announcement-popup__feature-icon-wrap">
-                <i data-iconsax="shield-tick" class="announcement-popup__feature-icon"></i>
-              </div>
-              <div class="announcement-popup__feature-info">
-                <h4 class="announcement-popup__feature-title">Secure &amp; Trusted</h4>
-                <p class="announcement-popup__feature-desc">Your data is safe with our secure admission system.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="announcement-popup__alert-banner">
-            <div class="announcement-popup__alert-icon-wrap">
-              <i data-iconsax="shield-tick" class="announcement-popup__alert-icon"></i>
-            </div>
-            <p class="announcement-popup__alert-text">
-              <strong>Start your future with confidence.</strong>
-              We're here to support you every step of the way.
-            </p>
-          </div>
-          @endif
+          <p id="announcementPopupMessage" class="announcement-popup__message-main">{{ $popupMessage }}</p>
         </div>
 
-        <div class="announcement-popup__image-column" aria-hidden="true">
+        <div class="announcement-popup__hero" aria-hidden="true">
           <img src="{{ asset('assets/images/announcement_popup.png') }}" alt="" class="announcement-popup__grid-image" loading="lazy" decoding="async">
           <div class="announcement-popup__image-glow"></div>
-          <div class="announcement-popup__image-pattern"></div>
         </div>
+
+        @if($showOnboardingExtras)
+        <div class="announcement-popup__features-grid">
+          <div class="announcement-popup__feature-card">
+            <div class="announcement-popup__feature-icon-wrap">
+              <i data-iconsax="monitor" class="announcement-popup__feature-icon"></i>
+            </div>
+            <div class="announcement-popup__feature-info">
+              <h4 class="announcement-popup__feature-title">Easy Access</h4>
+              <p class="announcement-popup__feature-desc">All admission information in one convenient place.</p>
+            </div>
+          </div>
+
+          <div class="announcement-popup__feature-card">
+            <div class="announcement-popup__feature-icon-wrap">
+              <i data-iconsax="document-text" class="announcement-popup__feature-icon"></i>
+            </div>
+            <div class="announcement-popup__feature-info">
+              <h4 class="announcement-popup__feature-title">Simple Process</h4>
+              <p class="announcement-popup__feature-desc">Step-by-step guidance for a smooth application.</p>
+            </div>
+          </div>
+
+          <div class="announcement-popup__feature-card">
+            <div class="announcement-popup__feature-icon-wrap">
+              <i data-iconsax="notification" class="announcement-popup__feature-icon"></i>
+            </div>
+            <div class="announcement-popup__feature-info">
+              <h4 class="announcement-popup__feature-title">Stay Updated</h4>
+              <p class="announcement-popup__feature-desc">Get the latest announcements and reminders.</p>
+            </div>
+          </div>
+
+          <div class="announcement-popup__feature-card">
+            <div class="announcement-popup__feature-icon-wrap">
+              <i data-iconsax="shield-tick" class="announcement-popup__feature-icon"></i>
+            </div>
+            <div class="announcement-popup__feature-info">
+              <h4 class="announcement-popup__feature-title">Secure &amp; Trusted</h4>
+              <p class="announcement-popup__feature-desc">Your data is safe with our secure admission system.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="announcement-popup__alert-banner">
+          <div class="announcement-popup__alert-icon-wrap">
+            <i data-iconsax="shield-tick" class="announcement-popup__alert-icon"></i>
+          </div>
+          <p class="announcement-popup__alert-text">
+            <strong>Start your future with confidence.</strong>
+            We're here to support you every step of the way.
+          </p>
+        </div>
+        @endif
       </div>
 
       <div class="announcement-popup__footer">
