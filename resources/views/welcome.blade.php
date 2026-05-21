@@ -16,12 +16,22 @@
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
 
   <!-- ✦ Iconsax Icons ✦ -->
   @include('partials.iconsax')
 
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=35" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=36" />
 
 </head>
 
@@ -694,218 +704,7 @@
 
 
   <!-- Initialize Iconsax after DOM + your JS have both run -->
-  <!-- ─── ANNOUNCEMENT POPUP ─── -->
-  @php
-  $popupAnn = $popupAnn ?? $announcements->firstWhere('is_popup', true);
-  @endphp
-
-  @if($popupAnn)
-  @php
-    $popupTitle = filled(trim($popupAnn->title ?? ''))
-      ? $popupAnn->title
-      : 'Welcome to the BTECH Admission Website!';
-    $defaultPopupMessage = "We've made it easier than ever to start your journey. Explore programs, check requirements, and begin your application with just a few clicks.";
-    $titleIsWelcome = str_contains(strtolower($popupTitle), 'welcome')
-      && str_contains(strtolower($popupTitle), 'btech');
-    $popupMessage = $titleIsWelcome
-      ? $defaultPopupMessage
-      : (filled(trim($popupAnn->message ?? '')) ? $popupAnn->message : $defaultPopupMessage);
-    $showOnboardingExtras = $titleIsWelcome
-      || !filled(trim($popupAnn->message ?? ''))
-      || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
-  @endphp
-  <div id="announcementPopup"
-    data-id="{{ $popupAnn->id }}"
-    class="announcement-popup"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Announcement"
-    aria-describedby="announcementPopupMessage"
-    hidden>
-
-    <div class="announcement-popup__card announcement-popup__card--grid" id="popupCard" tabindex="-1">
-      <button type="button" onclick="closePopup()" class="announcement-popup__close-floating" aria-label="Close modal">
-        &times;
-      </button>
-
-      <div class="announcement-popup__layout">
-        <div class="announcement-popup__intro">
-          <div class="announcement-popup__header">
-            <div class="announcement-popup__logo-wrap">
-              <img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" class="announcement-popup__logo" onerror="this.remove()">
-              <div class="announcement-popup__logo-text">
-                <span class="announcement-popup__college-name">DALUBHASAANG POLYTECHNIC COLLEGE</span>
-                <span class="announcement-popup__college-motto">Excellence &bull; Innovation &bull; Service</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="announcement-popup__badge-wrap">
-            <span class="announcement-popup__badge-capsule">
-              <i data-iconsax="notification" class="announcement-popup__badge-icon"></i>
-              IMPORTANT ANNOUNCEMENT
-            </span>
-          </div>
-
-          <div class="announcement-popup__headline-block">
-            @if($titleIsWelcome)
-            <h2 class="announcement-popup__title-main">
-              Welcome to the<br>
-              <span class="announcement-popup__title-line2">BTECH Admission Website!</span>
-            </h2>
-            @else
-            <h2 class="announcement-popup__title-main announcement-popup__title-main--single">{{ $popupTitle }}</h2>
-            @endif
-            <span class="announcement-popup__title-accent" aria-hidden="true"></span>
-          </div>
-
-          <p id="announcementPopupMessage" class="announcement-popup__message-main">{{ $popupMessage }}</p>
-        </div>
-
-        <div class="announcement-popup__hero" aria-hidden="true">
-          <img src="{{ asset('assets/images/announcement_popup.png') }}" alt="" class="announcement-popup__grid-image" loading="lazy" decoding="async">
-          <div class="announcement-popup__image-glow"></div>
-        </div>
-
-        @if($showOnboardingExtras)
-        <div class="announcement-popup__features-grid">
-          <div class="announcement-popup__feature-card">
-            <div class="announcement-popup__feature-icon-wrap">
-              <i data-iconsax="monitor" class="announcement-popup__feature-icon"></i>
-            </div>
-            <div class="announcement-popup__feature-info">
-              <h4 class="announcement-popup__feature-title">Easy Access</h4>
-              <p class="announcement-popup__feature-desc">All admission information in one convenient place.</p>
-            </div>
-          </div>
-
-          <div class="announcement-popup__feature-card">
-            <div class="announcement-popup__feature-icon-wrap">
-              <i data-iconsax="document-text" class="announcement-popup__feature-icon"></i>
-            </div>
-            <div class="announcement-popup__feature-info">
-              <h4 class="announcement-popup__feature-title">Simple Process</h4>
-              <p class="announcement-popup__feature-desc">Step-by-step guidance for a smooth application.</p>
-            </div>
-          </div>
-
-          <div class="announcement-popup__feature-card">
-            <div class="announcement-popup__feature-icon-wrap">
-              <i data-iconsax="notification" class="announcement-popup__feature-icon"></i>
-            </div>
-            <div class="announcement-popup__feature-info">
-              <h4 class="announcement-popup__feature-title">Stay Updated</h4>
-              <p class="announcement-popup__feature-desc">Get the latest announcements and reminders.</p>
-            </div>
-          </div>
-
-          <div class="announcement-popup__feature-card">
-            <div class="announcement-popup__feature-icon-wrap">
-              <i data-iconsax="shield-tick" class="announcement-popup__feature-icon"></i>
-            </div>
-            <div class="announcement-popup__feature-info">
-              <h4 class="announcement-popup__feature-title">Secure &amp; Trusted</h4>
-              <p class="announcement-popup__feature-desc">Your data is safe with our secure admission system.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="announcement-popup__alert-banner">
-          <div class="announcement-popup__alert-icon-wrap">
-            <i data-iconsax="shield-tick" class="announcement-popup__alert-icon"></i>
-          </div>
-          <p class="announcement-popup__alert-text">
-            <strong>Start your future with confidence.</strong>
-            We're here to support you every step of the way.
-          </p>
-        </div>
-        @endif
-      </div>
-
-      <div class="announcement-popup__footer">
-        <div class="announcement-popup__dont-show">
-          <label class="announcement-popup__checkbox-label">
-            <input type="checkbox" id="dontShowAgain" class="announcement-popup__checkbox">
-            <span class="announcement-popup__checkbox-text">Don't show this again</span>
-          </label>
-        </div>
-        <div class="announcement-popup__button-group">
-          @if($popupAnn->popup_button_link)
-          <a href="{{ $popupAnn->popup_button_link }}" class="announcement-popup__btn-secondary">
-            {{ $popupAnn->popup_button_text ?? 'View Announcements' }}
-          </a>
-          @else
-          <a href="{{ route('news-events') }}" class="announcement-popup__btn-secondary" onclick="closePopup()">
-            View Announcements
-          </a>
-          @endif
-
-          <a href="{{ url('/') }}" class="announcement-popup__btn-primary" onclick="closePopup()">
-            Get Started
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    (function() {
-      const popup = document.getElementById('announcementPopup');
-      if (!popup) return;
-
-      let lastFocusedElement = null;
-
-      function openPopup() {
-        lastFocusedElement = document.activeElement;
-        popup.hidden = false;
-        document.body.classList.add('announcement-popup-open');
-        requestAnimationFrame(() => {
-          const card = document.getElementById('popupCard');
-          popup.classList.add('is-visible');
-          card?.focus();
-        });
-      }
-
-      window.closePopup = function closePopup() {
-        const checkbox = document.getElementById('dontShowAgain');
-        if (checkbox && checkbox.checked) {
-          const annId = popup.getAttribute('data-id');
-          localStorage.setItem('dont_show_announcement_' + annId, 'true');
-        }
-
-        const card = document.getElementById('popupCard');
-        popup.classList.remove('is-visible');
-        document.body.classList.remove('announcement-popup-open');
-
-        setTimeout(() => {
-          popup.hidden = true;
-          if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
-            lastFocusedElement.focus();
-          }
-        }, 260);
-      };
-
-      popup.addEventListener('click', (event) => {
-        if (event.target === popup) {
-          window.closePopup();
-        }
-      });
-
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && popup.classList.contains('is-visible')) {
-          window.closePopup();
-        }
-      });
-
-      window.addEventListener('DOMContentLoaded', () => {
-        const annId = popup.getAttribute('data-id');
-        if (localStorage.getItem('dont_show_announcement_' + annId) !== 'true') {
-          setTimeout(openPopup, 900);
-        }
-      });
-    })();
-  </script>
-  @endif
+  @include('partials.announcement-popup', ['popupAnn' => $popupAnn ?? null, 'announcements' => $announcements ?? collect()])
 
   <script>
     // Smooth scroll
