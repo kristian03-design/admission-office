@@ -2930,249 +2930,282 @@ body.announcement-popup-open {
   transform: rotate(90deg) scale(1.05) !important;
 }
 
-/* Onboarding Grid Card Styles */
+/* Onboarding Grid Card — premium admission popup */
 .announcement-popup__card--grid {
-  width: min(1040px, 95vw) !important;
-  max-height: min(90vh, 880px) !important;
-  border-radius: 28px !important;
-  border: 1px solid rgba(15, 30, 61, 0.08) !important;
-  box-shadow: 0 30px 100px rgba(5, 12, 22, 0.24) !important;
-  grid-template-rows: 1fr !important;
+  width: min(1120px, 94vw) !important;
+  max-height: min(92vh, 720px) !important;
+  border-radius: 32px !important;
+  border: 1px solid rgba(15, 30, 61, 0.06) !important;
+  box-shadow:
+    0 40px 120px rgba(4, 10, 22, 0.28),
+    0 1px 0 rgba(255, 255, 255, 0.85) inset !important;
+  display: flex !important;
+  flex-direction: column !important;
+  grid-template-rows: unset !important;
+  overflow: hidden !important;
 }
 
 .announcement-popup__grid {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 58fr 42fr;
   width: 100%;
-  height: 100%;
+  flex: 1 1 auto;
   min-height: 0;
 }
 
 .announcement-popup__content-column {
-  padding: clamp(24px, 3.5vw, 42px) clamp(24px, 3.5vw, 48px);
+  padding: 32px 36px 28px 40px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  height: 100%;
+  gap: 14px;
+  min-height: 0;
 }
 
 .announcement-popup__header {
-  margin-bottom: 2px;
+  margin: 0;
 }
 
 .announcement-popup__logo-wrap {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 11px;
 }
 
 .announcement-popup__logo {
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 .announcement-popup__logo-text {
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
 .announcement-popup__college-name {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px;
-  font-weight: 800;
-  color: #0f1e3d;
-  letter-spacing: 0.05em;
-  line-height: 1.3;
+  font-family: 'Poppins', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #0c1f3f;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  text-transform: uppercase;
 }
 
 .announcement-popup__college-motto {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 9px;
-  font-weight: 600;
-  color: #8b9bb4;
-  letter-spacing: 0.02em;
+  font-family: 'Poppins', sans-serif;
+  font-size: 9.5px;
+  font-weight: 500;
+  color: #8a97ad;
+  letter-spacing: 0.01em;
 }
 
 .announcement-popup__badge-wrap {
   display: flex;
+  margin-top: 2px;
 }
 
 .announcement-popup__badge-capsule {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 30px;
+  gap: 7px;
+  padding: 5px 12px 5px 10px;
+  border-radius: 999px;
   background: #fffbeb;
-  border: 1px solid #fef3c7;
-  color: #d97706;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  border: 1px solid #f59e0b;
+  color: #ea580c;
+  font-family: 'Poppins', sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .announcement-popup__badge-capsule .iconsax-icon,
-.announcement-popup__badge-capsule svg {
-  width: 14px;
-  height: 14px;
+.announcement-popup__badge-capsule svg,
+.announcement-popup__badge-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+.announcement-popup__headline-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 2px;
 }
 
 .announcement-popup__title-main {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.8rem, 2.5vw, 2.3rem);
-  font-weight: 800;
-  color: #0f1e3d;
-  line-height: 1.25;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.65rem, 2.2vw, 2.05rem);
+  font-weight: 700;
+  color: #0c1f3f;
+  line-height: 1.22;
   margin: 0;
+  letter-spacing: -0.01em;
 }
 
-.announcement-popup__body-wrap {
-  margin-top: -4px;
+.announcement-popup__title-main--single {
+  font-family: 'Playfair Display', serif;
+}
+
+.announcement-popup__title-lead {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
+
+.announcement-popup__title-emphasis {
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+}
+
+.announcement-popup__title-accent {
+  display: block;
+  width: 72px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #c9a227 0%, #e8c547 100%);
 }
 
 .announcement-popup__message-main {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  color: #475569;
-  line-height: 1.62;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: #5c6b82;
+  line-height: 1.65;
   margin: 0;
+  max-width: 96%;
   white-space: pre-line;
 }
 
-/* Features Grid */
 .announcement-popup__features-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-top: 4px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 6px;
 }
 
 .announcement-popup__feature-card {
   display: flex;
-  gap: 12px;
+  flex-direction: row;
   align-items: flex-start;
-  padding: 14px;
-  border-radius: 12px;
-  background: #f8fafc;
-  border: 1px solid #f1f5f9;
-  transition: all 0.25s ease;
+  gap: 9px;
+  padding: 11px 9px 12px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 30, 61, 0.05);
+  box-shadow: 0 6px 22px rgba(12, 31, 63, 0.07);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 .announcement-popup__feature-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(15, 30, 61, 0.04);
-  background: #ffffff;
-  border-color: #e2e8f0;
+  box-shadow: 0 12px 28px rgba(12, 31, 63, 0.1);
 }
 
 .announcement-popup__feature-icon-wrap {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #e8f1fc;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  margin-top: 1px;
 }
 
-.bg-light-blue { background: #eff6ff; }
-.text-blue { color: #2563eb; }
-.bg-light-indigo { background: #eef2ff; }
-.text-indigo { color: #4f46e5; }
-.bg-light-amber { background: #fffbeb; }
-.text-amber { color: #d97706; }
-.bg-light-green { background: #f0fdf4; }
-.text-green { color: #16a34a; }
-
 .announcement-popup__feature-icon-wrap .iconsax-icon,
-.announcement-popup__feature-icon-wrap svg {
-  width: 18px;
-  height: 18px;
+.announcement-popup__feature-icon-wrap svg,
+.announcement-popup__feature-icon {
+  width: 17px;
+  height: 17px;
+  color: #0c1f3f;
 }
 
 .announcement-popup__feature-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
+  min-width: 0;
 }
 
 .announcement-popup__feature-title {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
   font-weight: 700;
-  color: #0f1e3d;
+  color: #0c1f3f;
   margin: 0;
+  line-height: 1.2;
 }
 
 .announcement-popup__feature-desc {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px;
-  color: #64748b;
+  font-family: 'Poppins', sans-serif;
+  font-size: 8.5px;
+  font-weight: 400;
+  color: #6b7a90;
   line-height: 1.4;
   margin: 0;
 }
 
-/* Alert confidence banner */
 .announcement-popup__alert-banner {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 18px;
-  border-radius: 12px;
-  background: #fffdf5;
-  border: 1px solid #fef3c7;
-  margin-top: 2px;
+  padding: 13px 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fffdf6 0%, #fef8e8 100%);
+  border: 1px solid #f5e6b8;
+  margin-top: 4px;
 }
 
 .announcement-popup__alert-icon-wrap {
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: #fef3c7;
+  background: linear-gradient(145deg, #f5e6b8, #e8d48a);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(201, 162, 39, 0.2);
 }
 
+.announcement-popup__alert-icon-wrap .iconsax-icon,
+.announcement-popup__alert-icon-wrap svg,
 .announcement-popup__alert-icon {
-  width: 15px;
-  height: 15px;
-  color: #d97706;
+  width: 16px;
+  height: 16px;
+  color: #9a7b1a;
 }
 
 .announcement-popup__alert-text {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.announcement-popup__alert-title {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 12px;
+  font-weight: 400;
+  color: #5c4a12;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.announcement-popup__alert-text strong {
   font-weight: 700;
-  color: #78350f;
+  color: #3d3210;
 }
 
-.announcement-popup__alert-subtitle {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 11px;
-  color: #b45309;
-  font-weight: 500;
-}
-
-/* Footer Section */
 .announcement-popup__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: auto;
-  padding-top: 18px;
-  border-top: 1px solid #f1f5f9;
-  gap: 20px;
+  flex-shrink: 0;
+  padding: 16px 32px 20px 40px;
+  border-top: 1px solid #e8edf4;
+  gap: 24px;
+  background: #fff;
 }
 
 .announcement-popup__dont-show {
@@ -3183,145 +3216,142 @@ body.announcement-popup-open {
 .announcement-popup__checkbox-label {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   cursor: pointer;
   user-select: none;
 }
 
 .announcement-popup__checkbox {
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-  border: 1.5px solid #cbd5e1;
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  border: 1.5px solid #c5d0de;
   cursor: pointer;
-  accent-color: #0f1e3d;
+  accent-color: #0c1f3f;
 }
 
 .announcement-popup__checkbox-text {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 12px;
-  font-weight: 600;
-  color: #64748b;
-  transition: color 0.2s ease;
+  font-weight: 500;
+  color: #6b7a90;
 }
 
 .announcement-popup__checkbox-label:hover .announcement-popup__checkbox-text {
-  color: #334155;
+  color: #3d4f66;
 }
 
 .announcement-popup__button-group {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
 .announcement-popup__btn-primary,
 .announcement-popup__btn-secondary {
-  min-height: 44px;
+  min-height: 42px;
+  min-width: 148px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  padding: 0 22px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
+  border-radius: 9px;
+  padding: 0 20px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .announcement-popup__btn-primary {
-  background: #0f1e3d;
+  background: #0c1f3f;
   color: #ffffff;
   border: none;
-  box-shadow: 0 4px 12px rgba(15, 30, 61, 0.15);
+  box-shadow: 0 6px 18px rgba(12, 31, 63, 0.22);
 }
 
 .announcement-popup__btn-primary:hover {
-  background: #1e3a67;
-  transform: translateY(-1.5px);
-  box-shadow: 0 6px 16px rgba(15, 30, 61, 0.22);
+  background: #152d52;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(12, 31, 63, 0.28);
 }
 
 .announcement-popup__btn-secondary {
   background: #ffffff;
-  color: #0f1e3d;
-  border: 1px solid #e2e8f0;
+  color: #0c1f3f;
+  border: 1px solid #d5dde8;
 }
 
 .announcement-popup__btn-secondary:hover {
   background: #f8fafc;
-  border-color: #cbd5e1;
-  transform: translateY(-1.5px);
+  border-color: #b8c5d6;
 }
 
-/* Right Image Column */
 .announcement-popup__image-column {
   position: relative;
-  background: #0f1e3d;
+  background: linear-gradient(145deg, #0c1f3f 0%, #1a4a8a 55%, #2563b8 100%);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: 100%;
 }
 
 .announcement-popup__grid-image {
+  position: relative;
+  z-index: 2;
   width: 100%;
   height: 100%;
+  min-height: 100%;
+  display: block;
   object-fit: cover;
-  object-position: center;
+  object-position: 72% center;
+}
+
+.announcement-popup__image-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.35;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.12) 0 2px, transparent 2px),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.08) 0 1.5px, transparent 1.5px);
+  background-size: 28px 28px, 22px 22px;
+  pointer-events: none;
 }
 
 .announcement-popup__image-glow {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.4) 15%, rgba(15, 30, 61, 0) 60%);
+  bottom: 0;
+  width: 42%;
+  z-index: 3;
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.92) 18%,
+    rgba(255, 255, 255, 0.45) 42%,
+    rgba(255, 255, 255, 0) 100%
+  );
   pointer-events: none;
 }
 
-/* Responsive Grid Popup Queries */
-@media (max-width: 991px) {
-  .announcement-popup__card--grid {
-    max-width: min(650px, 95vw) !important;
-    max-height: min(92vh, 820px) !important;
-  }
-  .announcement-popup__grid {
-    grid-template-columns: 1fr;
-  }
-  .announcement-popup__image-column {
-    display: none !important;
-  }
+.announcement-popup__card--grid .announcement-popup__close-floating {
+  top: 18px !important;
+  right: 18px !important;
+  width: 34px !important;
+  height: 34px !important;
+  background: #0c1f3f !important;
+  border: none !important;
+  font-size: 20px !important;
+  z-index: 20 !important;
 }
 
-@media (max-width: 576px) {
-  .announcement-popup__content-column {
-    padding: 24px 20px !important;
-    gap: 16px !important;
-  }
-  .announcement-popup__features-grid {
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-  }
-  .announcement-popup__footer {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 16px !important;
-  }
-  .announcement-popup__dont-show {
-    justify-content: center !important;
-  }
-  .announcement-popup__button-group {
-    flex-direction: column !important;
-    align-items: stretch !important;
-  }
-  .announcement-popup__button-group > * {
-    width: 100% !important;
-  }
+.announcement-popup__card--grid .announcement-popup__close-floating:hover {
+  background: #152d52 !important;
+  transform: scale(1.04) !important;
 }
 
 /* ─── GUIDE MODAL ─── */
