@@ -837,7 +837,7 @@
 
         <!-- Right image column -->
         <div class="announcement-popup__image-column">
-          <img src="{{ $popupAnn->popup_image ? (str_starts_with($popupAnn->popup_image, 'http') ? $popupAnn->popup_image : asset(str_starts_with($popupAnn->popup_image, 'storage/') || str_starts_with($popupAnn->popup_image, '/storage/') ? ltrim($popupAnn->popup_image, '/') : 'storage/' . $popupAnn->popup_image)) : asset('assets/images/announcement_onboarding.png') }}" alt="Announcement" class="announcement-popup__grid-image" loading="lazy" decoding="async">
+          <img src="{{ asset('assets/images/announcement_onboarding.png') }}" alt="Announcement" class="announcement-popup__grid-image" loading="lazy" decoding="async">
           <div class="announcement-popup__image-glow"></div>
         </div>
       </div>
