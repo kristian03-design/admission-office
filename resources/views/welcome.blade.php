@@ -726,8 +726,6 @@
           <span>Official Bulletin</span>
         </div>
         @endif
-
-        <div class="announcement-popup__media-shade"></div>
       </div>
 
       @if($hasMessage)

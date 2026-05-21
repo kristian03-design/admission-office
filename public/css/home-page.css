@@ -2766,15 +2766,7 @@ body.announcement-popup-open {
   object-position: center;
 }
 
-.announcement-popup__media-shade {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(180deg, rgba(7, 16, 30, .14) 0%, rgba(7, 16, 30, .02) 42%, rgba(255, 255, 255, .96) 100%);
-  pointer-events: none;
-}
+
 
 .announcement-popup__fallback {
   min-height: 230px;
