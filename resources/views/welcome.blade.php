@@ -702,6 +702,7 @@
   @if($popupAnn)
   @php
     $hasMessage = filled(trim($popupAnn->message));
+    $isDefault = !$hasMessage || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
   @endphp
   <div id="announcementPopup"
     data-id="{{ $popupAnn->id }}"
@@ -712,11 +713,135 @@
     @if($hasMessage) aria-describedby="announcementPopupMessage" @endif
     hidden>
 
-    <div class="announcement-popup__card {{ !$hasMessage ? 'announcement-popup__card--image-only' : '' }}" id="popupCard" tabindex="-1">
+    <div class="announcement-popup__card {{ !$hasMessage ? 'announcement-popup__card--image-only' : 'announcement-popup__card--grid' }}" id="popupCard" tabindex="-1">
       <button type="button" onclick="closePopup()" class="announcement-popup__close-floating" aria-label="Close modal">
         &times;
       </button>
 
+      @if($hasMessage)
+      <div class="announcement-popup__grid">
+        <!-- Left content column -->
+        <div class="announcement-popup__content-column">
+          <!-- Logo header -->
+          <div class="announcement-popup__header">
+            <div class="announcement-popup__logo-wrap">
+              <img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" class="announcement-popup__logo" onerror="this.remove()">
+              <div class="announcement-popup__logo-text">
+                <span class="announcement-popup__college-name">DALUBHASAANG POLYTECHNIC COLLEGE</span>
+                <span class="announcement-popup__college-motto">Excellence &bull; Innovation &bull; Service</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Announcement Badge -->
+          <div class="announcement-popup__badge-wrap">
+            <span class="announcement-popup__badge-capsule">
+              <i data-iconsax="notification" class="announcement-popup__badge-icon"></i>
+              IMPORTANT ANNOUNCEMENT
+            </span>
+          </div>
+
+          <!-- Title -->
+          <h2 class="announcement-popup__title-main">
+            {{ $popupAnn->title ?? 'Welcome to the BTECH Admission Website!' }}
+          </h2>
+
+          <!-- Content / Message -->
+          <div class="announcement-popup__body-wrap">
+            <p id="announcementPopupMessage" class="announcement-popup__message-main">
+              {{ $popupAnn->message }}
+            </p>
+          </div>
+
+          @if($isDefault)
+          <!-- Grid features -->
+          <div class="announcement-popup__features-grid">
+            <div class="announcement-popup__feature-card">
+              <div class="announcement-popup__feature-icon-wrap bg-light-blue">
+                <i data-iconsax="monitor" class="announcement-popup__feature-icon text-blue"></i>
+              </div>
+              <div class="announcement-popup__feature-info">
+                <h4 class="announcement-popup__feature-title">Easy Access</h4>
+                <p class="announcement-popup__feature-desc">All admission information in one convenient place.</p>
+              </div>
+            </div>
+
+            <div class="announcement-popup__feature-card">
+              <div class="announcement-popup__feature-icon-wrap bg-light-indigo">
+                <i data-iconsax="document" class="announcement-popup__feature-icon text-indigo"></i>
+              </div>
+              <div class="announcement-popup__feature-info">
+                <h4 class="announcement-popup__feature-title">Simple Process</h4>
+                <p class="announcement-popup__feature-desc">Step-by-step guidance for a smooth application.</p>
+              </div>
+            </div>
+
+            <div class="announcement-popup__feature-card">
+              <div class="announcement-popup__feature-icon-wrap bg-light-amber">
+                <i data-iconsax="notification" class="announcement-popup__feature-icon text-amber"></i>
+              </div>
+              <div class="announcement-popup__feature-info">
+                <h4 class="announcement-popup__feature-title">Stay Updated</h4>
+                <p class="announcement-popup__feature-desc">Get the latest announcements and reminders.</p>
+              </div>
+            </div>
+
+            <div class="announcement-popup__feature-card">
+              <div class="announcement-popup__feature-icon-wrap bg-light-green">
+                <i data-iconsax="shield-security" class="announcement-popup__feature-icon text-green"></i>
+              </div>
+              <div class="announcement-popup__feature-info">
+                <h4 class="announcement-popup__feature-title">Secure & Trusted</h4>
+                <p class="announcement-popup__feature-desc">Your data is safe with our secure admission system.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Alert Banner at bottom -->
+          <div class="announcement-popup__alert-banner">
+            <div class="announcement-popup__alert-icon-wrap">
+              <i data-iconsax="shield-tick" class="announcement-popup__alert-icon"></i>
+            </div>
+            <div class="announcement-popup__alert-text">
+              <span class="announcement-popup__alert-title">Start your future with confidence.</span>
+              <span class="announcement-popup__alert-subtitle">We're here to support you every step of the way.</span>
+            </div>
+          </div>
+          @endif
+
+          <!-- Footer Action Bar -->
+          <div class="announcement-popup__footer">
+            <div class="announcement-popup__dont-show">
+              <label class="announcement-popup__checkbox-label">
+                <input type="checkbox" id="dontShowAgain" class="announcement-popup__checkbox">
+                <span class="announcement-popup__checkbox-text">Don't show this again</span>
+              </label>
+            </div>
+            <div class="announcement-popup__button-group">
+              @if($popupAnn->popup_button_link)
+              <a href="{{ $popupAnn->popup_button_link }}" class="announcement-popup__btn-secondary">
+                {{ $popupAnn->popup_button_text ?? 'Learn More' }}
+              </a>
+              @else
+              <button type="button" onclick="closePopup()" class="announcement-popup__btn-secondary">
+                View Announcements
+              </button>
+              @endif
+
+              <a href="{{ url('/apply') }}" class="announcement-popup__btn-primary">
+                Get Started
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right image column -->
+        <div class="announcement-popup__image-column">
+          <img src="{{ $popupAnn->popup_image ? (str_starts_with($popupAnn->popup_image, 'http') ? $popupAnn->popup_image : asset(str_starts_with($popupAnn->popup_image, 'storage/') || str_starts_with($popupAnn->popup_image, '/storage/') ? ltrim($popupAnn->popup_image, '/') : 'storage/' . $popupAnn->popup_image)) : asset('assets/images/announcement_onboarding.png') }}" alt="Announcement" class="announcement-popup__grid-image" loading="lazy" decoding="async">
+          <div class="announcement-popup__image-glow"></div>
+        </div>
+      </div>
+      @else
       <div class="announcement-popup__media">
         @if($popupAnn->popup_image)
         <img src="{{ str_starts_with($popupAnn->popup_image, 'http') ? $popupAnn->popup_image : asset(str_starts_with($popupAnn->popup_image, 'storage/') || str_starts_with($popupAnn->popup_image, '/storage/') ? ltrim($popupAnn->popup_image, '/') : 'storage/' . $popupAnn->popup_image) }}" alt="Announcement" class="announcement-popup__image" loading="lazy" decoding="async">
@@ -726,31 +851,6 @@
           <span>Official Bulletin</span>
         </div>
         @endif
-      </div>
-
-      @if($hasMessage)
-      <div class="announcement-popup__content">
-        @if(filled($popupAnn->title))
-        <h3 class="announcement-popup__title">
-          {{ $popupAnn->title }}
-        </h3>
-        @endif
-
-        <p id="announcementPopupMessage" class="announcement-popup__message">
-          {{ $popupAnn->message }}
-        </p>
-
-        <div class="announcement-popup__actions">
-          @if($popupAnn->popup_button_link)
-          <a href="{{ $popupAnn->popup_button_link }}" class="announcement-popup__primary">
-            <span>{{ $popupAnn->popup_button_text ?? 'Learn More' }}</span>
-            <i data-iconsax="arrow-right"></i>
-          </a>
-          @endif
-          <button type="button" onclick="closePopup()" class="announcement-popup__secondary">
-            Close
-          </button>
-        </div>
       </div>
       @endif
     </div>
@@ -775,6 +875,12 @@
       }
 
       window.closePopup = function closePopup() {
+        const checkbox = document.getElementById('dontShowAgain');
+        if (checkbox && checkbox.checked) {
+          const annId = popup.getAttribute('data-id');
+          localStorage.setItem('dont_show_announcement_' + annId, 'true');
+        }
+
         const card = document.getElementById('popupCard');
         popup.classList.remove('is-visible');
         document.body.classList.remove('announcement-popup-open');
@@ -800,7 +906,10 @@
       });
 
       window.addEventListener('DOMContentLoaded', () => {
-        setTimeout(openPopup, 900);
+        const annId = popup.getAttribute('data-id');
+        if (localStorage.getItem('dont_show_announcement_' + annId) !== 'true') {
+          setTimeout(openPopup, 900);
+        }
       });
     })();
   </script>
