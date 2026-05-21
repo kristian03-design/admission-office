@@ -3224,39 +3224,6 @@ body.menu-open {
     max-height: 92vh;
   }
 
-  .announcement-popup {
-    padding: 0.75rem;
-    align-items: flex-end;
-  }
-
-  .announcement-popup__card {
-    max-height: 92vh;
-    border-radius: 22px 22px 14px 14px;
-  }
-
-  .announcement-popup__media,
-  .announcement-popup__image,
-  .announcement-popup__fallback {
-    min-height: 190px;
-  }
-
-  .announcement-popup__content {
-    padding: 0 1.25rem 1.4rem;
-  }
-
-  .announcement-popup__message {
-    font-size: .95rem;
-    line-height: 1.62;
-  }
-
-  .announcement-popup__actions {
-    flex-direction: column;
-  }
-
-  .announcement-popup__primary,
-  .announcement-popup__secondary {
-    width: 100%;
-  }
 }
 
 /* ─── 480px and below ─── */
@@ -4421,13 +4388,6 @@ textarea:focus-visible,
 
 .carousel-btn .nav-arrow-icon {
   pointer-events: none;
-}
-
-.announcement-popup [aria-label="Previous"],
-.announcement-popup [aria-label="Next"],
-.announcement-popup [aria-label="Previous image"],
-.announcement-popup [aria-label="Next image"] {
-  display: none !important;
 }
 
 /* ─── HAMBURGER ICON ─── */

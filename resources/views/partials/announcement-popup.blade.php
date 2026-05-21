@@ -18,11 +18,12 @@
     || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
 @endphp
 
-{{-- Announcement modal: Tailwind-only, matches BTECH admission popup mockup --}}
+<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=1">
+
 <div
   id="announcementPopup"
   data-id="{{ $popupAnn->id }}"
-  class="fixed inset-0 z-[9999] flex items-center justify-center p-4 font-poppins sm:p-6 bg-[#050c16]/70 backdrop-blur-[16px] backdrop-saturate-[1.25] opacity-0 invisible pointer-events-none transition-all duration-300 ease-out"
+  class="announcement-popup"
   role="dialog"
   aria-modal="true"
   aria-label="Announcement"
@@ -30,125 +31,105 @@
   aria-hidden="true"
   hidden>
 
-  <div
-    id="popupCard"
-    tabindex="-1"
-    class="relative flex w-full max-w-[1080px] max-h-[min(92vh,700px)] flex-col overflow-hidden rounded-[32px] border border-[#0A1F44]/[0.05] bg-white shadow-[0_40px_120px_rgba(4,10,22,0.3)] outline-none opacity-0 scale-[0.96] translate-y-5 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]">
-
-    <div class="grid min-h-0 flex-1 grid-cols-1 md:grid-cols-[58fr_42fr] md:items-stretch">
-      {{-- LEFT --}}
-      <div class="flex min-h-0 flex-col gap-3.5 overflow-y-auto px-7 py-8 sm:gap-4 sm:px-9 sm:py-9 md:pr-6 lg:px-10 lg:py-10">
-        <div class="flex items-center gap-3">
+  <div id="popupCard" class="announcement-popup__card" tabindex="-1">
+    <div class="announcement-popup__body">
+      <div class="announcement-popup__content">
+        <div class="announcement-popup__brand">
           <img
             src="{{ asset('assets/images/logo_v2.png') }}"
             alt="BTECH Logo"
-            class="h-[46px] w-[46px] shrink-0 object-contain"
+            class="announcement-popup__logo"
             onerror="this.remove()">
-          <div class="min-w-0 leading-tight">
-            <p class="text-[11px] font-bold uppercase tracking-[0.04em] text-[#0A1F44]">DALUBHASAANG POLYTECHNIC COLLEGE</p>
-            <p class="mt-0.5 text-[10px] font-medium text-[#8a97ad]">Excellence &bull; Innovation &bull; Service</p>
+          <div class="announcement-popup__brand-text">
+            <p class="announcement-popup__college-name">DALUBHASAANG POLYTECHNIC COLLEGE</p>
+            <p class="announcement-popup__college-motto">Excellence &bull; Innovation &bull; Service</p>
           </div>
         </div>
 
-        <span class="inline-flex w-fit items-center gap-1.5 rounded-full border border-[#F4B942] bg-[#FFFBEB] px-3 py-[5px] text-[9.5px] font-bold uppercase tracking-[0.1em] text-[#D97706]">
-          <i data-iconsax="notification" class="h-3.5 w-3.5 shrink-0 text-[#D97706]"></i>
+        <span class="announcement-popup__badge">
+          <i data-iconsax="notification"></i>
           IMPORTANT ANNOUNCEMENT
         </span>
 
-        <div class="space-y-2">
+        <div class="announcement-popup__headline-wrap">
           @if($titleIsWelcome)
-          <h2 class="text-[clamp(1.5rem,2.4vw,2rem)] font-bold leading-[1.22] tracking-tight text-[#0A1F44]">
-            Welcome to the<br class="hidden sm:block">
-            <span class="font-extrabold sm:whitespace-nowrap">BTECH Admission Website!</span>
+          <h2 class="announcement-popup__title">
+            Welcome to the<br>
+            <span class="announcement-popup__title-line2">BTECH Admission Website!</span>
           </h2>
           @else
-          <h2 class="text-[clamp(1.5rem,2.4vw,2rem)] font-bold leading-[1.22] tracking-tight text-[#0A1F44]">{{ $popupTitle }}</h2>
+          <h2 class="announcement-popup__title">{{ $popupTitle }}</h2>
           @endif
-          <span class="block h-1 w-10 rounded-sm bg-[#F4B942]" aria-hidden="true"></span>
+          <span class="announcement-popup__title-accent" aria-hidden="true"></span>
         </div>
 
-        <p id="announcementPopupMessage" class="max-w-[98%] text-[13px] leading-[1.65] text-[#5f6f85]">{{ $popupMessage }}</p>
+        <p id="announcementPopupMessage" class="announcement-popup__message">{{ $popupMessage }}</p>
 
         @if($showOnboardingExtras)
-        <div class="mt-0.5 grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-4 md:auto-rows-fr">
+        <div class="announcement-popup__features">
           @foreach([
             ['icon' => 'monitor', 'title' => 'Easy Access', 'desc' => 'All admission information in one convenient place.'],
             ['icon' => 'document-text', 'title' => 'Simple Process', 'desc' => 'Step-by-step guidance for a smooth application.'],
             ['icon' => 'notification', 'title' => 'Stay Updated', 'desc' => 'Get the latest announcements and reminders.'],
             ['icon' => 'shield-tick', 'title' => 'Secure & Trusted', 'desc' => 'Your data is safe with our secure admission system.'],
           ] as $feature)
-          <div class="flex h-full min-h-[108px] gap-2.5 rounded-xl border border-[#e5e7eb] bg-white p-3 shadow-[0_4px_16px_rgba(10,31,68,0.06)] transition-shadow duration-200 hover:shadow-[0_8px_22px_rgba(10,31,68,0.09)] sm:min-h-[112px] sm:p-3.5">
-            <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#e8f1fa] text-[#0A1F44]">
-              <i data-iconsax="{{ $feature['icon'] }}" class="h-[17px] w-[17px]"></i>
+          <div class="announcement-popup__feature-card">
+            <div class="announcement-popup__feature-icon">
+              <i data-iconsax="{{ $feature['icon'] }}"></i>
             </div>
-            <div class="flex min-w-0 flex-1 flex-col justify-center">
-              <h4 class="text-[11.5px] font-bold leading-tight text-[#0A1F44]">{{ $feature['title'] }}</h4>
-              <p class="mt-1 text-[9.5px] leading-[1.45] text-[#6d7c92]">{{ $feature['desc'] }}</p>
+            <div class="announcement-popup__feature-body">
+              <h4 class="announcement-popup__feature-title">{{ $feature['title'] }}</h4>
+              <p class="announcement-popup__feature-desc">{{ $feature['desc'] }}</p>
             </div>
           </div>
           @endforeach
         </div>
 
-        <div class="flex items-center gap-3 rounded-xl border border-[#F4B942]/40 bg-[#FFFBEB] px-4 py-3.5">
-          <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#F4B942]/50 bg-[#F4B942]/20 text-[#0A1F44]">
-            <i data-iconsax="shield-tick" class="h-4 w-4 text-[#9a7b1a]"></i>
+        <div class="announcement-popup__alert">
+          <div class="announcement-popup__alert-icon">
+            <i data-iconsax="shield-tick"></i>
           </div>
-          <p class="text-[12.5px] leading-[1.55] text-[#0A1F44]">
-            <strong class="font-bold">Start your future with confidence.</strong>
+          <p class="announcement-popup__alert-text">
+            <strong>Start your future with confidence.</strong>
             We're here to support you every step of the way.
           </p>
         </div>
         @endif
       </div>
 
-      {{-- RIGHT: hero --}}
-      <div class="relative min-h-[240px] overflow-hidden bg-gradient-to-br from-[#0A1F44] via-[#0f2d5c] to-[#1a4d8c] sm:min-h-[280px] md:min-h-full">
+      <div class="announcement-popup__hero" aria-hidden="true">
         <img
           src="{{ asset('assets/images/announcement_popup.png') }}"
           alt=""
-          class="absolute inset-0 h-[115%] w-full -top-[10%] object-cover object-[68%_58%] md:object-[72%_55%]"
+          class="announcement-popup__hero-image"
           loading="lazy"
           decoding="async">
-        <div
-          class="pointer-events-none absolute inset-y-0 left-0 z-[2] w-[52%] bg-gradient-to-r from-white via-white/60 to-transparent"
-          aria-hidden="true"></div>
+        <div class="announcement-popup__hero-fade" aria-hidden="true"></div>
         <button
           type="button"
-          onclick="closeAnnouncementPopup()"
-          class="absolute right-4 top-4 z-30 flex h-9 w-9 items-center justify-center rounded-full border-2 border-white/85 bg-white/10 text-lg font-light leading-none text-white backdrop-blur-[6px] transition-all duration-200 hover:border-white hover:bg-white/20"
+          class="announcement-popup__close"
           aria-label="Close modal">&times;</button>
       </div>
     </div>
 
-    <footer class="flex shrink-0 flex-col gap-4 border-t border-[#e8edf4] bg-white px-7 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-5">
-      <label class="inline-flex cursor-pointer select-none items-center gap-2.5">
-        <input
-          type="checkbox"
-          id="dontShowAgain"
-          class="h-4 w-4 rounded border-[#c5d0de] accent-[#0A1F44]">
-        <span class="text-xs font-medium text-[#6b7a90]">Don't show this again</span>
+    <footer class="announcement-popup__footer">
+      <label class="announcement-popup__dont-show">
+        <input type="checkbox" id="dontShowAgain">
+        <span>Don't show this again</span>
       </label>
 
-      <div class="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3">
+      <div class="announcement-popup__actions">
         @if($popupAnn->popup_button_link)
-        <a
-          href="{{ $popupAnn->popup_button_link }}"
-          class="inline-flex min-h-[42px] min-w-[152px] items-center justify-center rounded-lg border border-[#0A1F44]/20 bg-white px-5 text-[13px] font-semibold text-[#0A1F44] transition-all duration-200 hover:border-[#0A1F44]/35 hover:bg-[#f8fafc]">
+        <a href="{{ $popupAnn->popup_button_link }}" class="announcement-popup__btn announcement-popup__btn--secondary">
           {{ $popupAnn->popup_button_text ?? 'View Announcements' }}
         </a>
         @else
-        <a
-          href="{{ route('news-events') }}"
-          onclick="closeAnnouncementPopup()"
-          class="inline-flex min-h-[42px] min-w-[152px] items-center justify-center rounded-lg border border-[#0A1F44]/20 bg-white px-5 text-[13px] font-semibold text-[#0A1F44] transition-all duration-200 hover:border-[#0A1F44]/35 hover:bg-[#f8fafc]">
+        <a href="{{ route('news-events') }}" class="announcement-popup__btn announcement-popup__btn--secondary" data-announcement-close-nav>
           View Announcements
         </a>
         @endif
 
-        <a
-          href="{{ route('apply') }}?fresh=true"
-          onclick="closeAnnouncementPopup()"
-          class="inline-flex min-h-[42px] min-w-[152px] items-center justify-center rounded-lg bg-[#0A1F44] px-5 text-[13px] font-semibold text-white shadow-[0_6px_20px_rgba(10,31,68,0.25)] transition-all duration-200 hover:bg-[#0d2852] hover:shadow-[0_8px_24px_rgba(10,31,68,0.32)]">
+        <a href="{{ route('apply') }}?fresh=true" class="announcement-popup__btn announcement-popup__btn--primary" data-announcement-close-nav>
           Get Started
         </a>
       </div>
@@ -156,5 +137,5 @@
   </div>
 </div>
 
-<script src="{{ asset('js/announcement-popup.js') }}?v=2" defer></script>
+<script src="{{ asset('js/announcement-popup.js') }}?v=3" defer></script>
 @endif
