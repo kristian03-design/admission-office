@@ -13,7 +13,7 @@
   @include('partials.iconsax')
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=33" />
-  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=21" />
+  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=22" />
 
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
@@ -26,7 +26,7 @@
   </script>
   <script src="{{ asset('js/api-config.js') }}?v=9"></script>
   <script src="{{ asset('js/admission-api.js') }}?v=18"></script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=46" defer></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=47" defer></script>
 </head>
 
 <body>

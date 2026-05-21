@@ -575,12 +575,6 @@ function initCharts() {
 
   const funnelCanvas = document.getElementById('funnelChart');
   if (funnelCanvas) {
-    const funnelCtx = funnelCanvas.getContext('2d');
-    const funnelGrad = funnelCtx.createLinearGradient(0, 0, funnelCanvas.clientWidth || 400, 0);
-    funnelGrad.addColorStop(0, '#071b3d'); // BTECH Navy
-    funnelGrad.addColorStop(0.5, '#0b2d6b'); // BTECH Navy-mid
-    funnelGrad.addColorStop(1, '#c9933a'); // BTECH Gold
-
     if (funnelChart) funnelChart.destroy();
     funnelChart = new Chart(funnelCanvas, {
       type: 'bar',
@@ -589,8 +583,8 @@ function initCharts() {
         datasets: [{
           label: 'Applicants',
           data: [funnelData.applied, funnelData.reviewed, funnelData.interviewed, funnelData.admitted],
-          backgroundColor: funnelGrad,
-          hoverBackgroundColor: '#0646a5',
+          backgroundColor: '#071b3d', // Solid BTECH Navy Dark
+          hoverBackgroundColor: '#0b2d6b', // Subtle Navy Mid hover
           borderRadius: 6,
           borderSkipped: false
         }]
@@ -760,9 +754,9 @@ function initCharts() {
     trendAreaGrad.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
 
     const trendBorderGrad = trendCtx.createLinearGradient(0, 0, trendCanvas.clientWidth || 600, 0);
-    trendBorderGrad.addColorStop(0, '#0646a5');
-    trendBorderGrad.addColorStop(0.5, '#071b3d');
-    trendBorderGrad.addColorStop(1, '#c9933a');
+    trendBorderGrad.addColorStop(0, '#0646a5'); // Navy light
+    trendBorderGrad.addColorStop(0.5, '#0b2d6b'); // Navy mid
+    trendBorderGrad.addColorStop(1, '#071b3d'); // Navy dark
 
     if (trendChart) trendChart.destroy();
     trendChart = new Chart(trendCanvas, {
@@ -781,7 +775,7 @@ function initCharts() {
           pointBorderWidth: 2,
           pointRadius: 5,
           pointHoverRadius: 7,
-          pointHoverBackgroundColor: '#c9933a',
+          pointHoverBackgroundColor: '#0646a5',
           pointHoverBorderColor: '#fff',
           pointHoverBorderWidth: 2.5,
           borderWidth: 3
@@ -816,7 +810,7 @@ function initCharts() {
   // 4. APPLICANT TYPE (Doughnut Chart)
   const typeCounts = {};
   getApplications().forEach(a => { typeCounts[a.type] = (typeCounts[a.type] || 0) + 1; });
-  const typeColors = ['#071b3d', '#c9933a', '#16a34a', '#2563eb'];
+  const typeColors = ['#071b3d', '#0b2d6b', '#16a34a', '#2563eb']; // Changed second color from gold to mid navy
   const typeCanvas = document.getElementById('typeChart');
   if (typeCanvas) {
     if (typeChart) typeChart.destroy();
@@ -854,11 +848,6 @@ function initCharts() {
   const sorted = Object.entries(progCounts).sort((a, b) => b[1] - a[1]).slice(0, 6);
   const progCanvas = document.getElementById('programChart');
   if (progCanvas) {
-    const progCtx = progCanvas.getContext('2d');
-    const barGrad = progCtx.createLinearGradient(0, 0, progCanvas.clientWidth || 400, 0);
-    barGrad.addColorStop(0, '#f6e7d0');
-    barGrad.addColorStop(1, '#c9933a');
-
     if (programChart) programChart.destroy();
     programChart = new Chart(progCanvas, {
       type: 'bar',
@@ -867,8 +856,8 @@ function initCharts() {
         datasets: [{
           label: 'Applicants',
           data: sorted.length ? sorted.map(([, v]) => v) : [0],
-          backgroundColor: barGrad,
-          hoverBackgroundColor: '#071b3d',
+          backgroundColor: '#071b3d', // Solid Navy Dark
+          hoverBackgroundColor: '#0b2d6b',
           borderRadius: 6,
           borderSkipped: false
         }]
@@ -1991,7 +1980,7 @@ function renderProgramsTable() {
     const savedSlotsLeft = Number.isFinite(slotsLeftVal) ? Math.max(0, Math.min(3000, slotsLeftVal)) : 0;
     const slotsLeft = pendingProgramSlots[String(p.id)] != null ? pendingProgramSlots[String(p.id)] : savedSlotsLeft;
     const programCode = (p.code && String(p.code).trim()) ? String(p.code).trim() : shortProg(p.name || '');
-    const dirtyStyle = pendingProgramSlots[String(p.id)] != null ? 'border-color:var(--gold);background:#fffbeb;' : '';
+    const dirtyStyle = pendingProgramSlots[String(p.id)] != null ? 'border-color:var(--navy-light);background:#f0f9ff;' : '';
     const isFull = slotsLeft <= 0;
     const statusText = enabled ? (isFull ? 'Full' : 'Active') : 'Disabled';
     const statusClass = enabled ? (isFull ? 'full' : 'on') : 'off';
@@ -2039,8 +2028,8 @@ function markProgramSlotChanged(input) {
     input.style.background = '';
   } else {
     pendingProgramSlots[programId] = input.value;
-    input.style.borderColor = 'var(--gold)';
-    input.style.background = '#fffbeb';
+    input.style.borderColor = 'var(--navy-light)';
+    input.style.background = '#f0f9ff';
   }
 
   updateProgramSaveAllState();
@@ -4562,7 +4551,7 @@ function initReportCharts() {
   } else if (eligCanvas) {
     eligChart = new Chart(eligCanvas, {
       type: 'doughnut',
-      data: { labels: ['No Special Classification', 'Solo Parent', 'Indigenous', '4Ps', 'PWD'], datasets: [{ data: nextEligData, backgroundColor: ['#1b3557', '#c9933a', '#7c3aed', '#16a34a', '#2563eb'], borderWidth: 2, borderColor: '#fff', hoverOffset: 6 }] },
+      data: { labels: ['No Special Classification', 'Solo Parent', 'Indigenous', '4Ps', 'PWD'], datasets: [{ data: nextEligData, backgroundColor: ['#1b3557', '#cbd5e1', '#7c3aed', '#16a34a', '#2563eb'], borderWidth: 2, borderColor: '#fff', hoverOffset: 6 }] },
       options: { responsive: true, maintainAspectRatio: false, animation: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 10, font: { size: 11 } } } }, cutout: '60%' }
     });
   }
