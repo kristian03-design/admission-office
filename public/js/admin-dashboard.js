@@ -2476,8 +2476,9 @@ async function saveAnnouncement() {
   const selectedImage = popupImageFile && popupImageFile.files && popupImageFile.files[0] ? popupImageFile.files[0] : null;
   const imageError = validateAnnouncementImage(selectedImage);
 
-  if (!data.message) {
-    showToast("Message is required");
+  const hasExistingImage = document.getElementById("annPopupImagePreview").style.display !== "none";
+  if (!data.message && !selectedImage && !hasExistingImage) {
+    showToast("Please provide either a message or an image");
     return;
   }
 

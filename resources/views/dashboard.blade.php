@@ -1181,8 +1181,8 @@
       <div style="padding:24px;max-height:70vh;overflow-y:auto;">
         <input type="hidden" id="editAnnouncementId">
         <div class="settings-field">
-          <label class="settings-label">Announcement Message</label>
-          <textarea class="settings-input" id="annMessage" rows="3" style="height:auto;" required></textarea>
+          <label class="settings-label">Announcement Message <span style="font-weight:normal;font-size:11px;color:var(--text-3);text-transform:none;margin-left:4px;">(Optional)</span></label>
+          <textarea class="settings-input" id="annMessage" rows="3" style="height:auto;"></textarea>
         </div>
         <div class="settings-field" style="margin-top:16px;">
           <label class="settings-label">Announcement Image</label>

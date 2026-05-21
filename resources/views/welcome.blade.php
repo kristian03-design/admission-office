@@ -700,16 +700,23 @@
   @endphp
 
   @if($popupAnn)
+  @php
+    $hasMessage = filled(trim($popupAnn->message));
+  @endphp
   <div id="announcementPopup"
     data-id="{{ $popupAnn->id }}"
     class="announcement-popup"
     role="dialog"
     aria-modal="true"
     aria-label="Announcement"
-    aria-describedby="announcementPopupMessage"
+    @if($hasMessage) aria-describedby="announcementPopupMessage" @endif
     hidden>
 
-    <div class="announcement-popup__card" id="popupCard" tabindex="-1">
+    <div class="announcement-popup__card {{ !$hasMessage ? 'announcement-popup__card--image-only' : '' }}" id="popupCard" tabindex="-1">
+      <button type="button" onclick="closePopup()" class="announcement-popup__close-floating" aria-label="Close modal">
+        &times;
+      </button>
+
       <div class="announcement-popup__media">
         @if($popupAnn->popup_image)
         <img src="{{ str_starts_with($popupAnn->popup_image, 'http') ? $popupAnn->popup_image : asset(str_starts_with($popupAnn->popup_image, 'storage/') || str_starts_with($popupAnn->popup_image, '/storage/') ? ltrim($popupAnn->popup_image, '/') : 'storage/' . $popupAnn->popup_image) }}" alt="Announcement" class="announcement-popup__image" loading="lazy" decoding="async">
@@ -723,11 +730,13 @@
         <div class="announcement-popup__media-shade"></div>
       </div>
 
+      @if($hasMessage)
       <div class="announcement-popup__content">
-        <span class="announcement-popup__badge">
-          <i data-iconsax="notification"></i>
-          Important Notice
-        </span>
+        @if(filled($popupAnn->title))
+        <h3 class="announcement-popup__title">
+          {{ $popupAnn->title }}
+        </h3>
+        @endif
 
         <p id="announcementPopupMessage" class="announcement-popup__message">
           {{ $popupAnn->message }}
@@ -745,6 +754,7 @@
           </button>
         </div>
       </div>
+      @endif
     </div>
   </div>
 

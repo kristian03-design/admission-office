@@ -28,7 +28,7 @@ class AnnouncementController extends Controller
     {
         $validated = $request->validate([
             'title' => 'nullable|string|max:255',
-            'message' => 'required|string',
+            'message' => 'nullable|string',
             'is_active' => 'boolean',
             'sort_order' => 'integer',
             'starts_at' => 'nullable|date',
@@ -70,7 +70,7 @@ class AnnouncementController extends Controller
 
         $validated = $request->validate([
             'title' => 'nullable|string|max:255',
-            'message' => 'sometimes|required|string',
+            'message' => 'nullable|string',
             'is_active' => 'boolean',
             'sort_order' => 'integer',
             'starts_at' => 'nullable|date',
