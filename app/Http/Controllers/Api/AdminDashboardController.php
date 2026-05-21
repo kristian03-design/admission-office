@@ -96,6 +96,23 @@ class AdminDashboardController extends Controller
             'monthly_trend'        => $trend,
             'by_type'              => $byType,
             'by_program'           => $byProgram,
+            'funnel'               => [
+                'applied'     => $total,
+                'reviewed'    => Application::whereNotIn('status', ['pending', 'submitted', 'pending_docs'])->count(),
+                'interviewed' => Application::whereIn('status', ['for_interview', 'under_review', 'approved', 'accepted', 'enrolled'])->count(),
+                'admitted'    => Application::whereIn('status', ['approved', 'accepted', 'enrolled'])->count(),
+            ],
+            'activity_heatmap'     => Application::selectRaw("EXTRACT(DOW FROM submitted_at) as day_of_week, EXTRACT(HOUR FROM submitted_at) as hour, COUNT(*) as count")
+                ->whereNotNull('submitted_at')
+                ->groupBy('day_of_week', 'hour')
+                ->orderBy('day_of_week')
+                ->orderBy('hour')
+                ->get()
+                ->map(fn($r) => [
+                    'day_of_week' => (int) $r->day_of_week,
+                    'hour'        => (int) $r->hour,
+                    'count'       => (int) $r->count,
+                ]),
         ];
 
         return response()->json(['data' => $stats]);

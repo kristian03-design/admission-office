@@ -149,8 +149,8 @@
              onerror="this.style.display='none'" />
       </div>
       <div class="logo-text">
-        <span class="logo-name">Dalubhasaang Politekniko ng Lungsod ng Baliwag</span>
-        <span class="logo-sub">Baliwag Polytechnic College</span>
+        <span class="logo-name">Baliwag Polytechnic College</span>
+        <span class="logo-sub">BTECH Admissions Office</span>
       </div>
     </div>
 

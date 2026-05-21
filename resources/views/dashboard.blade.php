@@ -211,11 +211,11 @@
         <div class="chart-card">
           <div class="chart-card-header">
             <div>
-              <div class="chart-title">Application Trend</div>
-              <div class="chart-sub">Monthly submissions <span id="chartSY">{{ date('Y') }}-{{ date('Y') + 1 }}</span></div>
+              <div class="chart-title">Admission Funnel</div>
+              <div class="chart-sub">Conversion stage milestones</div>
             </div>
           </div>
-          <div class="chart-body"><canvas id="trendChart"></canvas></div>
+          <div class="chart-body"><canvas id="funnelChart"></canvas></div>
         </div>
         <div class="chart-card">
           <div class="chart-card-header">
@@ -226,6 +226,58 @@
           </div>
           <div class="chart-body chart-body--donut"><canvas id="typeChart"></canvas></div>
           <div class="donut-legend" id="donutLegend"></div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-title">Application Trend</div>
+              <div class="chart-sub">Monthly submissions <span id="chartSY">{{ date('Y') }}-{{ date('Y') + 1 }}</span></div>
+            </div>
+          </div>
+          <div class="chart-body"><canvas id="trendChart"></canvas></div>
+        </div>
+        <div class="chart-card heatmap-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-title">Submission Activity</div>
+              <div class="chart-sub">Peak application hours (7D &times; 24H)</div>
+            </div>
+          </div>
+          <div class="chart-body">
+            <div class="heatmap-container">
+              <div class="heatmap-hours">
+                <span>12 AM</span>
+                <span>6 AM</span>
+                <span>12 PM</span>
+                <span>6 PM</span>
+              </div>
+              <div class="heatmap-main">
+                <div class="heatmap-days">
+                  <span>Sun</span>
+                  <span>Mon</span>
+                  <span>Tue</span>
+                  <span>Wed</span>
+                  <span>Thu</span>
+                  <span>Fri</span>
+                  <span>Sat</span>
+                </div>
+                <div class="heatmap-grid" id="heatmapGrid"></div>
+              </div>
+              <div class="heatmap-legend">
+                <span>Less</span>
+                <div class="legend-cells">
+                  <div class="legend-cell level-0" title="No submissions"></div>
+                  <div class="legend-cell level-1" title="Low submissions"></div>
+                  <div class="legend-cell level-2" title="Medium submissions"></div>
+                  <div class="legend-cell level-3" title="High submissions"></div>
+                </div>
+                <span>More</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

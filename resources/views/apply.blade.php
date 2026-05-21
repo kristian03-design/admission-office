@@ -70,7 +70,7 @@
         </div>
         <div class="hdr-text">
           <h1>BTECH Admissions Office</h1>
-          <p>Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
+          <p>Baliwag Polytechnic College</p>
         </div>
       </div>
 
@@ -593,7 +593,7 @@
               <div class="rs-school-info">
                 <div class="rs-republic-line">Republic of the Philippines</div>
                 <div class="rs-school-name">BALIWAG POLYTECHNIC COLLEGE</div>
-                <div class="rs-subtitle">Dalubhasaang Politekniko ng Lungsod ng Baliwag</div>
+                <div class="rs-subtitle">Baliwag Polytechnic College</div>
                 <div class="rs-divider-line"></div>
                 <div class="rs-addr">
                   Baliwag City, Bulacan, Philippines &nbsp;|&nbsp; Tel: (044) xxx-xxxx &nbsp;|&nbsp; Fax: (044) xxx-xxxx<br>

@@ -35,7 +35,7 @@
         <div class="logo-badge"><img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" width="74" height="74" decoding="async" onerror="this.remove()"></div>
         <div class="leading-tight">
           <p class="text-xs font-medium tracking-widest uppercase opacity-70 nav-sub">{{ $settings['institution_name'] ?? 'BTECH ADMISSIONS OFFICE' }}</p>
-          <p class="text-base font-semibold tracking-wide nav-main">Dalubhasaang Politekniko ng Lungsod ng Baliwag</p>
+          <p class="text-base font-semibold tracking-wide nav-main">Baliwag Polytechnic College</p>
         </div>
       </a>
       <nav class="nav-desktop hidden md:flex items-center gap-6">

@@ -159,7 +159,7 @@ function mapStatusToApi(s) {
   return m[s] || 'under_review';
 }
 
-let trendChart, typeChart, programChart, gwaChart, eligChart;
+let trendChart, typeChart, programChart, gwaChart, eligChart, funnelChart;
 
 /* ─── HELPERS ─── */
 function avgGWA(app) {
@@ -554,13 +554,176 @@ function renderRecentList() {
 
 
 function initCharts() {
-  if (trendChart && typeChart && programChart) return;
+  if (trendChart && typeChart && programChart && funnelChart) return;
 
   Chart.defaults.font.family = "'DM Sans', sans-serif";
   Chart.defaults.color = '#64748b';
-  const NAVY2 = '#254d82', GOLD = '#c9933a', GREEN = '#16a34a', BLUE = '#2563eb', NAVY = '#1b3557';
+  const NAVY2 = '#0646a5', GOLD = '#c9933a', GREEN = '#16a34a', BLUE = '#2563eb', NAVY = '#071b3d';
 
-  // Trend (from server-side stats)
+  // 1. ADMISSION CONVERSION FUNNEL CHART
+  let funnelData = { applied: 0, reviewed: 0, interviewed: 0, admitted: 0 };
+  if (DASHBOARD_STATS && DASHBOARD_STATS.funnel) {
+    funnelData = DASHBOARD_STATS.funnel;
+  } else {
+    // client-side fallback
+    const list = getApplications();
+    funnelData.applied = list.length;
+    funnelData.reviewed = list.filter(a => a.status !== 'Pending').length;
+    funnelData.interviewed = list.filter(a => ['Interview Scheduled', 'Approved'].includes(a.status)).length;
+    funnelData.admitted = list.filter(a => a.status === 'Approved').length;
+  }
+
+  const funnelCanvas = document.getElementById('funnelChart');
+  if (funnelCanvas) {
+    const funnelCtx = funnelCanvas.getContext('2d');
+    const funnelGrad = funnelCtx.createLinearGradient(0, 0, funnelCanvas.clientWidth || 400, 0);
+    funnelGrad.addColorStop(0, '#071b3d'); // BTECH Navy
+    funnelGrad.addColorStop(0.5, '#0b2d6b'); // BTECH Navy-mid
+    funnelGrad.addColorStop(1, '#c9933a'); // BTECH Gold
+
+    if (funnelChart) funnelChart.destroy();
+    funnelChart = new Chart(funnelCanvas, {
+      type: 'bar',
+      data: {
+        labels: ['Applied', 'Reviewed', 'Interviewed', 'Admitted'],
+        datasets: [{
+          label: 'Applicants',
+          data: [funnelData.applied, funnelData.reviewed, funnelData.interviewed, funnelData.admitted],
+          backgroundColor: funnelGrad,
+          hoverBackgroundColor: '#0646a5',
+          borderRadius: 6,
+          borderSkipped: false
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const val = context.raw;
+                const index = context.dataIndex;
+                let pct = 100;
+                if (index > 0) {
+                  const prevVal = context.dataset.data[index - 1];
+                  pct = prevVal > 0 ? Math.round((val / prevVal) * 100) : 0;
+                }
+                const totalPct = funnelData.applied > 0 ? Math.round((val / funnelData.applied) * 100) : 0;
+                return `${context.label}: ${val.toLocaleString()} (${totalPct}% of total, ${pct}% of previous)`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1,
+              color: '#94a3b8',
+              font: { weight: 600, size: 10 }
+            },
+            grid: { color: 'rgba(226, 232, 240, 0.6)' }
+          },
+          y: {
+            ticks: {
+              color: '#475569',
+              font: { weight: 600, size: 11 }
+            },
+            grid: { display: false }
+          }
+        }
+      }
+    });
+  }
+
+  // 2. SUBMISSION ACTIVITY HEATMAP (GitHub Style)
+  const matrix = Array(7).fill(0).map(() => Array(24).fill(0));
+  if (DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.activity_heatmap)) {
+    DASHBOARD_STATS.activity_heatmap.forEach(item => {
+      const d = parseInt(item.day_of_week, 10);
+      const h = parseInt(item.hour, 10);
+      if (d >= 0 && d <= 6 && h >= 0 && h <= 23) {
+        matrix[d][h] = item.count;
+      }
+    });
+  } else {
+    // client-side fallback
+    getApplications().forEach(a => {
+      if (a.filed) {
+        const date = new Date(a.filed);
+        if (!isNaN(date.getTime())) {
+          const d = date.getDay();
+          const h = date.getHours();
+          matrix[d][h] = (matrix[d][h] || 0) + 1;
+        }
+      }
+    });
+  }
+
+  let maxCount = 0;
+  for (let d = 0; d < 7; d++) {
+    for (let h = 0; h < 24; h++) {
+      if (matrix[d][h] > maxCount) maxCount = matrix[d][h];
+    }
+  }
+
+  const getLevel = (count) => {
+    if (count === 0) return 0;
+    if (maxCount <= 3) {
+      if (count === 1) return 1;
+      if (count === 2) return 2;
+      return 3;
+    }
+    const thresh1 = Math.ceil(maxCount / 3);
+    const thresh2 = Math.ceil((maxCount * 2) / 3);
+    if (count <= thresh1) return 1;
+    if (count <= thresh2) return 2;
+    return 3;
+  };
+
+  const gridEl = document.getElementById('heatmapGrid');
+  if (gridEl) {
+    gridEl.innerHTML = '';
+    let tooltipEl = document.getElementById('heatmapTooltip');
+    if (!tooltipEl) {
+      tooltipEl = document.createElement('div');
+      tooltipEl.id = 'heatmapTooltip';
+      tooltipEl.className = 'heatmap-tooltip';
+      document.body.appendChild(tooltipEl);
+    }
+
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    for (let d = 0; d < 7; d++) {
+      for (let h = 0; h < 24; h++) {
+        const count = matrix[d][h];
+        const lvl = getLevel(count);
+        const cell = document.createElement('div');
+        cell.className = `heatmap-cell level-${lvl}`;
+        
+        const displayHour = h === 0 ? '12 AM' : h === 12 ? '12 PM' : h > 12 ? (h - 12) + ' PM' : h + ' AM';
+        const tooltipText = `${daysOfWeek[d]}, ${displayHour}: ${count} submission${count === 1 ? '' : 's'}`;
+        
+        cell.addEventListener('mouseenter', (e) => {
+          tooltipEl.innerHTML = tooltipText;
+          tooltipEl.style.opacity = '1';
+          const rect = cell.getBoundingClientRect();
+          tooltipEl.style.left = `${rect.left + window.scrollX + rect.width / 2}px`;
+          tooltipEl.style.top = `${rect.top + window.scrollY}px`;
+        });
+        
+        cell.addEventListener('mouseleave', () => {
+          tooltipEl.style.opacity = '0';
+        });
+        
+        gridEl.appendChild(cell);
+      }
+    }
+  }
+
+  // 3. APPLICATION TREND (Line Chart)
   let trendLabels = [], trendData = [];
   if (DASHBOARD_STATS && Array.isArray(DASHBOARD_STATS.monthly_trend) && DASHBOARD_STATS.monthly_trend.length > 0) {
     const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -570,7 +733,7 @@ function initCharts() {
     });
     trendData = DASHBOARD_STATS.monthly_trend.map(t => t.count);
   } else {
-    // Fallback: client-side
+    // client-side fallback
     const monthCounts = {};
     getApplications().forEach(a => {
       if (a.filed) {
@@ -587,40 +750,155 @@ function initCharts() {
     });
     trendData = sortedMonths.map(ym => monthCounts[ym]);
   }
-  if (trendChart) trendChart.destroy();
-  trendChart = new Chart(document.getElementById('trendChart'), {
-    type: 'line',
-    data: {
-      labels: trendLabels.length ? trendLabels : ['No data'],
-      datasets: [{ label: 'Applications', data: trendData.length ? trendData : [0], borderColor: NAVY2, backgroundColor: 'rgba(37,77,130,.08)', fill: true, tension: .42, pointBackgroundColor: NAVY2, pointRadius: 5, pointHoverRadius: 7, borderWidth: 2.5 }]
-    },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: 'rgba(0,0,0,.05)' } }, x: { grid: { display: false } } } }
-  });
 
-  // Donut
+  const trendCanvas = document.getElementById('trendChart');
+  if (trendCanvas) {
+    const trendCtx = trendCanvas.getContext('2d');
+    const trendAreaGrad = trendCtx.createLinearGradient(0, 0, 0, trendCanvas.clientHeight || 240);
+    trendAreaGrad.addColorStop(0, 'rgba(6, 70, 165, 0.25)'); // Navy light
+    trendAreaGrad.addColorStop(0.5, 'rgba(11, 45, 107, 0.08)'); // Navy mid
+    trendAreaGrad.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+
+    const trendBorderGrad = trendCtx.createLinearGradient(0, 0, trendCanvas.clientWidth || 600, 0);
+    trendBorderGrad.addColorStop(0, '#0646a5');
+    trendBorderGrad.addColorStop(0.5, '#071b3d');
+    trendBorderGrad.addColorStop(1, '#c9933a');
+
+    if (trendChart) trendChart.destroy();
+    trendChart = new Chart(trendCanvas, {
+      type: 'line',
+      data: {
+        labels: trendLabels.length ? trendLabels : ['No data'],
+        datasets: [{
+          label: 'Applications',
+          data: trendData.length ? trendData : [0],
+          borderColor: trendBorderGrad,
+          backgroundColor: trendAreaGrad,
+          fill: true,
+          tension: 0.4,
+          pointBackgroundColor: '#071b3d',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          pointHoverBackgroundColor: '#c9933a',
+          pointHoverBorderColor: '#fff',
+          pointHoverBorderWidth: 2.5,
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1,
+              color: '#94a3b8',
+              font: { weight: 600, size: 10 }
+            },
+            grid: { color: 'rgba(226, 232, 240, 0.6)' }
+          },
+          x: {
+            ticks: {
+              color: '#94a3b8',
+              font: { weight: 600, size: 10 }
+            },
+            grid: { display: false }
+          }
+        }
+      }
+    });
+  }
+
+  // 4. APPLICANT TYPE (Doughnut Chart)
   const typeCounts = {};
   getApplications().forEach(a => { typeCounts[a.type] = (typeCounts[a.type] || 0) + 1; });
-  const typeColors = [NAVY, GOLD, GREEN, BLUE];
-  if (typeChart) typeChart.destroy();
-  typeChart = new Chart(document.getElementById('typeChart'), {
-    type: 'doughnut',
-    data: { labels: Object.keys(typeCounts), datasets: [{ data: Object.values(typeCounts), backgroundColor: typeColors, borderWidth: 2, borderColor: '#fff', hoverOffset: 6 }] },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, cutout: '68%' }
-  });
-  document.getElementById('donutLegend').innerHTML = Object.keys(typeCounts).map((k, i) => `
-    <div class="legend-item"><div class="legend-dot" style="background:${typeColors[i]}"></div><span>${k} (${typeCounts[k]})</span></div>
-  `).join('');
+  const typeColors = ['#071b3d', '#c9933a', '#16a34a', '#2563eb'];
+  const typeCanvas = document.getElementById('typeChart');
+  if (typeCanvas) {
+    if (typeChart) typeChart.destroy();
+    typeChart = new Chart(typeCanvas, {
+      type: 'doughnut',
+      data: {
+        labels: Object.keys(typeCounts).length ? Object.keys(typeCounts) : ['No data'],
+        datasets: [{
+          data: Object.keys(typeCounts).length ? Object.values(typeCounts) : [0],
+          backgroundColor: typeColors,
+          borderWidth: 3,
+          borderColor: '#fff',
+          hoverOffset: 8,
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        cutout: '72%'
+      }
+    });
+    
+    document.getElementById('donutLegend').innerHTML = Object.keys(typeCounts).length 
+      ? Object.keys(typeCounts).map((k, i) => `
+        <div class="legend-item"><div class="legend-dot" style="background:${typeColors[i]}"></div><span>${k} (${typeCounts[k]})</span></div>
+      `).join('')
+      : '<p class="empty-state">No data</p>';
+  }
 
-  // Program bar
+  // 5. TOP PROGRAMS (Bar Chart)
   const progCounts = {};
   getApplications().forEach(a => { progCounts[a.firstChoice] = (progCounts[a.firstChoice] || 0) + 1; });
   const sorted = Object.entries(progCounts).sort((a, b) => b[1] - a[1]).slice(0, 6);
-  if (programChart) programChart.destroy();
-  programChart = new Chart(document.getElementById('programChart'), {
-    type: 'bar',
-    data: { labels: sorted.map(([k]) => shortProg(k)), datasets: [{ label: 'Applicants', data: sorted.map(([, v]) => v), backgroundColor: NAVY2, borderRadius: 6, borderSkipped: false }] },
-    options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: 'rgba(0,0,0,.05)' } }, y: { grid: { display: false } } } }
-  });
+  const progCanvas = document.getElementById('programChart');
+  if (progCanvas) {
+    const progCtx = progCanvas.getContext('2d');
+    const barGrad = progCtx.createLinearGradient(0, 0, progCanvas.clientWidth || 400, 0);
+    barGrad.addColorStop(0, '#f6e7d0');
+    barGrad.addColorStop(1, '#c9933a');
+
+    if (programChart) programChart.destroy();
+    programChart = new Chart(progCanvas, {
+      type: 'bar',
+      data: {
+        labels: sorted.length ? sorted.map(([k]) => shortProg(k)) : ['No data'],
+        datasets: [{
+          label: 'Applicants',
+          data: sorted.length ? sorted.map(([, v]) => v) : [0],
+          backgroundColor: barGrad,
+          hoverBackgroundColor: '#071b3d',
+          borderRadius: 6,
+          borderSkipped: false
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: { legend: { display: false } },
+        scales: {
+          x: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1,
+              color: '#94a3b8',
+              font: { weight: 600, size: 10 }
+            },
+            grid: { color: 'rgba(226, 232, 240, 0.6)' }
+          },
+          y: {
+            ticks: {
+              color: '#475569',
+              font: { weight: 600, size: 11 }
+            },
+            grid: { display: false }
+          }
+        }
+      }
+    });
+  }
 }
 
 /* ─── APPLICATIONS TABLE ─── */
@@ -5136,6 +5414,7 @@ async function refreshData(isInitial = false) {
       if (trendChart) { trendChart.destroy(); trendChart = null; }
       if (typeChart) { typeChart.destroy(); typeChart = null; }
       if (programChart) { programChart.destroy(); programChart = null; }
+      if (funnelChart) { funnelChart.destroy(); funnelChart = null; }
       rerenderCurrentPageAfterRefresh();
     }
   } catch (err) {
