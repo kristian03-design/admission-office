@@ -840,7 +840,7 @@
           </a>
           @endif
 
-          <a href="{{ url('/apply') }}" class="announcement-popup__btn-primary" onclick="closePopup()">
+          <a href="{{ url('/') }}" class="announcement-popup__btn-primary" onclick="closePopup()">
             Get Started
           </a>
         </div>
