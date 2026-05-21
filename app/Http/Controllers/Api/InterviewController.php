@@ -19,7 +19,7 @@ class InterviewController extends Controller
             return response()->json(['data' => []]);
         }
 
-        $query = Interview::where('program_id', $programId);
+        $query = Interview::with('application')->where('program_id', $programId);
 
         if ($search) {
             $query->where(function($q) use ($search) {

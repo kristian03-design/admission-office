@@ -395,13 +395,16 @@
         </div>
       </div>
 
-      <div class="filter-bar" style="margin-bottom:20px;background:white;padding:12px 16px;border-radius:12px;border:1px solid var(--navy-pale)">
+      <div class="filter-bar" style="margin-bottom:20px;background:white;padding:12px 16px;border-radius:12px;border:1px solid var(--navy-pale);display:flex;gap:12px;align-items:center;">
         <div class="search-wrap" style="flex:1">
           <span class="search-icon">
             <i data-iconsax="search"></i>
           </span>
-          <input type="text" id="schedulingSearchInput" placeholder="Search applicant name or reference..." class="search-input" oninput="applySchedulingSearch()" />
+          <input type="text" id="schedulingSearchInput" placeholder="Search applicant name or reference..." class="search-input" oninput="applySchedulingFilters()" />
         </div>
+        <select class="filter-select" id="schedulingFilterYear" style="min-width:180px;">
+          <option value="">All Academic Years</option>
+        </select>
       </div>
 
       <div class="table-card">

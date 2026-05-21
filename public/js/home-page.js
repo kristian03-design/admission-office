@@ -83,11 +83,11 @@ let menuOpen = false;
 
 function toggleMenu(forceClose = false) {
   menuOpen = forceClose ? false : !menuOpen;
-  
+
   menuToggle?.classList.toggle('active', menuOpen);
   mobileMenu?.classList.toggle('active', menuOpen);
   document.body.classList.toggle('menu-open', menuOpen);
-  
+
   // Hide navbar CTA on mobile when menu is open to reduce clutter
   const navCta = $('.btn-primary-nav');
   if (navCta) {
@@ -151,25 +151,25 @@ function initCounters() {
         const el = entry.target;
         const target = parseInt(el.getAttribute('data-count'), 10);
         if (isNaN(target)) return;
-        
+
         let count = 0;
         const duration = 2000; // 2 seconds
         const startTime = performance.now();
-        
+
         function updateCount(currentTime) {
           const elapsed = currentTime - startTime;
           const progress = Math.min(elapsed / duration, 1);
           const currentCount = Math.floor(progress * target);
-          
+
           el.textContent = currentCount;
-          
+
           if (progress < 1) {
             requestAnimationFrame(updateCount);
           } else {
             el.textContent = target;
           }
         }
-        
+
         requestAnimationFrame(updateCount);
         counterObserver.unobserve(el);
       }
@@ -696,7 +696,7 @@ $$('.form-input, .form-select').forEach(el => {
 // LOG
 // ─────────────────────────────────────────
 
-console.log('%c BTC Admissions Landing Page loaded ✓', 'color:#254d82;font-weight:bold;font-size:1rem;');
+console.log('%c BPC Admissions Landing Page loaded ✓', 'color:#254d82;font-weight:bold;font-size:1rem;');
 
 /* =========================================================
    HERO ROTATING STUDENT SLIDER — ADD TO home-page.js

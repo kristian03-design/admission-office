@@ -3624,6 +3624,21 @@ async function openStudentScheduling(courseName) {
   showPage('student-scheduling');
   renderSchedulingSkeleton();
 
+  // Populate Year Filter in Student Scheduling page
+  const schedulingYearSel = document.getElementById('schedulingFilterYear');
+  if (schedulingYearSel && schedulingYearSel.options.length <= 1) {
+    buildAcademicYearOptions().forEach(y => {
+      const opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y;
+      schedulingYearSel.appendChild(opt);
+    });
+    schedulingYearSel.addEventListener('change', applySchedulingFilters);
+  }
+  if (schedulingYearSel) {
+    schedulingYearSel.value = '';
+  }
+
   // Find the program ID for this course name
   const prog = getPrograms().find(p => p.name === courseName);
   const progId = prog ? prog.id : null;
@@ -3639,7 +3654,12 @@ async function openStudentScheduling(courseName) {
     const res = await AdmissionAPI.request(`/interviews?program_id=${progId}`);
     const existingInterviews = res.data || [];
 
-    const combined = [...existingInterviews];
+    const combined = existingInterviews.map(item => {
+      if (!item.academic_year) {
+        item.academic_year = item.application ? item.application.academic_year : '';
+      }
+      return item;
+    });
 
     currentSchedulingData = combined;
     renderSchedulingRows(combined);
@@ -3685,6 +3705,8 @@ function addSchedulingRow(data = {}) {
 
   const tr = document.createElement('tr');
   tr.className = 'scheduling-row';
+  const academicYear = data.academic_year || (data.application && data.application.academic_year) || '';
+  tr.setAttribute('data-academic-year', academicYear);
   const name = data.student_name || '';
   const ref = data.reference_number || '';
   const status = normalizeInterviewStatus(data.status);
@@ -3781,22 +3803,35 @@ function removeSchedulingRow(btn) {
 }
 
 function showAddStudentRow() {
-  addSchedulingRow();
+  const activeSY = (SYSTEM_SETTINGS && SYSTEM_SETTINGS.school_year) ? SYSTEM_SETTINGS.school_year.replace(/^S\.Y\.\s*/i, '') : '';
+  addSchedulingRow({
+    academic_year: activeSY
+  });
 }
 
-function applySchedulingSearch() {
-  const term = document.getElementById('schedulingSearchInput').value.toLowerCase();
+function applySchedulingFilters() {
+  const term = document.getElementById('schedulingSearchInput') ? document.getElementById('schedulingSearchInput').value.toLowerCase() : '';
+  const year = document.getElementById('schedulingFilterYear') ? document.getElementById('schedulingFilterYear').value : '';
   const rows = document.querySelectorAll('.scheduling-row');
 
   rows.forEach(row => {
     const name = row.querySelector('[name="student_name"]').value.toLowerCase();
     const ref = row.querySelector('[name="ref_num"]').value.toLowerCase();
-    if (name.includes(term) || ref.includes(term)) {
+    const rowYear = row.getAttribute('data-academic-year') || '';
+
+    const matchesSearch = name.includes(term) || ref.includes(term);
+    const matchesYear = !year || rowYear === year;
+
+    if (matchesSearch && matchesYear) {
       row.style.display = '';
     } else {
       row.style.display = 'none';
     }
   });
+}
+
+function applySchedulingSearch() {
+  applySchedulingFilters();
 }
 
 async function saveAllStudentSchedules() {
@@ -3875,21 +3910,35 @@ function openSelectApplicantModal() {
     selectedProgram?.code,
   ].map(normalizeProgramKey).filter(Boolean);
 
+  const selectedYear = document.getElementById('schedulingFilterYear') ? document.getElementById('schedulingFilterYear').value : '';
+
   // Get applicants for the current course
   const applicants = getApplications().filter(a => {
     const raw = a.raw || {};
     const appProgramId = a.programId != null ? String(a.programId) : (raw.program_id != null ? String(raw.program_id) : '');
-    if (selectedId && appProgramId && selectedId === appProgramId) return true;
+    
+    // Check program matching
+    let isMatch = false;
+    if (selectedId && appProgramId && selectedId === appProgramId) {
+      isMatch = true;
+    } else {
+      const choices = [
+        a.firstChoice,
+        raw.first_choice,
+        raw.program_name,
+        raw.program?.name,
+        raw.program?.code,
+      ].map(normalizeProgramKey).filter(Boolean);
+      isMatch = choices.some(choice => selectedNames.includes(choice));
+    }
 
-    const choices = [
-      a.firstChoice,
-      raw.first_choice,
-      raw.program_name,
-      raw.program?.name,
-      raw.program?.code,
-    ].map(normalizeProgramKey).filter(Boolean);
+    // Apply selected year filter if matching program
+    if (isMatch && selectedYear) {
+      const appYear = a.academic_year || raw.academic_year || '';
+      if (appYear !== selectedYear) return false;
+    }
 
-    return choices.some(choice => selectedNames.includes(choice));
+    return isMatch;
   });
 
   // Filter out applicants already in currentSchedulingData
@@ -3955,7 +4004,8 @@ function addApplicantToSchedule(appId) {
     reference_number: applicant.ref,
     interview_date: '',
     interview_time: '',
-    status: 'Pending'
+    status: 'Pending',
+    academic_year: applicant.academic_year || (applicant.raw && applicant.raw.academic_year) || ''
   };
 
   currentSchedulingData.push(newItem);
