@@ -22,6 +22,13 @@
         extend: {
           fontFamily: {
             poppins: ['Poppins', 'sans-serif'],
+            playfair: ['Playfair Display', 'serif'],
+          },
+          colors: {
+            btech: {
+              navy: '#0A1F44',
+              gold: '#F4B942',
+            },
           },
         },
       },
