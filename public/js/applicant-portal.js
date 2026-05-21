@@ -133,7 +133,7 @@
 
   const timeline = [
     ['submitted', 'Submitted', ['pending', 'submitted']],
-    ['under_review', 'Under Review', ['under_review', 'pending_docs']],
+    ['under_review', 'Under Review', ['under_review']],
     ['pending_docs', 'Pending Documents', ['pending_docs']],
     ['for_interview', 'For Interview', ['for_interview']],
     ['approved', 'Decision', ['approved', 'accepted', 'enrolled', 'rejected', 'cancelled']],
@@ -354,17 +354,57 @@
     const app = state.payload.application || {};
     const status = app.status || 'pending';
     const activeIndex = Math.max(0, timeline.findIndex(item => item[2].includes(status)));
+    
+    const isTerminalStatus = ['approved', 'accepted', 'enrolled', 'rejected', 'cancelled'].includes(status);
+
     $('statusTimeline').innerHTML = timeline.map((item, index) => {
       const isCurrent = index === activeIndex;
-      const done = index < activeIndex || (index === activeIndex && ['approved', 'accepted', 'enrolled'].includes(status));
-      const terminal = item[0] === 'approved' && ['rejected', 'cancelled'].includes(status);
-      const title = terminal ? labelStatus(status) : item[1];
+      
+      // A step is done if it is before the active index,
+      // or if it's the active index and we have reached a terminal stage
+      const done = index < activeIndex || (index === activeIndex && isTerminalStatus);
+      
+      const isTerminalStep = item[0] === 'approved' && ['rejected', 'cancelled'].includes(status);
+      const title = isTerminalStep ? labelStatus(status) : item[1];
+      
+      // Determine what to display inside the timeline dot
+      let dotContent = index + 1;
+      if (done) {
+        if (isTerminalStep) {
+          dotContent = '&#10007;'; // High-quality ballot X symbol
+        } else {
+          dotContent = '&#10003;'; // Checkmark symbol
+        }
+      }
+
+      // Determine subtext
+      let subtext = 'Waiting';
+      if (isCurrent) {
+        if (status === 'enrolled') {
+          subtext = 'Enrolled';
+        } else if (status === 'accepted') {
+          subtext = 'Accepted';
+        } else if (status === 'approved') {
+          subtext = 'Approved';
+        } else if (status === 'rejected') {
+          subtext = 'Closed';
+        } else if (status === 'cancelled') {
+          subtext = 'Closed';
+        } else {
+          subtext = 'Current stage';
+        }
+      } else if (done) {
+        subtext = 'Completed';
+      }
+
+      const terminalClass = (isTerminalStep && done) ? 'timeline-item--terminal' : '';
+
       return `
-        <div class="timeline-item ${done ? 'done' : ''} ${isCurrent ? 'current' : ''}">
-          <div class="timeline-dot">${done ? '&#10003;' : index + 1}</div>
+        <div class="timeline-item ${done ? 'done' : ''} ${isCurrent ? 'current' : ''} ${terminalClass}">
+          <div class="timeline-dot">${dotContent}</div>
           <div>
             <p class="font-bold text-slate-900">${escapeHtml(title)}</p>
-            <p class="text-sm text-slate-500">${isCurrent ? 'Current stage' : done ? 'Completed' : 'Waiting'}</p>
+            <p class="text-sm text-slate-500">${subtext}</p>
           </div>
         </div>
       `;
@@ -416,6 +456,10 @@
     renderDocuments();
     renderInterview();
     showStep('dashboardStep');
+    
+    if (state.payload.application && state.payload.application.id) {
+      initRealtime(state.payload.application.id);
+    }
   }
 
   async function loadPortal() {
@@ -685,4 +729,47 @@
       resetPortalSession();
     }
   });
+
+  let realtimeChannel = null;
+  function initRealtime(applicationId) {
+    if (realtimeChannel) return;
+    const url = window.SUPABASE_URL;
+    const anonKey = window.SUPABASE_ANON_KEY;
+    if (url && anonKey && typeof supabase !== 'undefined' && applicationId) {
+      try {
+        const client = supabase.createClient(url, anonKey);
+        realtimeChannel = client.channel('applicant-realtime')
+          .on('postgres_changes', { 
+            event: 'UPDATE', 
+            schema: 'public', 
+            table: 'applications', 
+            filter: `id=eq.${applicationId}` 
+          }, (payload) => {
+            console.log('Realtime update to current application received:', payload);
+            loadPortal();
+          })
+          .subscribe((status) => {
+            console.log('Applicant Realtime subscription status:', status);
+            if (status !== 'SUBSCRIBED') {
+              startFallbackPolling();
+            }
+          });
+      } catch (err) {
+        console.warn('Failed to initialize Supabase Realtime for applicant:', err);
+        startFallbackPolling();
+      }
+    } else {
+      console.log('Supabase Realtime not configured for applicant portal, starting fallback polling.');
+      startFallbackPolling();
+    }
+  }
+
+  let pollingInterval = null;
+  function startFallbackPolling() {
+    if (pollingInterval) return;
+    console.log('Realtime fallback: Polling active (30s).');
+    pollingInterval = setInterval(() => {
+      loadPortal();
+    }, 30000);
+  }
 })();

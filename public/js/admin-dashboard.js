@@ -5195,6 +5195,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial fetch
     refreshData(true);
 
+    // Initialize Supabase Realtime synchronization
+    initRealtime();
+
     if (ADMIN_REFRESH_MS > 0) {
       setInterval(() => {
         refreshData(false);
@@ -5380,3 +5383,46 @@ document.addEventListener('click', function(e) {
     manualClearCache();
   }
 });
+
+let realtimeChannel = null;
+function initRealtime() {
+  if (realtimeChannel) return;
+  const url = window.SUPABASE_URL;
+  const anonKey = window.SUPABASE_ANON_KEY;
+  if (url && anonKey && typeof supabase !== 'undefined') {
+    try {
+      const client = supabase.createClient(url, anonKey);
+      realtimeChannel = client.channel('admin-realtime')
+        .on('postgres_changes', { 
+          event: '*', 
+          schema: 'public', 
+          table: 'applications' 
+        }, (payload) => {
+          console.log('Realtime application update received:', payload);
+          // Instantly refresh dashboard data smoothly without reload
+          refreshData(false);
+        })
+        .subscribe((status) => {
+          console.log('Admin Realtime subscription status:', status);
+          if (status !== 'SUBSCRIBED') {
+            startFallbackPolling();
+          }
+        });
+    } catch (err) {
+      console.warn('Failed to initialize Supabase Realtime for admin dashboard:', err);
+      startFallbackPolling();
+    }
+  } else {
+    console.log('Supabase Realtime not configured for admin, starting fallback polling.');
+    startFallbackPolling();
+  }
+}
+
+let pollingInterval = null;
+function startFallbackPolling() {
+  if (pollingInterval) return;
+  console.log('Realtime fallback: Polling active (30s).');
+  pollingInterval = setInterval(() => {
+    refreshData(false);
+  }, 30000);
+}

@@ -417,6 +417,19 @@ body {
   color: #d97706;
 }
 
+/* Terminal / Closed / Rejected State styling */
+.timeline-item.timeline-item--terminal.done .timeline-dot {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: #ffffff;
+}
+
+.timeline-item.timeline-item--terminal.current .timeline-dot {
+  background: #fef2f2;
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
 .detail-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

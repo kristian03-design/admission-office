@@ -15,8 +15,11 @@
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=33" />
   <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=22" />
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     window.ADMIN_LOGIN_URL = "{{ route('admin.login') }}";
+    window.SUPABASE_URL = "{{ $supabaseUrl }}";
+    window.SUPABASE_ANON_KEY = "{{ $supabaseAnonKey }}";
     (function() {
       const root = window.location.pathname.split('/admin')[0].replace(/\/+$/, '');
       const apiSegment = '/api';

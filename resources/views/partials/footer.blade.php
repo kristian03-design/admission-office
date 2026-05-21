@@ -91,3 +91,32 @@
     </div>
   </div>
 </footer>
+
+@if(filled($supabaseUrl) && filled($supabaseAnonKey))
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  (function () {
+    const url = "{{ $supabaseUrl }}";
+    const anonKey = "{{ $supabaseAnonKey }}";
+    if (typeof supabase !== 'undefined' && url && anonKey) {
+      try {
+        const client = supabase.createClient(url, anonKey);
+        
+        // List of tables that trigger page refresh on change
+        const tables = ['announcements', 'news_events', 'system_settings', 'testimonials', 'faculty_staff', 'programs'];
+        
+        tables.forEach(table => {
+          client.channel('public-' + table)
+            .on('postgres_changes', { event: '*', schema: 'public', table: table }, (payload) => {
+              console.log('Realtime change detected in ' + table + ', refreshing page...');
+              window.location.reload();
+            })
+            .subscribe();
+        });
+      } catch (err) {
+        console.warn('Realtime sync failed to initialize:', err);
+      }
+    }
+  })();
+</script>
+@endif

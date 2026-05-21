@@ -35,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
     {
         \Illuminate\Pagination\Paginator::useTailwind();
 
+        // Share Supabase environment keys globally to avoid modifying individual controllers
+        View::share('supabaseUrl', env('VITE_SUPABASE_URL'));
+        View::share('supabaseAnonKey', env('VITE_SUPABASE_ANON_KEY'));
+
         View::composer(['welcome', 'about', 'news-events', 'news-event-details', 'course-details'], function ($view) {
             $footerPrograms = Cache::remember(PublicCache::FOOTER_PROGRAMS, PublicCache::ttl(), function () {
                 $fallbackNames = collect(config('academic_programs.fallback', []))
