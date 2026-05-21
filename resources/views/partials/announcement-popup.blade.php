@@ -49,7 +49,7 @@
 
           <div class="announcement-popup__brand-text">
             <p class="announcement-popup__college-name">
-              DALUBHASAANG POLYTECHNIC COLLEGE
+              DALUBHASAANG POLITEKNIKO NG LUNGSOD NG BALIWAG
             </p>
             <p class="announcement-popup__college-motto">
               Excellence &bull; Innovation &bull; Service
@@ -66,9 +66,10 @@
           @if($titleIsWelcome)
             <h2 class="announcement-popup__title">
               <span class="announcement-popup__title-line1">Welcome to the</span>
-              <span class="announcement-popup__title-accent" aria-hidden="true"></span>
-              <span class="announcement-popup__title-line2">BTECH Admission Website!</span>
+              <span class="announcement-popup__title-line2">BTECH Admission</span>
+              <span class="announcement-popup__title-line3">Website!</span>
             </h2>
+            <span class="announcement-popup__title-accent" aria-hidden="true"></span>
           @else
             <h2 class="announcement-popup__title">{{ $popupTitle }}</h2>
             <span class="announcement-popup__title-accent" aria-hidden="true"></span>
@@ -83,7 +84,7 @@
       <div class="announcement-popup__hero" aria-hidden="true">
         <div class="announcement-popup__hero-bg" aria-hidden="true"></div>
         <img
-          src="{{ asset('assets/images/announcement_popup.png') }}"
+          src="{{ asset('assets/images/announcement_logo.png') }}"
           alt=""
           class="announcement-popup__hero-image"
           loading="lazy"
