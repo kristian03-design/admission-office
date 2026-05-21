@@ -160,7 +160,7 @@
         @endif
 
         <a
-          href="{{ route('apply') }}?fresh=true"
+          href="{{ route('home') }}"
           class="announcement-popup__btn announcement-popup__btn--primary"
           data-announcement-close-nav>
           Get Started

@@ -55,7 +55,26 @@
   });
 
   popup.querySelectorAll('[data-announcement-close-nav]').forEach((link) => {
-    link.addEventListener('click', closePopup);
+    link.addEventListener('click', (event) => {
+      // Mark that the user has interacted with the announcement call-to-action
+      if (annId) {
+        localStorage.setItem('dont_show_announcement_' + annId, 'true');
+      }
+
+      try {
+        const currentUrl = new URL(window.location.href);
+        const targetUrl = new URL(link.href, window.location.href);
+
+        // If already on the same page, close the popup smoothly without a hard browser reload
+        if (currentUrl.pathname === targetUrl.pathname && currentUrl.search === targetUrl.search) {
+          event.preventDefault();
+          closePopup();
+        }
+      } catch (e) {
+        // Fallback
+        closePopup();
+      }
+    });
   });
 
   document.addEventListener('keydown', (event) => {
