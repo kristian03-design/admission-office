@@ -12,10 +12,22 @@
     if (typeof window.iconsax?.createIcons === 'function') {
       window.iconsax.createIcons();
     }
+
+    document
+      .querySelectorAll(
+        '.announcement-popup__feature-icon svg, .announcement-popup__badge svg, .announcement-popup__alert-icon svg'
+      )
+      .forEach((svg) => {
+        svg.setAttribute('width', '24');
+        svg.setAttribute('height', '24');
+        svg.setAttribute('stroke-width', '2.2');
+        svg.style.opacity = '1';
+      });
   }
 
   function openPopup() {
     lastFocusedElement = document.activeElement;
+
     popup.hidden = false;
     popup.setAttribute('aria-hidden', 'false');
     document.body.classList.add('overflow-hidden');
@@ -30,6 +42,7 @@
   function closePopup() {
     if (annId) {
       sessionStorage.setItem('dismissed_announcement_' + annId, 'true');
+
       if (checkbox?.checked) {
         localStorage.setItem('dont_show_announcement_' + annId, 'true');
       }
@@ -41,6 +54,7 @@
 
     window.setTimeout(() => {
       popup.hidden = true;
+
       if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
         lastFocusedElement.focus();
       }
@@ -59,7 +73,6 @@
 
   popup.querySelectorAll('[data-announcement-close-nav]').forEach((link) => {
     link.addEventListener('click', (event) => {
-      // Mark that the user has interacted with the announcement call-to-action
       if (annId) {
         localStorage.setItem('dont_show_announcement_' + annId, 'true');
       }
@@ -68,13 +81,14 @@
         const currentUrl = new URL(window.location.href);
         const targetUrl = new URL(link.href, window.location.href);
 
-        // If already on the same page, close the popup smoothly without a hard browser reload
-        if (currentUrl.pathname === targetUrl.pathname && currentUrl.search === targetUrl.search) {
+        if (
+          currentUrl.pathname === targetUrl.pathname &&
+          currentUrl.search === targetUrl.search
+        ) {
           event.preventDefault();
           closePopup();
         }
       } catch (e) {
-        // Fallback
         closePopup();
       }
     });
@@ -87,6 +101,14 @@
   });
 
   window.addEventListener('DOMContentLoaded', () => {
+    if (annId && localStorage.getItem('dont_show_announcement_' + annId) === 'true') {
+      return;
+    }
+
+    if (annId && sessionStorage.getItem('dismissed_announcement_' + annId) === 'true') {
+      return;
+    }
+
     window.setTimeout(openPopup, 900);
   });
 })();
