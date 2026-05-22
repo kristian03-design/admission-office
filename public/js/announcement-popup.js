@@ -100,15 +100,7 @@
     }
   });
 
-  window.addEventListener('DOMContentLoaded', () => {
-    if (annId && localStorage.getItem('dont_show_announcement_' + annId) === 'true') {
-      return;
-    }
-
-    if (annId && sessionStorage.getItem('dismissed_announcement_' + annId) === 'true') {
-      return;
-    }
-
+  window.addEventListener('pageshow', () => {
     window.setTimeout(openPopup, 900);
   });
 })();

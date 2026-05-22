@@ -315,7 +315,7 @@
   z-index: 10;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  gap: 12px;
   margin-top: -44px;
   padding: 0 32px 6px;
   filter: drop-shadow(0 12px 26px rgba(10,31,68,0.06));
@@ -325,9 +325,9 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 15px;
-  min-height: 118px;
-  padding: 18px;
+  gap: 12px;
+  min-height: 104px;
+  padding: 14px 12px;
   border-radius: 18px;
   border: 1px solid rgba(10, 31, 68, 0.07);
   background:
@@ -355,8 +355,8 @@
 }
 
 .announcement-popup__feature-icon {
-  width: 60px;
-  height: 60px;
+  width: 48px;
+  height: 48px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -377,9 +377,9 @@
 .announcement-popup__feature-icon i,
 .announcement-popup__feature-icon svg.iconsax-icon,
 .announcement-popup__feature-icon svg {
-  width: 28px !important;
-  height: 28px !important;
-  font-size: 28px !important;
+  width: 22px !important;
+  height: 22px !important;
+  font-size: 22px !important;
   stroke-width: 2.2 !important;
   color: #1e3a8a !important;
   opacity: 1 !important;
@@ -387,16 +387,17 @@
 
 .announcement-popup__feature-title {
   margin: 0;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
   line-height: 1.35;
   color: var(--ap-navy);
+  white-space: nowrap;
 }
 
 .announcement-popup__feature-desc {
-  margin: 5px 0 0;
-  font-size: 12px;
-  line-height: 1.55;
+  margin: 4px 0 0;
+  font-size: 11px;
+  line-height: 1.45;
   color: #66758c;
 }
 
