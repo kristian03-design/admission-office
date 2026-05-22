@@ -823,6 +823,14 @@
       </div>
       <h2 id="moReqTitle" style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:20px;text-align:center;"></h2>
       <div id="moReqList" class="req-list-compact"></div>
+      
+      <div style="margin-top: 16px; margin-bottom: 16px; padding: 12px 14px; background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 12px; display: flex; align-items: flex-start; gap: 10px; text-align: left;">
+        <i data-iconsax="info-circle" style="width: 18px; height: 18px; color: #b45309; flex-shrink: 0; margin-top: 1px;"></i>
+        <p style="font-size: 12.5px; color: #b45309; line-height: 1.5; margin: 0; font-weight: 600; font-family: inherit;">
+          Note: All other required documents and credentials must be submitted directly to the Admissions Office at the BTECH Main Campus.
+        </p>
+      </div>
+
       <button class="bp" style="width:100%;margin-top:10px;justify-content:center;height:42px;font-size:13px" onclick="closeModal('moReq')">
         <i data-iconsax="close-circle" style="width:14px;height:14px"></i>
         Close
