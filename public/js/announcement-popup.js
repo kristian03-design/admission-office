@@ -28,8 +28,11 @@
   }
 
   function closePopup() {
-    if (checkbox?.checked && annId) {
-      localStorage.setItem('dont_show_announcement_' + annId, 'true');
+    if (annId) {
+      sessionStorage.setItem('dismissed_announcement_' + annId, 'true');
+      if (checkbox?.checked) {
+        localStorage.setItem('dont_show_announcement_' + annId, 'true');
+      }
     }
 
     popup.classList.remove('is-open');
@@ -84,9 +87,6 @@
   });
 
   window.addEventListener('DOMContentLoaded', () => {
-    if (annId && localStorage.getItem('dont_show_announcement_' + annId) === 'true') {
-      return;
-    }
     window.setTimeout(openPopup, 900);
   });
 })();

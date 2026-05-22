@@ -22,7 +22,7 @@
     || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
 @endphp
 
-<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=11">
+<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=13">
 
 <div
   id="announcementPopup"
@@ -147,7 +147,8 @@
         @if($popupAnn->popup_button_link)
           <a
             href="{{ $popupAnn->popup_button_link }}"
-            class="announcement-popup__btn announcement-popup__btn--secondary">
+            class="announcement-popup__btn announcement-popup__btn--secondary"
+            data-announcement-close-nav>
             {{ $popupAnn->popup_button_text ?? 'View Announcements' }}
           </a>
         @else
@@ -171,5 +172,5 @@
   </div>
 </div>
 
-<script src="{{ asset('js/announcement-popup.js') }}?v=11" defer></script>
+<script src="{{ asset('js/announcement-popup.js') }}?v=13" defer></script>
 @endif
