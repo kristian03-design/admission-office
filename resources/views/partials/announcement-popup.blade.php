@@ -22,7 +22,7 @@
     || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
 @endphp
 
-<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=13">
+<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=15">
 
 <div
   id="announcementPopup"
@@ -58,7 +58,7 @@
         </div>
 
         <span class="announcement-popup__badge">
-          <i data-iconsax="notification"></i>
+          <i data-iconsax="notification" data-iconsax-style="bulk"></i>
           IMPORTANT ANNOUNCEMENT
         </span>
 
@@ -110,7 +110,7 @@
         ] as $feature)
           <div class="announcement-popup__feature-card">
             <div class="announcement-popup__feature-icon">
-              <i data-iconsax="{{ $feature['icon'] }}"></i>
+              <i data-iconsax="{{ $feature['icon'] }}" data-iconsax-style="bulk"></i>
             </div>
 
             <div class="announcement-popup__feature-body">
@@ -127,13 +127,13 @@
 
       <div class="announcement-popup__alert">
         <div class="announcement-popup__alert-icon">
-          <i data-iconsax="shield-tick"></i>
+          <i data-iconsax="shield-tick" data-iconsax-style="bulk"></i>
         </div>
 
-        <p class="announcement-popup__alert-text">
-          <strong>Start your future with confidence.</strong>
-          We're here to support you every step of the way.
-        </p>
+        <div class="announcement-popup__alert-text">
+          <span class="announcement-popup__alert-title">Start your future with confidence.</span>
+          <span class="announcement-popup__alert-desc">We're here to support you every step of the way.</span>
+        </div>
       </div>
     @endif
 
@@ -172,5 +172,5 @@
   </div>
 </div>
 
-<script src="{{ asset('js/announcement-popup.js') }}?v=13" defer></script>
+<script src="{{ asset('js/announcement-popup.js') }}?v=15" defer></script>
 @endif
