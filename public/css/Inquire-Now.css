@@ -2312,8 +2312,8 @@ body.site-loader-lock {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 80% center;
-  transform: scale(1.02);
+  object-position: 79% center;
+  transform: scale(1.05);
   user-select: none;
   -webkit-user-drag: none;
 }
