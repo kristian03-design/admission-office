@@ -10,7 +10,7 @@
   </script>
   @include('partials.iconsax')
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" />
-  <link rel="stylesheet" href="{{ asset('css/Inquire-Now.css') }}?v=135">
+  <link rel="stylesheet" href="{{ asset('css/Inquire-Now.css') }}?v=137">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .mo {
