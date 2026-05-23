@@ -121,46 +121,6 @@
       <!-- Close Button -->
       <a href="{{ route('home') }}" class="ac-close-btn" aria-label="Close modal">&times;</a>
 
-      <!-- Features Row -->
-      <div class="ac-features">
-        <div class="ac-feature-card">
-          <div class="ac-feature-icon">
-            <i data-iconsax="monitor" data-iconsax-style="linear"></i>
-          </div>
-          <div class="ac-feature-body">
-            <h4 class="ac-feature-title">Easy Access</h4>
-            <p class="ac-feature-desc">All admission information in one convenient place.</p>
-          </div>
-        </div>
-        <div class="ac-feature-card">
-          <div class="ac-feature-icon">
-            <i data-iconsax="document-text" data-iconsax-style="linear"></i>
-          </div>
-          <div class="ac-feature-body">
-            <h4 class="ac-feature-title">Simple Process</h4>
-            <p class="ac-feature-desc">Step-by-step guidance for a smooth application.</p>
-          </div>
-        </div>
-        <div class="ac-feature-card">
-          <div class="ac-feature-icon">
-            <i data-iconsax="notification-bing" data-iconsax-style="linear"></i>
-          </div>
-          <div class="ac-feature-body">
-            <h4 class="ac-feature-title">Stay Updated</h4>
-            <p class="ac-feature-desc">Get the latest announcements and reminders.</p>
-          </div>
-        </div>
-        <div class="ac-feature-card">
-          <div class="ac-feature-icon">
-            <i data-iconsax="shield-security" data-iconsax-style="linear"></i>
-          </div>
-          <div class="ac-feature-body">
-            <h4 class="ac-feature-title">Secure & Trusted</h4>
-            <p class="ac-feature-desc">Your data is safe with our secure admission system.</p>
-          </div>
-        </div>
-      </div>
-
       <!-- Footer -->
       <footer class="ac-footer">
         <div class="ac-help-wrap">
