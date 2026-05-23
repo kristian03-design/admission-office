@@ -31,7 +31,32 @@
     || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
 @endphp
 
-<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=55">
+<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=999">
+<style>
+  @media (max-width: 991px) {
+    .announcement-popup__hero {
+      display: none !important;
+    }
+    .announcement-popup__footer {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      padding: 16px 22px 22px !important;
+    }
+    .announcement-popup__actions {
+      flex-direction: column-reverse !important;
+      gap: 10px !important;
+      width: 100% !important;
+    }
+    .announcement-popup__btn {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .announcement-popup__dont-show {
+      justify-content: center !important;
+      margin-top: 16px !important;
+    }
+  }
+</style>
 
 <div
   id="announcementPopup"
