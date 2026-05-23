@@ -31,7 +31,7 @@
     || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
 @endphp
 
-<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=40">
+<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=55">
 
 <div
   id="announcementPopup"
@@ -58,9 +58,10 @@
 
         <span class="announcement-popup__badge">
           <i data-iconsax="notification-bing" data-iconsax-style="linear"></i>
-          IMPORTANT ANNOUNCEMENT
+          OFFICIAL NOTICE
         </span>
-
+   
+    
         <div class="announcement-popup__headline-wrap">
           @if($titleIsWelcome)
             <h2 class="announcement-popup__title">
@@ -133,11 +134,6 @@
     @endif
 
     <footer class="announcement-popup__footer">
-      <label class="announcement-popup__dont-show">
-        <input type="checkbox" id="dontShowAgain">
-        <span>Don't show this again</span>
-      </label>
-
       <div class="announcement-popup__actions">
         @if($popupAnn->popup_button_link)
           <a href="{{ $popupAnn->popup_button_link }}" class="announcement-popup__btn announcement-popup__btn--secondary" data-announcement-close-nav>
@@ -156,6 +152,11 @@
           Get Started
         </a>
       </div>
+
+      <label class="announcement-popup__dont-show">
+        <input type="checkbox" id="dontShowAgain">
+        <span>Don't show this again</span>
+      </label>
     </footer>
   </div>
 </div>
