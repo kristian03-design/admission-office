@@ -2228,6 +2228,7 @@ body.site-loader-lock {
     width: 55%;
     z-index: 10;
     height: 100%;
+    overflow: visible;
   }
 }
 
@@ -2261,6 +2262,14 @@ body.site-loader-lock {
   z-index: 10;
   user-select: none;
   -webkit-user-drag: none;
+}
+
+@media (min-width: 768px) {
+  .ac-student-img {
+    width: 120%;
+    right: 0;
+    left: auto;
+  }
 }
 
 .ac-gradient-fade {
