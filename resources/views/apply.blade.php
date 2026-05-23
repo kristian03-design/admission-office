@@ -81,18 +81,22 @@
 
           <!-- Main Title -->
           <div class="announcement-popup__headline-wrap">
-            <h2 class="announcement-popup__title">
+            <h2 class="announcement-popup__title" style="font-family: 'DM Serif Display', Georgia, serif; font-weight: normal; font-size: clamp(2rem, 3.2vw, 2.85rem); line-height: 1.15; letter-spacing: -0.01em;">
               <span class="announcement-popup__title-line1">Admissions are</span>
               <span class="announcement-popup__title-line2">currently <span style="color:#ef4444">closed</span></span>
             </h2>
-            <span class="announcement-popup__title-accent"></span>
+            <span class="announcement-popup__title-accent" style="margin-top: 14px; margin-bottom: 24px; display: block; width: 56px; height: 4px; border-radius: 999px; background: #f4b942;"></span>
           </div>
 
           <!-- Description -->
-          <p class="announcement-popup__message">
-            The admission portal is temporarily unavailable as the current application period has ended. 
-            Please stay updated through official announcements for the next admission schedule.
-          </p>
+          <div class="announcement-popup__message" style="display: flex; flex-direction: column; gap: 18px; margin-bottom: 24px;">
+            <p style="margin: 0; font-size: 13.5px; line-height: 1.6; color: #5f6f85; font-family: 'Poppins', sans-serif;">
+              The admission portal is temporarily unavailable as the current application period has ended.
+            </p>
+            <p style="margin: 0; font-size: 13.5px; line-height: 1.6; color: #5f6f85; font-family: 'Poppins', sans-serif;">
+              Please stay updated through official announcements for the next admission schedule.
+            </p>
+          </div>
         </div>
 
         <!-- Right Side Visual / Hero -->
@@ -137,13 +141,13 @@
       </div>
 
       <!-- Alert Banner -->
-      <div class="announcement-popup__alert">
-        <div class="announcement-popup__alert-icon">
-          <i data-iconsax="shield-security" data-iconsax-style="linear"></i>
+      <div class="announcement-popup__alert" style="margin: 20px 32px; display: flex; align-items: start; gap: 14px; padding: 16px 20px; background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 16px;">
+        <div style="width: 44px; height: 44px; border-radius: 50%; bg-color: rgba(244, 185, 66, 0.1); background: #fef3c7; border: 1.5px solid #f4b942; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+          <i data-iconsax="calendar-days" data-iconsax-style="linear" style="font-size: 22px; color: #c27803;"></i>
         </div>
-        <div class="announcement-popup__alert-text">
-          <span class="announcement-popup__alert-title">Start your future with confidence.</span>
-          <span class="announcement-popup__alert-desc">We're here to support you every step of the way.</span>
+        <div style="display: flex; flex-direction: column; gap: 4px; text-align: left;">
+          <span style="font-size: 13.5px; font-weight: 700; color: #0a1f44; font-family: 'Poppins', sans-serif;">Next Admission Period</span>
+          <span style="font-size: 12px; color: #5f6f85; line-height: 1.5; font-family: 'Poppins', sans-serif;">Applications are expected to reopen soon. Follow our official channels for updates.</span>
         </div>
       </div>
 
@@ -155,10 +159,10 @@
         </div>
 
         <div class="announcement-popup__actions">
-          <a href="{{ route('home') }}" class="announcement-popup__btn announcement-popup__btn--secondary" style="min-width:140px; text-decoration:none;">
+          <a href="{{ route('home') }}" class="announcement-popup__btn announcement-popup__btn--primary" style="text-decoration:none;">
             Return to Homepage
           </a>
-          <a href="{{ route('news-events') }}" class="announcement-popup__btn announcement-popup__btn--primary" style="min-width:180px; text-decoration:none;">
+          <a href="{{ route('news-events') }}" class="announcement-popup__btn announcement-popup__btn--secondary" style="text-decoration:none;">
             View Admission Updates
           </a>
         </div>
