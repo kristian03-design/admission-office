@@ -10,7 +10,7 @@
   </script>
   @include('partials.iconsax')
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" />
-  <link rel="stylesheet" href="{{ asset('css/Inquire-Now.css') }}?v=35">
+  <link rel="stylesheet" href="{{ asset('css/Inquire-Now.css') }}?v=55">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .mo {
@@ -130,7 +130,7 @@
         <div class="ac-right-col">
           <div class="ac-right-bg-glow"></div>
           <div class="ac-right-pattern"></div>
-          <img src="{{ asset('assets/images/inquire_now_banner.png') }}" alt="Students" class="ac-student-img" loading="lazy">
+          <img src="{{ asset('assets/images/announcement_logo.png') }}" alt="Students" class="ac-student-img" loading="lazy">
           <div class="ac-gradient-fade"></div>
 
           <!-- Floating Banner -->

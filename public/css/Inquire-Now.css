@@ -2556,19 +2556,22 @@ body.site-loader-lock {
 
 .ac-float-banner {
   position: absolute;
-  left: 26px;
-  right: 26px;
-  bottom: 26px;
+  left: auto;
+  right: 32px;
+  bottom: 24px;
+  width: 440px;
   z-index: 30;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding: 16px 18px;
+  gap: 6px;
+  padding: 12px 14px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 16px 36px rgba(10, 31, 68, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .ac-float-item {
