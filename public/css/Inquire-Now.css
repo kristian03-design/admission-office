@@ -2218,7 +2218,7 @@ body.site-loader-lock {
 @media (min-width: 992px) {
   .ac-body {
     flex-direction: row;
-    min-height: 525px;
+    min-height: 380px;
   }
 }
 
