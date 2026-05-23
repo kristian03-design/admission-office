@@ -62,97 +62,99 @@
   <div class="ac-overlay">
     <div class="ac-container animate-modal-in">
       
+      <div class="ac-body">
+        <!-- Left Content Column -->
+        <div class="ac-left-col">
+          <div>
+            <!-- Brand -->
+            <div class="ac-brand">
+              <img src="{{ asset('assets/images/logo_v2.png') }}" class="ac-logo" alt="Logo">
+              <div class="ac-brand-text">
+                <p class="ac-college-name">DALUBHASAANG POLITEKNIKO NG LUNGSOD NG BALIWAG</p>
+                <p class="ac-college-motto">Excellence &bull; Innovation &bull; Service</p>
+              </div>
+            </div>
+
+            <!-- Badge -->
+            <span class="ac-badge">
+              <i data-iconsax="lock" data-iconsax-style="linear"></i>
+              Admission Status
+            </span>
+
+            <!-- Title -->
+            <div class="ac-title-wrap">
+              <h2 class="ac-title">
+                Admissions are<br>currently <span style="color:#ef4444">closed</span>
+              </h2>
+              <span class="ac-title-accent"></span>
+            </div>
+
+            <!-- Description -->
+            <div class="ac-desc-wrap">
+              <p class="ac-desc-text">The admission portal is temporarily unavailable as the current application period has ended.</p>
+              <p class="ac-desc-text">Please stay updated through official announcements for the next admission schedule.</p>
+            </div>
+
+            <!-- Yellow Card -->
+            <div class="ac-alert-box">
+              <div class="ac-alert-icon-wrap">
+                <i data-iconsax="calendar-days" data-iconsax-style="linear"></i>
+              </div>
+              <div class="ac-alert-content">
+                <span class="ac-alert-title">Next Admission Period</span>
+                <span class="ac-alert-desc">Applications are expected to reopen soon. Follow our official channels for updates.</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <!-- Buttons -->
+            <div class="ac-btn-row">
+              <a href="{{ route('news-events') }}" class="ac-btn ac-btn--secondary">
+                <i data-iconsax="notification-bing"></i> View Admission Updates
+              </a>
+              <a href="{{ route('home') }}" class="ac-btn ac-btn--primary">
+                <i data-iconsax="home"></i> Return to Homepage
+              </a>
+            </div>
+
+            <!-- Help Link -->
+            <div class="ac-help-wrap">
+              <i data-iconsax="headphone"></i>
+              <span>Need help? <a href="{{ route('home') }}#contact" class="ac-help-link">Contact the Admission Office &rarr;</a></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Visual Column (Absolute backdrop on desktop) -->
+        <div class="ac-right-col">
+          <div class="ac-right-bg-glow"></div>
+          <div class="ac-right-pattern"></div>
+          <img src="{{ asset('assets/images/inquire_now_banner.png') }}" alt="Students" class="ac-student-img" loading="lazy">
+          <div class="ac-gradient-fade"></div>
+
+          <!-- Floating Banner -->
+          <div class="ac-float-banner">
+            <div class="ac-float-item">
+              <div class="ac-float-icon-wrap"><i data-iconsax="shield-security"></i></div>
+              <span class="ac-float-label">Secure Process</span>
+            </div>
+            <div class="ac-float-divider"></div>
+            <div class="ac-float-item">
+              <div class="ac-float-icon-wrap"><i data-iconsax="teacher"></i></div>
+              <span class="ac-float-label">Quality Education</span>
+            </div>
+            <div class="ac-float-divider"></div>
+            <div class="ac-float-item">
+              <div class="ac-float-icon-wrap"><i data-iconsax="star"></i></div>
+              <span class="ac-float-label">Student Success</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Close Button -->
       <a href="{{ route('home') }}" class="ac-close-btn">&times;</a>
-
-      <!-- Left Pane -->
-      <div class="ac-left-col">
-        <div>
-          <!-- Brand -->
-          <div class="ac-brand">
-            <img src="{{ asset('assets/images/logo_v2.png') }}" class="ac-logo" alt="Logo">
-            <div class="ac-brand-text">
-              <p class="ac-college-name">DALUBHASAANG POLITEKNIKO NG LUNGSOD NG BALIWAG</p>
-              <p class="ac-college-motto">Excellence &bull; Innovation &bull; Service</p>
-            </div>
-          </div>
-
-          <!-- Badge -->
-          <span class="ac-badge">
-            <i data-iconsax="lock" data-iconsax-style="linear"></i>
-            Admission Status
-          </span>
-
-          <!-- Title -->
-          <div class="ac-title-wrap">
-            <h2 class="ac-title">
-              Admissions are<br>currently <span style="color:#ef4444">closed</span>
-            </h2>
-            <span class="ac-title-accent"></span>
-          </div>
-
-          <!-- Description -->
-          <div class="ac-desc-wrap">
-            <p class="ac-desc-text">The admission portal is temporarily unavailable as the current application period has ended.</p>
-            <p class="ac-desc-text">Please stay updated through official announcements for the next admission schedule.</p>
-          </div>
-
-          <!-- Yellow Card -->
-          <div class="ac-alert-box">
-            <div class="ac-alert-icon-wrap">
-              <i data-iconsax="calendar-days" data-iconsax-style="linear"></i>
-            </div>
-            <div class="ac-alert-content">
-              <span class="ac-alert-title">Next Admission Period</span>
-              <span class="ac-alert-desc">Applications are expected to reopen soon. Follow our official channels for updates.</span>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <!-- Buttons -->
-          <div class="ac-btn-row">
-            <a href="{{ route('news-events') }}" class="ac-btn ac-btn--secondary">
-              <i data-iconsax="notification-bing"></i> View Admission Updates
-            </a>
-            <a href="{{ route('home') }}" class="ac-btn ac-btn--primary">
-              <i data-iconsax="home"></i> Return to Homepage
-            </a>
-          </div>
-
-          <!-- Help Link -->
-          <div class="ac-help-wrap">
-            <i data-iconsax="headphone"></i>
-            <span>Need help? <a href="{{ route('home') }}#contact" class="ac-help-link">Contact the Admission Office &rarr;</a></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Pane -->
-      <div class="ac-right-col">
-        <div class="ac-right-bg-glow"></div>
-        <div class="ac-right-pattern"></div>
-        <img src="{{ asset('assets/images/inquire_now_banner.png') }}" alt="Students" class="ac-student-img">
-        <div class="ac-gradient-fade"></div>
-
-        <!-- Floating Banner -->
-        <div class="ac-float-banner">
-          <div class="ac-float-item">
-            <div class="ac-float-icon-wrap"><i data-iconsax="shield-security"></i></div>
-            <span class="ac-float-label">Secure Process</span>
-          </div>
-          <div class="ac-float-divider"></div>
-          <div class="ac-float-item">
-            <div class="ac-float-icon-wrap"><i data-iconsax="teacher"></i></div>
-            <span class="ac-float-label">Quality Education</span>
-          </div>
-          <div class="ac-float-divider"></div>
-          <div class="ac-float-item">
-            <div class="ac-float-icon-wrap"><i data-iconsax="star"></i></div>
-            <span class="ac-float-label">Student Success</span>
-          </div>
-        </div>
-      </div>
 
     </div>
   </div>
