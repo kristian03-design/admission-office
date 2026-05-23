@@ -2528,8 +2528,8 @@ body.site-loader-lock {
 .ac-footer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  align-items: flex-start;
+  gap: 14px;
   padding: 20px 36px 22px;
   border-top: 1px solid #e8edf4;
   background: #fff;
@@ -2538,10 +2538,11 @@ body.site-loader-lock {
 .ac-help-wrap {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
   font-size: 12.5px;
   color: #5f6f85;
+  order: 2;
 }
 
 .ac-help-wrap i {
@@ -2558,9 +2559,10 @@ body.site-loader-lock {
 
 .ac-actions {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
   width: 100%;
+  order: 1;
 }
 
 .ac-btn {
@@ -2673,7 +2675,6 @@ body.site-loader-lock {
 
   .ac-help-wrap {
     justify-content: center;
-    margin-top: 16px;
   }
 
   .ac-actions {

@@ -465,8 +465,8 @@
 .announcement-popup__footer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  align-items: flex-start;
+  gap: 14px;
   padding: 20px 36px 22px;
   border-top: 1px solid var(--ap-border);
   background: #fff;
@@ -475,7 +475,7 @@
 .announcement-popup__dont-show {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 9px;
   cursor: pointer;
   user-select: none;
@@ -496,7 +496,7 @@
 
 .announcement-popup__actions {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
   width: 100%;
 }
@@ -535,7 +535,7 @@
 
 .announcement-popup__btn--secondary i,
 .announcement-popup__btn--secondary svg {
-  color: var(--ap-gold) !important;
+  color: var(--ap-navy) !important;
 }
 
 .announcement-popup__btn--secondary:hover {

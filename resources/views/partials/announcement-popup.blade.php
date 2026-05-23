@@ -31,7 +31,7 @@
     || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
 @endphp
 
-<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=999">
+<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=1001">
 <style>
   @media (max-width: 991px) {
     .announcement-popup__hero {
