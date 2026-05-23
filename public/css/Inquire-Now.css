@@ -2527,10 +2527,10 @@ body.site-loader-lock {
 /* FOOTER */
 .ac-footer {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 16px 36px 22px;
+  gap: 16px;
+  padding: 20px 36px 22px;
   border-top: 1px solid #e8edf4;
   background: #fff;
 }
@@ -2538,6 +2538,7 @@ body.site-loader-lock {
 .ac-help-wrap {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   font-size: 12.5px;
   color: #5f6f85;
@@ -2557,8 +2558,9 @@ body.site-loader-lock {
 
 .ac-actions {
   display: flex;
-  flex-shrink: 0;
-  gap: 10px;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
 }
 
 .ac-btn {
@@ -2645,27 +2647,7 @@ body.site-loader-lock {
   }
 
   .ac-right-col {
-    position: relative;
-    width: 100%;
-    height: 260px;
-    order: -1;
-  }
-
-  .ac-student-img {
-    right: 0;
-    width: 100% !important;
-    height: 100% !important;
-    object-position: center;
-    transform: scale(1.02);
-  }
-
-  .ac-gradient-fade {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0) 50%,
-        #fff 100%
-      );
+    display: none !important;
   }
 
   .ac-close-btn {
@@ -2689,6 +2671,11 @@ body.site-loader-lock {
     padding: 16px 22px 22px;
   }
 
+  .ac-help-wrap {
+    justify-content: center;
+    margin-top: 16px;
+  }
+
   .ac-actions {
     flex-direction: column-reverse;
     gap: 10px;
@@ -2707,9 +2694,5 @@ body.site-loader-lock {
 
   .ac-title {
     font-size: 1.75rem;
-  }
-
-  .ac-right-col {
-    height: 220px;
   }
 }
