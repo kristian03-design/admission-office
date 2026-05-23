@@ -5074,7 +5074,9 @@ main {
   transition: all 0.2s ease;
   text-decoration: none;
   padding: 0 1.5rem;
+  white-space: nowrap;
 }
+
 
 .modal-footer-btn--close {
   background: #ffffff;
@@ -5391,10 +5393,16 @@ main {
 
   .modal-footer-btn {
     flex: 1 !important;
+    white-space: nowrap !important;
     min-width: 0 !important;
     padding: 0 0.5rem !important;
     font-size: 0.85rem !important;
     min-height: 42px !important;
     border-radius: 10px !important;
+  }
+
+  .modal-footer-btn--close {
+    flex: 0 0 auto !important;
+    padding: 0 1.25rem !important;
   }
 }
