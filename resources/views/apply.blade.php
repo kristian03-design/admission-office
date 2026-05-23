@@ -132,7 +132,7 @@
       <div class="ac-right-col">
         <div class="ac-right-bg-glow"></div>
         <div class="ac-right-pattern"></div>
-        <img src="{{ asset('assets/images/announcement_logo.png') }}" alt="Students" class="ac-student-img">
+        <img src="{{ asset('assets/images/inquire_now_banner.png') }}" alt="Students" class="ac-student-img">
         <div class="ac-gradient-fade"></div>
 
         <!-- Floating Banner -->
