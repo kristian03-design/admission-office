@@ -38,7 +38,7 @@
   <!-- ✦ Iconsax Icons ✦ -->
   @include('partials.iconsax')
 
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=37" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=39" />
 
 </head>
 
@@ -764,10 +764,6 @@
           <button id="print-guide" class="modal-header-btn" aria-label="Print guidelines">
             <i data-iconsax="printer"></i>
             <span>Print</span>
-          </button>
-          <button id="close-guide" class="modal-header-btn" aria-label="Close modal">
-            <i data-iconsax="x"></i>
-            <span>Close</span>
           </button>
         </div>
       </div>
