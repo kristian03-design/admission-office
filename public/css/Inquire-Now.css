@@ -2313,7 +2313,7 @@ body.site-loader-lock {
   height: 100%;
   object-fit: cover;
   object-position: 78% center;
-  transform: scale(1.01);
+  transform: scale(1.025);
   user-select: none;
   -webkit-user-drag: none;
 }
