@@ -2226,7 +2226,7 @@ body.site-loader-lock {
   position: relative;
   z-index: 5;
   width: 100%;
-  padding: 28px 32px 72px 36px;
+  padding: 28px 32px 32px 36px;
   display: flex;
   flex-direction: column;
 }
@@ -2235,7 +2235,7 @@ body.site-loader-lock {
   .ac-left-col {
     width: 52%;
     max-width: 520px;
-    padding: 32px 36px 72px 40px;
+    padding: 32px 36px 36px 40px;
   }
 }
 
@@ -2312,7 +2312,7 @@ body.site-loader-lock {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 78% center;
+  object-position: 75% center;
   transform: scale(1.02);
   user-select: none;
   -webkit-user-drag: none;
@@ -2432,6 +2432,7 @@ body.site-loader-lock {
 }
 
 .ac-title {
+  font-family: "Poppins", "Outfit", "Segoe UI", sans-serif;
   margin: 0;
   font-size: clamp(1.85rem, 2.8vw, 2.65rem);
   font-weight: 800;
@@ -2468,12 +2469,12 @@ body.site-loader-lock {
   color: #5f6f85;
 }
 
-/* FULL-WIDTH ALERT */
+/* YELLOW ALERT CARD */
 .ac-alert {
   display: flex;
   align-items: center;
   gap: 20px;
-  margin: 14px 36px 16px;
+  margin: 24px 0 0 0;
   padding: 16px 24px;
   border-radius: 20px;
   border: 1px solid #ffe8cc;
@@ -2502,24 +2503,25 @@ body.site-loader-lock {
 }
 
 .ac-alert-text {
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: #5f6f85;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: "Poppins", "Segoe UI", sans-serif;
 }
 
 .ac-alert-title {
-  font-size: 14.5px;
-  font-weight: 800; /* Extremely bold */
+  font-size: 14px;
+  font-weight: 700; /* Bold navy */
   color: #0a1f44;
-  margin-right: 6px;
-  display: inline;
+  display: block;
 }
 
 .ac-alert-desc {
-  font-size: 13.5px;
-  font-weight: 500; /* Medium weight */
+  font-size: 12.5px;
+  font-weight: 400; /* Regular weight */
   color: #5f6f85;
-  display: inline;
+  display: block;
+  line-height: 1.5;
 }
 
 /* FOOTER */
@@ -2678,7 +2680,7 @@ body.site-loader-lock {
   }
 
   .ac-alert {
-    margin: 14px 22px;
+    margin: 20px 0 0 0;
   }
 
   .ac-footer {

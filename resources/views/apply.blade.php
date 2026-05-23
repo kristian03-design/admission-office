@@ -10,7 +10,7 @@
   </script>
   @include('partials.iconsax')
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" />
-  <link rel="stylesheet" href="{{ asset('css/Inquire-Now.css') }}?v=125">
+  <link rel="stylesheet" href="{{ asset('css/Inquire-Now.css') }}?v=135">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .mo {
@@ -93,6 +93,17 @@
             <p class="ac-desc-text">The admission portal is temporarily unavailable as the current application period has ended.</p>
             <p class="ac-desc-text">Please stay updated through official announcements for the next admission schedule.</p>
           </div>
+
+          <!-- Yellow Card (Placed at the bottom of the paragraph) -->
+          <div class="ac-alert">
+            <div class="ac-alert-icon">
+              <i data-iconsax="calendar-days" data-iconsax-style="linear"></i>
+            </div>
+            <div class="ac-alert-text">
+              <span class="ac-alert-title">Next Admission Period</span>
+              <span class="ac-alert-desc">Applications are expected to reopen soon. Follow our official channels for updates.</span>
+            </div>
+          </div>
         </div>
 
         <!-- Right Visual Column (Absolute backdrop on desktop) -->
@@ -106,15 +117,47 @@
           <div class="ac-gradient-fade"></div>
         </div>
       </div>
-     
-      <!-- Full-Width Alert Card -->
-      <div class="ac-alert">
-        <div class="ac-alert-icon">
-          <i data-iconsax="calendar-days" data-iconsax-style="linear"></i>
+
+      <!-- Close Button -->
+      <a href="{{ route('home') }}" class="ac-close-btn" aria-label="Close modal">&times;</a>
+
+      <!-- Features Row -->
+      <div class="ac-features">
+        <div class="ac-feature-card">
+          <div class="ac-feature-icon">
+            <i data-iconsax="monitor" data-iconsax-style="linear"></i>
+          </div>
+          <div class="ac-feature-body">
+            <h4 class="ac-feature-title">Easy Access</h4>
+            <p class="ac-feature-desc">All admission information in one convenient place.</p>
+          </div>
         </div>
-        <div class="ac-alert-text">
-          <span class="ac-alert-title">Next Admission Period</span>
-          <span class="ac-alert-desc">Applications are expected to reopen soon. Follow our official channels for updates.</span>
+        <div class="ac-feature-card">
+          <div class="ac-feature-icon">
+            <i data-iconsax="document-text" data-iconsax-style="linear"></i>
+          </div>
+          <div class="ac-feature-body">
+            <h4 class="ac-feature-title">Simple Process</h4>
+            <p class="ac-feature-desc">Step-by-step guidance for a smooth application.</p>
+          </div>
+        </div>
+        <div class="ac-feature-card">
+          <div class="ac-feature-icon">
+            <i data-iconsax="notification-bing" data-iconsax-style="linear"></i>
+          </div>
+          <div class="ac-feature-body">
+            <h4 class="ac-feature-title">Stay Updated</h4>
+            <p class="ac-feature-desc">Get the latest announcements and reminders.</p>
+          </div>
+        </div>
+        <div class="ac-feature-card">
+          <div class="ac-feature-icon">
+            <i data-iconsax="shield-security" data-iconsax-style="linear"></i>
+          </div>
+          <div class="ac-feature-body">
+            <h4 class="ac-feature-title">Secure & Trusted</h4>
+            <p class="ac-feature-desc">Your data is safe with our secure admission system.</p>
+          </div>
         </div>
       </div>
 
@@ -136,9 +179,6 @@
           </a>
         </div>
       </footer>
-
-    </div>
-  </div>
 
     </div>
   </div>
