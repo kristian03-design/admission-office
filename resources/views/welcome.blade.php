@@ -585,11 +585,7 @@
                 </div>
               </div>
               <div class="flex flex-col gap-4 min-w-64">
-                <a href="{{ route('apply') }}?fresh=true" class="btn-cta-primary text-center">
-                  {{ $settings['cta_section_button_text'] ?? 'Apply Online Now' }}
-                  <i data-iconsax="arrow-right" style="display:inline-flex;margin-left:.5rem;vertical-align:middle;width:18px;height:18px;"></i>
-                </a>
-                <button id="open-guide" class="btn-cta-link text-center text-sm w-full">Admission Guidelines & Guide →</button>
+                <button id="open-guide" class="btn-cta-ghost w-full">Admission Guidelines & Guide <i data-iconsax="arrow-right"></i></button>
               </div>
             </div>
           </div>
@@ -755,13 +751,23 @@
   <div id="guide-modal" class="modal-overlay">
     <div class="modal-container">
       <div class="modal-header">
-        <h2 class="modal-title">Admission Guidelines</h2>
-        <div class="flex items-center gap-4">
-          <button id="print-guide" class="modal-close" aria-label="Print guidelines">
+        <div class="modal-header-left">
+          <div class="modal-header-logo-wrap">
+            <img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo">
+          </div>
+          <div class="modal-header-title-wrap">
+            <h2 class="modal-title">Admission Guidelines</h2>
+            <span class="modal-subtitle">Follow the steps below to complete your admission process.</span>
+          </div>
+        </div>
+        <div class="modal-header-right">
+          <button id="print-guide" class="modal-header-btn" aria-label="Print guidelines">
             <i data-iconsax="printer"></i>
+            <span>Print</span>
           </button>
-          <button id="close-guide" class="modal-close" aria-label="Close modal">
+          <button id="close-guide" class="modal-header-btn" aria-label="Close modal">
             <i data-iconsax="x"></i>
+            <span>Close</span>
           </button>
         </div>
       </div>
@@ -770,8 +776,10 @@
         <!-- NEW STUDENTS -->
         <section class="guide-section">
           <h3 class="guide-category">
-            <i data-iconsax="user-plus"></i>
-            New Students (Freshmen – Graduate & Undergraduate)
+            <div class="guide-category-icon">
+              <i data-iconsax="user-plus"></i>
+            </div>
+            <span>New Students (Freshmen – Graduate & Undergraduate)</span>
           </h3>
           <div class="guide-list">
             <div class="guide-item">
@@ -782,13 +790,15 @@
               <span class="guide-step">2</span>
               <div class="guide-text">
                 Present the following documents in a <strong>long brown envelope</strong>.
-                <span class="guide-note">Note: Write your full name in CAPITAL LETTERS at the upper left corner (SURNAME, FIRST NAME, MIDDLE NAME).</span>
-                <div class="guide-sub-list">
-                  <span class="guide-sub-item">3pcs 2X2 picture with white background</span>
-                  <span class="guide-sub-item">Original Card of Grade 11 and 12 (Report Card)</span>
-                  <span class="guide-sub-item">Original Good Moral Certificate</span>
-                  <span class="guide-sub-item">Photocopy of PSA Birth Certificate</span>
-                  <span class="guide-sub-item">Photocopy of SHS Diploma</span>
+                <span class="guide-note" style="margin-bottom: 0.75rem;">Note: Write your full name in CAPITAL LETTERS at the upper left corner (SURNAME, FIRST NAME, MIDDLE NAME).</span>
+                <div class="guide-documents-box">
+                  <div class="guide-documents-list">
+                    <div class="guide-document-item">3pcs 2X2 picture with white background</div>
+                    <div class="guide-document-item">Original Card of Grade 11 and 12 (Report Card)</div>
+                    <div class="guide-document-item">Original Good Moral Certificate</div>
+                    <div class="guide-document-item">Photocopy of PSA Birth Certificate</div>
+                    <div class="guide-document-item">Photocopy of SHS Diploma</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -812,8 +822,10 @@
         <!-- TRANSFEREE -->
         <section class="guide-section">
           <h3 class="guide-category">
-            <i data-iconsax="refresh-cw"></i>
-            Transferees
+            <div class="guide-category-icon">
+              <i data-iconsax="refresh-cw"></i>
+            </div>
+            <span>Transferees</span>
           </h3>
           <div class="guide-list">
             <div class="guide-item">
@@ -824,13 +836,15 @@
               <span class="guide-step">2</span>
               <div class="guide-text">
                 Present the following documents in a <strong>long brown envelope</strong>.
-                <span class="guide-note">Note: Write your full name in CAPITAL LETTERS at the upper left corner (SURNAME, FIRST NAME, MIDDLE NAME).</span>
-                <div class="guide-sub-list">
-                  <span class="guide-sub-item">3pcs 2X2 picture with white background</span>
-                  <span class="guide-sub-item">Original Transcript of Records (TOR)</span>
-                  <span class="guide-sub-item">Honorable Dismissal</span>
-                  <span class="guide-sub-item">Original Good Moral Certificate</span>
-                  <span class="guide-sub-item">Photocopy of PSA Birth Certificate</span>
+                <span class="guide-note" style="margin-bottom: 0.75rem;">Note: Write your full name in CAPITAL LETTERS at the upper left corner (SURNAME, FIRST NAME, MIDDLE NAME).</span>
+                <div class="guide-documents-box">
+                  <div class="guide-documents-list">
+                    <div class="guide-document-item">3pcs 2X2 picture with white background</div>
+                    <div class="guide-document-item">Original Transcript of Records (TOR)</div>
+                    <div class="guide-document-item">Honorable Dismissal</div>
+                    <div class="guide-document-item">Original Good Moral Certificate</div>
+                    <div class="guide-document-item">Photocopy of PSA Birth Certificate</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -854,8 +868,10 @@
         <!-- RETURNING STUDENTS -->
         <section class="guide-section">
           <h3 class="guide-category">
-            <i data-iconsax="rotate-ccw"></i>
-            Returning Students
+            <div class="guide-category-icon">
+              <i data-iconsax="rotate-ccw"></i>
+            </div>
+            <span>Returning Students</span>
           </h3>
           <div class="guide-list">
             <div class="guide-item">
@@ -872,8 +888,10 @@
         <!-- ALS GRADUATES -->
         <section class="guide-section">
           <h3 class="guide-category">
-            <i data-iconsax="graduation-cap"></i>
-            ALS Graduates
+            <div class="guide-category-icon">
+              <i data-iconsax="graduation-cap"></i>
+            </div>
+            <span>ALS Graduates</span>
           </h3>
           <div class="guide-list">
             <div class="guide-item">
@@ -884,13 +902,15 @@
               <span class="guide-step">2</span>
               <div class="guide-text">
                 Present the following documents in a <strong>long brown envelope</strong>.
-                <span class="guide-note">Note: Write your full name in CAPITAL LETTERS at the upper left corner (SURNAME, FIRST NAME, MIDDLE NAME).</span>
-                <div class="guide-sub-list">
-                  <span class="guide-sub-item">3pcs 2X2 picture with white background</span>
-                  <span class="guide-sub-item">ALS Certificate of Completion (Original)</span>
-                  <span class="guide-sub-item">PEPT / TPEP Certificate (if applicable)</span>
-                  <span class="guide-sub-item">Original Good Moral Certificate</span>
-                  <span class="guide-sub-item">Photocopy of PSA Birth Certificate</span>
+                <span class="guide-note" style="margin-bottom: 0.75rem;">Note: Write your full name in CAPITAL LETTERS at the upper left corner (SURNAME, FIRST NAME, MIDDLE NAME).</span>
+                <div class="guide-documents-box">
+                  <div class="guide-documents-list">
+                    <div class="guide-document-item">3pcs 2X2 picture with white background</div>
+                    <div class="guide-document-item">ALS Certificate of Completion (Original)</div>
+                    <div class="guide-document-item">PEPT / TPEP Certificate (if applicable)</div>
+                    <div class="guide-document-item">Original Good Moral Certificate</div>
+                    <div class="guide-document-item">Photocopy of PSA Birth Certificate</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -912,10 +932,17 @@
         </section>
 
       </div>
+      <div class="modal-footer">
+        <button id="close-guide-footer" class="modal-footer-btn modal-footer-btn--close">Close</button>
+        <a href="{{ route('apply') }}?fresh=true" class="modal-footer-btn modal-footer-btn--apply">
+          <i data-iconsax="star" data-iconsax-style="linear"></i>
+          <span>Start Application</span>
+        </a>
+      </div>
     </div>
   </div>
 
-  <script src="{{ asset('js/home-page.js') }}?v=9"></script>
+  <script src="{{ asset('js/home-page.js') }}?v=10"></script>
   <script>
     // Initialize all icons including those in the modal and footer
     if (window.iconsax) {

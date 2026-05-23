@@ -898,6 +898,7 @@ console.log('%c BPC Admissions Landing Page loaded ✓', 'color:#254d82;font-wei
 (function initGuideModal() {
   const openBtn = document.getElementById('open-guide');
   const closeBtn = document.getElementById('close-guide');
+  const closeFooterBtn = document.getElementById('close-guide-footer');
   const printBtn = document.getElementById('print-guide');
   const modal = document.getElementById('guide-modal');
 
@@ -919,6 +920,7 @@ console.log('%c BPC Admissions Landing Page loaded ✓', 'color:#254d82;font-wei
   });
 
   closeBtn?.addEventListener('click', closeModal);
+  closeFooterBtn?.addEventListener('click', closeModal);
   printBtn?.addEventListener('click', () => window.print());
 
   // Close on outside click
