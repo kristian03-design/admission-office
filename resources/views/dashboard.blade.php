@@ -13,7 +13,7 @@
   @include('partials.iconsax')
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=37" />
-  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=22" />
+  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=23" />
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
@@ -529,6 +529,19 @@
 
     <!-- --- REPORTS --- -->
     <div class="page-content" id="page-reports">
+      <!-- Print-only Official Letterhead -->
+      <div class="print-header no-screen">
+        <div class="ph-logo-wrap">
+          <img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo">
+        </div>
+        <div class="ph-text">
+          <div class="ph-republic">Republic of the Philippines</div>
+          <div class="ph-college">BALIWAG POLYTECHNIC COLLEGE</div>
+          <div class="ph-office">Office of the Registrar &amp; Admissions</div>
+          <div class="ph-document">Enrollment and Application Analytics Report</div>
+        </div>
+      </div>
+
       <div class="page-header">
         <div>
           <h1 class="page-title">Reports</h1>
@@ -1362,9 +1375,15 @@
         <div class="slideover-title" id="slideoverTitle">Applicant Details</div>
         <div class="slideover-ref" id="slideoverRef">-</div>
       </div>
-      <button class="slideover-close" id="slideoverClose">
-        <i data-iconsax="x"></i>
-      </button>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button type="button" class="btn-outline no-print" id="printApplicantDetails" style="padding:6px 12px;display:flex;align-items:center;gap:6px;font-size:12px;height:38px;border-radius:999px;border:1px solid rgba(148,163,184,0.5);background:#fff;cursor:pointer;color:var(--navy)" onclick="window.print()">
+          <i data-iconsax="printer" style="width:16px;height:16px;stroke-width:2"></i>
+          <span>Print</span>
+        </button>
+        <button class="slideover-close" id="slideoverClose">
+          <i data-iconsax="x"></i>
+        </button>
+      </div>
     </div>
     <div class="slideover-body" id="slideoverBody"></div>
   </div>

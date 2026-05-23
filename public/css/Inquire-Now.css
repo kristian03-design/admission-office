@@ -1660,6 +1660,11 @@ body.site-loader-lock {
   bottom: -5px;
   z-index: -1;
   height: 12px;
+  left: 8%;
+  right: 8%;
+  bottom: -5px;
+  z-index: -1;
+  height: 12px;
   border-radius: 50%;
   background:
     radial-gradient(ellipse at center, rgba(255, 196, 0, .32) 0%, rgba(255, 196, 0, .14) 36%, rgba(255, 196, 0, .06) 58%, transparent 78%);
@@ -1795,29 +1800,103 @@ body.site-loader-lock {
    PRINT
 ════════════════════════════════ */
 @media print {
+  @page {
+    size: A4 portrait;
+    margin: 0.5in;
+  }
 
-  .no-print,
+  /* Hide all wrappers outside the review sheet */
+  body > *:not(.main-wrap),
+  .hdr,
+  .apply-hero,
+  .stepper-card,
+  .nav-bar,
   .review-action-bar,
-  .nav-bar {
+  #aForm > .sc:not([data-step="12"]),
+  .toast,
+  .mo {
     display: none !important;
   }
 
   body {
-    background: white !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .main-wrap {
-    padding: 0;
-  }
-
-  .review-sheet {
-    outline: none;
-    box-shadow: none !important;
-    min-width: unset;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .review-wrap {
-    overflow: visible;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    width: 100% !important;
+  }
+
+  .review-sheet {
+    border: 2px solid #000000 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    width: 100% !important;
+    min-width: unset !important;
+    position: relative !important;
+  }
+
+  .rs-school-name {
+    color: #000000 !important;
+  }
+
+  .rs-logo-box img {
+    filter: grayscale(1) !important;
+  }
+
+  .rs-sec-hdr {
+    background: #e2e8f0 !important;
+    color: #000000 !important;
+    border: 1px solid #000000 !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  .rs-table {
+    border: 1px solid #000000 !important;
+  }
+
+  .rs-table td, .rs-table th {
+    border: 1px solid #000000 !important;
+    color: #000000 !important;
+  }
+
+  .rs-table .lbl {
+    background: #f8fafc !important;
+    color: #000000 !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  .rs-badge {
+    border: 1px solid #000000 !important;
+    background: transparent !important;
+    color: #000000 !important;
+  }
+
+  .rs-badge.no {
+    border: 1px solid #000000 !important;
+    background: transparent !important;
+    color: #000000 !important;
+    text-decoration: line-through;
+  }
+
+  .rs-section {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 }
 

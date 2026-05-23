@@ -38,7 +38,7 @@
   <!-- ✦ Iconsax Icons ✦ -->
   @include('partials.iconsax')
 
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=39" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=40" />
 
 </head>
 
@@ -938,7 +938,7 @@
     </div>
   </div>
 
-  <script src="{{ asset('js/home-page.js') }}?v=10"></script>
+  <script src="{{ asset('js/home-page.js') }}?v=11"></script>
   <script>
     // Initialize all icons including those in the modal and footer
     if (window.iconsax) {

@@ -3915,8 +3915,69 @@ body {
 }
 
 /* ── Print ── */
-@media print {
+/* Print Header */
+.print-header {
+  display: none; /* Hidden on screen */
+}
 
+@media print {
+  .print-header {
+    display: flex !important;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    width: 100%;
+  }
+
+  .ph-logo-wrap {
+    width: 70px;
+    height: 70px;
+  }
+
+  .ph-logo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: grayscale(1);
+  }
+
+  .ph-text {
+    flex: 1;
+  }
+
+  .ph-republic {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #444;
+    letter-spacing: 1.5px;
+  }
+
+  .ph-college {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: #000000;
+    margin: 2px 0;
+  }
+
+  .ph-office {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .ph-document {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #000000;
+    margin-top: 5px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Reset main layouts */
   .sidebar,
   .topbar,
   .filter-bar,
@@ -3926,9 +3987,9 @@ body {
   .page-actions,
   .btn-primary,
   .btn-outline,
+  .btn-ghost,
   .notif-panel,
   .notif-overlay,
-  .slideover,
   .slideover-overlay,
   .toast,
   .sidebar-overlay {
@@ -3944,18 +4005,101 @@ body {
     display: block !important;
   }
 
-  .page-content:not(.active) {
+  .page-content:not(#page-reports) {
     display: none !important;
   }
 
-  .kpi-grid {
-    grid-template-columns: repeat(4, 1fr) !important;
+  .reports-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 15px !important;
+    margin-bottom: 25px !important;
   }
 
-  .charts-row,
-  .bottom-row,
+  .report-stat-card {
+    border: 1px solid #000000 !important;
+    background: transparent !important;
+    padding: 12px !important;
+    box-shadow: none !important;
+  }
+
+  .report-stat-label {
+    color: #444444 !important;
+    font-size: 11px !important;
+    text-transform: uppercase;
+  }
+
+  .report-stat-value {
+    color: #000000 !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+  }
+
+  .report-stat-sub {
+    color: #666666 !important;
+    font-size: 10px !important;
+  }
+
   .report-charts-row {
+    display: grid !important;
     grid-template-columns: 1fr 1fr !important;
+    gap: 20px !important;
+    margin-bottom: 25px !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .chart-card {
+    border: 1px solid #000000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 15px !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .chart-title {
+    color: #000000 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+  }
+
+  .chart-sub {
+    color: #555555 !important;
+    font-size: 11px !important;
+  }
+
+  .chart-body {
+    height: 240px !important;
+  }
+
+  .table-card {
+    border: 1px solid #000000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    margin-top: 20px !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .app-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  .app-table th, .app-table td {
+    border: 1px solid #000000 !important;
+    padding: 8px 12px !important;
+    color: #000000 !important;
+    font-size: 11px !important;
+  }
+
+  .app-table th {
+    background: #f1f5f9 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
   }
 
   body {
@@ -3963,12 +4107,86 @@ body {
     color: black;
   }
 
-  .kpi-card,
-  .chart-card,
-  .table-card,
-  .settings-card {
+  /* ═════ SLIDE-OVER PRINT MODE ═════ */
+  body:has(.slideover.open) > *:not(.slideover) {
+    display: none !important;
+  }
+
+  body:has(.slideover.open) .slideover {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    background: #ffffff !important;
+    transform: none !important;
+    border: none !important;
     box-shadow: none !important;
-    border: 1px solid #ccc !important;
+    display: block !important;
+  }
+
+  body:has(.slideover.open) .slideover-header {
+    background: #ffffff !important;
+    box-shadow: none !important;
+    border-bottom: 2px solid #000000 !important;
+    padding: 0 0 15px 0 !important;
+    margin-bottom: 20px !important;
+  }
+
+  body:has(.slideover.open) #printApplicantDetails,
+  body:has(.slideover.open) .slideover-close {
+    display: none !important;
+  }
+
+  body:has(.slideover.open) .slideover-body {
+    padding: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* Form layouts */
+  body:has(.slideover.open) .app-form {
+    color: #000000 !important;
+  }
+
+  body:has(.slideover.open) .form-college {
+    color: #000000 !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
+  }
+
+  body:has(.slideover.open) .form-subtitle {
+    border: 1px solid #000000 !important;
+    background: transparent !important;
+    color: #000000 !important;
+  }
+
+  body:has(.slideover.open) .form-header-with-photo {
+    border: 1px solid #000000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  body:has(.slideover.open) .form-photo-box {
+    border: 1px solid #000000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  body:has(.slideover.open) .form-section-title {
+    background: #e2e8f0 !important;
+    color: #000000 !important;
+    border: 1px solid #000000 !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  body:has(.slideover.open) .form-field-label {
+    color: #444444 !important;
+  }
+
+  body:has(.slideover.open) .form-field-value {
+    border-bottom: 1px solid #000000 !important;
+    color: #000000 !important;
   }
 }
 
