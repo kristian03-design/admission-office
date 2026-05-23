@@ -2174,14 +2174,15 @@ body.site-loader-lock {
     padding: 9px 10px;
   }
 }
-
+/* ════════════════════════════════
+  Application Closed Overlay
+════════════════════════════════ */
 .ac-overlay {
   position: fixed;
   inset: 0;
   z-index: 9999;
   background: rgba(10, 31, 68, 0.78);
   backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2190,18 +2191,17 @@ body.site-loader-lock {
 
 .ac-container {
   position: relative;
-  width: min(1120px, 94vw);
+  width: min(1180px, 94vw);
   min-height: 650px;
   background: #fff;
   border-radius: 26px;
   overflow: hidden;
   display: flex;
   box-shadow: 0 35px 100px rgba(0, 0, 0, 0.34);
-  border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
 .ac-left-col {
-  width: 55%;
+  width: 52%;
   padding: 44px 46px;
   display: flex;
   flex-direction: column;
@@ -2211,11 +2211,50 @@ body.site-loader-lock {
 }
 
 .ac-right-col {
-  width: 45%;
-  display: flex;
+  width: 48%;
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, #0a1f44, #1672ff);
+}
+
+.ac-student-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  transform: scale(1);
+  z-index: 10;
+}
+
+.ac-gradient-fade {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background:
+    linear-gradient(to bottom, transparent 62%, rgba(255,255,255,0.42) 100%),
+    linear-gradient(to right, rgba(255,255,255,0.12), transparent 35%);
+  pointer-events: none;
+}
+
+.ac-right-bg-glow,
+.ac-right-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.ac-right-bg-glow {
+  background:
+    radial-gradient(circle at 75% 25%, rgba(255,255,255,0.18), transparent 36%),
+    linear-gradient(135deg, rgba(10,31,68,0.15), rgba(22,114,255,0.35));
+}
+
+.ac-right-pattern {
+  opacity: 0.12;
+  background-image: radial-gradient(circle, #fff 1.2px, transparent 1.2px);
+  background-size: 16px 16px;
 }
 
 .ac-close-btn {
@@ -2406,50 +2445,6 @@ body.site-loader-lock {
   text-decoration: underline;
 }
 
-/* Right Image Panel */
-.ac-right-bg-glow,
-.ac-right-pattern {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
-.ac-right-bg-glow {
-  background:
-    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.18), transparent 35%),
-    linear-gradient(135deg, rgba(10,31,68,0.1), rgba(22,114,255,0.3));
-}
-
-.ac-right-pattern {
-  opacity: 0.12;
-  background-image: radial-gradient(circle, #fff 1.2px, transparent 1.2px);
-  background-size: 16px 16px;
-}
-
-.ac-student-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-
-  /* IMPORTANT: fixes your image crop */
-  object-position: center center;
-
-  transform: scale(1);
-  z-index: 10;
-}
-
-.ac-gradient-fade {
-  position: absolute;
-  inset: 0;
-  z-index: 20;
-  background:
-    linear-gradient(to bottom, transparent 62%, rgba(255,255,255,0.45) 100%),
-    linear-gradient(to right, rgba(255,255,255,0.08), transparent 30%);
-  pointer-events: none;
-}
-
 .ac-float-banner {
   position: absolute;
   left: 26px;
@@ -2464,7 +2459,6 @@ body.site-loader-lock {
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 16px 36px rgba(10, 31, 68, 0.16);
 }
 
@@ -2499,7 +2493,6 @@ body.site-loader-lock {
   background: #dbe3ee;
 }
 
-/* Mobile */
 @media (max-width: 767px) {
   .ac-container {
     width: 100%;
@@ -2509,20 +2502,21 @@ body.site-loader-lock {
     overflow-y: auto;
   }
 
+  .ac-right-col {
+    display: flex;
+    width: 100%;
+    height: 300px;
+    order: -1;
+  }
+
   .ac-left-col {
     width: 100%;
     padding: 32px 24px;
   }
 
-  .ac-right-col {
-    display: flex;
-    width: 100%;
-    height: 280px;
-    order: -1;
-  }
-
   .ac-student-img {
-    object-position: center center;
+    object-fit: contain;
+    object-position: center bottom;
   }
 
   .ac-title {
