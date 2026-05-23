@@ -59,116 +59,97 @@
   <div class="toast no-print" id="saveToast"></div>
 
   @if(($settings['accept_applications'] ?? '1') === '0')
-  <div class="fixed inset-0 z-[9999] bg-[#0a1f44]/80 backdrop-blur-xl flex items-center justify-center p-4 md:p-6 text-left">
-    <div class="relative max-w-[1000px] w-full bg-white rounded-[24px] shadow-[0_25px_80px_rgba(0,0,0,0.35)] overflow-hidden border border-slate-100 flex flex-col md:flex-row min-h-[580px] animate-modal-in">
+  <div class="ac-overlay">
+    <div class="ac-container animate-modal-in">
       
-      <!-- Top-Right Close Button -->
-      <a href="{{ route('home') }}" class="absolute top-4 right-4 z-[50] w-10 h-10 rounded-full bg-[#0a1f44]/5 hover:bg-[#0a1f44]/10 flex items-center justify-center cursor-pointer transition-all no-print text-[#0a1f44] text-xl font-light hover:scale-105" aria-label="Close" style="text-decoration:none;">
-        &times;
-      </a>
+      <!-- Close Button -->
+      <a href="{{ route('home') }}" class="ac-close-btn">&times;</a>
 
-      <!-- Left Content Column -->
-      <div class="w-full md:w-[55%] p-8 md:p-10 flex flex-col justify-between">
+      <!-- Left Pane -->
+      <div class="ac-left-col">
         <div>
-          <!-- Brand Logo & Header -->
-          <div class="flex items-center gap-3.5 mb-6">
-            <div class="w-12 h-12 flex-shrink-0">
-              <img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" class="w-full h-full object-contain">
-            </div>
-            <div>
-              <h1 class="text-sm font-black text-[#0a1f44] tracking-tight uppercase leading-none">DALUBHASAANG POLITEKNIKO NG LUNGSOD NG BALIWAG</h1>
-              <p class="text-[10px] font-bold text-[#8a97ad] tracking-widest uppercase mt-1">Excellence &bull; Innovation &bull; Service</p>
+          <!-- Brand -->
+          <div class="ac-brand">
+            <img src="{{ asset('assets/images/logo_v2.png') }}" class="ac-logo" alt="Logo">
+            <div class="ac-brand-text">
+              <p class="ac-college-name">DALUBHASAANG POLITEKNIKO NG LUNGSOD NG BALIWAG</p>
+              <p class="ac-college-motto">Excellence &bull; Innovation &bull; Service</p>
             </div>
           </div>
 
-          <!-- Status Badge -->
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-red-600 w-fit mb-5" style="background:#fee2e2; border: 1px solid #fca5a5; color:#dc2626;">
-            <i data-iconsax="lock" class="w-4 h-4 text-red-600" style="color:#dc2626;"></i>
-            <span class="text-[10px] font-extrabold tracking-wider uppercase">Admission Status</span>
-          </div>
+          <!-- Badge -->
+          <span class="ac-badge">
+            <i data-iconsax="lock" data-iconsax-style="linear"></i>
+            Admission Status
+          </span>
 
-          <!-- Main Title -->
-          <div class="mb-5">
-            <h2 class="text-3xl md:text-[2.2rem] font-normal text-[#0a1f44] leading-[1.15] tracking-tight" style="font-family: 'DM Serif Display', Georgia, serif; letter-spacing: -0.01em;">
-              Admissions are<br>currently <span class="text-red-500">closed</span>
+          <!-- Title -->
+          <div class="ac-title-wrap">
+            <h2 class="ac-title">
+              Admissions are<br>currently <span style="color:#ef4444">closed</span>
             </h2>
-            <span class="block w-14 h-1 bg-[#f4b942] rounded-full mt-4"></span>
+            <span class="ac-title-accent"></span>
           </div>
 
           <!-- Description -->
-          <div class="flex flex-col gap-4 text-[13.5px] text-[#5f6f85] leading-relaxed mb-6" style="font-family: 'Poppins', sans-serif;">
-            <p class="margin-0">The admission portal is temporarily unavailable as the current application period has ended.</p>
-            <p class="margin-0">Please stay updated through official announcements for the next admission schedule.</p>
+          <div class="ac-desc-wrap">
+            <p class="ac-desc-text">The admission portal is temporarily unavailable as the current application period has ended.</p>
+            <p class="ac-desc-text">Please stay updated through official announcements for the next admission schedule.</p>
           </div>
 
-          <!-- Yellow Card (Next Admission Period) -->
-          <div class="flex items-start gap-4 p-4 rounded-2xl bg-[#fffbeb] border border-[#fde68a] mb-6">
-            <div class="w-10 h-10 rounded-full bg-[#f4b942]/10 flex items-center justify-center flex-shrink-0" style="border: 1.5px solid #f4b942; background:#fef3c7;">
-              <i data-iconsax="calendar-days" class="w-5.5 h-5.5 text-[#c27803] flex items-center justify-center" style="color:#c27803; font-size:22px;"></i>
+          <!-- Yellow Card -->
+          <div class="ac-alert-box">
+            <div class="ac-alert-icon-wrap">
+              <i data-iconsax="calendar-days" data-iconsax-style="linear"></i>
             </div>
-            <div class="flex flex-col gap-1 text-left">
-              <h4 class="text-xs font-bold text-[#0a1f44]" style="font-family: 'Poppins', sans-serif;">Next Admission Period</h4>
-              <p class="text-xs text-[#5f6f85] leading-relaxed" style="font-family: 'Poppins', sans-serif;">
-                Applications are expected to reopen soon. Follow our official channels for updates.
-              </p>
+            <div class="ac-alert-content">
+              <span class="ac-alert-title">Next Admission Period</span>
+              <span class="ac-alert-desc">Applications are expected to reopen soon. Follow our official channels for updates.</span>
             </div>
           </div>
         </div>
 
         <div>
-          <!-- Action Buttons (Left Primary: Return to Homepage, Right Secondary: View Admission Updates) -->
-          <div class="flex flex-col sm:flex-row gap-3 mb-5">
-            <!-- Primary (Left): Return to Homepage -->
-            <a href="{{ route('home') }}" class="flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-[#0a1f44] text-white rounded-xl font-bold hover:bg-[#061428] hover:-translate-y-0.5 active:translate-y-0 transition-all shadow-md shadow-[#0a1f44]/15 text-xs uppercase tracking-wider" style="text-decoration:none; height:46px;">
-              <i data-iconsax="home" class="w-4.5 h-4.5"></i>
-              Return to Homepage
+          <!-- Buttons -->
+          <div class="ac-btn-row">
+            <a href="{{ route('news-events') }}" class="ac-btn ac-btn--secondary">
+              <i data-iconsax="notification-bing"></i> View Admission Updates
             </a>
-            <!-- Secondary (Right): View Admission Updates -->
-            <a href="{{ route('news-events') }}" class="flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-white border border-[#cbd5e1] text-[#0a1f44] rounded-xl font-bold hover:bg-[#f8fafc] hover:-translate-y-0.5 active:translate-y-0 transition-all text-xs uppercase tracking-wider text-center" style="text-decoration:none; height:46px;">
-              <i data-iconsax="notification-bing" class="w-4.5 h-4.5 text-[#f4b942]"></i>
-              View Admission Updates
+            <a href="{{ route('home') }}" class="ac-btn ac-btn--primary">
+              <i data-iconsax="home"></i> Return to Homepage
             </a>
           </div>
 
-          <!-- Help Info -->
-          <div class="flex items-center gap-2 text-xs text-[#5f6f85]">
-            <i data-iconsax="headphone" class="w-4 h-4 text-[#8a97ad]" style="font-size:16px;"></i>
-            <span>Need help? <a href="{{ route('home') }}#contact" class="font-bold text-[#0a1f44] hover:underline">Contact the Admission Office &rarr;</a></span>
+          <!-- Help Link -->
+          <div class="ac-help-wrap">
+            <i data-iconsax="headphone"></i>
+            <span>Need help? <a href="{{ route('home') }}#contact" class="ac-help-link">Contact the Admission Office &rarr;</a></span>
           </div>
         </div>
       </div>
 
-      <!-- Right Visual Column (Visible on Medium+ screens) -->
-      <div class="hidden md:flex w-[45%] bg-gradient-to-br from-[#0c4a6e] to-[#0284c7] relative items-end justify-center overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-sky-400/40 via-sky-600/10 to-transparent"></div>
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle,_#ffffff_1.2px,_transparent_1.2px)] bg-[size:16px_16px]"></div>
-        
-        <img src="{{ asset('assets/images/announcement_logo.png') }}" alt="Students" class="w-[90%] h-[82%] object-contain object-bottom z-10 select-none">
-        
-        <!-- Gradient cover to fade bottom -->
-        <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0284c7]/40 to-transparent z-20"></div>
+      <!-- Right Pane -->
+      <div class="ac-right-col">
+        <div class="ac-right-bg-glow"></div>
+        <div class="ac-right-pattern"></div>
+        <img src="{{ asset('assets/images/announcement_logo.png') }}" alt="Students" class="ac-student-img">
+        <div class="ac-gradient-fade"></div>
 
-        <!-- Floating Feature Banner -->
-        <div class="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-white/20 z-30 flex items-center justify-between text-center gap-1">
-          <div class="flex-1 flex flex-col items-center">
-            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mb-1">
-              <i data-iconsax="shield-security" class="w-4 h-4 text-blue-600"></i>
-            </div>
-            <span class="text-[9px] font-black text-[#0a1f44] leading-tight block">Secure Process</span>
+        <!-- Floating Banner -->
+        <div class="ac-float-banner">
+          <div class="ac-float-item">
+            <div class="ac-float-icon-wrap"><i data-iconsax="shield-security"></i></div>
+            <span class="ac-float-label">Secure Process</span>
           </div>
-          <div class="w-px h-8 bg-slate-200"></div>
-          <div class="flex-1 flex flex-col items-center">
-            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mb-1">
-              <i data-iconsax="teacher" class="w-4 h-4 text-blue-600"></i>
-            </div>
-            <span class="text-[9px] font-black text-[#0a1f44] leading-tight block">Quality Education</span>
+          <div class="ac-float-divider"></div>
+          <div class="ac-float-item">
+            <div class="ac-float-icon-wrap"><i data-iconsax="teacher"></i></div>
+            <span class="ac-float-label">Quality Education</span>
           </div>
-          <div class="w-px h-8 bg-slate-200"></div>
-          <div class="flex-1 flex flex-col items-center">
-            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mb-1">
-              <i data-iconsax="star" class="w-4 h-4 text-blue-600"></i>
-            </div>
-            <span class="text-[9px] font-black text-[#0a1f44] leading-tight block">Student Success</span>
+          <div class="ac-float-divider"></div>
+          <div class="ac-float-item">
+            <div class="ac-float-icon-wrap"><i data-iconsax="star"></i></div>
+            <span class="ac-float-label">Student Success</span>
           </div>
         </div>
       </div>

@@ -2174,3 +2174,460 @@ body.site-loader-lock {
     padding: 9px 10px;
   }
 }
+
+/* =========================================================
+   Decoupled Applications Closed Modal (.ac-)
+   Isolates all closed applications styles to avoid collisions.
+   ========================================================= */
+
+.ac-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(10, 31, 68, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  text-align: left;
+}
+
+.ac-container {
+  position: relative;
+  max-width: 1000px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 580px;
+}
+
+@media (min-width: 768px) {
+  .ac-container {
+    flex-direction: row;
+  }
+}
+
+.ac-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 50;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(10, 31, 68, 0.05);
+  color: #0a1f44;
+  font-size: 22px;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.ac-close-btn:hover {
+  background: rgba(10, 31, 68, 0.1);
+  transform: scale(1.05);
+}
+
+.ac-left-col {
+  width: 100%;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  .ac-left-col {
+    width: 55%;
+    padding: 40px;
+  }
+}
+
+.ac-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.ac-logo {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.ac-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.ac-college-name {
+  font-size: 13px;
+  font-weight: 900;
+  color: #0a1f44;
+  text-transform: uppercase;
+  letter-spacing: 0.1px;
+  line-height: 1.25;
+  margin: 0;
+  font-family: 'Poppins', 'Nunito', sans-serif;
+}
+
+.ac-college-motto {
+  font-size: 10px;
+  font-weight: 700;
+  color: #8a97ad;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin: 4px 0 0;
+  font-family: 'Poppins', 'Nunito', sans-serif;
+}
+
+.ac-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-bottom: 20px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #fee2e2;
+  border: 1.5px solid #fca5a5;
+  color: #dc2626;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Poppins', 'Nunito', sans-serif;
+}
+
+.ac-badge i,
+.ac-badge svg {
+  width: 14px !important;
+  height: 14px !important;
+  color: #dc2626 !important;
+}
+
+.ac-title-wrap {
+  margin-bottom: 20px;
+}
+
+.ac-title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 30px;
+  font-weight: normal;
+  color: #0a1f44;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .ac-title {
+    font-size: clamp(2rem, 3.2vw, 2.85rem);
+  }
+}
+
+.ac-title-accent {
+  display: block;
+  width: 56px;
+  height: 4px;
+  border-radius: 999px;
+  background: #f4b942;
+  margin-top: 14px;
+  margin-bottom: 24px;
+}
+
+.ac-desc-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 24px;
+  font-family: 'Poppins', 'Nunito', sans-serif;
+}
+
+.ac-desc-text {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #5f6f85;
+}
+
+.ac-alert-box {
+  display: flex;
+  align-items: start;
+  gap: 14px;
+  padding: 16px 20px;
+  background: #fffbeb;
+  border: 1.5px solid #fde68a;
+  border-radius: 16px;
+  margin-bottom: 24px;
+}
+
+.ac-alert-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fef3c7;
+  border: 1.5px solid #f4b942;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ac-alert-icon-wrap i,
+.ac-alert-icon-wrap svg {
+  font-size: 22px;
+  color: #c27803;
+}
+
+.ac-alert-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+}
+
+.ac-alert-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0a1f44;
+  font-family: 'Poppins', 'Nunito', sans-serif;
+}
+
+.ac-alert-desc {
+  font-size: 12px;
+  color: #5f6f85;
+  line-height: 1.5;
+  font-family: 'Poppins', 'Nunito', sans-serif;
+}
+
+.ac-btn-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 480px) {
+  .ac-btn-row {
+    flex-direction: row;
+  }
+}
+
+.ac-btn {
+  flex: 1;
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  text-align: center;
+  font-family: 'Poppins', 'Nunito', sans-serif;
+}
+
+.ac-btn:hover {
+  transform: translateY(-1px);
+}
+
+.ac-btn:active {
+  transform: translateY(0);
+}
+
+.ac-btn i,
+.ac-btn svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.ac-btn--primary {
+  background: #0a1f44;
+  color: #ffffff !important;
+  border: 1.5px solid #0a1f44;
+  box-shadow: 0 4px 12px rgba(10, 31, 68, 0.15);
+}
+
+.ac-btn--primary:hover {
+  background: #061428;
+  border-color: #061428;
+  box-shadow: 0 6px 18px rgba(10, 31, 68, 0.25);
+}
+
+.ac-btn--primary i,
+.ac-btn--primary svg {
+  color: #ffffff !important;
+}
+
+.ac-btn--secondary {
+  background: #ffffff;
+  color: #0a1f44 !important;
+  border: 1.5px solid #cbd5e1;
+}
+
+.ac-btn--secondary:hover {
+  background: #f8fafc;
+}
+
+.ac-btn--secondary i,
+.ac-btn--secondary svg {
+  color: #f4b942 !important;
+}
+
+.ac-help-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #5f6f85;
+  font-family: 'Poppins', 'Nunito', sans-serif;
+}
+
+.ac-help-wrap i,
+.ac-help-wrap svg {
+  font-size: 16px;
+  color: #8a97ad;
+}
+
+.ac-help-link {
+  font-weight: 700;
+  color: #0a1f44;
+  text-decoration: none;
+}
+
+.ac-help-link:hover {
+  text-decoration: underline;
+}
+
+.ac-right-col {
+  display: none;
+  width: 45%;
+  background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%);
+  position: relative;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .ac-right-col {
+    display: flex;
+  }
+}
+
+.ac-right-bg-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top right, rgba(56, 189, 248, 0.4) 0%, rgba(2, 132, 199, 0.1) 45%, transparent 70%);
+  z-index: 1;
+}
+
+.ac-right-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  background: radial-gradient(circle, #ffffff 1.2px, transparent 1.2px);
+  background-size: 16px 16px;
+  z-index: 1;
+}
+
+.ac-student-img {
+  width: 90%;
+  height: 82%;
+  object-fit: contain;
+  object-position: bottom;
+  z-index: 10;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.ac-gradient-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 96px;
+  background: linear-gradient(to top, rgba(2, 132, 199, 0.4), transparent);
+  z-index: 20;
+}
+
+.ac-float-banner {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(10, 31, 68, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  gap: 4px;
+}
+
+.ac-float-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ac-float-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #eff6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.ac-float-icon-wrap i,
+.ac-float-icon-wrap svg {
+  width: 16px !important;
+  height: 16px !important;
+  color: #2563eb !important;
+}
+
+.ac-float-label {
+  font-size: 9px;
+  font-weight: 900;
+  color: #0a1f44;
+  line-height: 1.25;
+  display: block;
+}
+
+.ac-float-divider {
+  width: 1px;
+  height: 32px;
+  background: #e2e8f0;
+  flex-shrink: 0;
+}
+
