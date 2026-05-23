@@ -8,6 +8,15 @@
   const annId = popup.getAttribute('data-id');
   let lastFocusedElement = null;
 
+  if (annId) {
+    if (localStorage.getItem('dont_show_announcement_' + annId) === 'true') {
+      return;
+    }
+    if (sessionStorage.getItem('dismissed_announcement_' + annId) === 'true') {
+      return;
+    }
+  }
+
   function setIcons() {
     if (typeof window.iconsax?.createIcons === 'function') {
       window.iconsax.createIcons();

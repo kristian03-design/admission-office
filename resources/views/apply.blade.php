@@ -36,6 +36,20 @@
     .acad-block:last-child {
       margin-bottom: 0;
     }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    .animate-modal-in {
+      animation: fadeInScale 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
   </style>
 </head>
 
@@ -45,18 +59,110 @@
   <div class="toast no-print" id="saveToast"></div>
 
   @if(($settings['accept_applications'] ?? '1') === '0')
-  <div class="fixed inset-0 z-[9999] bg-[#0f1e3d]/90 backdrop-blur-xl flex items-center justify-center p-6 text-center">
-    <div class="max-w-md w-full bg-white p-10 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/10 relative overflow-hidden">
-      <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-500 to-orange-500"></div>
-      <div class="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse">
-        <i data-iconsax="lock" class="text-red-500 w-12 h-12"></i>
+  <link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=25">
+  <div class="announcement-popup is-open">
+    <div class="announcement-popup__card" tabindex="-1">
+      <div class="announcement-popup__body">
+        <div class="announcement-popup__content">
+          <!-- Brand Logo & Header -->
+          <div class="announcement-popup__brand">
+            <img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" class="announcement-popup__logo" onerror="this.remove()">
+            <div class="announcement-popup__brand-text">
+              <p class="announcement-popup__college-name">DALUBHASAANG POLITEKNIKO NG LUNGSOD NG BALIWAG</p>
+              <p class="announcement-popup__college-motto">Excellence &bull; Innovation &bull; Service</p>
+            </div>
+          </div>
+
+          <!-- Status Badge -->
+          <span class="announcement-popup__badge" style="background:#fee2e2; border-color:#fca5a5; color:#dc2626;">
+            <i data-iconsax="lock" data-iconsax-style="linear" style="color:#dc2626;"></i>
+            ADMISSION STATUS
+          </span>
+
+          <!-- Main Title -->
+          <div class="announcement-popup__headline-wrap">
+            <h2 class="announcement-popup__title">
+              <span class="announcement-popup__title-line1">Admissions are</span>
+              <span class="announcement-popup__title-line2">currently <span style="color:#ef4444">closed</span></span>
+            </h2>
+            <span class="announcement-popup__title-accent"></span>
+          </div>
+
+          <!-- Description -->
+          <p class="announcement-popup__message">
+            The admission portal is temporarily unavailable as the current application period has ended. 
+            Please stay updated through official announcements for the next admission schedule.
+          </p>
+        </div>
+
+        <!-- Right Side Visual / Hero -->
+        <div class="announcement-popup__hero" aria-hidden="true">
+          <div class="announcement-popup__hero-bg" aria-hidden="true"></div>
+          <picture>
+            <source srcset="{{ asset('assets/images/announcement_logo_mobile.png') }}" media="(max-width: 991px)">
+            <img
+              src="{{ asset('assets/images/announcement_logo.png') }}"
+              alt=""
+              class="announcement-popup__hero-image"
+              loading="lazy"
+              decoding="async">
+          </picture>
+          <div class="announcement-popup__hero-fade" aria-hidden="true"></div>
+        </div>
       </div>
-      <h2 class="text-3xl font-bold text-[#0f1e3d] mb-4 tracking-tight">Application is already closed</h2>
-      <p class="text-slate-500 mb-10 text-lg leading-relaxed">The application portal is currently closed. We are not accepting new submissions at this time.</p>
-      <a href="{{ route('home') }}" class="inline-flex items-center justify-center gap-3 w-full px-8 py-4 bg-[#0f1e3d] text-white rounded-2xl font-bold hover:bg-[#1b3557] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-[#0f1e3d]/20">
-        <i data-iconsax="home" class="w-5 h-5"></i>
-        Return to Homepage
+
+      <!-- Top-Right Close Button -->
+      <a href="{{ route('home') }}" class="announcement-popup__close" aria-label="Close modal" style="text-decoration:none; display:flex; align-items:center; justify-content:center;">
+        &times;
       </a>
+
+      <!-- 4 Features Cards -->
+      <div class="announcement-popup__features">
+        @foreach([
+          ['icon' => 'monitor', 'title' => 'Easy Access', 'desc' => 'All admission information in one convenient place.'],
+          ['icon' => 'document-text', 'title' => 'Simple Process', 'desc' => 'Step-by-step guidance for a smooth application.'],
+          ['icon' => 'notification-bing', 'title' => 'Stay Updated', 'desc' => 'Get the latest announcements and reminders.'],
+          ['icon' => 'shield-security', 'title' => 'Secure & Trusted', 'desc' => 'Your data is safe with our secure admission system.'],
+        ] as $feature)
+          <div class="announcement-popup__feature-card">
+            <div class="announcement-popup__feature-icon">
+              <i data-iconsax="{{ $feature['icon'] }}" data-iconsax-style="linear"></i>
+            </div>
+            <div class="announcement-popup__feature-body">
+              <h4 class="announcement-popup__feature-title">{{ $feature['title'] }}</h4>
+              <p class="announcement-popup__feature-desc">{{ $feature['desc'] }}</p>
+            </div>
+          </div>
+        @endforeach
+      </div>
+
+      <!-- Alert Banner -->
+      <div class="announcement-popup__alert">
+        <div class="announcement-popup__alert-icon">
+          <i data-iconsax="shield-security" data-iconsax-style="linear"></i>
+        </div>
+        <div class="announcement-popup__alert-text">
+          <span class="announcement-popup__alert-title">Start your future with confidence.</span>
+          <span class="announcement-popup__alert-desc">We're here to support you every step of the way.</span>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="announcement-popup__footer">
+        <div class="flex items-center gap-2 text-xs text-[#5f6f85]">
+          <i data-iconsax="headphone" class="w-4 h-4 text-[#8a97ad]" style="font-size:16px;"></i>
+          <span>Need help? <a href="{{ route('home') }}#contact" class="font-bold text-[#0a1f44] hover:underline">Contact the Admission Office &rarr;</a></span>
+        </div>
+
+        <div class="announcement-popup__actions">
+          <a href="{{ route('home') }}" class="announcement-popup__btn announcement-popup__btn--secondary" style="min-width:140px; text-decoration:none;">
+            Return to Homepage
+          </a>
+          <a href="{{ route('news-events') }}" class="announcement-popup__btn announcement-popup__btn--primary" style="min-width:180px; text-decoration:none;">
+            View Admission Updates
+          </a>
+        </div>
+      </footer>
     </div>
   </div>
   @endif

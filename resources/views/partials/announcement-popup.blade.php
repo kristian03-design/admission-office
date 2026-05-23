@@ -1,5 +1,14 @@
 @php
   $popupAnn = $popupAnn ?? ($announcements ?? collect())->firstWhere('is_popup', true);
+  if (!$popupAnn) {
+    $popupAnn = new \App\Models\Announcement([
+      'id' => 9999,
+      'title' => 'Welcome to the BTECH Admission Website!',
+      'message' => "We've made it easier than ever to start your journey. Explore programs, check requirements, and begin your application with just a few clicks.",
+      'is_active' => true,
+      'is_popup' => true,
+    ]);
+  }
 @endphp
 
 @if($popupAnn)
@@ -22,7 +31,7 @@
     || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
 @endphp
 
-<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=24">
+<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=25">
 
 <div
   id="announcementPopup"
@@ -148,5 +157,5 @@
   </div>
 </div>
 
-<script src="{{ asset('js/announcement-popup.js') }}?v=24" defer></script>
+<script src="{{ asset('js/announcement-popup.js') }}?v=25" defer></script>
 @endif
