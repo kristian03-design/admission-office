@@ -505,6 +505,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   padding: 0 20px;
   border-radius: 10px;
   font-size: 13.5px;
@@ -517,11 +518,22 @@
     box-shadow 0.2s ease;
 }
 
+.announcement-popup__btn i,
+.announcement-popup__btn svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
 .announcement-popup__btn--secondary {
   border: 1.5px solid #c5d0e0;
   background: #fff;
   color: var(--ap-navy);
   font-weight: 600;
+}
+
+.announcement-popup__btn--secondary i,
+.announcement-popup__btn--secondary svg {
+  color: var(--ap-gold) !important;
 }
 
 .announcement-popup__btn--secondary:hover {
@@ -535,6 +547,11 @@
   color: #fff;
   box-shadow: 0 8px 20px rgba(10, 31, 68, 0.2);
   font-weight: 500;
+}
+
+.announcement-popup__btn--primary i,
+.announcement-popup__btn--primary svg {
+  color: #fff !important;
 }
 
 .announcement-popup__btn--primary:hover {

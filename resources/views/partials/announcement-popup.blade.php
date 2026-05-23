@@ -31,7 +31,7 @@
     || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
 @endphp
 
-<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=25">
+<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=40">
 
 <div
   id="announcementPopup"
@@ -141,15 +141,18 @@
       <div class="announcement-popup__actions">
         @if($popupAnn->popup_button_link)
           <a href="{{ $popupAnn->popup_button_link }}" class="announcement-popup__btn announcement-popup__btn--secondary" data-announcement-close-nav>
+            <i data-iconsax="notification-bing" data-iconsax-style="linear"></i>
             {{ $popupAnn->popup_button_text ?? 'View Announcements' }}
           </a>
         @else
           <a href="{{ route('news-events') }}" class="announcement-popup__btn announcement-popup__btn--secondary" data-announcement-close-nav>
+            <i data-iconsax="notification-bing" data-iconsax-style="linear"></i>
             View Announcements
           </a>
         @endif
 
         <a href="{{ route('home') }}" class="announcement-popup__btn announcement-popup__btn--primary" data-announcement-close-nav>
+          <i data-iconsax="arrow-right" data-iconsax-style="linear"></i>
           Get Started
         </a>
       </div>

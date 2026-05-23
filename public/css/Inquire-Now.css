@@ -2310,8 +2310,9 @@ body.site-loader-lock {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 78% center;
-  transform: scale(1.02);
+  object-position: 86% center; /* Shift students to the right to avoid overlapping the text */
+  transform: scale(0.98); /* Slightly scale down to match the homepage size */
+  transform-origin: right bottom;
   user-select: none;
   -webkit-user-drag: none;
 }
@@ -2319,6 +2320,7 @@ body.site-loader-lock {
 @media (max-width: 991px) {
   .ac-student-img {
     object-position: center;
+    transform: scale(1);
   }
 }
 
