@@ -22,7 +22,7 @@
     || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
 @endphp
 
-<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=22">
+<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=23">
 
 <div
   id="announcementPopup"
@@ -145,5 +145,5 @@
   </div>
 </div>
 
-<script src="{{ asset('js/announcement-popup.js') }}?v=22" defer></script>
+<script src="{{ asset('js/announcement-popup.js') }}?v=23" defer></script>
 @endif
