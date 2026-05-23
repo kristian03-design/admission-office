@@ -31,7 +31,7 @@
     || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
 @endphp
 
-<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=1001">
+<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=1003">
 <style>
   @media (max-width: 991px) {
     .announcement-popup__hero {
@@ -159,6 +159,11 @@
     @endif
 
     <footer class="announcement-popup__footer">
+      <label class="announcement-popup__dont-show">
+        <input type="checkbox" id="dontShowAgain">
+        <span>Don't show this again</span>
+      </label>
+
       <div class="announcement-popup__actions">
         @if($popupAnn->popup_button_link)
           <a href="{{ $popupAnn->popup_button_link }}" class="announcement-popup__btn announcement-popup__btn--secondary" data-announcement-close-nav>
@@ -177,11 +182,6 @@
           Get Started
         </a>
       </div>
-
-      <label class="announcement-popup__dont-show">
-        <input type="checkbox" id="dontShowAgain">
-        <span>Don't show this again</span>
-      </label>
     </footer>
   </div>
 </div>

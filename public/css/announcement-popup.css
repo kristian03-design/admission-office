@@ -464,10 +464,11 @@
 
 .announcement-popup__footer {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 20px 36px 22px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 36px 20px;
   border-top: 1px solid var(--ap-border);
   background: #fff;
 }
@@ -475,10 +476,10 @@
 .announcement-popup__dont-show {
   display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
   gap: 9px;
   cursor: pointer;
   user-select: none;
+  flex-shrink: 0;
 }
 
 .announcement-popup__dont-show span {
@@ -496,10 +497,11 @@
 
 .announcement-popup__actions {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   gap: 12px;
-  width: 100%;
-}
+  flex-shrink: 0;
+
+
 
 .announcement-popup__btn {
   min-width: 168px;

@@ -10,7 +10,7 @@
   </script>
   @include('partials.iconsax')
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_v2.png') }}" />
-  <link rel="stylesheet" href="{{ asset('css/Inquire-Now.css') }}?v=200">
+  <link rel="stylesheet" href="{{ asset('css/Inquire-Now.css') }}?v=201">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .mo {
@@ -123,6 +123,11 @@
 
       <!-- Footer -->
       <footer class="ac-footer">
+        <div class="ac-help-wrap">
+          <i data-iconsax="headphone"></i>
+          <span>Need help? <a href="{{ route('home') }}#contact" class="ac-help-link">Contact the Admission Office &rarr;</a></span>
+        </div>
+
         <div class="ac-actions">
           <a href="{{ route('news-events') }}" class="ac-btn ac-btn--secondary">
             <i data-iconsax="notification-bing" data-iconsax-style="linear"></i>
@@ -132,11 +137,6 @@
             <i data-iconsax="home" data-iconsax-style="linear"></i>
             Return to Homepage
           </a>
-        </div>
-
-        <div class="ac-help-wrap">
-          <i data-iconsax="headphone"></i>
-          <span>Need help? <a href="{{ route('home') }}#contact" class="ac-help-link">Contact the Admission Office &rarr;</a></span>
         </div>
       </footer>
 
