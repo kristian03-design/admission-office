@@ -578,7 +578,7 @@
     right: 0;
     width: 100%;
     height: 100%;
-    object-position: 80% center;
+    object-position: 60% center;
   }
 
   .announcement-popup__hero-fade {
@@ -624,7 +624,8 @@
 /* MOBILE */
 
 @media (max-width: 640px) {
-  .announcement-popup__features, .announcement-popup__alert{
+  .announcement-popup__features, .announcement-popup__alert, 
+  .announcement-popup__close{
     display: none;
   }
 
