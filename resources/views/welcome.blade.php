@@ -570,9 +570,18 @@
               <div class="text-center lg:text-left">
                 <h2 class="apply-cta-title">{!! $settings['cta_section_headline'] ?? 'Your Future Begins<br /><em>This Enrollment Season.</em>' !!}</h2>
                 <p class="apply-cta-sub mt-4 max-w-xl">{{ $settings['cta_section_subheadline'] ?? "Don't wait. Seats are limited and scholarship slots fill quickly. Take the first step toward the career — and the life — you've been working toward." }}</p>
+                @php
+                  $deadlineRaw = trim($settings['application_deadline'] ?? '');
+                  if (empty($deadlineRaw) || strtoupper($deadlineRaw) === 'TBA') {
+                    $formattedDeadline = 'TBA';
+                  } else {
+                    $ts = strtotime($deadlineRaw);
+                    $formattedDeadline = $ts ? date('F j, Y', $ts) : 'TBA';
+                  }
+                @endphp
                 <div class="apply-deadline mt-6">
                   <span class="deadline-label">Application Deadline: </span>
-                  <span class="deadline-date">{{ $settings['application_deadline'] ?? '' }}</span>
+                  <span class="deadline-date">{{ $formattedDeadline }}</span>
                 </div>
               </div>
               <div class="flex flex-col gap-4 min-w-64">
