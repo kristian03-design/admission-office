@@ -22,7 +22,7 @@
     || str_contains(strtolower($popupAnn->title ?? ''), 'welcome');
 @endphp
 
-<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=23">
+<link rel="stylesheet" href="{{ asset('css/announcement-popup.css') }}?v=24">
 
 <div
   id="announcementPopup"
@@ -73,12 +73,15 @@
 
       <div class="announcement-popup__hero" aria-hidden="true">
         <div class="announcement-popup__hero-bg" aria-hidden="true"></div>
-        <img
-          src="{{ asset('assets/images/announcement_logo.png') }}"
-          alt=""
-          class="announcement-popup__hero-image"
-          loading="lazy"
-          decoding="async">
+        <picture>
+          <source srcset="{{ asset('assets/images/announcement_logo_mobile.png') }}" media="(max-width: 991px)">
+          <img
+            src="{{ asset('assets/images/announcement_logo.png') }}"
+            alt=""
+            class="announcement-popup__hero-image"
+            loading="lazy"
+            decoding="async">
+        </picture>
         <div class="announcement-popup__hero-fade" aria-hidden="true"></div>
       </div>
     </div>
@@ -145,5 +148,5 @@
   </div>
 </div>
 
-<script src="{{ asset('js/announcement-popup.js') }}?v=23" defer></script>
+<script src="{{ asset('js/announcement-popup.js') }}?v=24" defer></script>
 @endif
