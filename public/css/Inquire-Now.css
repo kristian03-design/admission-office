@@ -2201,42 +2201,29 @@ body.site-loader-lock {
 }
 
 .ac-left-col {
-  width: 52%;
+  width: 45%;
   padding: 44px 46px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: transparent;
+  background: #fff;
   position: relative;
-  z-index: 20;
+  z-index: 5;
 }
 
 .ac-right-col {
-  width: 48%;
+  width: 55%;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   background: linear-gradient(135deg, #0a1f44, #1672ff);
-}
-
-@media (min-width: 768px) {
-  .ac-right-col {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 55%;
-    z-index: 10;
-    height: 100%;
-    overflow: visible;
-  }
+  z-index: 10;
 }
 
 .ac-right-col::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 0;
+  left: -1px;
   bottom: 0;
   width: 32%;
   background: linear-gradient(
@@ -2247,14 +2234,16 @@ body.site-loader-lock {
     rgba(255, 255, 255, 0.3) 65%,
     transparent 100%
   );
-  z-index: 5;
+  z-index: 8;
   pointer-events: none;
 }
 
 .ac-student-img {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 115%;
   height: 100%;
   object-fit: cover;
   object-position: 78% center;
@@ -2262,14 +2251,6 @@ body.site-loader-lock {
   z-index: 10;
   user-select: none;
   -webkit-user-drag: none;
-}
-
-@media (min-width: 768px) {
-  .ac-student-img {
-    width: 120%;
-    right: 0;
-    left: auto;
-  }
 }
 
 .ac-gradient-fade {
@@ -2565,6 +2546,7 @@ body.site-loader-lock {
     width: 100%;
     height: 300px;
     order: -1;
+    overflow: hidden !important;
   }
 
   .ac-left-col {
@@ -2573,6 +2555,8 @@ body.site-loader-lock {
   }
 
   .ac-student-img {
+    width: 100% !important;
+    height: 100% !important;
     object-fit: contain;
     object-position: center bottom;
   }
