@@ -1,2 +1,25 @@
 User-agent: *
-Disallow:
+
+# Block search engine indexers from crawling sensitive files and directories
+Disallow: /.env
+Disallow: /.env.*
+Disallow: /.git/
+Disallow: /.gitignore
+Disallow: /.gitattributes
+Disallow: /composer.json
+Disallow: /composer.lock
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /artisan
+Disallow: /phpunit.xml
+Disallow: /vercel.json
+Disallow: /tailwind.config.js
+Disallow: /vite.config.js
+Disallow: /vendor/
+Disallow: /storage/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+
+# General crawler settings
+Sitemap: /sitemap.xml

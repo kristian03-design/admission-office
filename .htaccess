@@ -1,0 +1,31 @@
+# ==============================================================================
+# BTECH Admission Office - Root Security Configuration
+# ==============================================================================
+
+# Disable directory listing to prevent crawlers/users from browsing files
+Options -Indexes
+
+# Block public access to any .env environment configuration files
+<FilesMatch "^\.env">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Block public access to any git directories or configuration files
+<FilesMatch "^\.git">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Block public access to critical application settings and package records
+<FilesMatch "^(composer\.json|composer\.lock|package\.json|package-lock\.json|\.gitignore|\.gitattributes|artisan|phpunit\.xml|vercel\.json|tailwind\.config\.js|vite\.config.js)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Automatically route public HTTP/S traffic to the public/ directory
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^$ public/ [L]
+    RewriteRule ^((?!public/).*)$ public/$1 [L]
+</IfModule>

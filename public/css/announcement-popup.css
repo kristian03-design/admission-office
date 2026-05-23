@@ -625,7 +625,7 @@
 
 @media (max-width: 640px) {
   .announcement-popup__features {
-    grid-template-columns: 1fr;
+    display: none;
   }
 
   .announcement-popup__title {

@@ -1,3 +1,23 @@
+# Disable directory listing and block access to sensitive files
+Options -Indexes
+
+<FilesMatch "^\.env">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "^\.git">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Block indexing of sensitive file extensions if accessed
+<IfModule mod_headers.c>
+    <FilesMatch "\.(env|json|lock|git|yml|yaml|sh|sql)$">
+        Header set X-Robots-Tag "noindex, nofollow, noarchive, nosnippet"
+    </FilesMatch>
+</IfModule>
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
