@@ -2434,9 +2434,9 @@ body.site-loader-lock {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 10px 24px;
+  padding: 10px 20px;
   border-radius: 12px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -2444,6 +2444,7 @@ body.site-loader-lock {
   transition: all 0.25s ease;
   cursor: pointer;
   text-align: center;
+  white-space: nowrap;
   font-family: 'Poppins', 'Nunito', sans-serif;
 }
 
@@ -2512,7 +2513,7 @@ body.site-loader-lock {
 .ac-help-link {
   font-weight: 700;
   color: #0a1f44;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .ac-help-link:hover {
