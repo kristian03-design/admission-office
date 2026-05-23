@@ -578,7 +578,7 @@
     right: 0;
     width: 100%;
     height: 100%;
-    object-position: center bottom;
+    object-position: 80% center;
   }
 
   .announcement-popup__hero-fade {
@@ -612,7 +612,7 @@
   }
 
   .announcement-popup__actions {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 
   .announcement-popup__btn {
@@ -624,7 +624,7 @@
 /* MOBILE */
 
 @media (max-width: 640px) {
-  .announcement-popup__features {
+  .announcement-popup__features, .announcement-popup__alert{
     display: none;
   }
 
