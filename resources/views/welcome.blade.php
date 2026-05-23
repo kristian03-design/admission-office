@@ -38,7 +38,7 @@
   <!-- ✦ Iconsax Icons ✦ -->
   @include('partials.iconsax')
 
-  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=36" />
+  <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=37" />
 
 </head>
 
@@ -571,8 +571,8 @@
                 <h2 class="apply-cta-title">{!! $settings['cta_section_headline'] ?? 'Your Future Begins<br /><em>This Enrollment Season.</em>' !!}</h2>
                 <p class="apply-cta-sub mt-4 max-w-xl">{{ $settings['cta_section_subheadline'] ?? "Don't wait. Seats are limited and scholarship slots fill quickly. Take the first step toward the career — and the life — you've been working toward." }}</p>
                 <div class="apply-deadline mt-6">
-                  <span class="deadline-label">Application Deadline</span>
-                  <span class="deadline-date">{{ $settings['application_deadline'] ?? 'April 17, 2026' }}</span>
+                  <span class="deadline-label">Application Deadline: </span>
+                  <span class="deadline-date">{{ $settings['application_deadline'] ?? '' }}</span>
                 </div>
               </div>
               <div class="flex flex-col gap-4 min-w-64">

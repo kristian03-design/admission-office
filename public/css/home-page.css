@@ -470,6 +470,15 @@ body.menu-open .logo-badge {
   border-bottom: 1px solid var(--gray-200);
 }
 
+#navbar.scrolled .nav-main {
+  color: var(--navy) !important;
+}
+
+#navbar.scrolled .nav-sub {
+  color: var(--navy-mid) !important;
+  opacity: .7;
+}
+
 #navbar.scrolled .nav-link {
   color: var(--navy-mid);
 }
@@ -4506,6 +4515,15 @@ body {
 
 #navbar.scrolled {
   background: var(--white) !important;
+}
+
+#navbar.scrolled .nav-main {
+  color: var(--navy) !important;
+}
+
+#navbar.scrolled .nav-sub {
+  color: var(--navy-mid) !important;
+  opacity: .7;
 }
 
 .nav-inner {
