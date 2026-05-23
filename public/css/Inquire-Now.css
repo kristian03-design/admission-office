@@ -2175,102 +2175,77 @@ body.site-loader-lock {
   }
 }
 
-/* =========================================================
-   Decoupled Applications Closed Modal (.ac-)
-   Isolates all closed applications styles to avoid collisions.
-   ========================================================= */
-
 .ac-overlay {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: rgba(10, 31, 68, 0.8);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: rgba(10, 31, 68, 0.78);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
-  text-align: left;
+  padding: 18px;
 }
 
 .ac-container {
   position: relative;
-  max-width: 1000px;
-  width: 100%;
-  background: #ffffff;
-  border-radius: 24px;
-  border: 1px solid #f1f5f9;
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+  width: min(1120px, 94vw);
+  min-height: 650px;
+  background: #fff;
+  border-radius: 26px;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
-  min-height: 580px;
+  box-shadow: 0 35px 100px rgba(0, 0, 0, 0.34);
+  border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
-@media (min-width: 768px) {
-  .ac-container {
-    flex-direction: row;
-  }
+.ac-left-col {
+  width: 55%;
+  padding: 44px 46px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #fff;
+  z-index: 5;
+}
+
+.ac-right-col {
+  width: 45%;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0a1f44, #1672ff);
 }
 
 .ac-close-btn {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 50;
-  width: 40px;
-  height: 40px;
+  top: 18px;
+  right: 18px;
+  z-index: 60;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: rgba(10, 31, 68, 0.05);
-  color: #0a1f44;
+  background: rgba(10, 31, 68, 0.85);
+  color: #fff;
   font-size: 22px;
-  font-weight: 300;
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.ac-close-btn:hover {
-  background: rgba(10, 31, 68, 0.1);
-  transform: scale(1.05);
-}
-
-.ac-left-col {
-  width: 100%;
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-@media (min-width: 768px) {
-  .ac-left-col {
-    width: 55%;
-    padding: 40px;
-  }
 }
 
 .ac-brand {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 24px;
+  margin-bottom: 26px;
 }
 
 .ac-logo {
   width: 48px;
   height: 48px;
-  flex-shrink: 0;
   object-fit: contain;
-}
-
-.ac-brand-text {
-  display: flex;
-  flex-direction: column;
 }
 
 .ac-college-name {
@@ -2278,10 +2253,8 @@ body.site-loader-lock {
   font-weight: 900;
   color: #0a1f44;
   text-transform: uppercase;
-  letter-spacing: 0.1px;
   line-height: 1.25;
   margin: 0;
-  font-family: 'Poppins', 'Nunito', sans-serif;
 }
 
 .ac-college-motto {
@@ -2290,8 +2263,7 @@ body.site-loader-lock {
   color: #8a97ad;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  margin: 4px 0 0;
-  font-family: 'Poppins', 'Nunito', sans-serif;
+  margin-top: 4px;
 }
 
 .ac-badge {
@@ -2299,200 +2271,125 @@ body.site-loader-lock {
   align-items: center;
   gap: 8px;
   width: fit-content;
-  margin-bottom: 20px;
-  padding: 6px 14px;
+  margin-bottom: 22px;
+  padding: 8px 16px;
   border-radius: 999px;
-  background: #fee2e2;
-  border: 1.5px solid #fca5a5;
-  color: #dc2626;
+  background: #fff1f1;
+  border: 1px solid #ffb4b4;
+  color: #e94b4b;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-family: 'Poppins', 'Nunito', sans-serif;
-}
-
-.ac-badge i,
-.ac-badge svg {
-  width: 14px !important;
-  height: 14px !important;
-  color: #dc2626 !important;
-}
-
-.ac-title-wrap {
-  margin-bottom: 20px;
 }
 
 .ac-title {
-  font-family: 'DM Serif Display', Georgia, serif;
-  font-size: 30px;
-  font-weight: normal;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 800;
   color: #0a1f44;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.1;
   margin: 0;
 }
 
-@media (min-width: 768px) {
-  .ac-title {
-    font-size: clamp(2rem, 3.2vw, 2.85rem);
-  }
+.ac-title .closed,
+.ac-title span {
+  color: #e85d5d;
 }
 
 .ac-title-accent {
   display: block;
-  width: 56px;
-  height: 4px;
+  width: 72px;
+  height: 5px;
   border-radius: 999px;
   background: #f4b942;
-  margin-top: 14px;
-  margin-bottom: 24px;
+  margin: 18px 0 26px;
 }
 
 .ac-desc-wrap {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  margin-bottom: 24px;
-  font-family: 'Poppins', 'Nunito', sans-serif;
+  gap: 16px;
+  margin-bottom: 26px;
 }
 
 .ac-desc-text {
   margin: 0;
-  font-size: 13.5px;
-  line-height: 1.65;
+  font-size: 14px;
+  line-height: 1.75;
   color: #5f6f85;
 }
 
 .ac-alert-box {
   display: flex;
-  align-items: start;
-  gap: 14px;
-  padding: 16px 20px;
-  background: #fffbeb;
-  border: 1.5px solid #fde68a;
-  border-radius: 16px;
-  margin-bottom: 24px;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  background: linear-gradient(90deg, #fff8e6, #fffdf5);
+  border: 1px solid rgba(244, 185, 66, 0.55);
+  border-radius: 18px;
+  margin-bottom: 26px;
 }
 
 .ac-alert-icon-wrap {
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  background: #fef3c7;
-  border: 1.5px solid #f4b942;
-  flex-shrink: 0;
+  background: #fff2c7;
+  color: #c27803;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.ac-alert-icon-wrap i,
-.ac-alert-icon-wrap svg {
-  font-size: 22px;
-  color: #c27803;
-}
-
-.ac-alert-content {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  text-align: left;
+  flex-shrink: 0;
 }
 
 .ac-alert-title {
-  font-size: 13.5px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
   color: #0a1f44;
-  font-family: 'Poppins', 'Nunito', sans-serif;
 }
 
 .ac-alert-desc {
-  font-size: 12px;
+  font-size: 12.5px;
   color: #5f6f85;
-  line-height: 1.5;
-  font-family: 'Poppins', 'Nunito', sans-serif;
+  line-height: 1.55;
 }
 
 .ac-btn-row {
   display: flex;
-  flex-direction: column;
   gap: 12px;
-  margin-bottom: 20px;
-}
-
-@media (min-width: 480px) {
-  .ac-btn-row {
-    flex-direction: row;
-  }
+  margin-bottom: 22px;
 }
 
 .ac-btn {
   flex: 1;
-  min-height: 46px;
+  min-height: 52px;
+  border-radius: 13px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 10px 20px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 800;
+  font-size: 12px;
+  font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
   text-decoration: none;
-  transition: all 0.25s ease;
-  cursor: pointer;
-  text-align: center;
-  white-space: nowrap;
-  font-family: 'Poppins', 'Nunito', sans-serif;
+  transition: 0.25s ease;
 }
 
 .ac-btn:hover {
-  transform: translateY(-1px);
-}
-
-.ac-btn:active {
-  transform: translateY(0);
-}
-
-.ac-btn i,
-.ac-btn svg {
-  width: 16px !important;
-  height: 16px !important;
+  transform: translateY(-2px);
 }
 
 .ac-btn--primary {
   background: #0a1f44;
-  color: #ffffff !important;
-  border: 1.5px solid #0a1f44;
-  box-shadow: 0 4px 12px rgba(10, 31, 68, 0.15);
-}
-
-.ac-btn--primary:hover {
-  background: #061428;
-  border-color: #061428;
-  box-shadow: 0 6px 18px rgba(10, 31, 68, 0.25);
-}
-
-.ac-btn--primary i,
-.ac-btn--primary svg {
-  color: #ffffff !important;
+  color: #fff !important;
+  box-shadow: 0 12px 24px rgba(10, 31, 68, 0.22);
 }
 
 .ac-btn--secondary {
-  background: #ffffff;
+  background: #fff;
   color: #0a1f44 !important;
   border: 1.5px solid #cbd5e1;
-}
-
-.ac-btn--secondary:hover {
-  background: #f8fafc;
-}
-
-.ac-btn--secondary i,
-.ac-btn--secondary svg {
-  color: #f4b942 !important;
 }
 
 .ac-help-wrap {
@@ -2501,138 +2398,142 @@ body.site-loader-lock {
   gap: 8px;
   font-size: 12px;
   color: #5f6f85;
-  font-family: 'Poppins', 'Nunito', sans-serif;
-}
-
-.ac-help-wrap i,
-.ac-help-wrap svg {
-  font-size: 16px;
-  color: #8a97ad;
 }
 
 .ac-help-link {
-  font-weight: 700;
   color: #0a1f44;
+  font-weight: 800;
   text-decoration: underline;
 }
 
-.ac-help-link:hover {
-  text-decoration: underline;
-}
-
-.ac-right-col {
-  display: none;
-  width: 45%;
-  background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%);
-  position: relative;
-  align-items: flex-end;
-  justify-content: center;
-  overflow: hidden;
-}
-
-@media (min-width: 768px) {
-  .ac-right-col {
-    display: flex;
-  }
-}
-
-.ac-right-bg-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at top right, rgba(56, 189, 248, 0.4) 0%, rgba(2, 132, 199, 0.1) 45%, transparent 70%);
-  z-index: 1;
-}
-
+/* Right Image Panel */
+.ac-right-bg-glow,
 .ac-right-pattern {
   position: absolute;
   inset: 0;
-  opacity: 0.1;
-  background: radial-gradient(circle, #ffffff 1.2px, transparent 1.2px);
-  background-size: 16px 16px;
   z-index: 1;
+}
+
+.ac-right-bg-glow {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.18), transparent 35%),
+    linear-gradient(135deg, rgba(10,31,68,0.1), rgba(22,114,255,0.3));
+}
+
+.ac-right-pattern {
+  opacity: 0.12;
+  background-image: radial-gradient(circle, #fff 1.2px, transparent 1.2px);
+  background-size: 16px 16px;
 }
 
 .ac-student-img {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 78% center;
+
+  /* IMPORTANT: fixes your image crop */
+  object-position: center center;
+
+  transform: scale(1);
   z-index: 10;
-  user-select: none;
-  -webkit-user-drag: none;
-  transform: scale(1.02);
 }
 
 .ac-gradient-fade {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 96px;
-  background: linear-gradient(to top, rgba(2, 132, 199, 0.4), transparent);
+  inset: 0;
   z-index: 20;
+  background:
+    linear-gradient(to bottom, transparent 62%, rgba(255,255,255,0.45) 100%),
+    linear-gradient(to right, rgba(255,255,255,0.08), transparent 30%);
+  pointer-events: none;
 }
 
 .ac-float-banner {
   position: absolute;
-  bottom: 24px;
-  left: 24px;
-  right: 24px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 10px 30px rgba(10, 31, 68, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  left: 26px;
+  right: 26px;
+  bottom: 26px;
   z-index: 30;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  text-align: center;
-  gap: 4px;
+  gap: 8px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 16px 36px rgba(10, 31, 68, 0.16);
 }
 
 .ac-float-item {
   flex: 1;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .ac-float-icon-wrap {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: #eff6ff;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 4px;
-}
-
-.ac-float-icon-wrap i,
-.ac-float-icon-wrap svg {
-  width: 16px !important;
-  height: 16px !important;
-  color: #2563eb !important;
 }
 
 .ac-float-label {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 900;
   color: #0a1f44;
   line-height: 1.25;
-  display: block;
 }
 
 .ac-float-divider {
   width: 1px;
-  height: 32px;
-  background: #e2e8f0;
-  flex-shrink: 0;
+  height: 34px;
+  background: #dbe3ee;
 }
 
+/* Mobile */
+@media (max-width: 767px) {
+  .ac-container {
+    width: 100%;
+    min-height: auto;
+    flex-direction: column;
+    max-height: 94vh;
+    overflow-y: auto;
+  }
+
+  .ac-left-col {
+    width: 100%;
+    padding: 32px 24px;
+  }
+
+  .ac-right-col {
+    display: flex;
+    width: 100%;
+    height: 280px;
+    order: -1;
+  }
+
+  .ac-student-img {
+    object-position: center center;
+  }
+
+  .ac-title {
+    font-size: 2.3rem;
+  }
+
+  .ac-btn-row {
+    flex-direction: column;
+  }
+
+  .ac-float-banner {
+    display: none;
+  }
+}
