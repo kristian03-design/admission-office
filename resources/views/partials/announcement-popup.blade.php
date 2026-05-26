@@ -38,7 +38,7 @@
       display: none !important;
     }
     .announcement-popup__footer {
-      flex-direction: column !important;
+      flex-direction: column-reverse !important;
       align-items: stretch !important;
       padding: 16px 22px 22px !important;
     }

@@ -12,16 +12,22 @@ Options -Indexes
 </FilesMatch>
 
 # Block public access to any git directories or configuration files
-<FilesMatch "^\.git">
+RedirectMatch 403 ^/\.git(/|$)
+
+# Block public access to critical application settings and package records
+<FilesMatch "^(composer\.json|composer\.lock|package\.json|package-lock\.json|\.gitignore|\.gitattributes|artisan|phpunit\.xml|vercel\.json|tailwind\.config\.js|vite\.config.js|insert_admin\.php)$">
     Order allow,deny
     Deny from all
 </FilesMatch>
 
-# Block public access to critical application settings and package records
-<FilesMatch "^(composer\.json|composer\.lock|package\.json|package-lock\.json|\.gitignore|\.gitattributes|artisan|phpunit\.xml|vercel\.json|tailwind\.config\.js|vite\.config.js)$">
+# Block public access to database files, backups, and logs
+<FilesMatch "\.(sql|sqlite|sqlite3|db|log|err)$">
     Order allow,deny
     Deny from all
 </FilesMatch>
+
+# Block direct access to sensitive application directories
+RedirectMatch 403 ^/(app|bootstrap|config|database|resources|routes|storage|tests|vendor)(/|$)
 
 # Automatically route public HTTP/S traffic to the public/ directory
 <IfModule mod_rewrite.c>

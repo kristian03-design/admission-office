@@ -568,7 +568,7 @@
 
 @media (max-width: 991px) {
   .announcement-popup {
-    align-items: flex-end;
+    align-items: center;
     padding: 0.75rem;
   }
 
@@ -608,9 +608,14 @@
   }
 
   .announcement-popup__footer {
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: stretch;
     padding: 16px 22px 22px;
+  }
+
+  .announcement-popup__dont-show {
+    justify-content: center;
+    margin-top: 16px;
   }
 
   .announcement-popup__actions {

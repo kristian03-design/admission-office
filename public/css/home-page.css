@@ -307,7 +307,6 @@ body.site-loader-lock {
 
 /* Desktop nav */
 .nav-desktop {
-  display: none !important;
   flex: 1 1 auto;
   justify-content: center;
   min-width: 0;
@@ -389,7 +388,6 @@ body.site-loader-lock {
 /* Desktop nav shown at 1024px+ */
 @media (min-width: 1024px) {
   .nav-desktop {
-    display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     justify-content: center !important;
