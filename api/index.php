@@ -79,7 +79,7 @@ if (isset($_GET['__path'])) {
 
     $_SERVER['REQUEST_URI'] = $requestUri;
     $_SERVER['PHP_SELF'] = $requestUri;
-    $_SERVER['SCRIPT_NAME'] = '/api/index.php';
+    $_SERVER['SCRIPT_NAME'] = '/index.php';
     $_SERVER['QUERY_STRING'] = $query ? http_build_query($query) : '';
     unset($_SERVER['PATH_INFO']);
     unset($_GET['__path']);
@@ -99,6 +99,10 @@ if (isset($_SERVER['REQUEST_URI'])) {
         unset($_SERVER['PATH_INFO']);
     }
 }
+
+// Ensure SCRIPT_NAME is always /index.php so Symfony's Request base URL detection
+// resolves to '/' instead of '/api', allowing '/api/*' routes to match correctly in Laravel.
+$_SERVER['SCRIPT_NAME'] = '/index.php';
 
 // Boot Laravel
 require __DIR__ . '/../public/index.php';

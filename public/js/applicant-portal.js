@@ -315,8 +315,14 @@
     }
     if (type === 'select:first') return renderSelect(key, value, false);
     if (type === 'select:second') return renderSelect(key, value, true);
+
+    let displayValue = value || '';
+    if (type === 'date' && displayValue && typeof displayValue === 'string') {
+      displayValue = displayValue.split('T')[0];
+    }
+
     const step = type === 'number' ? ' step="any"' : '';
-    return `<input class="portal-input" type="${type}" name="${key}" value="${escapeHtml(value || '')}" ${step} ${state.editing ? '' : 'disabled'}>`;
+    return `<input class="portal-input" type="${type}" name="${key}" value="${escapeHtml(displayValue)}" ${step} ${state.editing ? '' : 'disabled'}>`;
   }
 
   function renderDetails() {
