@@ -25,7 +25,7 @@
 <body>
   @include('partials.site-loader')
 
-  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+@include('partials.header')
     <div class="nav-inner flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
       <a href="{{ route('home') }}" class="flex items-center gap-3 group">
         <div class="logo-badge"><img src="{{ asset('assets/images/logo_v2.png') }}" alt="BTECH Logo" width="74" height="74" decoding="async" onerror="this.remove()"></div>
