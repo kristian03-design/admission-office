@@ -198,6 +198,8 @@
     return data;
   }
 
+  const PORTAL_NOT_FOUND_MESSAGE = 'No application found with the provided reference number and email.';
+
   function toast(message, type = 'success') {
     const el = $('portalToast');
     if (!el) return;
@@ -216,6 +218,10 @@
     el.classList.add('show');
     setTimeout(() => el.classList.remove('show'), 3200);
   }
+
+  toast.error = (message) => toast(message, 'error');
+  toast.success = (message) => toast(message, 'success');
+  toast.warning = (message) => toast(message, 'warning');
 
   function showStep(name) {
     ['lookupStep', 'otpStep', 'dashboardStep'].forEach(id => $(id)?.classList.toggle('active', id === name));
@@ -553,7 +559,6 @@
       state.email = String(fd.get('email') || '').trim();
       state.sendingOtp = true;
       state.otpReady = false;
-      showStep('otpStep');
       setBusy(form, true);
       setButtonLoading(button, true);
       updateResendButton();
@@ -564,12 +569,16 @@
           body: JSON.stringify({ reference_number: state.ref, email: state.email }),
         });
         state.otpReady = true;
-        toast('Verification code sent if the details match.');
+        showStep('otpStep');
+        toast.success('Verification code sent to your submitted email.');
         startResendCooldown(60);
       } catch (err) {
         state.otpReady = false;
-        showStep('lookupStep');
-        toast(err.message, 'error');
+        if (err.message === PORTAL_NOT_FOUND_MESSAGE) {
+          toast.error(PORTAL_NOT_FOUND_MESSAGE);
+        } else {
+          toast.error(err.message);
+        }
       } finally {
         state.sendingOtp = false;
         setBusy(form, false);
@@ -630,11 +639,15 @@
           body: JSON.stringify({ reference_number: state.ref, email: state.email }),
         });
         state.otpReady = true;
-        toast('A new verification code was sent if the details match.');
+        toast.success('A new verification code was sent to your submitted email.');
         startResendCooldown(60);
       } catch (err) {
         state.otpReady = false;
-        toast(err.message, 'error');
+        if (err.message === PORTAL_NOT_FOUND_MESSAGE) {
+          toast.error(PORTAL_NOT_FOUND_MESSAGE);
+        } else {
+          toast.error(err.message);
+        }
       } finally {
         state.sendingOtp = false;
         setButtonLoading(button, false);

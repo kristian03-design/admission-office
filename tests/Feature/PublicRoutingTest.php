@@ -43,6 +43,32 @@ class PublicRoutingTest extends TestCase
             ->assertSee($portalHref, false);
     }
 
+    public function test_applicant_portal_request_otp_rejects_unknown_credentials(): void
+    {
+        Application::create([
+            'reference_number' => 'BTECH-2026-000122',
+            'email' => 'student@example.com',
+            'first_name' => 'Ada',
+            'last_name' => 'Student',
+            'status' => 'pending',
+            'submitted_at' => now(),
+        ]);
+
+        $this->postJson('/api/application-status/request-otp', [
+            'reference_number' => 'BTECH-2026-000122',
+            'email' => 'wrong@example.com',
+        ])->assertNotFound()
+            ->assertJsonPath('message', 'No application found with the provided reference number and email.');
+
+        $this->postJson('/api/application-status/request-otp', [
+            'reference_number' => 'BTECH-2026-999999',
+            'email' => 'student@example.com',
+        ])->assertNotFound()
+            ->assertJsonPath('message', 'No application found with the provided reference number and email.');
+
+        Mail::assertNothingSent();
+    }
+
     public function test_applicant_portal_otp_opens_status_payload(): void
     {
         $application = Application::create([

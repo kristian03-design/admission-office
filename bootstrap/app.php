@@ -7,6 +7,7 @@ use App\Http\Middleware\EnsureAdmin;
 use App\Http\Middleware\CachePublicResponseHeaders;
 use App\Http\Middleware\PreventPublicFormSpam;
 use App\Http\Middleware\SecureHeaders;
+use App\Http\Middleware\SanitizeRequestInput;
 
 $app = Application::configure(basePath: $_ENV['APP_BASE_PATH'] ?? $_SERVER['APP_BASE_PATH'] ?? dirname(__DIR__))
     ->withRouting(
@@ -20,6 +21,7 @@ $app = Application::configure(basePath: $_ENV['APP_BASE_PATH'] ?? $_SERVER['APP_
             $middleware->trustProxies(at: '*');
         }
         $middleware->append(SecureHeaders::class);
+        $middleware->append(SanitizeRequestInput::class);
         $middleware->alias([
             'admin' => EnsureAdmin::class,
             'public.cache' => CachePublicResponseHeaders::class,

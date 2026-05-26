@@ -21,6 +21,8 @@ use Illuminate\Validation\ValidationException;
 
 class ApplicantPortalController extends Controller
 {
+    public const NOT_FOUND_MESSAGE = 'No application found with the provided reference number and email.';
+
     private const OTP_TTL_SECONDS = 1800;
     private const SESSION_TTL_SECONDS = 3600;
 
@@ -35,22 +37,26 @@ class ApplicantPortalController extends Controller
 
         $application = $this->findApplication($validated['reference_number'], $validated['email']);
 
-        if ($application) {
-            $otp = (string) random_int(100000, 999999);
-
-            if (SystemSetting::get('email_notifications', '1') !== '0') {
-                try {
-                    Mail::to($application->email)->send(new ApplicantPortalOtpMail($application, $otp));
-                } catch (\Throwable $e) {
-                    Log::error('Failed to send applicant portal OTP: '.$e->getMessage());
-                }
-            }
-
-            $this->portalCache()->put($this->otpCacheKey($application), hash('sha256', $otp), self::OTP_TTL_SECONDS);
+        if (!$application) {
+            return response()->json([
+                'message' => self::NOT_FOUND_MESSAGE,
+            ], 404);
         }
 
+        $otp = (string) random_int(100000, 999999);
+
+        if (SystemSetting::get('email_notifications', '1') !== '0') {
+            try {
+                Mail::to($application->email)->send(new ApplicantPortalOtpMail($application, $otp));
+            } catch (\Throwable $e) {
+                Log::error('Failed to send applicant portal OTP: '.$e->getMessage());
+            }
+        }
+
+        $this->portalCache()->put($this->otpCacheKey($application), hash('sha256', $otp), self::OTP_TTL_SECONDS);
+
         return response()->json([
-            'message' => 'If the reference number and email match an application, a verification code has been sent.',
+            'message' => 'A verification code has been sent to your submitted email.',
             'expires_in_seconds' => self::OTP_TTL_SECONDS,
         ]);
     }
