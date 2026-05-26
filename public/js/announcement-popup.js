@@ -6,9 +6,10 @@
   const checkbox = document.getElementById('dontShowAgain');
   const closeBtn = popup.querySelector('.announcement-popup__close');
   const annId = popup.getAttribute('data-id');
+  const alwaysShow = popup.getAttribute('data-always-show') === 'true';
   let lastFocusedElement = null;
 
-  if (annId) {
+  if (annId && !alwaysShow) {
     if (localStorage.getItem('dont_show_announcement_' + annId) === 'true') {
       return;
     }
@@ -109,7 +110,11 @@
     }
   });
 
-  window.addEventListener('pageshow', () => {
+  if (document.readyState === 'complete') {
     window.setTimeout(openPopup, 900);
-  });
+  } else {
+    window.addEventListener('load', () => {
+      window.setTimeout(openPopup, 900);
+    });
+  }
 })();

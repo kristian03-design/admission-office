@@ -61,6 +61,7 @@
 <div
   id="announcementPopup"
   data-id="{{ $popupAnn->id }}"
+  data-always-show="{{ ($popupAnn->popup_always_show ?? false) ? 'true' : 'false' }}"
   class="announcement-popup"
   role="dialog"
   aria-modal="true"

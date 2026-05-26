@@ -500,8 +500,7 @@
   justify-content: flex-end;
   gap: 12px;
   flex-shrink: 0;
-
-
+}
 
 .announcement-popup__btn {
   min-width: 168px;

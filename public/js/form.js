@@ -1094,23 +1094,6 @@ async function initPublicSettings() {
   if (typeof AdmissionAPI === 'undefined') return;
   try {
     const s = await AdmissionAPI.getPublicSettings();
-    if (s.accept_applications === '0' || s.accept_applications === 0) {
-      document.body.innerHTML = `
-        <div style="height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:sans-serif;padding:20px;text-align:center;background:#f8fafc">
-          <div style="width:80px;height:80px;background:#fee2e2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
-            <i data-iconsax="lock" style="color:#ef4444;width:40px;height:40px"></i>
-          </div>
-          <h1 style="color:#1e293b;margin-bottom:10px;font-size:24px;font-weight:700">Applications are currently closed</h1>
-          <p style="color:#64748b;max-width:400px;line-height:1.6">The online admission application for ${s.school_year || 'the current term'} is not yet open or has already ended.</p>
-          <a href="/" style="margin-top:24px;color:#254d82;text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px">
-            <i data-iconsax="arrow-left" style="width:16px;height:16px"></i>
-            Back to Home
-          </a>
-        </div>
-      `;
-      if (typeof iconsax !== 'undefined') iconsax.createIcons();
-      return;
-    }
     const instName = s.institution_name || 'Baliwag Polytechnic College';
     const instAddr = s.campus_address || 'Baliwag City, Bulacan, Philippines';
     const instEmail = s.admissions_email || 'admissions@btech.edu.ph';
