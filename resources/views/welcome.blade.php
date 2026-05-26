@@ -55,7 +55,7 @@
           <p class="text-base font-semibold tracking-wide nav-main">Baliwag Polytechnic College</p>
         </div>
       </a>
-      <nav class="nav-desktop hidden md:flex items-center gap-6">
+      <nav class="nav-desktop hidden lg:flex items-center gap-6">
         <a href="{{ route('home') }}" class="nav-link text-sm font-medium tracking-wide">Home</a>
         <a href="{{ route('about') }}" class="nav-link text-sm font-medium tracking-wide">About</a>
         <a href="{{ route('home') }}#programs" class="nav-link text-sm font-medium tracking-wide">Programs</a>
@@ -64,12 +64,12 @@
       </nav>
       <div class="nav-actions flex items-center gap-3">
         <a href="{{ route('apply') }}?fresh=true" class="btn-primary-nav text-sm font-semibold px-5 py-2 rounded-full transition-all">Inquire Now</a>
-        <button id="menu-toggle" class="md:hidden p-2 rounded-lg" aria-label="Toggle menu" aria-expanded="false">
+        <button id="menu-toggle" class="lg:hidden p-2 rounded-lg" aria-label="Toggle menu" aria-expanded="false">
           <span class="hamburger-icon" aria-hidden="true"></span>
         </button>
       </div>
     </div>
-    <div id="mobile-menu" class="mobile-menu md:hidden">
+    <div id="mobile-menu" class="mobile-menu lg:hidden">
       <div class="mobile-menu-inner">
         <nav class="mobile-nav">
           <a href="{{ route('home') }}" class="mobile-nav-link" style="--i:1">

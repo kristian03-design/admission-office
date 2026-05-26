@@ -91,7 +91,7 @@ function toggleMenu(forceClose = false) {
   // Hide navbar CTA on mobile when menu is open to reduce clutter
   const navCta = $('.btn-primary-nav');
   if (navCta) {
-    navCta.style.display = (menuOpen && window.innerWidth < 768) ? 'none' : '';
+    navCta.style.display = (menuOpen && window.innerWidth < 1024) ? 'none' : '';
   }
 
   menuToggle?.setAttribute('aria-expanded', menuOpen ? 'true' : 'false');
