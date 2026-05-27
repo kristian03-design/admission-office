@@ -195,8 +195,7 @@
 
 <body>
   @include('partials.site-loader')
-
-  </header>
+  @include('partials.header')
 
   <main>
     <section class="hero-section subpage-hero news-events-hero relative flex items-center overflow-hidden">

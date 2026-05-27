@@ -17,6 +17,10 @@
     /* -- Navbar: dark on load, white on scroll -- */
     /* Un-scrolled: solid navy so text is readable over light page background */
     /* Scrolled: let home-page.css handle the white styles ? no override here */
+    #navbar:not(.scrolled) {
+      background: #071b3d !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
 
     .detail-image-button {
       display: block;
