@@ -5,6 +5,7 @@
 !.env.example
 .env.backup
 .env.production
+.htaccess
 *.pem
 *.key
 *.p12
