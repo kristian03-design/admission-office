@@ -13,7 +13,7 @@
   @include('partials.iconsax')
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="{{ asset('css/home-page.css') }}?v=37" />
-  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=23" />
+  <link rel="stylesheet" href="{{ asset('css/admin-dashboard.css') }}?v=24" />
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
@@ -29,7 +29,7 @@
   </script>
   <script src="{{ asset('js/api-config.js') }}?v=9"></script>
   <script src="{{ asset('js/admission-api.js') }}?v=18"></script>
-  <script src="{{ asset('js/admin-dashboard.js') }}?v=47" defer></script>
+  <script src="{{ asset('js/admin-dashboard.js') }}?v=48" defer></script>
 </head>
 
 <body>

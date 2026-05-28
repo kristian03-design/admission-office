@@ -4282,6 +4282,66 @@ function buildReportsRenderKey() {
   ].join('|');
 }
 
+function renderReportsSkeleton() {
+  const grid = document.getElementById('reportsGrid');
+  if (grid) {
+    grid.setAttribute('aria-busy', 'true');
+    grid.innerHTML = Array.from({ length: 6 }, () => `
+      <div class="report-stat-card report-stat-card--skeleton">
+        <div class="skeleton-line report-skeleton-label"></div>
+        <div class="skeleton-line report-skeleton-value"></div>
+        <div class="skeleton-line report-skeleton-sub"></div>
+      </div>
+    `).join('');
+  }
+
+  document.querySelectorAll('#page-reports .chart-body').forEach(body => {
+    body.classList.add('report-chart-loading');
+    body.setAttribute('aria-busy', 'true');
+    if (!body.querySelector('.report-chart-skeleton')) {
+      body.insertAdjacentHTML('beforeend', `
+        <div class="report-chart-skeleton" aria-hidden="true">
+          <div class="report-chart-skeleton__axis"></div>
+          <div class="report-chart-skeleton__bars">
+            <span style="height:72%"></span>
+            <span style="height:86%"></span>
+            <span style="height:64%"></span>
+            <span style="height:78%"></span>
+          </div>
+        </div>
+      `);
+    }
+  });
+
+  const tableBody = document.getElementById('rptTableBody');
+  if (tableBody) {
+    tableBody.setAttribute('aria-busy', 'true');
+    tableBody.innerHTML = Array.from({ length: 5 }, (_, rowIndex) => `
+      <tr class="skeleton-row report-table-skeleton-row">
+        <td><div class="skeleton-line" style="width:${rowIndex % 2 ? 56 : 72}%"></div></td>
+        <td><div class="skeleton-line" style="width:${rowIndex % 2 ? 42 : 54}%"></div></td>
+        <td><div class="skeleton-line" style="width:34px"></div></td>
+        <td><div class="skeleton-line" style="width:34px"></div></td>
+        <td><div class="skeleton-line" style="width:34px"></div></td>
+        <td><div class="skeleton-line" style="width:34px"></div></td>
+      </tr>
+    `).join('');
+  }
+}
+
+function clearReportsSkeleton() {
+  const grid = document.getElementById('reportsGrid');
+  if (grid) grid.removeAttribute('aria-busy');
+
+  document.querySelectorAll('#page-reports .chart-body').forEach(body => {
+    body.classList.remove('report-chart-loading');
+    body.removeAttribute('aria-busy');
+    body.querySelector('.report-chart-skeleton')?.remove();
+  });
+
+  document.getElementById('rptTableBody')?.removeAttribute('aria-busy');
+}
+
 async function initReports() {
   const grid = document.getElementById('reportsGrid');
   if (!grid) return;
@@ -4290,6 +4350,7 @@ async function initReports() {
   if (reportsRenderKey === currentKey && grid.children.length && gwaChart && eligChart) {
     return;
   }
+  renderReportsSkeleton();
   // Show loading state
   if (!grid.children.length) grid.innerHTML = `
     <div class="report-stat-card" style="opacity:0.5;grid-column:1/-1;text-align:center;padding:24px;">
@@ -4366,6 +4427,7 @@ async function initReports() {
 
   renderReportTable();
   initReportCharts();
+  clearReportsSkeleton();
   reportsRenderKey = buildReportsRenderKey();
 }
 
